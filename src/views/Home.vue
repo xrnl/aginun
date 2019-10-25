@@ -1,5 +1,12 @@
 <template>
-  <div class="home">
-    <h1>Home page</h1>
+  <div>
+    <h1 class="capstitle">aginun</h1>
+    <p>example text</p>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.capstitle {
+  font-family: "FUCXEDCAPS";
+}
+</style>

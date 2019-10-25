@@ -1,4 +1,6 @@
 @font-face {
   font-family: 'FUCXEDCAPS';
-  src:  url('@/assets/fonts/FUCXEDCAPSLatin-Regular.woff2') format('woff2');
+  src:
+  url('~@/assets/fonts/FUCXEDCAPSLatin-Regular.woff2') format('woff2'),
+  url('~@/assets/fonts/FUCXEDCAPSLatin-Regular.woff') format('woff');
 }
