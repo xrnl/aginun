@@ -1,0 +1,31 @@
+// this file contains variables for vuetify components
+// Do not change file path as vuetify looks for this specific path.
+@import '~vuetify/src/styles/settings/colors';
+
+// Globals
+// Change body font
+// $body-font-family: 'Crimson Text', serif;
+// Change header font
+// $heading-font-family: $body-font-family;
+
+// Do not pass all material design colors
+// Saves 30kb of transfer
+$color-pack: false;
+
+// set background of light mode to pure white
+$material-light: (
+  'background': map-get($shades, 'white')
+);
+
+$material-dark: (
+  'background': #121212, // recommended material design background color
+  'cards': #1e1e1e
+);
+
+// Variables for specific components must come before the import
+// Example:
+// $btn-letter-spacing: 0;
+
+// Any component modifications must be imported at the bottom
+// Example:
+// @import '~vuetify/src/components/VBtn/variables';

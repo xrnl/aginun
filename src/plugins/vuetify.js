@@ -1,3 +1,4 @@
+import "@mdi/font/css/materialdesignicons.css";
 import Vue from "vue";
 import Vuetify from "vuetify/lib";
 
@@ -5,18 +6,23 @@ Vue.use(Vuetify);
 
 export default new Vuetify({
   theme: {
+    dark: true, // dark as default theme
     options: {
-      customProperties: true
+      customProperties: true // access vuetify variables from css in .vue
     },
     themes: {
       light: {
-        primary: "#ee44aa",
-        secondary: "#424242",
-        accent: "#82B1FF",
-        error: "#FF5252",
-        info: "#2196F3",
-        success: "#4CAF50",
-        warning: "#FFC107"
+        primary: "#3A62A8",
+        secondary: "#79D0EF",
+        success: "#22A83E",
+        relief: "#3A62A8"
+      },
+      dark: {
+        primary: "#C61281",
+        secondary: "#EB9CC4",
+        success: "#22A83E",
+        relief: "#1e1e1e"
+
       }
     }
   },
