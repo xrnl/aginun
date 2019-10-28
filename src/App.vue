@@ -1,10 +1,7 @@
 <template>
   <v-app>
-    <v-navigation-drawer
+    <the-navigation-drawer
       v-model="drawer"
-      app
-      :mobile-break-point="this.$vuetify.breakpoint.thresholds.sm"
-      color="relief"
     />
     <v-app-bar
       app
@@ -30,8 +27,13 @@
 </template>
 
 <script>
+import TheNavigationDrawer from '@/components/TheNavigationDrawer.vue'
+
 export default {
   name: "App",
+  components: {
+    TheNavigationDrawer
+  },
   data: () => ({
     drawer: null, // vuetify determines initial state based on screen size
   }),
