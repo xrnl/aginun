@@ -5,7 +5,6 @@
     />
     <v-app-bar
       app
-      dense
     >
       <v-app-bar-nav-icon
         v-if="$vuetify.breakpoint.smAndDown"

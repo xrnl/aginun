@@ -37,15 +37,20 @@ const routes = [
   {
     // always keep this the last route as it dynamically matches any string
     // include new routes above
-    path: "/:country_code",
+    /*
+    subcircle1: national group or circle in international group
+    subcircle2: local group or circle in national group
+    subcircle3: circle in local group
+    */
+    path: "/:subcircle1",
     component: CircleRouter,
     alias: [
-      '/:country_code/:circle',
-      '/:country_code/:local_group/:circle'
+      '/:subcircle1/:subcircle2',
+      "/:subcircle1/:subcircle2/:subcircle3"
     ],
     children: [
       {
-        path: "",
+        path: "tasks",
         name: "tasks",
         component: CircleTasks
       },
