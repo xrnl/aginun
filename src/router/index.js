@@ -56,6 +56,11 @@ const routes = [
       }
     ]
   },
+  {
+    // non-existent pages redirect to the home page
+    path: '*',
+    redirect: '/'
+  }
 ];
 
 const router = new VueRouter({
