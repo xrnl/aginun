@@ -20,7 +20,11 @@
       </v-btn>
     </v-app-bar>
     <v-content>
-      <router-view />
+      <!-- Components do not automatically re-render with dynamic routes
+      https://router.vuejs.org/guide/essentials/dynamic-matching.html#reacting-to-params-changes
+      :key ensures component is always re-rendered from scratch,
+      eliminating the need to watch routes or navigation guards in components -->
+      <router-view :key="$route.fullPath" />
     </v-content>
   </v-app>
 </template>
@@ -46,3 +50,9 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+// .v-list-item {
+//   justify-content: space-between;
+// }
+</style>

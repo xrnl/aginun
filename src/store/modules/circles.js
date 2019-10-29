@@ -11,6 +11,10 @@ export default {
     selected: state => {
       return state.myCircles.find(s => s.id === state.idSelected)
     },
+    notSelected: state => {
+      return state.myCircles.filter(s => s.id !== state.idSelected)
+    },
+    hasGroups: state => { return state.myCircles.length > 0 },
     url: (state, getters) => (id) => {
       const circle = state.myCircles.find(s => s.id === id)
       const url = `/${circle.country}/${circle.local}/${circle.working}`
@@ -20,6 +24,10 @@ export default {
   mutations: {
     updateSelected (state, id) {
       state.idSelected = id
+    },
+    removeCircle (state) {
+      // just for testing purposes.
+      state.myCircles.pop()
     }
   },
   actions: {},

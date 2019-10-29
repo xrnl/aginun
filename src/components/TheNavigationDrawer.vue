@@ -11,7 +11,7 @@
       nav
       class="pt-5"
     >
-      <v-list-item-group class="pl-5">
+      <v-list-item-group class="px-5 mb-8">
         <v-list-item
           :to="{ name: 'profile'}"
           exact
@@ -35,61 +35,69 @@
           </v-list-item-content>
         </v-list-item>
       </v-list-item-group>
-      <v-list-group
-        v-model="viewGroups"
-        class="mt-8"
-        color="shade"
-        active-class="v-list-item--active"
+      <div
+        v-if="hasGroups"
       >
-        <template v-slot:activator>
-          <div class="mr-n5">
+        <v-list-group
+          v-model="viewGroups"
+          color="shade--base"
+        >
+          <template v-slot:activator>
             <title-subtitle
               :title="selected.working"
               :subtitle="`${selected.local}, ${selected.country}`"
+              style="flex-grow: 1"
+              class="mr-n5"
             />
-          </div>
-        </template>
-        <v-list-item
-          v-for="circle in myCircles"
-          :key="circle.id"
-          :to="{ path: `${url(circle.id)}/` }"
-          @click.native="updateSelected(circle.id)"
-        >
-          <title-subtitle
-            :title="circle.working"
-            :subtitle="`${circle.local}, ${circle.country}`"
-          />
-        </v-list-item>
-      </v-list-group>
-      <v-divider class="mb-2" />
+          </template>
+          <v-list-item
+            v-for="circle in notSelected"
+            :key="circle.id"
+            :to="{ path: `${url(circle.id)}/tasks` }"
+            @click.native="updateSelected(circle.id)"
+          >
+            <title-subtitle
+              :title="circle.working"
+              :subtitle="`${circle.local}, ${circle.country}`"
+            />
+          </v-list-item>
+
+          <button-add-group @click="addGroup" />
+        </v-list-group>
+        <v-divider class="mb-2" />
 
 
-      <v-list-item-group
-        class="pl-5"
-      >
-        <v-list-item
-          :to="{ path: URLtask }"
-          exact
+        <v-list-item-group
+          class="px-5"
         >
-          <v-list-item-icon>
-            <v-icon>mdi-playlist-check</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            Tasks
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item
-          :to="{ path: URLrole }"
-          exact
-        >
-          <v-list-item-icon>
-            <v-icon>mdi-account-group</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            Roles
-          </v-list-item-content>
-        </v-list-item>
-      </v-list-item-group>
+          <v-list-item
+            :to="{ path: URLtask }"
+            exact
+          >
+            <v-list-item-icon>
+              <v-icon>mdi-playlist-check</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              Tasks
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item
+            :to="{ path: URLrole }"
+            exact
+          >
+            <v-list-item-icon>
+              <v-icon>mdi-account-group</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              Roles
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
+      </div>
+      <button-add-group
+        v-else
+        @click="addGroup"
+      />
     </v-list>
 
     <template v-slot:append>
@@ -113,12 +121,14 @@
 
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex'
-import TitleSubtitle from '@/components/TitleSubtitle.vue'
+import TitleSubtitle from '@/components/TitleSubtitle'
+import ButtonAddGroup from '@/components/TheNavigationDrawer/ButtonAddGroup'
 
   export default {
     name: "TheNavigationDrawer",
     components: {
-      TitleSubtitle
+      TitleSubtitle,
+      ButtonAddGroup
     },
     props: {
       value: {
@@ -133,7 +143,7 @@ import TitleSubtitle from '@/components/TitleSubtitle.vue'
     },
     computed: {
       ...mapState('circles',['myCircles']),
-      ...mapGetters('circles',['selected', 'url']),
+      ...mapGetters('circles',['selected', 'notSelected', 'hasGroups', 'url']),
       URLtask: function () {
         return `${this.url(this.selected.id)}/tasks`
       },
@@ -144,13 +154,17 @@ import TitleSubtitle from '@/components/TitleSubtitle.vue'
     watch: {
       '$route' (to, from) {
         // react to route changes
-        this.viewGroups = false;
+        this.viewGroups = false
         // hide sidebar on mobile devices
         if (this.$vuetify.breakpoint.smAndDown) this.$emit('input', false)
       }
     },
     methods: {
-      ...mapMutations('circles', ['updateSelected']),
+      ...mapMutations('circles', ['updateSelected', 'removeCircle']),
+      addGroup: function() {
+        console.log('this method should show modal/page for adding a group')
+        this.removeCircle()
+      }
     }
   }
 </script>

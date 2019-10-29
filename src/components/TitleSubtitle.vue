@@ -1,11 +1,9 @@
 <template>
-  <div>
-    <div class="d-block">
-      <h4>{{ title }}</h4>
-      <span class="caption">
-        {{ subtitle }}
-      </span>
-    </div>
+  <div class="d-block">
+    <h4>{{ title }}</h4>
+    <span class="caption">
+      {{ subtitle }}
+    </span>
   </div>
 </template>
 
