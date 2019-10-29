@@ -38,6 +38,8 @@
       <v-list-group
         v-model="viewGroups"
         class="mt-8"
+        color="shade"
+        active-class="v-list-item--active"
       >
         <template v-slot:activator>
           <div class="mr-n5">
@@ -49,8 +51,9 @@
         </template>
         <v-list-item
           v-for="circle in myCircles"
-          :key="circle.idx"
-          @click="updateSelected(circle.idx)"
+          :key="circle.id"
+          :to="{ path: `${url(circle.id)}/` }"
+          @click.native="updateSelected(circle.id)"
         >
           <title-subtitle
             :title="circle.working"
@@ -65,7 +68,7 @@
         class="pl-5"
       >
         <v-list-item
-          :to="{ path: `${url}/tasks` }"
+          :to="{ path: URLtask }"
           exact
         >
           <v-list-item-icon>
@@ -76,7 +79,7 @@
           </v-list-item-content>
         </v-list-item>
         <v-list-item
-          :to="{ path: `${url}/roles` }"
+          :to="{ path: URLrole }"
           exact
         >
           <v-list-item-icon>
@@ -131,9 +134,23 @@ import TitleSubtitle from '@/components/TitleSubtitle.vue'
     computed: {
       ...mapState('circles',['myCircles']),
       ...mapGetters('circles',['selected', 'url']),
+      URLtask: function () {
+        return `${this.url(this.selected.id)}/tasks`
+      },
+      URLrole: function () {
+        return `${this.url(this.selected.id)}/roles`
+      },
+    },
+    watch: {
+      '$route' (to, from) {
+        // react to route changes
+        this.viewGroups = false;
+        // hide sidebar on mobile devices
+        if (this.$vuetify.breakpoint.smAndDown) this.$emit('input', false)
+      }
     },
     methods: {
-      ...mapMutations('circles', ['updateSelected'])
+      ...mapMutations('circles', ['updateSelected']),
     }
   }
 </script>

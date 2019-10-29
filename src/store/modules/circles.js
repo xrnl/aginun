@@ -1,25 +1,25 @@
 export default {
   state: {
     myCircles: [
-      {idx: 1, country: 'Nederland', local: 'Amsterdam', working: 'Outreach and Training'},
-      {idx: 2, country: 'Nederland', local: 'Utrecht', working: 'Media and Communications'},
-      {idx: 3, country: 'Nederland', local: 'Neijmegen', working: 'Actions and Logistics'},
+      {id: 1, country: 'Nederland', local: 'Amsterdam', working: 'Outreach and Training'},
+      {id: 2, country: 'Nederland', local: 'Utrecht', working: 'Media and Communications'},
+      {id: 3, country: 'Nederland', local: 'Neijmegen', working: 'Arts'},
     ],
-    idx: 1
+    idSelected: 1
   },
   getters: {
     selected: state => {
-      return state.myCircles.find(s => s.idx === state.idx)
+      return state.myCircles.find(s => s.id === state.idSelected)
     },
-    url: (_, getters) => {
-      const circle = getters.selected
+    url: (state, getters) => (id) => {
+      const circle = state.myCircles.find(s => s.id === id)
       const url = `/${circle.country}/${circle.local}/${circle.working}`
       return url.replace(/\s+/g, '-').toLowerCase();
     }
   },
   mutations: {
-    updateSelected (state, newIdx) {
-      state.idx = newIdx
+    updateSelected (state, id) {
+      state.idSelected = id
     }
   },
   actions: {},

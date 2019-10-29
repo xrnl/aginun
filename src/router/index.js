@@ -52,7 +52,8 @@ const routes = [
       {
         path: "tasks",
         name: "tasks",
-        component: CircleTasks
+        alias: "",
+        component: CircleTasks,
       },
       {
         path: "roles",
