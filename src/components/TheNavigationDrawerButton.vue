@@ -7,22 +7,15 @@
       @click="$emit('click')"
     >
       <v-icon class="mr-8">
-        mdi-plus
+        <slot name="icon" />
       </v-icon>
-      Add group
+      <slot />
     </v-btn>
   </div>
 </template>
 
 <script>
   export default {
-    name: "ButtonAddGroup",
-    data: () => ({
-
-    }),
+    name: "TheNavigationDrawerButton",
   }
 </script>
-
-<style lang="scss" scoped>
-
-</style>
