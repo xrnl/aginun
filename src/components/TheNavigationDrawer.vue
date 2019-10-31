@@ -51,14 +51,14 @@
             />
           </template>
           <v-list-item
-            v-for="circle in notSelected"
-            :key="circle.id"
-            :to="{ path: `${url(circle.id)}/tasks` }"
-            @click.native="updateSelected(circle.id)"
+            v-for="group in notSelected"
+            :key="group.id"
+            :to="{ path: `${url(group.id)}/tasks` }"
+            @click.native="updateSelected(group.id)"
           >
             <title-subtitle
-              :title="circle.working"
-              :subtitle="`${circle.local}, ${circle.country}`"
+              :title="group.working"
+              :subtitle="`${group.local}, ${group.country}`"
             />
           </v-list-item>
 
@@ -142,8 +142,8 @@ import ButtonAddGroup from '@/components/TheNavigationDrawer/ButtonAddGroup'
       }
     },
     computed: {
-      ...mapState('circles',['myCircles']),
-      ...mapGetters('circles',['selected', 'notSelected', 'hasGroups', 'url']),
+      ...mapState('groups',['myGroups']),
+      ...mapGetters('groups',['selected', 'notSelected', 'hasGroups', 'url']),
       URLtask: function () {
         return `${this.url(this.selected.id)}/tasks`
       },
@@ -160,10 +160,10 @@ import ButtonAddGroup from '@/components/TheNavigationDrawer/ButtonAddGroup'
       }
     },
     methods: {
-      ...mapMutations('circles', ['updateSelected', 'removeCircle']),
+      ...mapMutations('groups', ['updateSelected', 'removeGroup']),
       addGroup: function() {
         console.log('this method should show modal/page for adding a group')
-        this.removeCircle()
+        this.removeGroup()
       }
     }
   }

@@ -1,12 +1,12 @@
 <template>
   <div>
-    CircleRoles
+    GroupTasks
   </div>
 </template>
 
 <script>
   export default {
-    name: "CircleRoles",
+    name: "GroupTasks",
     data: () => ({
 
     }),

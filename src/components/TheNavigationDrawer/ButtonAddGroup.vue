@@ -9,7 +9,7 @@
       <v-icon class="mr-8">
         mdi-plus
       </v-icon>
-      Add circle
+      Add group
     </v-btn>
   </div>
 </template>

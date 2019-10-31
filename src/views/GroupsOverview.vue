@@ -1,12 +1,12 @@
 <template>
   <div>
-    CirclesOverview
+    GroupsOverview
   </div>
 </template>
 
 <script>
   export default {
-    name: "CirclesOverview",
+    name: "GroupsOverview",
     data: () => ({
 
     }),

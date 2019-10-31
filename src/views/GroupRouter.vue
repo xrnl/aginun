@@ -8,6 +8,6 @@
 
 <script>
   export default {
-    name: "CircleRouter",
+    name: "GroupRouter",
   }
 </script>
