@@ -62,12 +62,12 @@
             />
           </v-list-item>
 
-          <button-drawer @click="addGroup">
+          <button-icon @click="addGroup">
             <template #icon>
               mdi-plus
             </template>
             Add circle
-          </button-drawer>
+          </button-icon>
         </v-list-group>
         <v-divider class="mb-2" />
 
@@ -127,13 +127,13 @@
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex'
 import TitleSubtitle from '@/components/TitleSubtitle'
-import TheNavigationDrawerButton from '@/components/TheNavigationDrawerButton'
+import ButtonIcon from '@/components/ButtonIcon'
 
   export default {
     name: "TheNavigationDrawer",
     components: {
       TitleSubtitle,
-      buttonDrawer: TheNavigationDrawerButton
+      ButtonIcon
     },
     props: {
       value: {
