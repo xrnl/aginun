@@ -125,7 +125,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import TitleSubtitle from '@/components/TitleSubtitle'
 import ButtonIcon from '@/components/ButtonIcon'
 
@@ -147,7 +147,6 @@ import ButtonIcon from '@/components/ButtonIcon'
       }
     },
     computed: {
-      ...mapState('groups',['myGroups']),
       ...mapGetters('groups',['selected', 'notSelected', 'hasGroups', 'url']),
       URLtask: function () {
         return `${this.url(this.selected.id)}/tasks`

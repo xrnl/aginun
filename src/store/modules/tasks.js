@@ -3,7 +3,7 @@ import findWithIndex from '@/utils/findWithIndex'
 export default {
   state: {
     tasks: [
-      {id: 1, title: 'task 1', completed: false, groupId: 1, sectionId: 1},
+      {id: 1, title: 'task 1', completed: true, groupId: 1, sectionId: 1},
       {id: 2, title: 'task 2', completed: false, groupId: 1, sectionId: 1},
       {id: 3, title: 'task 3', completed: false, groupId: 1, sectionId: 2},
       {id: 4, title: 'task 4', completed: false, groupId: 1, sectionId: 2}
