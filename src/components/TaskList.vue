@@ -1,16 +1,17 @@
 <template>
-  <v-container>
-    <task-list />
-  </v-container>
+  <div>
+    <task-list-item />
+    <task-list-item />
+  </div>
 </template>
 
 <script>
-import TaskList from '@/components/TaskList'
+import TaskListItem from '@/components/TaskListItem'
 
   export default {
-    name: "GroupTasks",
+    name: "TaskList",
     components: {
-      TaskList
+      TaskListItem
     },
     data: () => ({
 

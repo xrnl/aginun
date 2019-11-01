@@ -1,6 +1,5 @@
 <template>
   <v-app-bar
-    v-if="$vuetify.breakpoint.smAndDown"
     app
   >
     <v-app-bar-nav-icon
