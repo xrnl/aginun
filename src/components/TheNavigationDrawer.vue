@@ -53,7 +53,7 @@
           <v-list-item
             v-for="group in notSelected"
             :key="group.id"
-            :to="{ path: `${url(group.id)}/tasks` }"
+            :to="{ path: `${url(group.id)}/roles` }"
             @click.native="updateSelected(group.id)"
           >
             <title-subtitle
@@ -75,7 +75,7 @@
         <v-list-item-group
           class="px-5"
         >
-          <v-list-item
+          <!-- <v-list-item
             :to="{ path: URLtask }"
             exact
           >
@@ -85,7 +85,7 @@
             <v-list-item-content>
               Tasks
             </v-list-item-content>
-          </v-list-item>
+          </v-list-item> -->
           <v-list-item
             :to="{ path: URLrole }"
             exact

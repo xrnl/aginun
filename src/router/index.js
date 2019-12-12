@@ -49,12 +49,13 @@ const routes = [
       "/:subgroup1/:subgroup2/:subgroup3"
     ],
     children: [
-      {
-        path: "tasks",
-        name: "tasks",
-        alias: "",
-        component: GroupTasks,
-      },
+      // Task page temporarily unavailable
+      // {
+      //   path: "tasks",
+      //   name: "tasks",
+      //   alias: "",
+      //   component: GroupTasks,
+      // },
       {
         path: "roles",
         name: "roles",
