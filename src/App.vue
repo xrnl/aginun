@@ -1,7 +1,6 @@
 <template>
   <v-app>
-    <the-navigation-drawer v-model="drawer" />
-    <the-app-bar @toggleDrawer="drawer = !drawer" />
+    <the-app-bar />
     <v-content>
       <!-- Components do not automatically re-render with dynamic routes
       https://router.vuejs.org/guide/essentials/dynamic-matching.html#reacting-to-params-changes
@@ -13,13 +12,11 @@
 </template>
 
 <script>
-import TheNavigationDrawer from '@/components/TheNavigationDrawer.vue'
 import TheAppBar from '@/components/TheAppBar.vue'
 
 export default {
   name: "App",
   components: {
-    TheNavigationDrawer,
     TheAppBar
   },
   data: () => ({
