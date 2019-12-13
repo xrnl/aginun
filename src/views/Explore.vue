@@ -1,12 +1,17 @@
 <template>
-  <div>
-    Explore
-  </div>
+  <v-container>
+    <role-card />
+  </v-container>
 </template>
 
 <script>
+import RoleCard from '@/components/RoleCard.vue'
+
   export default {
     name: "Explore",
+    components: {
+      RoleCard
+    },
     data: () => ({
 
     }),
