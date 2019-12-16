@@ -1,9 +1,9 @@
 <template>
   <v-app-bar
     app
-    :height="$store.state.styles.navbarHeight + 'px'"
+    :height="$store.state.styles.navbarHeight"
     flat
-    class="navbar"
+    class="bottom-border"
   >
     <v-spacer />
     <v-btn
@@ -28,7 +28,7 @@
 
 
 <style lang="scss" scoped>
-.navbar {
+.bottom-border {
   border-bottom-style: solid;
   border-bottom-width: 1px;
   &.theme--light {
