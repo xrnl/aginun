@@ -1,18 +1,18 @@
 <template>
-  <the-container>
+  <wide-container>
     <task-list />
-  </the-container>
+  </wide-container>
 </template>
 
 <script>
 import TaskList from '@/components/TaskList'
-import TheContainer from '@/components/TheContainer'
+import WideContainer from '@/components/WideContainer'
 
   export default {
     name: "GroupTasks",
     components: {
       TaskList,
-      TheContainer
+      WideContainer
     },
     data: () => ({
 

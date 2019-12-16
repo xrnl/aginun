@@ -6,10 +6,7 @@
 
 <script>
   export default {
-    name: "TheContainer",
-    data: () => ({
-
-    }),
+    name: "TheContainer"
   }
 </script>
 
