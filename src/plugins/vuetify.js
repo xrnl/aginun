@@ -6,7 +6,7 @@ Vue.use(Vuetify);
 
 export default new Vuetify({
   theme: {
-    dark: true, // dark as default theme
+    dark: false, // dark as default theme
     options: {
       customProperties: true // access vuetify variables from css in .vue
     },
