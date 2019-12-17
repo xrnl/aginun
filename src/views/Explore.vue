@@ -31,8 +31,9 @@
       </div>
       <div class="d-flex flex-wrap justify-center">
         <role-card
-          v-for="i in 11"
-          :key="i"
+          v-for="role in roles"
+          :key="role.id"
+          :role="role"
         />
       </div>
     </div>
@@ -46,6 +47,7 @@
 <script>
 import RoleCard from '@/components/RoleCard.vue'
 import FilterDrawer from '@/components/FilterDrawer'
+import { mapState } from 'vuex'
 
   export default {
     name: "Explore",
@@ -58,6 +60,7 @@ import FilterDrawer from '@/components/FilterDrawer'
       drawerWidth: 400
     }),
     computed: {
+      ...mapState('roles', ['roles']),
       containerMargin: function () {
         if (this.drawer && !this.isMobile){
           return {'margin-right': this.drawerWidth + 'px'}

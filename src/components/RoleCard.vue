@@ -5,11 +5,12 @@
   >
     <v-card
       :elevation="hover ? 12 : 2"
-      width="250"
+      width="300"
+      height="200"
       class="card"
     >
       <div
-        class="transition-wrapper"
+        class="transition-wrapper d-flex flex-column full-height"
         :class="{lighter: hover && $vuetify.theme.dark}"
       >
         <div class="d-flex justify-space-between align-center pa-3">
@@ -21,21 +22,15 @@
           </v-icon>
         </div>
         <v-divider />
-        <div class="pa-3">
-          <p class="headline mb-0">
-            {{ role.title }}
-          </p>
-          <div class="caption">
-            {{ role.xrGroup }}, {{ role.location }}
+        <div class="pa-3 d-flex flex-column flex-grow-1 justify-space-between">
+          <div>
+            <span class="headline">
+              {{ role.title }}
+            </span>
+            <div class="caption">
+              {{ role.localGroup }}, {{ role.location }}
+            </div>
           </div>
-          <!-- <ul class="mt-5">
-            <li
-              v-for="r in role.responsibilities"
-              :key="r"
-            >
-              {{ r }}
-            </li>
-          </ul> -->
           <div class="d-flex flex-wrap justify-space-between align-end mt-5">
             <span class="d-flex flex-column justify-center">
               <span
@@ -63,32 +58,23 @@
 </template>
 
 <script>
+import has from 'lodash/has'
+
   export default {
     name: "RoleCard",
-    data: () => ({
+    props: {
       role: {
-        title: 'Facilitator',
-        workingGroup: 'Actions & Logistics',
-        xrGroup: 'XR Zwolle',
-        location: 'Zwolle',
-        timeCommitment: {
-          min: 6,
-          max: 10
-        },
-        responsibilities: [
-          'Finding strategic locations for actions',
-          'Buy equipment for actions',
-          'Transport equipment for actions'
-        ]
-
-      }
-    }),
-    computed: {
-      elevation: function () {
-        if (this.$vuetify.theme.dark) {
-          return {'background-color': '#333333'}
+        type: Object,
+        required: true,
+        validator: function (obj) {
+          return has(obj, 'id') && Number.isInteger(obj.id) &&
+                 has(obj, 'title') && typeof obj.title === 'string' &&
+                 has(obj, 'workingGroup') && typeof obj.workingGroup === 'string' &&
+                 has(obj, 'localGroup') && typeof obj.localGroup === 'string' &&
+                 has(obj, 'location') && typeof obj.location === 'string' &&
+                 has(obj, 'timeCommitment') && typeof obj.timeCommitment === 'object' &&
+                 Number.isInteger(obj.timeCommitment.min) && Number.isInteger(obj.timeCommitment.max)
         }
-        return {}
       }
     }
   }
@@ -119,5 +105,9 @@
 
 .lighter {
     background-color: #333333 !important;
+}
+
+.full-height {
+  height: 100%;
 }
 </style>
