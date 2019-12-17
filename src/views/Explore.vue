@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div :style="containerMargin">
+    <div
+      :style="containerMargin"
+    >
       <div class="">
         <div class="text-center my-8">
           <h3>
@@ -34,7 +36,7 @@
         />
       </div>
     </div>
-    <the-filter-drawer
+    <filter-drawer
       v-model="drawer"
       :width="drawerWidth"
     />
@@ -43,13 +45,13 @@
 
 <script>
 import RoleCard from '@/components/RoleCard.vue'
-import TheFilterDrawer from '@/components/TheFilterDrawer'
+import FilterDrawer from '@/components/FilterDrawer'
 
   export default {
     name: "Explore",
     components: {
       RoleCard,
-      TheFilterDrawer
+      FilterDrawer
     },
     data: () => ({
       drawer: null,
@@ -57,7 +59,7 @@ import TheFilterDrawer from '@/components/TheFilterDrawer'
     }),
     computed: {
       containerMargin: function () {
-        if (this.drawer){
+        if (this.drawer && !this.isMobile){
           return {'margin-right': this.drawerWidth + 'px'}
         }
         else {return {}}

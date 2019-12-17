@@ -2,9 +2,8 @@
   <div
     class="drawer"
     :style="drawerStyle"
-    :class="{'theme--dark': $vuetify.theme.dark, 'theme--light': !$vuetify.theme.dark}"
+    :class="{'active': value}"
     :value="value"
-    @input="$emit('input', $event)"
   >
     <div
       v-if="this.$vuetify.breakpoint.smAndDown"
@@ -29,40 +28,46 @@
         Clear filters
       </v-btn>
     </div>
-    <div class="d-flex justify-space-between pa-4">
-      <p>search</p>
-      <v-btn
-        text
-        color="primary"
-      >
-        Clear filters
-      </v-btn>
+    <div class="pa-4">
+      <div class="d-flex justify-space-between align-center">
+        <span class="font-weight-bold">Position title</span>
+        <v-btn
+          v-if="!$vuetify.breakpoint.smAndDown"
+          text
+          color="primary"
+        >
+          Clear filters
+        </v-btn>
+      </div>
     </div>
-
-    <v-list-group>
-      <template v-slot:activator>
-        <v-list-item-title>Working group</v-list-item-title>
+    <filter-section>
+      <template v-slot:title>
+        Local group
       </template>
-      <v-list-item>
-        <span>Working groups go here</span>
-      </v-list-item>
-    </v-list-group>
-    <v-divider />
-    <v-list-group>
-      <template v-slot:activator>
-        <v-list-item-title>Time commitment</v-list-item-title>
+      <span>Local groups go here</span>
+    </filter-section>
+    <filter-section>
+      <template v-slot:title>
+        Working group
       </template>
-      <v-list-item>
-        <span>Time commitment goes here</span>
-      </v-list-item>
-    </v-list-group>
+      <span>Working groups go here</span>
+    </filter-section>
+    <filter-section>
+      <template v-slot:title>
+        Time commitment
+      </template>
+      <span>Time commitment goes here</span>
+    </filter-section>
   </div>
 </template>
 
 <script>
+import FilterDrawerSection from '@/components/FilterDrawerSection'
+
   export default {
     name: "TheFilterDrawer",
     components: {
+      filterSection: FilterDrawerSection
     },
     props: {
       value: {
@@ -81,16 +86,10 @@
     computed: {
       drawerStyle: function () {
         let styles = {}
-        if (this.$vuetify.breakpoint.smAndDown) {
-          styles.top = 0
-          styles['max-width'] = 'auto'
-        }
-        else {
+        if (!this.$vuetify.breakpoint.smAndDown) {
           styles.top = this.$store.state.styles.navbarHeight
           styles['max-width'] = this.width + 'px'
-
         }
-        styles.width = this.value ? '100%' : '0%'
         return styles
       }
     }
@@ -99,17 +98,26 @@
 
 <style lang="scss" scoped>
 .drawer {
-  height: 100%;
   position: fixed;
+  top: 0;
   right: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
   border-left-style: solid;
   border-left-width: 1px;
   z-index: 16;
-  &.theme--light {
+  transition: transform 0.3s ease-out;
+  overflow-y: auto;
+  transform: translateX(100%);
+  &.active {
+    transform: translateX(0);
+  }
+  .theme--light &{
     background: white;
     border-color: rgba(0, 0, 0, 0.12);
   }
-  &.theme--dark {
+  .theme--dark &{
     background: #121212;
     border-color: rgba(255, 255, 255, 0.12);
   }
