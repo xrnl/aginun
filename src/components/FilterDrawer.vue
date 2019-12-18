@@ -52,31 +52,55 @@
       <template v-slot:title>
         Local group
       </template>
-      <span>Local groups go here</span>
+      <autocomplete-custom
+        v-model="selectedLocalGroups"
+        :items="localGroups"
+        chips
+        small-chips
+        multiple
+        solo
+        class="mt-3"
+      />
     </filter-section>
     <filter-section>
       <template v-slot:title>
         Working group
       </template>
-      <span>Working groups go here</span>
+      <autocomplete-custom
+        v-model="selectedWorkingGroups"
+        :items="workingGroups"
+        chips
+        small-chips
+        multiple
+        solo
+        class="mt-3"
+      />
     </filter-section>
     <filter-section>
       <template v-slot:title>
         Time commitment
       </template>
-      <span>Time commitment goes here</span>
+      <v-range-slider
+        v-model="timeRange"
+        :min="timeCommitment.min"
+        :max="timeCommitment.max"
+        class="mt-12"
+        thumb-label="always"
+      />
     </filter-section>
   </div>
 </template>
 
 <script>
 import FilterDrawerSection from '@/components/FilterDrawerSection'
-import { mapGetters, mapMutations } from 'vuex'
+import AutocompleteCustom from '@/components/AutocompleteCustom'
+import { mapState, mapGetters, mapMutations } from 'vuex'
 
   export default {
     name: "TheFilterDrawer",
     components: {
-      filterSection: FilterDrawerSection
+      filterSection: FilterDrawerSection,
+      AutocompleteCustom
     },
     props: {
       value: {
@@ -90,9 +114,13 @@ import { mapGetters, mapMutations } from 'vuex'
       }
     },
     data: () => ({
-      filteredRoleTitle: ''
+      filteredRoleTitle: '',
+      selectedLocalGroups: [],
+      selectedWorkingGroups: [],
+      timeRange: [1, 30]
     }),
     computed: {
+      ...mapState('roles', ['localGroups', 'workingGroups', 'timeCommitment']),
       ...mapGetters('roles', ['nPositions']),
       drawerStyle: function () {
         let styles = {}
