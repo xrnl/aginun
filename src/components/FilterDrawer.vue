@@ -19,7 +19,7 @@
             mdi-arrow-left
           </v-icon>
         </v-btn>
-        <span>See positions</span>
+        <span><span class="primary--text font-weight-bold">{{ nPositions }}</span> positions found</span>
       </div>
       <v-btn
         text
@@ -28,9 +28,9 @@
         Clear filters
       </v-btn>
     </div>
-    <div class="pa-4">
+    <div class="px-4 py-5 pb-0">
       <div class="d-flex justify-space-between align-center">
-        <span class="font-weight-bold">Position title</span>
+        <span class="font-weight-bold">Search positions</span>
         <v-btn
           v-if="!$vuetify.breakpoint.smAndDown"
           text
@@ -39,6 +39,14 @@
           Clear filters
         </v-btn>
       </div>
+      <v-text-field
+        v-model="filteredRoleTitle"
+        label="Facilitator, Writer, Photographer..."
+        solo
+        class="mt-3"
+        @keydown.enter="searchRole(filteredRoleTitle)"
+        @blur="searchRole(filteredRoleTitle)"
+      />
     </div>
     <filter-section>
       <template v-slot:title>
@@ -63,6 +71,7 @@
 
 <script>
 import FilterDrawerSection from '@/components/FilterDrawerSection'
+import { mapGetters, mapMutations } from 'vuex'
 
   export default {
     name: "TheFilterDrawer",
@@ -81,9 +90,10 @@ import FilterDrawerSection from '@/components/FilterDrawerSection'
       }
     },
     data: () => ({
-
+      filteredRoleTitle: ''
     }),
     computed: {
+      ...mapGetters('roles', ['nPositions']),
       drawerStyle: function () {
         let styles = {}
         if (!this.$vuetify.breakpoint.smAndDown) {
@@ -92,6 +102,9 @@ import FilterDrawerSection from '@/components/FilterDrawerSection'
         }
         return styles
       }
+    },
+    methods: {
+      ...mapMutations('roles', ['searchRole'])
     }
   }
 </script>

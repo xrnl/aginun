@@ -101,11 +101,25 @@ export default {
       'XR Zwolle',
       'XR NL'
     ],
-    timeCommitment: {min: 1, max:30}
+    timeCommitment: {min: 1, max:30},
+    filteredRoleTitle: ''
   },
   getters: {
+    filteredRoles: function (state) {
+      const regex = RegExp(state.filteredRoleTitle, 'i')
+      let roles = state.roles.filter(role => {
+        return regex.test(role.title)
+      })
+      return roles
+    },
+    nPositions: function (state, getters) {
+      return getters.filteredRoles.length
+    }
   },
   mutations: {
+    searchRole: function (state, filteredRoleTitle) {
+      state.filteredRoleTitle = filteredRoleTitle
+    }
   },
   actions: {},
 }

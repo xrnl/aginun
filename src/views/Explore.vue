@@ -31,10 +31,17 @@
       </div>
       <div class="d-flex flex-wrap justify-center">
         <role-card
-          v-for="role in roles"
+          v-for="role in filteredRoles"
           :key="role.id"
           :role="role"
         />
+        <div
+          v-if="nPositions < 1"
+          class="pa-5 text-center"
+        >
+          <h3>No results.</h3>
+          <p>Try removing filters.</p>
+        </div>
       </div>
     </div>
     <filter-drawer
@@ -47,7 +54,7 @@
 <script>
 import RoleCard from '@/components/RoleCard.vue'
 import FilterDrawer from '@/components/FilterDrawer'
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
   export default {
     name: "Explore",
@@ -60,7 +67,7 @@ import { mapState } from 'vuex'
       drawerWidth: 400
     }),
     computed: {
-      ...mapState('roles', ['roles']),
+      ...mapGetters('roles', ['filteredRoles', 'nPositions']),
       containerMargin: function () {
         if (this.drawer && !this.isMobile){
           return {'margin-right': this.drawerWidth + 'px'}
