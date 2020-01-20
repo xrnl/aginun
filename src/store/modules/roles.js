@@ -1,125 +1,101 @@
 export default {
   state: {
     roles: [
+      // Should find a good way to retrieve these from the server, maybe look into graphql?
       {
         id: 1,
-        title: 'Facilitator',
-        workingGroup: 'Action and Logistics',
-        localGroup: 'XR Zwolle',
-        location: 'Zwolle',
+        title: "Facilitator",
+        workingGroup: { text: "Action and Logistics", value: 5 },
+        localGroup: { text: "XR Zwolle", value: 19 },
+        location: "Zwolle",
         timeCommitment: {
           min: 6,
           max: 10
-        },
+        }
       },
       {
         id: 2,
-        title: 'Representative',
-        workingGroup: 'Political Strategy and Change',
-        localGroup: 'XR Amsterdam',
-        location: 'Amsterdam',
+        title: "Representative",
+        workingGroup: { text: "Political Strategy", value: 3 },
+        localGroup: { text: "XR Amsterdam", value: 1 },
+        location: "Amsterdam",
         timeCommitment: {
           min: 6,
           max: 10
-        },
+        }
       },
       {
         id: 3,
-        title: 'Photographer',
-        workingGroup: 'Media and Communication',
-        localGroup: 'XR NL',
-        location: 'Amsterdam',
+        title: "Photographer",
+        workingGroup: { text: "Media and Communication", value: 1 },
+        localGroup: { text: "XR NL", value: 20 },
+        location: "Amsterdam",
         timeCommitment: {
           min: 1,
           max: 5
-        },
+        }
       },
       {
         id: 4,
-        title: 'Fundraiser',
-        workingGroup: 'Finance',
-        localGroup: 'XR NL',
-        location: 'Amsterdam',
+        title: "Fundraiser",
+        workingGroup: { text: "Finance", value: 7 },
+        localGroup: { text: "XR NL", value: 20 },
+        location: "Amsterdam",
         timeCommitment: {
           min: 11,
           max: 20
-        },
+        }
       },
       {
         id: 5,
-        title: 'Lawyer',
-        workingGroup: 'Legal',
-        localGroup: 'XR NL',
-        location: 'Amsterdam',
+        title: "Lawyer",
+        workingGroup: { text: "Legal", value: 9 },
+        localGroup: { text: "XR NL", value: 20 },
+        location: "Amsterdam",
         timeCommitment: {
           min: 21,
           max: 30
-        },
+        }
       },
       {
         id: 6,
-        title: 'Action coordinator',
-        workingGroup: 'Actions & Logistics',
-        localGroup: 'XR Den Haag',
-        location: 'Den Haag',
+        title: "Action coordinator",
+        workingGroup: { text: "Action and Logistics", value: 5 },
+        localGroup: { text: "XR Den Haag", value: 6 },
+        location: "Den Haag",
         timeCommitment: {
           min: 6,
           max: 10
-        },
+        }
       }
     ],
-    workingGroups: [
-      'Media and Communication',
-      'Outreach and Training',
-      'Political Strategy',
-      'Regenerative Culture',
-      'Action and Logistics',
-      'Arts',
-      'Finance',
-      'Tech',
-      'Legal'
-    ],
-    localGroups: [
-      'XR Amsterdam',
-      'XR Arnhem/Nijmegen',
-      'XR Brabant',
-      'XR Castricum',
-      'XR Delft',
-      'XR Den Haag',
-      'XR Deventer',
-      'XR Enschede',
-      'XR Groningen',
-      'XR Haarlem',
-      'XR Leeuwarden/Fryslân',
-      'XR Leiden',
-      'XR Maastricht',
-      'XR Rotterdam',
-      'XR Utrecht',
-      'XR Wageningen',
-      'XR Ysselvallei',
-      'XR Zaandam',
-      'XR Zwolle',
-      'XR NL'
-    ],
-    timeCommitment: {min: 1, max:30},
-    filteredRoleTitle: ''
+    timeCommitment: { min: 1, max: 30 }
   },
   getters: {
-    filteredRoles: function (state) {
-      const regex = RegExp(state.filteredRoleTitle, 'i')
-      let roles = state.roles.filter(role => {
-        return regex.test(role.title)
-      })
-      return roles
-    },
-    nPositions: function (state, getters) {
-      return getters.filteredRoles.length
+    getByFilters: state => ({ text, workingGroup, localGroup }) => {
+      // need to make this more resilient and generic, this will get out of hand quickly, but ok for testing
+      return state.roles.filter(role => {
+        if (
+          text !== "" &&
+          !role.title.toLowerCase().includes(text.toLowerCase())
+        ) {
+          return false;
+        }
+        if (
+          workingGroup.length > 0 &&
+          !workingGroup.includes(role.workingGroup.value)
+        ) {
+          return false;
+        }
+        if (
+          localGroup.length > 0 &&
+          !localGroup.includes(role.localGroup.value)
+        ) {
+          return false;
+        }
+        return true;
+      });
     }
   },
-  mutations: {
-    searchRole: function (state, filteredRoleTitle) {
-      state.filteredRoleTitle = filteredRoleTitle
-    }
-  },
-  actions: {},
-}
+  actions: {}
+};

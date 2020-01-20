@@ -2,139 +2,121 @@
   <div
     class="drawer"
     :style="drawerStyle"
-    :class="{'active': value}"
+    :class="{ active: value }"
     :value="value"
   >
     <div
       v-if="this.$vuetify.breakpoint.smAndDown"
-      :style="{height: $store.state.styles.navbarHeight}"
+      :style="{ height: $store.state.styles.navbarHeight }"
       class="d-flex justify-space-between align-center pa-3 bottom-border"
     >
       <div class="d-flex align-center">
-        <v-btn
-          icon
-          @click="$emit('input', false)"
-        >
-          <v-icon color="primary">
-            mdi-arrow-left
-          </v-icon>
+        <v-btn icon @click="$emit('input', false)">
+          <v-icon color="primary">mdi-arrow-left</v-icon>
         </v-btn>
-        <span><span class="primary--text font-weight-bold">{{ nPositions }}</span> positions found</span>
+        <span>
+          <strong class="primary--text">{{ roleAmount }}</strong>
+          positions found
+        </span>
       </div>
-      <v-btn
-        text
-        color="primary"
-      >
-        Clear filters
-      </v-btn>
+      <v-btn text color="primary">Clear filters</v-btn>
     </div>
     <div class="px-4 py-5 pb-0">
       <div class="d-flex justify-space-between align-center">
         <span class="font-weight-bold">Search positions</span>
-        <v-btn
-          v-if="!$vuetify.breakpoint.smAndDown"
-          text
-          color="primary"
+        <v-btn v-if="!$vuetify.breakpoint.smAndDown" text color="primary"
+          >Clear filters</v-btn
         >
-          Clear filters
-        </v-btn>
       </div>
       <v-text-field
-        v-model="filteredRoleTitle"
+        :value="selectedFilters.text"
         label="Facilitator, Writer, Photographer..."
-        solo
         class="mt-3"
-        @keydown.enter="searchRole(filteredRoleTitle)"
-        @blur="searchRole(filteredRoleTitle)"
+        @input="value => onSetFilter(value, 'text')"
       />
     </div>
     <filter-section>
-      <template v-slot:title>
-        Local group
-      </template>
-      <autocomplete-custom
-        v-model="selectedLocalGroups"
-        :items="localGroups"
-        chips
-        small-chips
-        multiple
-        solo
-        class="mt-3"
-      />
+      <template v-slot:title
+        >Groups</template
+      >
+      <flex-wrapper direction="column">
+        <autocomplete-custom
+          :value="selectedFilters.localGroup"
+          :items="localGroups"
+          label="Local Group"
+          @change="id => onSetFilter(id, 'localGroup')"
+        />
+        <autocomplete-custom
+          :value="selectedFilters.workingGroup"
+          :items="workingGroups"
+          label="Working Group"
+          @change="id => onSetFilter(id, 'workingGroup')"
+        />
+      </flex-wrapper>
     </filter-section>
     <filter-section>
-      <template v-slot:title>
-        Working group
-      </template>
-      <autocomplete-custom
-        v-model="selectedWorkingGroups"
-        :items="workingGroups"
-        chips
-        small-chips
-        multiple
-        solo
-        class="mt-3"
-      />
-    </filter-section>
-    <filter-section>
-      <template v-slot:title>
-        Time commitment
-      </template>
+      <template v-slot:title
+        >Time commitment</template
+      >
       <v-range-slider
         v-model="timeRange"
         :min="timeCommitment.min"
         :max="timeCommitment.max"
         class="mt-12"
         thumb-label="always"
+        label="Time Commitment"
       />
     </filter-section>
   </div>
 </template>
 
 <script>
-import FilterDrawerSection from '@/components/FilterDrawerSection'
-import AutocompleteCustom from '@/components/AutocompleteCustom'
-import { mapState, mapGetters, mapMutations } from 'vuex'
+import FlexWrapper from "@/components/layout/FlexWrapper.vue";
+import AutocompleteCustom from "@/components/AutocompleteCustom";
+import { mapState, mapGetters, mapMutations } from "vuex";
+import FilterDrawerSection from "./layout/FilterDrawerSection";
 
-  export default {
-    name: "TheFilterDrawer",
-    components: {
-      filterSection: FilterDrawerSection,
-      AutocompleteCustom
+export default {
+  name: "TheFilterDrawer",
+  components: {
+    filterSection: FilterDrawerSection,
+    AutocompleteCustom,
+    FlexWrapper
+  },
+  props: {
+    value: {
+      required: true,
+      validator: value => typeof value === "boolean" || value === null
     },
-    props: {
-      value: {
-        required: true,
-        validator: value => typeof value === "boolean" || value === null
-      },
-      width: {
-        required: true,
-        type: Number,
-        default: 400
+    selectedFilters: {
+      type: Object,
+      required: true
+    },
+    roleAmount: { type: Number, default: 0 },
+    onSetFilter: { required: true, type: Function },
+    width: {
+      required: true,
+      type: Number,
+      default: 400
+    }
+  },
+  data: () => ({
+    timeRange: [1, 30]
+  }),
+  computed: {
+    ...mapState("roles", ["timeCommitment"]),
+    ...mapState("localGroups", ["localGroups"]),
+    ...mapState("workingGroups", ["workingGroups"]),
+    drawerStyle: function() {
+      let styles = {};
+      if (!this.$vuetify.breakpoint.smAndDown) {
+        styles.top = this.$store.state.styles.navbarHeight;
+        styles["max-width"] = this.width + "px";
       }
-    },
-    data: () => ({
-      filteredRoleTitle: '',
-      selectedLocalGroups: [],
-      selectedWorkingGroups: [],
-      timeRange: [1, 30]
-    }),
-    computed: {
-      ...mapState('roles', ['localGroups', 'workingGroups', 'timeCommitment']),
-      ...mapGetters('roles', ['nPositions']),
-      drawerStyle: function () {
-        let styles = {}
-        if (!this.$vuetify.breakpoint.smAndDown) {
-          styles.top = this.$store.state.styles.navbarHeight
-          styles['max-width'] = this.width + 'px'
-        }
-        return styles
-      }
-    },
-    methods: {
-      ...mapMutations('roles', ['searchRole'])
+      return styles;
     }
   }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -154,11 +136,11 @@ import { mapState, mapGetters, mapMutations } from 'vuex'
   &.active {
     transform: translateX(0);
   }
-  .theme--light &{
+  .theme--light & {
     background: white;
     border-color: rgba(0, 0, 0, 0.12);
   }
-  .theme--dark &{
+  .theme--dark & {
     background: #121212;
     border-color: rgba(255, 255, 255, 0.12);
   }
@@ -167,10 +149,10 @@ import { mapState, mapGetters, mapMutations } from 'vuex'
 .bottom-border {
   border-bottom-style: solid;
   border-bottom-width: 1px;
-  .theme--light &{
+  .theme--light & {
     border-color: rgba(0, 0, 0, 0.12);
   }
-  .theme--dark &{
+  .theme--dark & {
     border-color: rgba(255, 255, 255, 0.12);
   }
 }
