@@ -53,7 +53,8 @@ export default {
       text: "",
       localGroup: [],
       workingGroup: []
-    }
+    },
+    nPositions: 3
   }),
   computed: {
     ...mapGetters("roles", ["getByFilters"]),

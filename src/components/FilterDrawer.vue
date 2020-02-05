@@ -1,10 +1,5 @@
 <template>
-  <div
-    class="drawer"
-    :style="drawerStyle"
-    :class="{ active: value }"
-    :value="value"
-  >
+  <div class="drawer" :style="drawerStyle" :class="{ active: value }" :value="value">
     <div
       v-if="this.$vuetify.breakpoint.smAndDown"
       :style="{ height: $store.state.styles.navbarHeight }"
@@ -24,9 +19,7 @@
     <div class="px-4 py-5 pb-0">
       <div class="d-flex justify-space-between align-center">
         <span class="font-weight-bold">Search positions</span>
-        <v-btn v-if="!$vuetify.breakpoint.smAndDown" text color="primary"
-          >Clear filters</v-btn
-        >
+        <v-btn v-if="!$vuetify.breakpoint.smAndDown" text color="primary">Clear filters</v-btn>
       </div>
       <v-text-field
         :value="selectedFilters.text"
@@ -36,9 +29,7 @@
       />
     </div>
     <filter-section>
-      <template v-slot:title
-        >Groups</template
-      >
+      <template v-slot:title>Groups</template>
       <flex-wrapper direction="column">
         <autocomplete-custom
           :value="selectedFilters.localGroup"
@@ -55,9 +46,7 @@
       </flex-wrapper>
     </filter-section>
     <filter-section>
-      <template v-slot:title
-        >Time commitment</template
-      >
+      <template v-slot:title>Time commitment</template>
       <v-range-slider
         v-model="timeRange"
         :min="timeCommitment.min"
@@ -75,6 +64,7 @@ import FlexWrapper from "@/components/layout/FlexWrapper.vue";
 import AutocompleteCustom from "@/components/AutocompleteCustom";
 import { mapState, mapGetters, mapMutations } from "vuex";
 import FilterDrawerSection from "./layout/FilterDrawerSection";
+import gql from "graphql-tag";
 
 export default {
   name: "TheFilterDrawer",
@@ -103,9 +93,22 @@ export default {
   data: () => ({
     timeRange: [1, 30]
   }),
+  apollo: {
+    localGroups: {
+      query: gql`
+        query {
+          local_group {
+            id
+            name
+          }
+        }
+      `,
+      update: data => data.local_group.map(lg => lg.name)
+    }
+  },
   computed: {
     ...mapState("roles", ["timeCommitment"]),
-    ...mapState("localGroups", ["localGroups"]),
+    // ...mapState("localGroups", ["localGroups"]),
     ...mapState("workingGroups", ["workingGroups"]),
     drawerStyle: function() {
       let styles = {};
