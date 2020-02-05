@@ -108,7 +108,6 @@ export default {
   },
   computed: {
     ...mapState("roles", ["timeCommitment"]),
-    // ...mapState("localGroups", ["localGroups"]),
     ...mapState("workingGroups", ["workingGroups"]),
     drawerStyle: function() {
       let styles = {};
