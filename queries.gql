@@ -1,0 +1,16 @@
+query local_group {
+  __typename
+  local_group {
+    id
+    name
+  }
+}
+
+mutation insert_localgroup($objects: [local_group_insert_input!]!) {
+  insert_local_group(objects: $objects) {
+    returning {
+      id
+      name
+    }
+  }
+}

@@ -3,7 +3,7 @@ import { createHttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 
 const httpLink = createHttpLink({
-  uri: 'http://localhost:8080/v1/graphql',
+  uri: 'https://xr-volunteer-app.herokuapp.com/v1/graphql',
 })
 
 const cache = new InMemoryCache()
