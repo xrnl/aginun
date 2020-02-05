@@ -17,7 +17,7 @@
         </div>
       </div>
       <div class="d-flex flex-wrap justify-center">
-        <role-card v-for="role in filteredRoles" :key="role.id" :role="role" />
+        <role-card v-for="role in roles" :key="role.id" :role="role" />
         <div v-if="nPositions < 1" class="pa-5 text-center">
           <h3>No results.</h3>
           <p>Try removing filters.</p>
@@ -29,7 +29,7 @@
       :width="drawerWidth"
       :onSetFilter="handleSelectFilter"
       :selectedFilters="selectedFilters"
-      :roleAmount="filteredRoles.length"
+      :roleAmount="10"
     />
   </div>
 </template>
@@ -38,6 +38,7 @@
 import RoleCard from "@/components/RoleCard.vue";
 import FilterDrawer from "@/components/FilterDrawer";
 import { mapGetters } from "vuex";
+import gql from "graphql-tag";
 
 export default {
   name: "Explore",
@@ -57,10 +58,10 @@ export default {
     nPositions: 3
   }),
   computed: {
-    ...mapGetters("roles", ["getByFilters"]),
-    filteredRoles: function() {
-      return this.getByFilters(this.selectedFilters);
-    },
+    // ...mapGetters("roles", ["getByFilters"]),
+    // filteredRoles: function() {
+    //   return this.getByFilters(this.selectedFilters);
+    // },
     containerMargin: function() {
       if (this.drawer && !this.isMobile) {
         return { "margin-right": this.drawerWidth + "px" };
@@ -70,6 +71,36 @@ export default {
     },
     isMobile: function() {
       return this.$vuetify.breakpoint.smAndDown;
+    }
+  },
+  apollo: {
+    roles: {
+      query: gql`
+        query {
+          role {
+            id
+            name
+            time_commitment
+          }
+        }
+      `,
+      update: data => {
+        const d = data.role.map(role => {
+          return {
+            id: role.id,
+            name: role.name,
+            timeCommitment: {
+              min: role.time_commitment[0],
+              max: role.time_commitment[1]
+            },
+            localGroup: role.local_group_id,
+            workingGroup: role.working_group_id,
+            location: role.location
+          };
+        });
+        console.log(d);
+        return d;
+      }
     }
   },
   methods: {

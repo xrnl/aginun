@@ -91,7 +91,11 @@ export default {
     }
   },
   data: () => ({
-    timeRange: [1, 30]
+    timeRange: [1, 30],
+    timeCommitment: {
+      min: 1,
+      max: 30
+    }
   }),
   apollo: {
     localGroups: {
@@ -104,11 +108,21 @@ export default {
         }
       `,
       update: data => data.local_group.map(lg => lg.name)
+    },
+    workingGroups: {
+      query: gql`
+        query {
+          working_group {
+            id
+            name
+          }
+        }
+      `,
+      update: data => data.working_group.map(wg => wg.name)
     }
   },
   computed: {
-    ...mapState("roles", ["timeCommitment"]),
-    ...mapState("workingGroups", ["workingGroups"]),
+    // ...mapState("roles", ["timeCommitment"]),
     drawerStyle: function() {
       let styles = {};
       if (!this.$vuetify.breakpoint.smAndDown) {

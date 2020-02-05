@@ -14,3 +14,29 @@ mutation insert_localgroup($objects: [local_group_insert_input!]!) {
     }
   }
 }
+
+query working_group {
+  __typename
+  working_group {
+    id
+    name
+  }
+}
+
+query role {
+  __typename
+  role {
+    id
+    name
+    local_group {
+      id
+      name
+    }
+    working_group {
+      id
+      name
+    }
+    location
+    time_commitment
+  }
+}
