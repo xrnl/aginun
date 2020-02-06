@@ -1,4 +1,4 @@
-query local_group {
+query localGroup {
   __typename
   local_group {
     id
@@ -6,7 +6,7 @@ query local_group {
   }
 }
 
-mutation insert_localgroup($objects: [local_group_insert_input!]!) {
+mutation insertLocalGroup($objects: [local_group_insert_input!]!) {
   insert_local_group(objects: $objects) {
     returning {
       id
@@ -15,7 +15,7 @@ mutation insert_localgroup($objects: [local_group_insert_input!]!) {
   }
 }
 
-query working_group {
+query workingGroup {
   __typename
   working_group {
     id
@@ -38,5 +38,19 @@ query role {
     }
     location
     time_commitment
+  }
+
+}
+
+query timeCommitment {
+  role_aggregate {
+    aggregate {
+      min {
+        time_commitment_min
+      }
+      max {
+        time_commitment_max
+      }
+    }
   }
 }

@@ -91,11 +91,11 @@ export default {
     }
   },
   data: () => ({
-    timeRange: [1, 30],
-    timeCommitment: {
-      min: 1,
-      max: 30
-    }
+    timeRange: [0, Number.MAX_SAFE_INTEGER]
+    // timeCommitment: {
+    //   min: 1,
+    //   max: 30
+    // }
   }),
   apollo: {
     localGroups: {
@@ -119,6 +119,26 @@ export default {
         }
       `,
       update: data => data.working_group.map(wg => wg.name)
+    },
+    timeCommitment: {
+      query: gql`
+        query {
+          role_aggregate {
+            aggregate {
+              min {
+                time_commitment_min
+              }
+              max {
+                time_commitment_max
+              }
+            }
+          }
+        }
+      `,
+      update: data => ({
+        min: Math.floor(data.role_aggregate.aggregate.min.time_commitment_min),
+        max: data.role_aggregate.aggregate.max.time_commitment_max
+      })
     }
   },
   computed: {
