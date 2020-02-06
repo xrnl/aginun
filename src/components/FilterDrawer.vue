@@ -91,11 +91,12 @@ export default {
     }
   },
   data: () => ({
-    timeRange: [0, Number.MAX_SAFE_INTEGER]
-    // timeCommitment: {
-    //   min: 1,
-    //   max: 30
-    // }
+    timeRange: [0, Number.MAX_SAFE_INTEGER],
+    // why do we need to initiate this while it is being queried from the server? because it is async?
+    timeCommitment: {
+      min: 1,
+      max: Number.MAX_SAFE_INTEGER
+    }
   }),
   apollo: {
     localGroups: {

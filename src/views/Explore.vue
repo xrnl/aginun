@@ -80,27 +80,37 @@ export default {
           role {
             id
             name
-            time_commitment
+            location
+            time_commitment_min
+            time_commitment_max
+            local_group {
+              id
+              name
+            }
+            working_group {
+              id
+              name
+            }
           }
         }
       `,
-      update: data => {
-        const d = data.role.map(role => {
-          return {
-            id: role.id,
-            name: role.name,
-            timeCommitment: {
-              min: role.time_commitment[0],
-              max: role.time_commitment[1]
-            },
-            localGroup: role.local_group_id,
-            workingGroup: role.working_group_id,
-            location: role.location
-          };
-        });
-        console.log(d);
-        return d;
-      }
+      update: data =>
+        data.role.map(role => ({
+          id: role.id,
+          name: role.title,
+          location: role.location,
+          timeCommitment: {
+            min: role.time_commitment_min,
+            max: role.time_commitment_max
+          },
+          localGroup: {
+            text: role.local_group.name
+          },
+          workingGroup: {
+            text: role.working_group.name
+          },
+          location: role.location
+        }))
     }
   },
   methods: {
