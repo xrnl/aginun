@@ -143,7 +143,6 @@ export default {
     }
   },
   computed: {
-    // ...mapState("roles", ["timeCommitment"]),
     drawerStyle: function() {
       let styles = {};
       if (!this.$vuetify.breakpoint.smAndDown) {

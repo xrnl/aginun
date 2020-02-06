@@ -37,7 +37,7 @@
 <script>
 import RoleCard from "@/components/RoleCard.vue";
 import FilterDrawer from "@/components/FilterDrawer";
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import gql from "graphql-tag";
 
 export default {
@@ -62,6 +62,13 @@ export default {
     // filteredRoles: function() {
     //   return this.getByFilters(this.selectedFilters);
     // },
+    ...mapState("filters", [
+      "localGroup",
+      "workingGroup",
+      "timeCommitmentMin",
+      "timeCommitmentMax",
+      "limit"
+    ]),
     containerMargin: function() {
       if (this.drawer && !this.isMobile) {
         return { "margin-right": this.drawerWidth + "px" };
@@ -72,25 +79,30 @@ export default {
     isMobile: function() {
       return this.$vuetify.breakpoint.smAndDown;
     }
+    // roles: function() {
+    //   $apollo.query
+    // }
   },
   apollo: {
     roles: {
       query: gql`
         query getRoles(
-          $limit: Int!
-          $workingGroup: Int!
-          $localGroup: Int!
-          $timeCommitmentMin: float8!
-          $timeCommitmentMax: float8!
+          $limit: Int
+          $search: String
+          $localGroup: Int
+          $workingGroup: Int
+          $timeCommitmentMin: float8
+          $timeCommitmentMax: float8
         ) {
           role(
-            limit: $limit
             where: {
-              working_group: { id: { _eq: $workingGroup } }
+              name: { _ilike: $search }
               local_group: { id: { _eq: $localGroup } }
+              working_group: { id: { _eq: $workingGroup } }
               time_commitment_min: { _gte: $timeCommitmentMin }
               time_commitment_max: { _lte: $timeCommitmentMax }
             }
+            limit: $limit
           ) {
             id
             name
@@ -111,8 +123,7 @@ export default {
       update: data =>
         data.role.map(role => ({
           id: role.id,
-          name: role.title,
-          location: role.location,
+          title: role.name,
           timeCommitment: {
             min: role.time_commitment_min,
             max: role.time_commitment_max
@@ -125,13 +136,14 @@ export default {
           },
           location: role.location
         })),
-      variables: () => {
+      variables: function() {
         return {
-          localGroup: 0,
-          workingGroup: 0,
-          timeCommitmentMin: 0,
-          timeCommitmentMax: Number.MAX_SAFE_INTEGER,
-          limit: 200
+          limit: this.limit,
+          search: this.search,
+          localGroup: this.localGroup,
+          workingGroup: this.workingGroup,
+          timeCommitmentMin: this.timeCommitmentMin,
+          timeCommitmentMax: this.timeCommitmentMax
         };
       },
       error: error => {
@@ -139,6 +151,7 @@ export default {
       }
     }
   },
+
   methods: {
     handleSelectFilter: function(value, type) {
       this.selectedFilters[type] = value;
