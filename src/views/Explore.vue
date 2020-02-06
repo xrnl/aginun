@@ -76,8 +76,22 @@ export default {
   apollo: {
     roles: {
       query: gql`
-        query {
-          role {
+        query getRoles(
+          $limit: Int!
+          $workingGroup: Int!
+          $localGroup: Int!
+          $timeCommitmentMin: float8!
+          $timeCommitmentMax: float8!
+        ) {
+          role(
+            limit: $limit
+            where: {
+              working_group: { id: { _eq: $workingGroup } }
+              local_group: { id: { _eq: $localGroup } }
+              time_commitment_min: { _gte: $timeCommitmentMin }
+              time_commitment_max: { _lte: $timeCommitmentMax }
+            }
+          ) {
             id
             name
             location
@@ -110,7 +124,19 @@ export default {
             text: role.working_group.name
           },
           location: role.location
-        }))
+        })),
+      variables: () => {
+        return {
+          localGroup: 0,
+          workingGroup: 0,
+          timeCommitmentMin: 0,
+          timeCommitmentMax: Number.MAX_SAFE_INTEGER,
+          limit: 200
+        };
+      },
+      error: error => {
+        console.error("[GraphQL]", error);
+      }
     }
   },
   methods: {
