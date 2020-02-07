@@ -19,7 +19,12 @@
     <div class="px-4 py-5 pb-0">
       <div class="d-flex justify-space-between align-center">
         <span class="font-weight-bold">Search positions</span>
-        <v-btn v-if="!$vuetify.breakpoint.smAndDown" text color="primary">Clear filters</v-btn>
+        <v-btn
+          v-if="!$vuetify.breakpoint.smAndDown"
+          text
+          color="primary"
+          @click="() => onSetFilter(null, 'reset')"
+        >Clear filters</v-btn>
       </div>
       <v-text-field
         :value="selectedFilters.text"
@@ -164,7 +169,15 @@ export default {
         styles["max-width"] = this.width + "px";
       }
       return styles;
-    }
+    },
+    ...mapState("filters", [
+      "localGroup",
+      "workingGroup",
+      "limit",
+      "search",
+      "timeCommitmentMin",
+      "timeCommitmentMax"
+    ])
   }
 };
 </script>

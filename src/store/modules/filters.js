@@ -26,6 +26,13 @@ export default {
       } else if (type === 'timeCommitment') {
         state.timeCommitmentMin = value[0];
         state.timeCommitmentMax = value[1];
+      } else if (type === 'reset') {
+        state.limit = 50;
+        state.search = null;
+        state.localGroup = null;
+        state.workingGroup = null;
+        state.timeCommitmentMin = 0;
+        state.timeCommitmentMax = Number.MAX_SAFE_INTEGER;
       }
     },
     storeGroups(state, { groups, type }) {
