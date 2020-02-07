@@ -54,6 +54,7 @@
         class="mt-12"
         thumb-label="always"
         label="Time Commitment"
+        @change="id => onSetFilter(id, 'timeCommitment')"
       />
     </filter-section>
   </div>

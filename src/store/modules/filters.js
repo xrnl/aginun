@@ -12,7 +12,7 @@ export default {
   },
   mutations: {
     updateFilter(state, { type, value }) {
-      console.log(type);
+      // console.log(type, value);
       if (type === 'localGroup' || type === 'workingGroup') {
         let v = null;
         if (value.length) {
@@ -23,8 +23,9 @@ export default {
         state[type] = v;
       } else if (type === 'text') {
         state.search = `%${value}%`;
-      } else {
-        // time commitment here
+      } else if (type === 'timeCommitment') {
+        state.timeCommitmentMin = value[0];
+        state.timeCommitmentMax = value[1];
       }
     },
     storeGroups(state, { groups, type }) {
