@@ -37,7 +37,7 @@
 <script>
 import RoleCard from "@/components/RoleCard.vue";
 import FilterDrawer from "@/components/FilterDrawer";
-import { mapGetters, mapState } from "vuex";
+import { mapGetters, mapState, mapMutations } from "vuex";
 import gql from "graphql-tag";
 
 export default {
@@ -57,6 +57,9 @@ export default {
     },
     nPositions: 3
   }),
+  // methods: {
+  //   ...mapMutations("filters", ["updateFilter"])
+  // },
   computed: {
     // ...mapGetters("roles", ["getByFilters"]),
     // filteredRoles: function() {
@@ -65,9 +68,10 @@ export default {
     ...mapState("filters", [
       "localGroup",
       "workingGroup",
+      "limit",
+      "search",
       "timeCommitmentMin",
-      "timeCommitmentMax",
-      "limit"
+      "timeCommitmentMax"
     ]),
     containerMargin: function() {
       if (this.drawer && !this.isMobile) {
@@ -89,16 +93,16 @@ export default {
         query getRoles(
           $limit: Int
           $search: String
-          $localGroup: Int
-          $workingGroup: Int
+          $localGroup: [Int!]
+          $workingGroup: [Int!]
           $timeCommitmentMin: float8
           $timeCommitmentMax: float8
         ) {
           role(
             where: {
               name: { _ilike: $search }
-              local_group: { id: { _eq: $localGroup } }
-              working_group: { id: { _eq: $workingGroup } }
+              local_group: { id: { _in: $localGroup } }
+              working_group: { id: { _in: $workingGroup } }
               time_commitment_min: { _gte: $timeCommitmentMin }
               time_commitment_max: { _lte: $timeCommitmentMax }
             }
@@ -154,7 +158,7 @@ export default {
 
   methods: {
     handleSelectFilter: function(value, type) {
-      this.selectedFilters[type] = value;
+      this.$store.commit("filters/updateFilter", { type, value });
     }
   },
   watch: {

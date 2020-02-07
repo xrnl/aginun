@@ -108,7 +108,14 @@ export default {
           }
         }
       `,
-      update: data => data.local_group.map(lg => lg.name)
+      // update: data => data.local_group.map(lg => lg.name)
+      update: function(data) {
+        this.$store.commit("filters/storeGroups", {
+          groups: data.local_group,
+          type: "localGroup"
+        });
+        return data.local_group.map(({ id, name }) => ({ id, text: name }));
+      }
     },
     workingGroups: {
       query: gql`
@@ -119,7 +126,13 @@ export default {
           }
         }
       `,
-      update: data => data.working_group.map(wg => wg.name)
+      update: function(data) {
+        this.$store.commit("filters/storeGroups", {
+          groups: data.working_group,
+          type: "workingGroup"
+        });
+        return data.working_group.map(wg => wg.name);
+      }
     },
     timeCommitment: {
       query: gql`

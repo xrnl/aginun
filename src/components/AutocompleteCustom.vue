@@ -3,11 +3,11 @@
     :value="value"
     :items="items"
     chips
-    small-chips
     multiple
+    small-chips
     class="mt-3"
-    @change="$emit('change', $event)"
     :label="label"
+    @change="$emit('change', $event)"
   >
     <!-- <template v-slot:selection="data">
       <v-chip
@@ -39,6 +39,14 @@ export default {
     }
   },
   data: () => ({})
+  // methods: {
+  //   itemSelected(item) {
+  //     console.log("Selected item!", item.id);
+  //   },
+  //   itemClicked(item) {
+  //     console.log("Clicked item!", item);
+  //   }
+  // }
 };
 </script>
 
