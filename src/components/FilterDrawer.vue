@@ -37,14 +37,14 @@
       <template v-slot:title>Groups</template>
       <flex-wrapper direction="column">
         <autocomplete-custom
-          :value="localGroup || []"
-          :items="localGroups"
+          :value="localGroups || []"
+          :items="localGroupsIdByName"
           label="Local Group"
           @change="id => onSetFilter(id, 'localGroup')"
         />
         <autocomplete-custom
-          :value="workingGroup || []"
-          :items="workingGroups"
+          :value="workingGroups || []"
+          :items="workingGroupsIdByName"
           label="Working Group"
           @change="id => onSetFilter(id, 'workingGroup')"
         />
@@ -84,7 +84,6 @@ export default {
       required: true,
       validator: value => typeof value === "boolean" || value === null
     },
-    onSetFilter: { required: true, type: Function },
     width: {
       required: true,
       type: Number,
@@ -93,7 +92,7 @@ export default {
   },
   data: () => ({}),
   apollo: {
-    localGroups: {
+    localGroupsIdByName: {
       query: gql`
         query localGroups {
           local_group {
@@ -110,7 +109,7 @@ export default {
         return data.local_group.map(({ id, name }) => ({ id, text: name }));
       }
     },
-    workingGroups: {
+    workingGroupsIdByName: {
       query: gql`
         query workingGroups {
           working_group {
@@ -147,13 +146,13 @@ export default {
           data.role_aggregate.aggregate.min.time_commitment_min,
           data.role_aggregate.aggregate.max.time_commitment_max
         ];
-        this.$store.commit("filters/storeData", {
-          data: range,
-          type: "timeCommitmentRange"
+        this.$store.commit("filters/update", {
+          key: "timeCommitmentRange",
+          value: range
         });
-        this.$store.commit("filters/storeData", {
-          data: range,
-          type: "selectedTimeCommitment"
+        this.$store.commit("filters/update", {
+          key: "selectedTimeCommitment",
+          value: range
         });
         return range;
       }
@@ -165,9 +164,9 @@ export default {
         return this.$store.state.filters.selectedTimeCommitment;
       },
       set(value) {
-        this.$store.commit("filters/storeData", {
-          data: value,
-          type: "selectedTimeCommitment"
+        this.$store.commit("filters/update", {
+          key: "selectedTimeCommitment",
+          value
         });
       }
     },
@@ -180,14 +179,18 @@ export default {
       return styles;
     },
     ...mapState("filters", [
-      "localGroup",
-      "workingGroup",
+      "localGroups",
+      "workingGroups",
       "limit",
       "search",
       "timeCommitmentRange",
-      // "selectedTimeCommitment",
       "roleAmount"
     ])
+  },
+  methods: {
+    onSetFilter: function(value, key) {
+      this.$store.commit("filters/update", { key, value });
+    }
   }
 };
 </script>

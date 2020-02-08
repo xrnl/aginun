@@ -3,49 +3,53 @@ export default {
   state: {
     limit: 50,
     search: null,
-    localGroup: null,
-    workingGroup: null,
-    selectedTimeCommitment: [1, 40],
-    timeCommitmentRange: [1, 40],
-    localGroups: {},
-    workingGroups: {},
+    localGroups: null,
+    workingGroups: null,
+    localGroupIds: null,
+    workingGroupIds: null,
+    selectedTimeCommitment: [0, 40],
+    timeCommitmentRange: [0, 40],
+    localGroupsIdByName: {},
+    workingGroupsIdByName: {},
     roleAmount: 0,
   },
   mutations: {
-    updateFilter(state, { type, value }) {
-      // console.log(type, value);
-      if (type === 'localGroup' || type === 'workingGroup') {
+    update(state, { key, value }) {
+      // console.log('[UPDATE]', key, value);
+      if (key === 'localGroup' || key === 'workingGroup') {
         let v = null;
         if (value.length) {
           v = value.map(name => {
-            return state[`${type}s`][name]
+            return state[`${key}sIdByName`][name]
           });
         }
-        console.log(type, value, v);
-        state[type] = v;
-      } else if (type === 'text') {
+        state[`${key}Ids`] = v;
+        state[`${key}s`] = value;
+      } else if (key === 'text') {
         state.search = `%${value}%`;
-      } else if (type === 'timeCommitmentRange') {
+      } else if (key === 'timeCommitmentRange') {
         state.timeCommitmentRange = value;
-      } else if (type === 'selectedTimeCommitment') {
+      } else if (key === 'selectedTimeCommitment') {
         state.selectedTimeCommitment = value;
-      } else if (type === 'reset') {
+      } else if (key === 'reset') {
         state.limit = 50;
         state.search = null;
-        state.localGroup = null;
-        state.workingGroup = null;
-        state.selectedTimeCommitment = [1, 40];
+        state.localGroups = null;
+        state.workingGroups = null;
+        state.localGroupIds = null;
+        state.workingGroupIds = null;
+        state.selectedTimeCommitment = [0, 40];
+      } else {
+        state[key] = value;
       }
+      // console.log('[STATE]', state);
     },
     storeGroups(state, { groups, type }) {
       const g = groups.reduce((acc, val) => {
         acc[val.name] = val.id;
         return acc;
       }, {});
-      state[`${type}s`] = g;
+      state[`${type}sIdByName`] = g;
     },
-    storeData(state, { data, type }) {
-      state[type] = data;
-    }
   }
 }

@@ -24,12 +24,7 @@
         </div>
       </div>
     </div>
-    <filter-drawer
-      v-model="drawer"
-      :width="drawerWidth"
-      :onSetFilter="handleSelectFilter"
-      :roleAmount="roleAmount"
-    />
+    <filter-drawer v-model="drawer" :width="drawerWidth" :roleAmount="roleAmount" />
   </div>
 </template>
 
@@ -50,20 +45,9 @@ export default {
     drawerWidth: 400
   }),
   computed: {
-    // selectedTimeCommitment: {
-    //   get() {
-    //     return this.$store.state.filters.selectedTimeCommitment;
-    //   },
-    //   set(value) {
-    //     this.$store.commit("filters/storeData", {
-    //       data: value,
-    //       type: "selectedTimeCommitment"
-    //     });
-    //   }
-    // },
     ...mapState("filters", [
-      "localGroup",
-      "workingGroup",
+      "localGroupIds",
+      "workingGroupIds",
       "limit",
       "search",
       "roleAmount",
@@ -86,16 +70,16 @@ export default {
         query getRoles(
           $limit: Int
           $search: String
-          $localGroup: [Int!]
-          $workingGroup: [Int!]
+          $localGroupIds: [Int!]
+          $workingGroupIds: [Int!]
           $timeCommitmentMin: Int
           $timeCommitmentMax: Int
         ) {
           role(
             where: {
               name: { _ilike: $search }
-              local_group: { id: { _in: $localGroup } }
-              working_group: { id: { _in: $workingGroup } }
+              local_group: { id: { _in: $localGroupIds } }
+              working_group: { id: { _in: $workingGroupIds } }
               time_commitment_min: { _gte: $timeCommitmentMin }
               time_commitment_max: { _lte: $timeCommitmentMax }
             }
@@ -130,9 +114,9 @@ export default {
           },
           location: role.location
         }));
-        this.$store.commit("filters/storeData", {
-          data: roles.length,
-          type: "roleAmount"
+        this.$store.commit("filters/update", {
+          key: "roleAmount",
+          value: roles.length
         });
         return roles;
       },
@@ -140,8 +124,8 @@ export default {
         return {
           limit: this.limit,
           search: this.search,
-          localGroup: this.localGroup,
-          workingGroup: this.workingGroup,
+          localGroupIds: this.localGroupIds,
+          workingGroupIds: this.workingGroupIds,
           timeCommitmentMin: this.selectedTimeCommitment[0],
           timeCommitmentMax: this.selectedTimeCommitment[1]
         };
@@ -152,11 +136,7 @@ export default {
     }
   },
 
-  methods: {
-    handleSelectFilter: function(value, type) {
-      this.$store.commit("filters/updateFilter", { type, value });
-    }
-  },
+  methods: {},
   watch: {
     isMobile: function() {
       this.drawer = !this.isMobile;
