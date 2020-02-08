@@ -84,7 +84,6 @@ export default {
       required: true,
       validator: value => typeof value === "boolean" || value === null
     },
-    roleAmount: { type: Number, default: 0 },
     onSetFilter: { required: true, type: Function },
     width: {
       required: true,
@@ -103,7 +102,6 @@ export default {
           }
         }
       `,
-      // update: data => data.local_group.map(lg => lg.name)
       update: function(data) {
         this.$store.commit("filters/storeGroups", {
           groups: data.local_group,
@@ -153,11 +151,26 @@ export default {
           data: range,
           type: "timeCommitmentRange"
         });
+        this.$store.commit("filters/storeData", {
+          data: range,
+          type: "selectedTimeCommitment"
+        });
         return range;
       }
     }
   },
   computed: {
+    selectedTimeCommitment: {
+      get() {
+        return this.$store.state.filters.selectedTimeCommitment;
+      },
+      set(value) {
+        this.$store.commit("filters/storeData", {
+          data: value,
+          type: "selectedTimeCommitment"
+        });
+      }
+    },
     drawerStyle: function() {
       let styles = {};
       if (!this.$vuetify.breakpoint.smAndDown) {
@@ -171,8 +184,9 @@ export default {
       "workingGroup",
       "limit",
       "search",
-      "selectedTimeCommitment",
-      "timeCommitmentRange"
+      "timeCommitmentRange",
+      // "selectedTimeCommitment",
+      "roleAmount"
     ])
   }
 };

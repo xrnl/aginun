@@ -9,6 +9,7 @@ export default {
     timeCommitmentRange: [1, 40],
     localGroups: {},
     workingGroups: {},
+    roleAmount: 0,
   },
   mutations: {
     updateFilter(state, { type, value }) {
@@ -20,12 +21,14 @@ export default {
             return state[`${type}s`][name]
           });
         }
+        console.log(type, value, v);
         state[type] = v;
       } else if (type === 'text') {
         state.search = `%${value}%`;
+      } else if (type === 'timeCommitmentRange') {
+        state.timeCommitmentRange = value;
       } else if (type === 'selectedTimeCommitment') {
         state.selectedTimeCommitment = value;
-        console.log(value);
       } else if (type === 'reset') {
         state.limit = 50;
         state.search = null;

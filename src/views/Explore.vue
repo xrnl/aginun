@@ -18,7 +18,7 @@
       </div>
       <div class="d-flex flex-wrap justify-center">
         <role-card v-for="role in roles" :key="role.id" :role="role" />
-        <div v-if="nPositions < 1" class="pa-5 text-center">
+        <div v-if="roleAmount < 1" class="pa-5 text-center">
           <h3>No results.</h3>
           <p>Try removing filters.</p>
         </div>
@@ -28,8 +28,7 @@
       v-model="drawer"
       :width="drawerWidth"
       :onSetFilter="handleSelectFilter"
-      :selectedFilters="selectedFilters"
-      :roleAmount="10"
+      :roleAmount="roleAmount"
     />
   </div>
 </template>
@@ -48,28 +47,26 @@ export default {
   },
   data: () => ({
     drawer: null,
-    drawerWidth: 400,
-    //not a huge fan of having to declare these beforehand, will look into another way
-    selectedFilters: {
-      text: "",
-      localGroup: [],
-      workingGroup: []
-    },
-    nPositions: 3
+    drawerWidth: 400
   }),
-  // methods: {
-  //   ...mapMutations("filters", ["updateFilter"])
-  // },
   computed: {
-    // ...mapGetters("roles", ["getByFilters"]),
-    // filteredRoles: function() {
-    //   return this.getByFilters(this.selectedFilters);
+    // selectedTimeCommitment: {
+    //   get() {
+    //     return this.$store.state.filters.selectedTimeCommitment;
+    //   },
+    //   set(value) {
+    //     this.$store.commit("filters/storeData", {
+    //       data: value,
+    //       type: "selectedTimeCommitment"
+    //     });
+    //   }
     // },
     ...mapState("filters", [
       "localGroup",
       "workingGroup",
       "limit",
       "search",
+      "roleAmount",
       "selectedTimeCommitment"
     ]),
     containerMargin: function() {
@@ -82,9 +79,6 @@ export default {
     isMobile: function() {
       return this.$vuetify.breakpoint.smAndDown;
     }
-    // roles: function() {
-    //   $apollo.query
-    // }
   },
   apollo: {
     roles: {
@@ -123,8 +117,8 @@ export default {
           }
         }
       `,
-      update: data =>
-        data.role.map(role => ({
+      update: function(data) {
+        const roles = data.role.map(role => ({
           id: role.id,
           title: role.name,
           timeCommitment: [role.time_commitment_min, role.time_commitment_max],
@@ -135,7 +129,13 @@ export default {
             text: role.working_group.name
           },
           location: role.location
-        })),
+        }));
+        this.$store.commit("filters/storeData", {
+          data: roles.length,
+          type: "roleAmount"
+        });
+        return roles;
+      },
       variables: function() {
         return {
           limit: this.limit,
