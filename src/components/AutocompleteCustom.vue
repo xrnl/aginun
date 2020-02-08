@@ -5,9 +5,9 @@
     chips
     small-chips
     multiple
-    solo
     class="mt-3"
     @change="$emit('change', $event)"
+    :label="label"
   >
     <!-- <template v-slot:selection="data">
       <v-chip
@@ -17,29 +17,29 @@
       >
         {{ data }}
       </v-chip>
-    </template> -->
+    </template>-->
   </v-autocomplete>
 </template>
 
 <script>
-  export default {
-    name: "AutocompleteCustom",
-    props: {
-      items: {
-        type: Array,
-        required: true
-      },
-      value: {
-        type: Array,
-        required: true
-      }
+export default {
+  name: "AutocompleteCustom",
+  props: {
+    items: {
+      type: Array,
+      required: true
     },
-    data: () => ({
-
-    }),
-  }
+    value: {
+      type: Array,
+      required: true
+    },
+    label: {
+      type: String,
+      required: true
+    }
+  },
+  data: () => ({})
+};
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
