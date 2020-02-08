@@ -70,8 +70,7 @@ export default {
       "workingGroup",
       "limit",
       "search",
-      "timeCommitmentMin",
-      "timeCommitmentMax"
+      "selectedTimeCommitment"
     ]),
     containerMargin: function() {
       if (this.drawer && !this.isMobile) {
@@ -95,8 +94,8 @@ export default {
           $search: String
           $localGroup: [Int!]
           $workingGroup: [Int!]
-          $timeCommitmentMin: float8
-          $timeCommitmentMax: float8
+          $timeCommitmentMin: Int
+          $timeCommitmentMax: Int
         ) {
           role(
             where: {
@@ -128,10 +127,7 @@ export default {
         data.role.map(role => ({
           id: role.id,
           title: role.name,
-          timeCommitment: {
-            min: role.time_commitment_min,
-            max: role.time_commitment_max
-          },
+          timeCommitment: [role.time_commitment_min, role.time_commitment_max],
           localGroup: {
             text: role.local_group.name
           },
@@ -146,8 +142,8 @@ export default {
           search: this.search,
           localGroup: this.localGroup,
           workingGroup: this.workingGroup,
-          timeCommitmentMin: this.timeCommitmentMin,
-          timeCommitmentMax: this.timeCommitmentMax
+          timeCommitmentMin: this.selectedTimeCommitment[0],
+          timeCommitmentMax: this.selectedTimeCommitment[1]
         };
       },
       error: error => {

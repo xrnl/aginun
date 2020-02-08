@@ -5,8 +5,8 @@ export default {
     search: null,
     localGroup: null,
     workingGroup: null,
-    timeCommitmentMin: 0,
-    timeCommitmentMax: Number.MAX_SAFE_INTEGER,
+    selectedTimeCommitment: [1, 40],
+    timeCommitmentRange: [1, 40],
     localGroups: {},
     workingGroups: {},
   },
@@ -23,16 +23,15 @@ export default {
         state[type] = v;
       } else if (type === 'text') {
         state.search = `%${value}%`;
-      } else if (type === 'timeCommitment') {
-        state.timeCommitmentMin = value[0];
-        state.timeCommitmentMax = value[1];
+      } else if (type === 'selectedTimeCommitment') {
+        state.selectedTimeCommitment = value;
+        console.log(value);
       } else if (type === 'reset') {
         state.limit = 50;
         state.search = null;
         state.localGroup = null;
         state.workingGroup = null;
-        state.timeCommitmentMin = 0;
-        state.timeCommitmentMax = Number.MAX_SAFE_INTEGER;
+        state.selectedTimeCommitment = [1, 40];
       }
     },
     storeGroups(state, { groups, type }) {
@@ -42,5 +41,8 @@ export default {
       }, {});
       state[`${type}s`] = g;
     },
+    storeData(state, { data, type }) {
+      state[type] = data;
+    }
   }
 }

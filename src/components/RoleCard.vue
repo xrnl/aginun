@@ -18,8 +18,8 @@
           <div class="d-flex flex-wrap justify-space-between align-end mt-5">
             <span class="d-flex flex-column justify-center">
               <span class="title flex-grow-0" style="line-height: 1rem">
-                {{ role.timeCommitment.min }} -
-                {{ role.timeCommitment.max }}
+                {{ role.timeCommitment[0] }} -
+                {{ role.timeCommitment[1] }}
               </span>
               <span class="overline text-uppercase">hours / week</span>
             </span>

@@ -27,7 +27,7 @@
         >Clear filters</v-btn>
       </div>
       <v-text-field
-        :value="selectedFilters.text"
+        :value="search"
         label="Facilitator, Writer, Photographer..."
         class="mt-3"
         @input="value => onSetFilter(value, 'text')"
@@ -37,13 +37,13 @@
       <template v-slot:title>Groups</template>
       <flex-wrapper direction="column">
         <autocomplete-custom
-          :value="selectedFilters.localGroup"
+          :value="localGroup || []"
           :items="localGroups"
           label="Local Group"
           @change="id => onSetFilter(id, 'localGroup')"
         />
         <autocomplete-custom
-          :value="selectedFilters.workingGroup"
+          :value="workingGroup || []"
           :items="workingGroups"
           label="Working Group"
           @change="id => onSetFilter(id, 'workingGroup')"
@@ -53,9 +53,9 @@
     <filter-section>
       <template v-slot:title>Time commitment</template>
       <v-range-slider
-        v-model="timeRange"
-        :min="timeCommitment.min"
-        :max="timeCommitment.max"
+        v-model="selectedTimeCommitment"
+        :min="timeCommitmentRange[0]"
+        :max="timeCommitmentRange[1]"
         class="mt-12"
         thumb-label="always"
         label="Time Commitment"
@@ -84,10 +84,6 @@ export default {
       required: true,
       validator: value => typeof value === "boolean" || value === null
     },
-    selectedFilters: {
-      type: Object,
-      required: true
-    },
     roleAmount: { type: Number, default: 0 },
     onSetFilter: { required: true, type: Function },
     width: {
@@ -96,18 +92,11 @@ export default {
       default: 400
     }
   },
-  data: () => ({
-    timeRange: [0, Number.MAX_SAFE_INTEGER],
-    // why do we need to initiate this while it is being queried from the server? because it is async?
-    timeCommitment: {
-      min: 1,
-      max: Number.MAX_SAFE_INTEGER
-    }
-  }),
+  data: () => ({}),
   apollo: {
     localGroups: {
       query: gql`
-        query {
+        query localGroups {
           local_group {
             id
             name
@@ -125,7 +114,7 @@ export default {
     },
     workingGroups: {
       query: gql`
-        query {
+        query workingGroups {
           working_group {
             id
             name
@@ -140,9 +129,9 @@ export default {
         return data.working_group.map(wg => wg.name);
       }
     },
-    timeCommitment: {
+    timeCommitmentRange: {
       query: gql`
-        query {
+        query timeCommitmentRange {
           role_aggregate {
             aggregate {
               min {
@@ -155,10 +144,17 @@ export default {
           }
         }
       `,
-      update: data => ({
-        min: Math.floor(data.role_aggregate.aggregate.min.time_commitment_min),
-        max: data.role_aggregate.aggregate.max.time_commitment_max
-      })
+      update: function(data) {
+        const range = [
+          data.role_aggregate.aggregate.min.time_commitment_min,
+          data.role_aggregate.aggregate.max.time_commitment_max
+        ];
+        this.$store.commit("filters/storeData", {
+          data: range,
+          type: "timeCommitmentRange"
+        });
+        return range;
+      }
     }
   },
   computed: {
@@ -175,8 +171,8 @@ export default {
       "workingGroup",
       "limit",
       "search",
-      "timeCommitmentMin",
-      "timeCommitmentMax"
+      "selectedTimeCommitment",
+      "timeCommitmentRange"
     ])
   }
 };

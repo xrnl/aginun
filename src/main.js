@@ -6,8 +6,8 @@ import vuetify from "./plugins/vuetify";
 import VueApollo from 'vue-apollo'
 import { apolloClient } from './apollo-client'
 
-Vue.use(VueApollo);
 Vue.config.productionTip = false;
+Vue.use(VueApollo);
 
 const apolloProvider = new VueApollo({
   defaultClient: apolloClient,
