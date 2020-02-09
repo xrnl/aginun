@@ -1,5 +1,13 @@
 # aginun
 
+## GraphQL branch
+
+In this branch the frontend is connected to Hasura server running on Heroku. See these live urls:
+
+- [frontend](https://xr-volunteer-app.abumarkub.org/)
+- [backend](https://xr-volunteer-app.herokuapp.com/console/data/schema/public)
+
+
 ## Project setup
 ```
 npm install

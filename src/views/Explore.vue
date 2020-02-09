@@ -24,14 +24,18 @@
         </div>
       </div>
     </div>
-    <filter-drawer v-model="drawer" :width="drawerWidth" :roleAmount="roleAmount" />
+    <filter-drawer
+      v-model="drawer"
+      :width="drawerWidth"
+      :roleAmount="roleAmount"
+    />
   </div>
 </template>
 
 <script>
 import RoleCard from "@/components/RoleCard.vue";
 import FilterDrawer from "@/components/FilterDrawer";
-import { mapGetters, mapState, mapMutations } from "vuex";
+import { mapState } from "vuex";
 import gql from "graphql-tag";
 
 export default {
@@ -131,7 +135,7 @@ export default {
         };
       },
       error: error => {
-        console.error("[GraphQL]", error);
+        throw new Error(error);
       }
     }
   },

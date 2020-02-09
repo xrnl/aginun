@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import TheAppBar from '@/components/TheAppBar.vue'
+import TheAppBar from "@/components/TheAppBar.vue";
 
 export default {
   name: "App",
@@ -20,10 +20,9 @@ export default {
     TheAppBar
   },
   data: () => ({
-    drawer: null, // vuetify determines initial state based on screen size
+    drawer: null // vuetify determines initial state based on screen size
   })
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

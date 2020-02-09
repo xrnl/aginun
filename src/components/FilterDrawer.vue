@@ -1,5 +1,10 @@
 <template>
-  <div class="drawer" :style="drawerStyle" :class="{ active: value }" :value="value">
+  <div
+    class="drawer"
+    :style="drawerStyle"
+    :class="{ active: value }"
+    :value="value"
+  >
     <div
       v-if="this.$vuetify.breakpoint.smAndDown"
       :style="{ height: $store.state.styles.navbarHeight }"
@@ -24,7 +29,8 @@
           text
           color="primary"
           @click="() => onSetFilter(null, 'reset')"
-        >Clear filters</v-btn>
+          >Clear filters</v-btn
+        >
       </div>
       <v-text-field
         :value="search"

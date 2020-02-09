@@ -11,27 +11,27 @@ export default {
     timeCommitmentRange: [0, 40],
     localGroupsIdByName: {},
     workingGroupsIdByName: {},
-    roleAmount: 0,
+    roleAmount: 0
   },
   mutations: {
     update(state, { key, value }) {
       // console.log('[UPDATE]', key, value);
-      if (key === 'localGroup' || key === 'workingGroup') {
+      if (key === "localGroup" || key === "workingGroup") {
         let v = null;
         if (value.length) {
           v = value.map(name => {
-            return state[`${key}sIdByName`][name]
+            return state[`${key}sIdByName`][name];
           });
         }
         state[`${key}Ids`] = v;
         state[`${key}s`] = value;
-      } else if (key === 'text') {
+      } else if (key === "text") {
         state.search = `%${value}%`;
-      } else if (key === 'timeCommitmentRange') {
+      } else if (key === "timeCommitmentRange") {
         state.timeCommitmentRange = value;
-      } else if (key === 'selectedTimeCommitment') {
+      } else if (key === "selectedTimeCommitment") {
         state.selectedTimeCommitment = value;
-      } else if (key === 'reset') {
+      } else if (key === "reset") {
         state.limit = 50;
         state.search = null;
         state.localGroups = null;
@@ -50,6 +50,6 @@ export default {
         return acc;
       }, {});
       state[`${type}sIdByName`] = g;
-    },
+    }
   }
-}
+};

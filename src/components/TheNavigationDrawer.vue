@@ -7,15 +7,9 @@
     :value="value"
     @input="$emit('input', $event)"
   >
-    <v-list
-      nav
-      class="pt-5"
-    >
+    <v-list nav class="pt-5">
       <v-list-item-group class="px-5 mb-8">
-        <v-list-item
-          :to="{ name: 'profile'}"
-          exact
-        >
+        <v-list-item :to="{ name: 'profile' }" exact>
           <v-list-item-icon>
             <v-icon>mdi-home</v-icon>
           </v-list-item-icon>
@@ -23,10 +17,7 @@
             Home
           </v-list-item-content>
         </v-list-item>
-        <v-list-item
-          :to="{ name: 'explore'}"
-          exact
-        >
+        <v-list-item :to="{ name: 'explore' }" exact>
           <v-list-item-icon>
             <v-icon>mdi-charity</v-icon>
           </v-list-item-icon>
@@ -35,13 +26,8 @@
           </v-list-item-content>
         </v-list-item>
       </v-list-item-group>
-      <div
-        v-if="hasGroups"
-      >
-        <v-list-group
-          v-model="viewGroups"
-          color="shade--base"
-        >
+      <div v-if="hasGroups">
+        <v-list-group v-model="viewGroups" color="shade--base">
           <template v-slot:activator>
             <title-subtitle
               :title="selected.working"
@@ -71,10 +57,7 @@
         </v-list-group>
         <v-divider class="mb-2" />
 
-
-        <v-list-item-group
-          class="px-5"
-        >
+        <v-list-item-group class="px-5">
           <!-- <v-list-item
             :to="{ path: URLtask }"
             exact
@@ -86,10 +69,7 @@
               Tasks
             </v-list-item-content>
           </v-list-item> -->
-          <v-list-item
-            :to="{ path: URLrole }"
-            exact
-          >
+          <v-list-item :to="{ path: URLrole }" exact>
             <v-list-item-icon>
               <v-icon>mdi-account-group</v-icon>
             </v-list-item-icon>
@@ -99,19 +79,13 @@
           </v-list-item>
         </v-list-item-group>
       </div>
-      <button-add-group
-        v-else
-        @click="addGroup"
-      />
+      <button-add-group v-else @click="addGroup" />
     </v-list>
 
     <template v-slot:append>
       <v-divider />
       <v-list class="pa-0">
-        <v-list-item
-          :to="{ name: 'settings'}"
-          exact
-        >
+        <v-list-item :to="{ name: 'settings' }" exact>
           <v-list-item-icon>
             <v-icon>mdi-settings</v-icon>
           </v-list-item-icon>
@@ -125,54 +99,52 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
-import TitleSubtitle from '@/components/TitleSubtitle'
-import ButtonIcon from '@/components/ButtonIcon'
+import { mapGetters, mapMutations } from "vuex";
+import TitleSubtitle from "@/components/TitleSubtitle";
+import ButtonIcon from "@/components/ButtonIcon";
 
-  export default {
-    name: "TheNavigationDrawer",
-    components: {
-      TitleSubtitle,
-      ButtonIcon
+export default {
+  name: "TheNavigationDrawer",
+  components: {
+    TitleSubtitle,
+    ButtonIcon
+  },
+  props: {
+    value: {
+      required: true,
+      validator: value => typeof value === "boolean" || value === null
+    }
+  },
+  data: function() {
+    return {
+      viewGroups: false
+    };
+  },
+  computed: {
+    ...mapGetters("groups", ["selected", "notSelected", "hasGroups", "url"]),
+    URLtask: function() {
+      return `${this.url(this.selected.id)}/tasks`;
     },
-    props: {
-      value: {
-        required: true,
-        validator: value => typeof value === "boolean" || value === null
-      }
-    },
-    data: function () {
-      return {
-        viewGroups: false
-      }
-    },
-    computed: {
-      ...mapGetters('groups',['selected', 'notSelected', 'hasGroups', 'url']),
-      URLtask: function () {
-        return `${this.url(this.selected.id)}/tasks`
-      },
-      URLrole: function () {
-        return `${this.url(this.selected.id)}/roles`
-      },
-    },
-    watch: {
-      '$route' (to, from) {
-        // react to route changes
-        this.viewGroups = false
-        // hide sidebar on mobile devices
-        if (this.$vuetify.breakpoint.smAndDown) this.$emit('input', false)
-      }
-    },
-    methods: {
-      ...mapMutations('groups', ['updateSelected', 'removeGroup']),
-      addGroup: function() {
-        console.log('this method should show modal/page for adding a group')
-        this.removeGroup()
-      }
+    URLrole: function() {
+      return `${this.url(this.selected.id)}/roles`;
+    }
+  },
+  watch: {
+    $route() {
+      // react to route changes
+      this.viewGroups = false;
+      // hide sidebar on mobile devices
+      if (this.$vuetify.breakpoint.smAndDown) this.$emit("input", false);
+    }
+  },
+  methods: {
+    ...mapMutations("groups", ["updateSelected", "removeGroup"]),
+    addGroup: function() {
+      // console.log("this method should show modal/page for adding a group");
+      this.removeGroup();
     }
   }
+};
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
