@@ -1,7 +1,7 @@
 <template>
   <div
     :class="
-      `flex flex-${direction === 'column' ? 'column' : 'row'} ${
+      `d-flex flex-${direction === 'column' ? 'column' : 'row'} ${
         !!justifyContent ? justifyContent : null
       }`
     "
