@@ -18,7 +18,7 @@ const routes = [
     name: "roles",
     component: RolesOverview,
     alias: "/",
-    children: [{ path: ":id", component: RoleViewDialog }]
+    children: [{ path: "view/:id", component: RoleViewDialog }]
   },
   // {
   //   path: "/user/:username",

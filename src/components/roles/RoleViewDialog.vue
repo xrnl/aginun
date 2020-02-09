@@ -1,7 +1,9 @@
 <template
   ><div>
     <v-dialog
+      persistent
       @click:outside="$router.push('/roles')"
+      @keydown.escape="$router.push('/roles')"
       max-width="750"
       value="true"
     >
@@ -59,6 +61,9 @@ import FlexWrapper from "../layout/FlexWrapper";
 import MetaInfo from "../layout/MetaInfo";
 import { mapGetters } from "vuex";
 export default {
+  methods: {
+    log: e => console.log("ah", e)
+  },
   components: {
     FlexWrapper,
     MetaInfo
@@ -71,7 +76,6 @@ export default {
   computed: {
     ...mapGetters("roles", ["getByID"]),
     role: function() {
-      console.log(this.getByID(this.$route.params.id));
       return this.getByID(this.$route.params.id);
     }
   }

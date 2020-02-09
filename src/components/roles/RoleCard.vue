@@ -25,11 +25,11 @@
               >
               <span class="overline text-uppercase">hours / week</span>
             </span>
+            <v-btn text dark color="primary" :to="`roles/view/${role.id}`"
+              >Read More</v-btn
+            >
           </div>
         </div>
-        <v-btn text dark color="primary" :to="`roles/${role.id}`"
-          >Read More</v-btn
-        >
       </div>
     </v-card>
   </v-hover>
