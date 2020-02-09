@@ -1,0 +1,2 @@
+{ "semi": true, "trailingComma": "es5", "parser": "vue",
+"vueIndentScriptAndStyle": true }
