@@ -68,7 +68,7 @@
 <script>
 import FlexWrapper from "@/components/layout/FlexWrapper.vue";
 import AutocompleteCustom from "@/components/AutocompleteCustom";
-import { mapState, mapGetters, mapMutations } from "vuex";
+import { mapState } from "vuex";
 import FilterDrawerSection from "./layout/FilterDrawerSection";
 import gql from "graphql-tag";
 

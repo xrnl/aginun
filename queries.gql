@@ -54,12 +54,3 @@ query timeCommitment {
     }
   }
 }
-
-type FilterEqInt {
-  _eq: Int!
-}
-
-type FilterRoles {
-  localGroups: FilterEqInt
-  workingGroups: FilterEqInt
-}
