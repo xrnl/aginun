@@ -136,7 +136,8 @@ export default {
       },
       error: error => {
         throw new Error(error);
-      }
+      },
+      fetchPolicy: 'cache-and-network'
     }
   },
 

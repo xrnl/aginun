@@ -21,7 +21,9 @@
     "prettier"
   ],
   "rules": {
-    "prettier/prettier": 1,
-    "no-undef": 1
+    "prettier/prettier": "warn",
+    "no-undef": "warn",
+    "no-console": "warn",
+    "no-unused-vars": "warn"
   }
 }

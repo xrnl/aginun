@@ -113,7 +113,8 @@ export default {
           type: "localGroup"
         });
         return data.local_group.map(({ id, name }) => ({ id, text: name }));
-      }
+      },
+      fetchPolicy: 'cache-and-network'
     },
     workingGroupsIdByName: {
       query: gql`
@@ -130,7 +131,8 @@ export default {
           type: "workingGroup"
         });
         return data.working_group.map(wg => wg.name);
-      }
+      },
+      fetchPolicy: 'cache-and-network'
     },
     timeCommitmentRange: {
       query: gql`
@@ -161,7 +163,8 @@ export default {
           value: range
         });
         return range;
-      }
+      },
+      fetchPolicy: 'cache-and-network'
     }
   },
   computed: {
