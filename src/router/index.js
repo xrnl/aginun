@@ -1,7 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-import Explore from "../views/Explore.vue";
+import RolesOverview from "../views/RolesOverview.vue";
+import RoleViewDialog from "../components/roles/RoleViewDialog.vue";
 // import UserProfile from "../views/UserProfile.vue";
 // import UserSettings from "../views/UserSettings.vue";
 // import GroupsOverview from "../views/GroupsOverview.vue";
@@ -13,10 +14,11 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/explore",
-    name: "explore",
-    component: Explore,
-    alias: "/"
+    path: "/roles",
+    name: "roles",
+    component: RolesOverview,
+    alias: "/",
+    children: [{ path: "view/:id", component: RoleViewDialog }]
   },
   // {
   //   path: "/user/:username",
@@ -65,8 +67,8 @@ const routes = [
   // },
   {
     // non-existent pages redirect to the home page
-    path: '*',
-    redirect: '/'
+    path: "*",
+    redirect: "/"
   }
 ];
 

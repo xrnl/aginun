@@ -1,5 +1,6 @@
 <template>
   <div>
+    <router-view :key="$route.fullPath" />
     <div :style="containerMargin">
       <div class>
         <div class="text-center my-8">
@@ -18,7 +19,7 @@
       </div>
       <div class="d-flex flex-wrap justify-center">
         <role-card v-for="role in filteredRoles" :key="role.id" :role="role" />
-        <div v-if="nPositions < 1" class="pa-5 text-center">
+        <div v-if="filteredRoles.length < 1" class="pa-5 text-center">
           <h3>No results.</h3>
           <p>Try removing filters.</p>
         </div>
@@ -35,7 +36,7 @@
 </template>
 
 <script>
-import RoleCard from "@/components/RoleCard.vue";
+import RoleCard from "@/components/roles/RoleCard.vue";
 import FilterDrawer from "@/components/FilterDrawer";
 import { mapGetters } from "vuex";
 

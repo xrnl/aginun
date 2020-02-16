@@ -1,9 +1,9 @@
 <template>
   <div
     :class="
-      `flex flex-${direction === 'column' ? 'column' : 'row'} ${
-        !!justifyContent ? justifyContent : null
-      }`
+      `d-flex flex-${
+        direction === 'column' ? 'column' : 'row'
+      } ${justifyContent} ${classes}`
     "
   >
     <slot></slot>
@@ -17,7 +17,11 @@ export default {
       validator: value => ["column", "row"].includes(value),
       default: "row"
     },
-    justifyContent: { type: String }
+    justifyContent: { type: String, default: "flex-start" },
+    classes: {
+      type: String,
+      default: ""
+    }
   }
 };
 </script>

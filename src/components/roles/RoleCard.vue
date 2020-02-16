@@ -1,5 +1,5 @@
 <template>
-  <v-hover v-slot:default="{ hover }" class="pointer">
+  <v-hover v-slot:default="{ hover }">
     <v-card :elevation="hover ? 12 : 2" width="300" height="200" class="card">
       <div
         class="transition-wrapper d-flex flex-column full-height"
@@ -25,10 +25,8 @@
               >
               <span class="overline text-uppercase">hours / week</span>
             </span>
-            <span
-              class="primary--text caption text-uppercase button--text"
-              style="line-height: 1rem"
-              >Learn more</span
+            <v-btn text dark color="primary" :to="`roles/view/${role.id}`"
+              >Read More</v-btn
             >
           </div>
         </div>

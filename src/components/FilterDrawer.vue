@@ -21,6 +21,7 @@
       </div>
       <v-btn text color="primary">Clear filters</v-btn>
     </div>
+
     <div class="px-4 py-5 pb-0">
       <div class="d-flex justify-space-between align-center">
         <span class="font-weight-bold">Search positions</span>
@@ -67,6 +68,11 @@
         label="Time Commitment"
       />
     </filter-section>
+    <!-- <flex-wrapper justifyContent="justify-end" classes="pa-2">
+      <v-btn to="/roles/new" dark color="primary"
+        ><v-icon>mdi-plus</v-icon> Create a new role</v-btn
+      >
+    </flex-wrapper> -->
   </div>
 </template>
 
