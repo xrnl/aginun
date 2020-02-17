@@ -1,15 +1,9 @@
 query SelectedLocalGroups {
-  selectedLocalGroups @client {
-    id
-    name
-  }
+  selectedLocalGroups @client
 }
 
 query SelectedWorkingGroups {
-  selectedWorkingGroups @client {
-    id
-    name
-  }
+  selectedWorkingGroups @client
 }
 
 query SelectedTimeCommitment {
@@ -24,15 +18,11 @@ query SearchString {
   searchString @client
 }
 
-query Filters {
-  searchString @client
-  selectedLocalGroups @client {
-    id
-  }
-  selectedWorkingGroups @client {
-    id
-  }
-  selectedTimeCommitment @client
+query Filters @client {
+  searchString
+  selectedLocalGroups
+  selectedWorkingGroups
+  selectedTimeCommitment
 }
 
 query NavbarHeight {
@@ -46,32 +36,18 @@ query LocalGroupById($id: Int!) {
   }
 }
 
-query RoleById($id: Int!) {
-  roleById(id: $id) @client {
-    id
-    name
-    description
-  }
-}
-
 mutation UpdateLocalGroups($names: [String!]) {
-  updateLocalGroups(names: $names) @client {
-    id
-    name
-  }
+  updateLocalGroups(names: $names) @client
 }
 
 mutation UpdateWorkingGroups($names: [String!]) {
-  updateWorkingGroups(names: $names) @client {
-    id
-    name
-  }
+  updateWorkingGroups(names: $names) @client
 }
 
 mutation UpdateTimeCommitmentRange($range: [Int!]) {
   updateTimeCommitmentRange(range: $range) @client
 }
 
-mutation UpdateRoleAmount($amount: Int!) {
+mutation UpdateRoleAmount($amount: [Int!]) {
   updateRoleAmount(amount: $amount) @client
 }
