@@ -15,7 +15,7 @@
 </template>
 
 <script>
-export default {
-  name: "ButtonIcon"
-};
+  export default {
+    name: "ButtonIcon",
+  };
 </script>

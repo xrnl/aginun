@@ -1,0 +1,60 @@
+query Roles(
+  $limit: Int
+  $search: String
+  $localGroupIds: [Int!]
+  $workingGroupIds: [Int!]
+  $timeCommitmentMin: Int
+  $timeCommitmentMax: Int
+) {
+  role(
+    where: {
+      name: { _ilike: $search }
+      local_group: { id: { _in: $localGroupIds } }
+      working_group: { id: { _in: $workingGroupIds } }
+      time_commitment_min: { _gte: $timeCommitmentMin }
+      time_commitment_max: { _lte: $timeCommitmentMax }
+    }
+    limit: $limit
+  ) {
+    id
+    name
+    location
+    time_commitment_min
+    time_commitment_max
+    local_group {
+      id
+      name
+    }
+    working_group {
+      id
+      name
+    }
+  }
+}
+
+query WorkingGroups {
+  working_group {
+    id
+    name
+  }
+}
+
+query LocalGroups {
+  local_group {
+    id
+    name
+  }
+}
+
+query BoundsTimeCommitmentRange {
+  role_aggregate {
+    aggregate {
+      min {
+        time_commitment_min
+      }
+      max {
+        time_commitment_max
+      }
+    }
+  }
+}

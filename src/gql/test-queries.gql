@@ -1,0 +1,8 @@
+mutation insertLocalGroup($objects: [local_group_insert_input!]!) {
+  insert_local_group(objects: $objects) {
+    returning {
+      id
+      name
+    }
+  }
+}

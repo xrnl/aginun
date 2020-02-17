@@ -99,52 +99,52 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
-import TitleSubtitle from "@/components/TitleSubtitle";
-import ButtonIcon from "@/components/ButtonIcon";
+  import { mapGetters, mapMutations } from "vuex";
+  import TitleSubtitle from "@/components/TitleSubtitle";
+  import ButtonIcon from "@/components/ButtonIcon";
 
-export default {
-  name: "TheNavigationDrawer",
-  components: {
-    TitleSubtitle,
-    ButtonIcon
-  },
-  props: {
-    value: {
-      required: true,
-      validator: value => typeof value === "boolean" || value === null
-    }
-  },
-  data: function() {
-    return {
-      viewGroups: false
-    };
-  },
-  computed: {
-    ...mapGetters("groups", ["selected", "notSelected", "hasGroups", "url"]),
-    URLtask: function() {
-      return `${this.url(this.selected.id)}/tasks`;
+  export default {
+    name: "TheNavigationDrawer",
+    components: {
+      TitleSubtitle,
+      ButtonIcon,
     },
-    URLrole: function() {
-      return `${this.url(this.selected.id)}/roles`;
-    }
-  },
-  watch: {
-    $route() {
-      // react to route changes
-      this.viewGroups = false;
-      // hide sidebar on mobile devices
-      if (this.$vuetify.breakpoint.smAndDown) this.$emit("input", false);
-    }
-  },
-  methods: {
-    ...mapMutations("groups", ["updateSelected", "removeGroup"]),
-    addGroup: function() {
-      // console.log("this method should show modal/page for adding a group");
-      this.removeGroup();
-    }
-  }
-};
+    props: {
+      value: {
+        required: true,
+        validator: value => typeof value === "boolean" || value === null,
+      },
+    },
+    data: function() {
+      return {
+        viewGroups: false,
+      };
+    },
+    computed: {
+      ...mapGetters("groups", ["selected", "notSelected", "hasGroups", "url"]),
+      URLtask: function() {
+        return `${this.url(this.selected.id)}/tasks`;
+      },
+      URLrole: function() {
+        return `${this.url(this.selected.id)}/roles`;
+      },
+    },
+    watch: {
+      $route() {
+        // react to route changes
+        this.viewGroups = false;
+        // hide sidebar on mobile devices
+        if (this.$vuetify.breakpoint.smAndDown) this.$emit("input", false);
+      },
+    },
+    methods: {
+      ...mapMutations("groups", ["updateSelected", "removeGroup"]),
+      addGroup: function() {
+        // console.log("this method should show modal/page for adding a group");
+        this.removeGroup();
+      },
+    },
+  };
 </script>
 
 <style lang="scss" scoped></style>

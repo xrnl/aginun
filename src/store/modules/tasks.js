@@ -6,12 +6,12 @@ export default {
       { id: 1, title: "task 1", completed: true, groupId: 1, sectionId: 1 },
       { id: 2, title: "task 2", completed: false, groupId: 1, sectionId: 1 },
       { id: 3, title: "task 3", completed: false, groupId: 1, sectionId: 2 },
-      { id: 4, title: "task 4", completed: false, groupId: 1, sectionId: 2 }
-    ]
+      { id: 4, title: "task 4", completed: false, groupId: 1, sectionId: 2 },
+    ],
   },
   getters: {
     tasksUncomplete: state => state.tasks.filter(task => !task.completed),
-    getTask: state => id => state.tasks.find(task => task.id === id)
+    getTask: state => id => state.tasks.find(task => task.id === id),
   },
   mutations: {
     addTask(state, { title, groupId, sectionId }) {
@@ -21,11 +21,11 @@ export default {
         id: newId,
         title: title,
         groupId: groupId,
-        sectionId: sectionId
+        sectionId: sectionId,
       });
     },
     deleteTask(state, id) {
-      const { index } = findWithIndex(state.tasks, id);
+      const { _, index } = findWithIndex(state.tasks, id);
       state.tasks.splice(index, 1);
     },
     toggleTask(state, id) {
@@ -42,7 +42,7 @@ export default {
       const { item: task, index } = findWithIndex(state.tasks, id);
       task.sectionId = sectionId;
       state.tasks.splice(index, 1, task);
-    }
+    },
   },
-  actions: {}
+  actions: {},
 };

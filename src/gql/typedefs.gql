@@ -1,0 +1,28 @@
+type Group {
+  id: Int
+  name: String
+}
+
+type Role {
+  id: Int
+  name: String
+  description: Strings
+}
+
+extend type mutation_root {
+  updateLocalGroups(names: [String!]): [Group!]
+  updateWorkingGroups(names: [String!]): [Group!]
+  updateTimeCommitmentRange(range: [Int!]): Boolean
+  updateRoleAmount(amount: Int!): Boolean
+}
+
+extend type query_root {
+  roleAmount: Int!
+  searchString: String!
+  localGroupById(id: Int!): Group
+  navbarHeight: Int!
+  selectedLocalGroups: [Group]!
+  selectedWorkingGroups: [Group]!
+  selectedTimeCommitment: [Int!]!
+  roleById(id: Int!): Role
+}

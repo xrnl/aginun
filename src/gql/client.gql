@@ -1,0 +1,77 @@
+query SelectedLocalGroups {
+  selectedLocalGroups @client {
+    id
+    name
+  }
+}
+
+query SelectedWorkingGroups {
+  selectedWorkingGroups @client {
+    id
+    name
+  }
+}
+
+query SelectedTimeCommitment {
+  selectedTimeCommitment @client
+}
+
+query RoleAmount {
+  roleAmount @client
+}
+
+query SearchString {
+  searchString @client
+}
+
+query Filters {
+  searchString @client
+  selectedLocalGroups @client {
+    id
+  }
+  selectedWorkingGroups @client {
+    id
+  }
+  selectedTimeCommitment @client
+}
+
+query NavbarHeight {
+  navbarHeight @client
+}
+
+query LocalGroupById($id: Int!) {
+  localGroupById(id: $id) @client {
+    id
+    name
+  }
+}
+
+query RoleById($id: Int!) {
+  roleById(id: $id) @client {
+    id
+    name
+    description
+  }
+}
+
+mutation UpdateLocalGroups($names: [String!]) {
+  updateLocalGroups(names: $names) @client {
+    id
+    name
+  }
+}
+
+mutation UpdateWorkingGroups($names: [String!]) {
+  updateWorkingGroups(names: $names) @client {
+    id
+    name
+  }
+}
+
+mutation UpdateTimeCommitmentRange($range: [Int!]) {
+  updateTimeCommitmentRange(range: $range) @client
+}
+
+mutation UpdateRoleAmount($amount: Int!) {
+  updateRoleAmount(amount: $amount) @client
+}
