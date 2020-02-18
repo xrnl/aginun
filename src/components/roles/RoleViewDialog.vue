@@ -62,23 +62,23 @@ import MetaInfo from "../layout/MetaInfo";
 import { mapGetters } from "vuex";
 export default {
   methods: {
-    log: e => console.log("ah", e)
+    log: e => console.log("ah", e),
   },
   components: {
     FlexWrapper,
-    MetaInfo
+    MetaInfo,
   },
   data() {
     return {
-      dialog: true
+      dialog: true,
     };
   },
   computed: {
     ...mapGetters("roles", ["getByID"]),
     role: function() {
       return this.getByID(this.$route.params.id);
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
