@@ -15,13 +15,13 @@ export default {
   props: {
     direction: {
       validator: value => ["column", "row"].includes(value),
-      default: "row"
+      default: "row",
     },
     justifyContent: { type: String, default: "flex-start" },
     classes: {
       type: String,
-      default: ""
-    }
-  }
+      default: "",
+    },
+  },
 };
 </script>
