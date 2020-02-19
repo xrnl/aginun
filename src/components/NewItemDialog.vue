@@ -1,110 +1,233 @@
 <template>
   <v-dialog :value="value" width="600px" @input="$emit('input', false)">
     <v-card class="pa-4">
-      <v-text-field v-model="title" label="Title" required />
-      <v-select
-        v-model="localGroup"
-        :items="localGroups"
-        item-value="value"
-        item-text="text"
-        return-object
-        label="Local group"
-      />
-      <v-select
-        v-model="workingGroup"
-        :items="workingGroups"
-        item-value="value"
-        item-text="text"
-        return-object
-        label="Working group"
-      />
-      <p style="color: gray" class="caption">
-        Responsibilities
-      </p>
-      <v-text-field
-        v-model="newResponsibility"
-        label="Add new responsibility"
-        solo
-        @keypress.enter="addResponsibility"
-      >
-        <template v-slot:append>
-          <v-btn
-            text
-            icon
-            small
-            color="primary"
-            :disabled="!newResponsibility"
-            @click="addResponsibility"
+      <validation-observer v-slot="{ invalid, handleSubmit, reset }">
+        <form
+          @submit.prevent="handleSubmit(publishRole)"
+          @reset.prevent="reset"
+        >
+          <validation-provider
+            v-slot="{ errors }"
+            rules="required|alpha_spaces|max:30"
+            name="title"
           >
-            <v-icon>mdi-plus</v-icon>
-          </v-btn>
-        </template>
-      </v-text-field>
-      <v-card v-if="responsibilities.length > 0" class="mb-4">
-        <template v-for="(r, i) in responsibilities">
-          <v-divider v-if="i !== 0" :key="`${i}-divider`" />
-          <v-list-item :key="`${i}-${r}`" class="d-flex justify-space-between">
-            <span>{{ r }}</span>
-            <v-btn
-              text
-              icon
-              color="gray"
-              @click="responsibilities.splice(i, 1)"
+            <v-text-field
+              v-model="title"
+              label="Title"
+              :error-messages="errors"
+            />
+          </validation-provider>
+          <validation-provider
+            v-slot="{ errors }"
+            rules="requiredSelect"
+            name="local group"
+          >
+            <v-select
+              v-model="localGroup"
+              :items="localGroups"
+              item-value="value"
+              item-text="text"
+              return-object
+              label="Local group"
+              :error-messages="errors"
+            />
+          </validation-provider>
+          <validation-provider
+            v-slot="{ errors }"
+            rules="requiredSelect"
+            name="working group"
+          >
+            <v-select
+              v-model="workingGroup"
+              :items="workingGroups"
+              item-value="value"
+              item-text="text"
+              return-object
+              label="Working group"
+              :error-messages="errors"
+            />
+          </validation-provider>
+          <p style="color: gray" class="caption">
+            Responsibilities
+          </p>
+          <validation-provider
+            v-slot="{ errors }"
+            rules="alpha_spaces|max:80"
+            name="responsibility"
+          >
+            <v-text-field
+              v-model="newResponsibility"
+              label="Add new responsibility"
+              solo
+              :error-messages="errors"
+              @keypress.enter="addResponsibility"
             >
-              <v-icon>mdi-close</v-icon>
-            </v-btn>
-          </v-list-item>
-        </template>
-      </v-card>
-      <v-textarea
-        v-model="requirements"
-        label="Requirements"
-        placeholder="Skills, experience, equipment"
-        required
-      />
-      <v-textarea
-        v-model="description"
-        label="Description"
-        placeholder="Any additional information not specified in the set of responsibilities.
+              <template v-slot:append>
+                <v-btn
+                  text
+                  icon
+                  small
+                  color="primary"
+                  :disabled="isEmpty(newResponsibility)"
+                  @click="addResponsibility"
+                >
+                  <v-icon>mdi-plus</v-icon>
+                </v-btn>
+              </template>
+            </v-text-field>
+          </validation-provider>
+          <v-card v-if="responsibilities.length > 0" class="mb-4">
+            <template v-for="(r, i) in responsibilities">
+              <v-divider v-if="i !== 0" :key="`${i}-divider`" />
+              <v-list-item
+                :key="`${i}-${r}`"
+                class="d-flex justify-space-between"
+              >
+                <span>{{ r }}</span>
+                <v-btn
+                  text
+                  icon
+                  color="gray"
+                  @click="responsibilities.splice(i, 1)"
+                >
+                  <v-icon>mdi-close</v-icon>
+                </v-btn>
+              </v-list-item>
+            </template>
+          </v-card>
+          <validation-provider
+            v-slot="{ errors }"
+            rules="required|max:1000"
+            name="requirements"
+          >
+            <v-textarea
+              v-model="requirements"
+              label="Requirements"
+              placeholder="Skills, experience, equipment"
+              :error-messages="errors"
+            />
+          </validation-provider>
+          <validation-provider
+            v-slot="{ errors }"
+            rules="required|max:1000"
+            name="description"
+          >
+            <v-textarea
+              v-model="description"
+              label="Description"
+              placeholder="Any additional information not specified in the set of responsibilities.
         
 This can include information about the circle or the specific project that the role is needed for."
-        required
-      />
-      <v-select
-        v-model="timeCommitment"
-        :items="roleTimeCommitments"
-        item-value="min"
-        return-object
-        label="Time commitment"
-      >
-        <template v-slot:item="{ item }">
-          {{ item.min }} - {{ item.max }} hours/week
-        </template>
-        <template v-slot:selection="{ item }">
-          {{ item.min }} - {{ item.max }} hours/week
-        </template>
-      </v-select>
-      <p class="caption mb-0" style="color: gray">
-        Contact details
-      </p>
-      <v-text-field v-model="email" label="Email" />
-      <v-text-field v-model="mattermostId" label="Mattermost id" />
-      <v-text-field v-model="phone" label="Phone number" />
-      <v-card-actions class="d-flex justify-end">
-        <v-btn color="primary" text @click="$emit('input', false)">
-          Cancel
-        </v-btn>
+              :error-messages="errors"
+            />
+          </validation-provider>
+          <validation-provider
+            v-slot="{ errors }"
+            rules="requiredSelect"
+            name="time commitment"
+          >
+            <v-select
+              v-model="timeCommitment"
+              :items="roleTimeCommitments"
+              item-value="min"
+              return-object
+              label="Time commitment"
+              :error-messages="errors"
+            >
+              <template v-slot:item="{ item }">
+                {{ item.min }} - {{ item.max }} hours/week
+              </template>
+              <template v-slot:selection="{ item }">
+                {{ item.min }} - {{ item.max }} hours/week
+              </template>
+            </v-select>
+          </validation-provider>
+          <p class="caption mb-0" style="color: gray">
+            Contact details
+          </p>
+          <validation-provider
+            v-slot="{ errors }"
+            name="email address"
+            mode="eager"
+            rules="required|email"
+          >
+            <v-text-field
+              v-model="email"
+              label="Email"
+              :error-messages="errors"
+            />
+          </validation-provider>
+          <v-text-field v-model="mattermostId" label="Mattermost id" />
+          <validation-provider
+            v-slot="{ errors }"
+            rules="phoneDutch"
+            mode="eager"
+            name="phone number"
+          >
+            <v-text-field
+              v-model="phone"
+              label="Phone number"
+              :error-messages="errors"
+            />
+          </validation-provider>
+          <v-card-actions class="d-flex justify-end">
+            <v-btn color="primary" text @click="$emit('input', false)">
+              Cancel
+            </v-btn>
 
-        <v-btn color="primary" @click="publishRole">
-          Submit
-        </v-btn>
-      </v-card-actions>
+            <v-btn color="primary" :disabled="invalid" type="submit">
+              Submit
+            </v-btn>
+          </v-card-actions>
+        </form>
+      </validation-observer>
     </v-card>
   </v-dialog>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
+import { extend, ValidationProvider, ValidationObserver } from "vee-validate";
+import { required, alpha_spaces, max, email } from "vee-validate/dist/rules";
+
+extend("required", {
+  ...required,
+  message: fieldName => {
+    let article;
+    if (fieldName.split(" ")[0].endsWith("s")) {
+      article = "";
+    } else if (/^([aeiou])/i.test(fieldName)) {
+      article = "an";
+    } else {
+      article = "a";
+    }
+
+    return `You must specify ${article} ${fieldName}.`;
+  },
+});
+extend("requiredSelect", {
+  ...required,
+  message: "You must select a {_field_}.",
+});
+extend("email", { ...email, message: "You must enter a valid email address." });
+extend("alpha_spaces", {
+  ...alpha_spaces,
+  message: "The {_field_} can only contain letters and spaces.",
+});
+extend("max", {
+  ...max,
+  params: ["length"],
+  message: "The {_field_} must be under {length} characters.",
+});
+extend("phoneDutch", {
+  validate: value => {
+    const dutchPhoneRegex = RegExp(
+      /^((\+|00(\s|\s?-\s?)?)31(\s|\s?-\s?)?(\(0\)[-\s]?)?|0)[1-9]((\s|\s?-\s?)?[0-9])((\s|\s?-\s?)?[0-9])((\s|\s?-\s?)?[0-9])\s?[0-9]\s?[0-9]\s?[0-9]\s?[0-9]\s?[0-9]$/
+    );
+    return dutchPhoneRegex.test(value);
+  },
+  message: "You must enter a valid Dutch phone number",
+});
 
 let initialState = () => ({
   title: undefined,
@@ -122,6 +245,10 @@ let initialState = () => ({
 
 export default {
   name: "NewItemDialog",
+  components: {
+    ValidationProvider,
+    ValidationObserver,
+  },
   props: {
     value: {
       required: true,
@@ -137,8 +264,10 @@ export default {
   methods: {
     ...mapActions("roles", ["addRole"]),
     addResponsibility: function() {
-      this.responsibilities.push(this.newResponsibility);
-      this.newResponsibility = "";
+      if (!this.isEmpty(this.newResponsibility)) {
+        this.responsibilities.push(this.newResponsibility);
+        this.newResponsibility = undefined;
+      }
     },
     resetState: function() {
       Object.assign(this.$data, initialState());
@@ -152,6 +281,7 @@ export default {
       this.$emit("input", false);
       this.resetState();
     },
+    isEmpty: text => !text || text.length == 0 || !text.trim(),
   },
 };
 </script>
