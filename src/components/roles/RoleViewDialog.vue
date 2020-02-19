@@ -1,18 +1,20 @@
-<template
-  ><div>
+<template>
+  <div>
     <v-dialog
       persistent
-      @click:outside="$router.push('/roles')"
-      @keydown.escape="$router.push('/roles')"
       max-width="750"
       value="true"
+      @click:outside="$router.push('/roles')"
+      @keydown.escape="$router.push('/roles')"
     >
       <v-card v-if="!!role" class="role card">
         <v-card-title>
           <flex-wrapper direction="column">
-            <h2 class="role title">{{ role.title }}</h2>
-            <flex-wrapper v-if="role.workingGroup || role.localGroup"
-              ><h5 class="role subtitle">
+            <h2 class="role title">
+              {{ role.title }}
+            </h2>
+            <flex-wrapper v-if="role.workingGroup || role.localGroup">
+              <h5 class="role subtitle">
                 {{ !!role.workingGroup && role.workingGroup.text }}
                 <span
                   v-if="!!role.workingGroup && !!role.localGroup"
@@ -32,7 +34,11 @@
               <p>{{ role.description }}</p>
               <div v-if="!!role.responsibilities">
                 <h4>Responsibilities</h4>
-                <p>{{ role.responsibilities }}</p>
+                <ul>
+                  <li v-for="(r, i) in role.responsibilities" :key="i">
+                    {{ r }}
+                  </li>
+                </ul>
               </div>
             </div>
             <div class="role sidebar">
@@ -61,9 +67,6 @@ import FlexWrapper from "../layout/FlexWrapper";
 import MetaInfo from "../layout/MetaInfo";
 import { mapGetters } from "vuex";
 export default {
-  methods: {
-    log: e => console.log("ah", e),
-  },
   components: {
     FlexWrapper,
     MetaInfo,

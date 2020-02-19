@@ -40,7 +40,7 @@
           </v-btn>
         </template>
       </v-text-field>
-      <v-card v-if="responsibilities.length > 0">
+      <v-card v-if="responsibilities.length > 0" class="mb-4">
         <template v-for="(r, i) in responsibilities">
           <v-divider v-if="i !== 0" :key="`${i}-divider`" />
           <v-list-item :key="`${i}-${r}`" class="d-flex justify-space-between">
@@ -59,7 +59,7 @@
       <v-textarea
         v-model="requirements"
         label="Requirements"
-        placeholder="Skills, experience, equipment..."
+        placeholder="Skills, experience, equipment"
         required
       />
       <v-textarea
@@ -88,14 +88,14 @@ This can include information about the circle or the specific project that the r
         Contact details
       </p>
       <v-text-field v-model="email" label="Email" />
-      <v-text-field v-model="matterMostId" label="Mattermost id" />
+      <v-text-field v-model="mattermostId" label="Mattermost id" />
       <v-text-field v-model="phone" label="Phone number" />
       <v-card-actions class="d-flex justify-end">
         <v-btn color="primary" text @click="$emit('input', false)">
           Cancel
         </v-btn>
 
-        <v-btn color="primary" @click="$emit('input', false)">
+        <v-btn color="primary" @click="publishRole">
           Submit
         </v-btn>
       </v-card-actions>
@@ -104,7 +104,21 @@ This can include information about the circle or the specific project that the r
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
+
+let initialState = () => ({
+  title: undefined,
+  newResponsibility: undefined,
+  responsibilities: [],
+  description: undefined,
+  requirements: undefined,
+  timeCommitment: undefined,
+  localGroup: undefined,
+  workingGroup: undefined,
+  email: undefined,
+  mattermostId: undefined,
+  phone: undefined,
+});
 
 export default {
   name: "NewItemDialog",
@@ -114,28 +128,29 @@ export default {
       type: Boolean,
     },
   },
-  data: () => ({
-    title: "",
-    newResponsibility: "",
-    responsibilities: [],
-    description: "",
-    requirements: "",
-    timeCommitment: undefined,
-    localGroup: undefined,
-    workingGroup: undefined,
-    email: "",
-    matterMostId: "",
-    phone: "",
-  }),
+  data: () => initialState(),
   computed: {
     ...mapState("meta", ["roleTimeCommitments"]),
     ...mapState("localGroups", ["localGroups"]),
     ...mapState("workingGroups", ["workingGroups"]),
   },
   methods: {
+    ...mapActions("roles", ["addRole"]),
     addResponsibility: function() {
       this.responsibilities.push(this.newResponsibility);
       this.newResponsibility = "";
+    },
+    resetState: function() {
+      Object.assign(this.$data, initialState());
+    },
+    publishRole: function() {
+      const role = JSON.parse(JSON.stringify(this.$data));
+      delete role["newResponsibility"];
+
+      this.addRole(role);
+
+      this.$emit("input", false);
+      this.resetState();
     },
   },
 };
