@@ -1,7 +1,7 @@
 <template>
   <page-with-drawer :is-drawer-open="isDrawerOpen">
     😎
-    <template slot:drawer>
+    <template v-slot:drawer>
       ☜(ﾟヮﾟ☜)
     </template>
   </page-with-drawer>
@@ -10,7 +10,8 @@
 import PageWithDrawer from "@/components/layout/PageWithDrawer.vue";
 import { mapGetters } from "vuex";
 export default {
-  components: PageWithDrawer,
+  name: "TasksOverview",
+  components: { PageWithDrawer },
   data: () => ({
     isDrawerOpen: null,
   }),

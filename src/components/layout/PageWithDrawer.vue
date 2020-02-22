@@ -27,7 +27,6 @@ export default {
   },
   data: () => ({
     drawer: null,
-    drawerWidth: 400,
   }),
   computed: {
     isMobile: function() {
@@ -35,7 +34,7 @@ export default {
     },
     containerMargin: function() {
       if (this.drawer && !this.isMobile) {
-        return { "margin-right": `${this.drawerWidth}px` };
+        return { "margin-right": this.drawerWidth };
       }
       return {};
     },
