@@ -1,45 +1,61 @@
 <template>
   <page-with-drawer :is-drawer-open="isDrawerOpen">
     <router-view :key="$route.fullPath" />
-    <div :style="containerMargin">
-      <div class>
-        <div class="text-center my-8">
-          <h1>
-            Find positions at
-            <span class="xr-title">Extinction Rebellion Nederland.</span>
-          </h1>
-        </div>
-        <div v-if="$vuetify.breakpoint.smAndDown" class="mb-8">
-          <v-divider />
-          <div class="d-flex justify-end pa-3">
-            <v-btn text color="primary" @click="isDrawerOpen = true">
-              Filter
-            </v-btn>
-          </div>
-          <v-divider />
-        </div>
+    <div class="text-center">
+      <h1>
+        Find roles at
+        <span class="xr-title">Extinction Rebellion Nederland.</span>
+      </h1>
+    </div>
+    <div v-if="$vuetify.breakpoint.smAndDown" class="mb-8">
+      <v-divider />
+      <div class="d-flex justify-end pa-3">
+        <v-btn text color="primary" @click="isDrawerOpen = true">
+          Filter
+        </v-btn>
       </div>
-      <div class="d-flex flex-wrap justify-center">
-        <role-card v-for="role in filteredRoles" :key="role.id" :role="role" />
-        <div v-if="filteredRoles.length < 1" class="pa-5 text-center">
-          <h3>No results.</h3>
-          <p>Try removing filters.</p>
-        </div>
-      </div>
+      <v-divider />
+    </div>
+    <grid-list
+      v-if="filteredRoles.length > 0"
+      item-width="300px"
+      item-height="200px"
+      gap="2rem"
+    >
+      <role-card v-for="role in filteredRoles" :key="role.id" :role="role" />
+    </grid-list>
+    <div v-else class="pa-5 text-center">
+      <h3>No results.</h3>
+      <p>Try removing filters.</p>
     </div>
     <template v-slot:drawer>
-      <role-filters
-        :on-set-filter="handleSelectFilter"
-        :selected-filters="selectedFilters"
-        :role-amount="filteredRoles.length"
-      />
+      <default-drawer>
+        <template #header>
+          <div
+            class="d-flex justify-space-between align-center"
+            style="width:100%;"
+          >
+            <span class="font-weight-bold">Search for positions</span>
+            <v-btn text color="primary">
+              Clear filters
+            </v-btn>
+          </div>
+        </template>
+        <role-filters
+          :on-set-filter="handleSelectFilter"
+          :selected-filters="selectedFilters"
+          :role-amount="filteredRoles.length"
+        />
+      </default-drawer>
     </template>
   </page-with-drawer>
 </template>
 
 <script>
+import DefaultDrawer from "@/components/layout/DefaultDrawer.vue";
 import PageWithDrawer from "@/components/layout/PageWithDrawer.vue";
 import RoleCard from "@/components/roles/RoleCard.vue";
+import GridList from "@/components/layout/GridList.vue";
 import RoleFilters from "@/components/roles/RoleFilters.vue";
 import { mapGetters } from "vuex";
 
@@ -49,10 +65,11 @@ export default {
     RoleCard,
     RoleFilters,
     PageWithDrawer,
+    GridList,
+    DefaultDrawer,
   },
   data: () => ({
     isDrawerOpen: null,
-    drawerWidth: 400,
     //not a huge fan of having to declare these beforehand, will look into another way
     selectedFilters: {
       text: "",
@@ -64,13 +81,6 @@ export default {
     ...mapGetters("roles", ["getByFilters"]),
     filteredRoles: function() {
       return this.getByFilters(this.selectedFilters);
-    },
-    containerMargin: function() {
-      if (this.isDrawerOpen && !this.isMobile) {
-        return { "margin-right": this.drawerWidth + "px" };
-      } else {
-        return {};
-      }
     },
     isMobile: function() {
       return this.$vuetify.breakpoint.smAndDown;

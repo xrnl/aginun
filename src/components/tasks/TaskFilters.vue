@@ -1,4 +1,5 @@
 <template>
+  <!-- Right now, this is the exact same as RoleFilters.vue, it could be that they will diverge at some point though, so for now there's two seperate files -->
   <div>
     <div>
       <v-text-field

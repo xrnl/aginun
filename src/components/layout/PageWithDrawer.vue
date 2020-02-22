@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div :style="containerMargin">
+    <div class="my-8" :style="containerMargin">
       <slot />
     </div>
     <div
@@ -25,16 +25,13 @@ export default {
       default: "400px",
     },
   },
-  data: () => ({
-    drawer: null,
-  }),
   computed: {
     isMobile: function() {
       return this.$vuetify.breakpoint.smAndDown;
     },
     containerMargin: function() {
-      if (this.drawer && !this.isMobile) {
-        return { "margin-right": this.drawerWidth };
+      if (this.isDrawerOpen && !this.isMobile) {
+        return { marginRight: this.drawerWidth };
       }
       return {};
     },

@@ -3,10 +3,10 @@
     :class="
       `d-flex flex-${
         direction === 'column' ? 'column' : 'row'
-      } ${justifyContent} ${classes}`
+      } justify-${justifyContent} ${classes}`
     "
   >
-    <slot></slot>
+    <slot />
   </div>
 </template>
 <script>

@@ -1,23 +1,66 @@
 <template>
   <page-with-drawer :is-drawer-open="isDrawerOpen">
-    😎
+    <grid-list
+      v-if="filteredTasks.length > 0"
+      item-width="300px"
+      item-height="200px"
+      gap="2rem"
+    >
+      <task-card v-for="task in filteredTasks" :key="task.id" :task="task" />
+    </grid-list>
+    <div v-else class="pa-5 text-center">
+      <h3>No results.</h3>
+      <p>Try removing filters.</p>
+    </div>
     <template v-slot:drawer>
-      ☜(ﾟヮﾟ☜)
+      <default-drawer>
+        <template #header>
+          <div
+            class="d-flex justify-space-between align-center"
+            style="width:100%;"
+          >
+            <span class="font-weight-bold">Search for positions</span>
+            <v-btn text color="primary">
+              Clear filters
+            </v-btn>
+          </div>
+        </template>
+        <task-filters
+          :on-set-filter="handleSelectFilter"
+          :selected-filters="selectedFilters"
+          :role-amount="filteredTasks.length"
+        />
+      </default-drawer>
     </template>
   </page-with-drawer>
 </template>
 <script>
+import TaskFilters from "@/components/tasks/TaskFilters.vue";
+import DefaultDrawer from "@/components/layout/DefaultDrawer.vue";
+import GridList from "@/components/layout/GridList.vue";
+import TaskCard from "@/components/tasks/TaskCard.vue";
 import PageWithDrawer from "@/components/layout/PageWithDrawer.vue";
 import { mapGetters } from "vuex";
 export default {
   name: "TasksOverview",
-  components: { PageWithDrawer },
+  components: {
+    TaskFilters,
+    PageWithDrawer,
+    GridList,
+    TaskCard,
+    DefaultDrawer,
+  },
   data: () => ({
     isDrawerOpen: null,
+    selectedFilters: {
+      text: "",
+      localGroup: [],
+      workingGroup: [],
+    },
   }),
   computed: {
     ...mapGetters("tasks", ["getByFilters"]),
-    filteredRoles: function() {
+    filteredTasks: function() {
       return this.getByFilters(this.selectedFilters);
     },
     isMobile: function() {
@@ -31,6 +74,11 @@ export default {
   },
   created: function() {
     this.isDrawerOpen = !this.isMobile;
+  },
+  methods: {
+    handleSelectFilter: function(value, type) {
+      this.selectedFilters[type] = value;
+    },
   },
 };
 </script>
