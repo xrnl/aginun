@@ -29,9 +29,9 @@
     </div>
     <template v-slot:drawer>
       <role-filters
-        :onSetFilter="handleSelectFilter"
-        :selectedFilters="selectedFilters"
-        :roleAmount="filteredRoles.length"
+        :on-set-filter="handleSelectFilter"
+        :selected-filters="selectedFilters"
+        :role-amount="filteredRoles.length"
       />
     </template>
   </page-with-drawer>
@@ -44,7 +44,7 @@ import RoleFilters from "@/components/roles/RoleFilters.vue";
 import { mapGetters } from "vuex";
 
 export default {
-  name: "Explore",
+  name: "RolesOverview",
   components: {
     RoleCard,
     RoleFilters,
@@ -76,11 +76,6 @@ export default {
       return this.$vuetify.breakpoint.smAndDown;
     },
   },
-  methods: {
-    handleSelectFilter: function(value, type) {
-      this.selectedFilters[type] = value;
-    },
-  },
   watch: {
     isMobile: function() {
       this.isDrawerOpen = !this.isMobile;
@@ -88,6 +83,11 @@ export default {
   },
   created: function() {
     this.isDrawerOpen = !this.isMobile;
+  },
+  methods: {
+    handleSelectFilter: function(value, type) {
+      this.selectedFilters[type] = value;
+    },
   },
 };
 </script>
