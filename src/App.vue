@@ -17,11 +17,11 @@ import TheAppBar from "@/components/TheAppBar.vue";
 export default {
   name: "App",
   components: {
-    TheAppBar
+    TheAppBar,
   },
   data: () => ({
-    drawer: null // vuetify determines initial state based on screen size
-  })
+    drawer: null, // vuetify determines initial state based on screen size
+  }),
 };
 </script>
 

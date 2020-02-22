@@ -7,7 +7,9 @@
       >
         <div class="d-flex justify-space-between align-center pa-3">
           <span>{{ role.workingGroup.text }}</span>
-          <v-icon color="primary">mdi-police-badge</v-icon>
+          <v-icon color="primary">
+            mdi-police-badge
+          </v-icon>
         </div>
         <v-divider />
         <div class="pa-3 d-flex flex-column flex-grow-1 justify-space-between">
@@ -19,15 +21,15 @@
           </div>
           <div class="d-flex flex-wrap justify-space-between align-end mt-5">
             <span class="d-flex flex-column justify-center">
-              <span class="title flex-grow-0" style="line-height: 1rem"
-                >{{ role.timeCommitment.min }} -
-                {{ role.timeCommitment.max }}</span
-              >
+              <span class="title flex-grow-0" style="line-height: 1rem">
+                {{ role.timeCommitment.min }} -
+                {{ role.timeCommitment.max }}
+              </span>
               <span class="overline text-uppercase">hours / week</span>
             </span>
-            <v-btn text dark color="primary" :to="`roles/view/${role.id}`"
-              >Read More</v-btn
-            >
+            <v-btn text dark color="primary" :to="`roles/view/${role.id}`">
+              Read More
+            </v-btn>
           </div>
         </div>
       </div>
@@ -36,14 +38,12 @@
 </template>
 
 <script>
-import has from "lodash/has";
-
 export default {
   name: "RoleCard",
   props: {
     role: {
       type: Object,
-      required: true
+      required: true,
       // might look into more managable prop validation, this might be hard to update when roles get more/less properties.
       // making components always render, even with missing properties might be okay
       // (i.e. the time commitment won't show when a role doesn't have a time commitment)
@@ -67,8 +67,8 @@ export default {
           Number.isInteger(obj.timeCommitment.max)
         );
       }*/
-    }
-  }
+    },
+  },
 };
 </script>
 

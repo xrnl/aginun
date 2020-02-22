@@ -1,10 +1,5 @@
 <template>
-  <div
-    class="drawer"
-    :style="drawerStyle"
-    :class="{ active: value }"
-    :value="value"
-  >
+  <div>
     <div
       v-if="this.$vuetify.breakpoint.smAndDown"
       :style="{ height: $store.state.styles.navbarHeight }"
@@ -12,22 +7,26 @@
     >
       <div class="d-flex align-center">
         <v-btn icon @click="$emit('input', false)">
-          <v-icon color="primary">mdi-arrow-left</v-icon>
+          <v-icon color="primary">
+            mdi-arrow-left
+          </v-icon>
         </v-btn>
         <span>
           <strong class="primary--text">{{ roleAmount }}</strong>
           positions found
         </span>
       </div>
-      <v-btn text color="primary">Clear filters</v-btn>
+      <v-btn text color="primary">
+        Clear filters
+      </v-btn>
     </div>
 
     <div class="px-4 py-5 pb-0">
       <div class="d-flex justify-space-between align-center">
         <span class="font-weight-bold">Search positions</span>
-        <v-btn v-if="!$vuetify.breakpoint.smAndDown" text color="primary"
-          >Clear filters</v-btn
-        >
+        <v-btn v-if="!$vuetify.breakpoint.smAndDown" text color="primary">
+          Clear filters
+        </v-btn>
       </div>
       <v-text-field
         :value="selectedFilters.text"
@@ -37,9 +36,9 @@
       />
     </div>
     <filter-section>
-      <template v-slot:title
-        >Groups</template
-      >
+      <template v-slot:title>
+        Groups
+      </template>
       <flex-wrapper direction="column">
         <autocomplete-custom
           :value="selectedFilters.localGroup"
@@ -56,9 +55,9 @@
       </flex-wrapper>
     </filter-section>
     <filter-section>
-      <template v-slot:title
-        >Time commitment</template
-      >
+      <template v-slot:title>
+        Time commitment
+      </template>
       <v-range-slider
         v-model="timeRange"
         :min="timeCommitment.min"
@@ -68,60 +67,38 @@
         label="Time Commitment"
       />
     </filter-section>
-    <!-- <flex-wrapper justifyContent="justify-end" classes="pa-2">
-      <v-btn to="/roles/new" dark color="primary"
-        ><v-icon>mdi-plus</v-icon> Create a new role</v-btn
-      >
-    </flex-wrapper> -->
   </div>
 </template>
 
 <script>
 import FlexWrapper from "@/components/layout/FlexWrapper.vue";
 import AutocompleteCustom from "@/components/AutocompleteCustom";
-import { mapState, mapGetters, mapMutations } from "vuex";
-import FilterDrawerSection from "./layout/FilterDrawerSection";
+import { mapState } from "vuex";
+import FilterDrawerSection from "../layout/FilterDrawerSection";
 
 export default {
-  name: "TheFilterDrawer",
+  name: "RoleFilters",
   components: {
     filterSection: FilterDrawerSection,
     AutocompleteCustom,
-    FlexWrapper
+    FlexWrapper,
   },
   props: {
-    value: {
-      required: true,
-      validator: value => typeof value === "boolean" || value === null
-    },
     selectedFilters: {
       type: Object,
-      required: true
+      required: true,
     },
     roleAmount: { type: Number, default: 0 },
     onSetFilter: { required: true, type: Function },
-    width: {
-      required: true,
-      type: Number,
-      default: 400
-    }
   },
   data: () => ({
-    timeRange: [1, 30]
+    timeRange: [1, 30],
   }),
   computed: {
     ...mapState("roles", ["timeCommitment"]),
     ...mapState("localGroups", ["localGroups"]),
     ...mapState("workingGroups", ["workingGroups"]),
-    drawerStyle: function() {
-      let styles = {};
-      if (!this.$vuetify.breakpoint.smAndDown) {
-        styles.top = this.$store.state.styles.navbarHeight;
-        styles["max-width"] = this.width + "px";
-      }
-      return styles;
-    }
-  }
+  },
 };
 </script>
 

@@ -27,18 +27,18 @@ export default {
   props: {
     items: {
       type: Array,
-      required: true
+      required: true,
     },
     value: {
       type: Array,
-      required: true
+      required: true,
     },
     label: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
-  data: () => ({})
+  data: () => ({}),
 };
 </script>
 

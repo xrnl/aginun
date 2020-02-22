@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <page-with-drawer :is-drawer-open="isDrawerOpen">
     <router-view :key="$route.fullPath" />
     <div :style="containerMargin">
       <div class>
@@ -12,7 +12,9 @@
         <div v-if="$vuetify.breakpoint.smAndDown" class="mb-8">
           <v-divider />
           <div class="d-flex justify-end pa-3">
-            <v-btn text color="primary" @click="drawer = true">Filter</v-btn>
+            <v-btn text color="primary" @click="isDrawerOpen = true">
+              Filter
+            </v-btn>
           </div>
           <v-divider />
         </div>
@@ -25,36 +27,38 @@
         </div>
       </div>
     </div>
-    <filter-drawer
-      v-model="drawer"
-      :width="drawerWidth"
-      :onSetFilter="handleSelectFilter"
-      :selectedFilters="selectedFilters"
-      :roleAmount="filteredRoles.length"
-    />
-  </div>
+    <template v-slot:drawer>
+      <role-filters
+        :onSetFilter="handleSelectFilter"
+        :selectedFilters="selectedFilters"
+        :roleAmount="filteredRoles.length"
+      />
+    </template>
+  </page-with-drawer>
 </template>
 
 <script>
+import PageWithDrawer from "@/components/layout/PageWithDrawer.vue";
 import RoleCard from "@/components/roles/RoleCard.vue";
-import FilterDrawer from "@/components/FilterDrawer";
+import RoleFilters from "@/components/roles/RoleFilters.vue";
 import { mapGetters } from "vuex";
 
 export default {
   name: "Explore",
   components: {
     RoleCard,
-    FilterDrawer
+    RoleFilters,
+    PageWithDrawer,
   },
   data: () => ({
-    drawer: null,
+    isDrawerOpen: null,
     drawerWidth: 400,
     //not a huge fan of having to declare these beforehand, will look into another way
     selectedFilters: {
       text: "",
       localGroup: [],
-      workingGroup: []
-    }
+      workingGroup: [],
+    },
   }),
   computed: {
     ...mapGetters("roles", ["getByFilters"]),
@@ -62,7 +66,7 @@ export default {
       return this.getByFilters(this.selectedFilters);
     },
     containerMargin: function() {
-      if (this.drawer && !this.isMobile) {
+      if (this.isDrawerOpen && !this.isMobile) {
         return { "margin-right": this.drawerWidth + "px" };
       } else {
         return {};
@@ -70,21 +74,21 @@ export default {
     },
     isMobile: function() {
       return this.$vuetify.breakpoint.smAndDown;
-    }
+    },
   },
   methods: {
     handleSelectFilter: function(value, type) {
       this.selectedFilters[type] = value;
-    }
+    },
   },
   watch: {
     isMobile: function() {
-      this.drawer = !this.isMobile;
-    }
+      this.isDrawerOpen = !this.isMobile;
+    },
   },
   created: function() {
-    this.drawer = !this.isMobile;
-  }
+    this.isDrawerOpen = !this.isMobile;
+  },
 };
 </script>
 

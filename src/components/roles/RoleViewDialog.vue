@@ -1,5 +1,5 @@
-<template
-  ><div>
+<template>
+  <div>
     <v-dialog
       persistent
       @click:outside="$router.push('/roles')"
@@ -11,8 +11,8 @@
         <v-card-title>
           <flex-wrapper direction="column">
             <h2 class="role title">{{ role.title }}</h2>
-            <flex-wrapper v-if="role.workingGroup || role.localGroup"
-              ><h5 class="role subtitle">
+            <flex-wrapper v-if="role.workingGroup || role.localGroup">
+              <h5 class="role subtitle">
                 {{ !!role.workingGroup && role.workingGroup.text }}
                 <span
                   v-if="!!role.workingGroup && !!role.localGroup"
@@ -61,24 +61,21 @@ import FlexWrapper from "../layout/FlexWrapper";
 import MetaInfo from "../layout/MetaInfo";
 import { mapGetters } from "vuex";
 export default {
-  methods: {
-    log: e => console.log("ah", e)
-  },
   components: {
     FlexWrapper,
-    MetaInfo
+    MetaInfo,
   },
   data() {
     return {
-      dialog: true
+      dialog: true,
     };
   },
   computed: {
     ...mapGetters("roles", ["getByID"]),
     role: function() {
       return this.getByID(this.$route.params.id);
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
