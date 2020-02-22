@@ -1,10 +1,7 @@
 <template>
   <v-hover v-slot:default="{ hover }">
     <v-card :elevation="hover ? 12 : 2" width="300" height="200" class="card">
-      <div
-        class="transition-wrapper d-flex flex-column full-height"
-        :class="{ lighter: hover && $vuetify.theme.dark }"
-      >
+      <div class="transition-wrapper d-flex flex-column full-height">
         <template v-if="!!$slots.header && !!$slots.header[0]">
           <div class="d-flex align-center pa-3">
             <slot name="header" />
@@ -39,10 +36,6 @@
 export default {};
 </script>
 <style lang="scss" scoped>
-.lighter {
-  background-color: #333333 !important;
-}
-
 .full-height {
   height: 100%;
 }

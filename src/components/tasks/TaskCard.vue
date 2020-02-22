@@ -1,6 +1,8 @@
 <template>
   <default-card>
-    <template #title>{{ task.title }}</template>
+    <template #title>
+      {{ task.title }}
+    </template>
     <template #subtitle>
       {{ task.localGroup.text }}, {{ task.workingGroup.text }}
     </template>

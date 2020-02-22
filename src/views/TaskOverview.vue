@@ -1,5 +1,22 @@
 <template>
   <page-with-drawer :is-drawer-open="isDrawerOpen">
+    <div class="text-center my-8">
+      <h1>
+        Find roles at
+        <strong class="xr-title">
+          Extinction Rebellion Nederland.
+        </strong>
+      </h1>
+    </div>
+    <div v-if="$vuetify.breakpoint.smAndDown" class="mb-8">
+      <v-divider />
+      <div class="d-flex justify-end pa-3">
+        <v-btn text color="primary" @click="isDrawerOpen = true">
+          Filter
+        </v-btn>
+      </div>
+      <v-divider />
+    </div>
     <grid-list
       v-if="filteredTasks.length > 0"
       item-width="300px"

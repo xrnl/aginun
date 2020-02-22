@@ -1,10 +1,12 @@
 <template>
   <page-with-drawer :is-drawer-open="isDrawerOpen">
     <router-view :key="$route.fullPath" />
-    <div class="text-center">
+    <div class="text-center my-8">
       <h1>
         Find roles at
-        <span class="xr-title">Extinction Rebellion Nederland.</span>
+        <strong class="xr-title">
+          Extinction Rebellion Nederland.
+        </strong>
       </h1>
     </div>
     <div v-if="$vuetify.breakpoint.smAndDown" class="mb-8">
@@ -102,8 +104,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.xr-title {
-  font-family: "FUCXEDCAPS";
-}
-</style>
+<style lang="scss" scoped></style>

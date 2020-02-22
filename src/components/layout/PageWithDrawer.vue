@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="my-8" :style="containerMargin">
+    <div :style="containerMargin">
       <slot />
     </div>
     <div

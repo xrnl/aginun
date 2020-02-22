@@ -33,9 +33,6 @@ export default {
 <style lang="scss" scoped>
 .grid-list {
   display: grid;
-  //   grid-template-columns: repeat(auto-fill, 300px);
-  //   grid-auto-rows: minmax(200px, max-content);
-  //   grid-gap: 1rem;
   align-items: start;
   justify-content: center;
 }
