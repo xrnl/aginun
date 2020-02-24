@@ -51,9 +51,19 @@
                 "
               />
               <meta-info
-                v-if="!!role.contactDetails"
-                title="Contact Details"
-                :description="role.contactDetails"
+                v-if="!!role.email"
+                title="Contact Email"
+                :description="role.email"
+              />
+              <meta-info
+                v-if="!!role.phone"
+                title="Phone"
+                :description="role.phone"
+              />
+              <meta-info
+                v-if="!!role.mattermostId"
+                title="Mattermost"
+                :description="role.mattermostId"
               />
             </div>
           </flex-wrapper>
