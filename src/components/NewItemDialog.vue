@@ -52,14 +52,15 @@
           </p>
           <validation-provider
             v-slot="{ errors }"
-            rules="alpha_spaces|max:80"
+            :rules="`${responsibilities.length < 1 ? 'requiredList' : ''}`"
+            mode="eager"
             name="responsibility"
           >
             <v-text-field
               v-model="newResponsibility"
               label="Add new responsibility"
               solo
-              :error-messages="errors"
+              :error-messages="errorResponsibility || errors"
               @keypress.enter="addResponsibility"
             >
               <template v-slot:append>
@@ -68,7 +69,7 @@
                   icon
                   small
                   color="primary"
-                  :disabled="isEmpty(newResponsibility)"
+                  :disabled="!validResponsibility"
                   @click="addResponsibility"
                 >
                   <v-icon>mdi-plus</v-icon>
@@ -209,6 +210,10 @@ extend("requiredSelect", {
   ...required,
   message: "You must select a {_field_}.",
 });
+extend("requiredList", {
+  validate: () => false,
+  message: "You must add at least one {_field_}.",
+});
 extend("email", { ...email, message: "You must enter a valid email address." });
 extend("alpha_spaces", {
   ...alpha_spaces,
@@ -260,11 +265,26 @@ export default {
     ...mapState("meta", ["roleTimeCommitments"]),
     ...mapState("localGroups", ["localGroups"]),
     ...mapState("workingGroups", ["workingGroups"]),
+    errorResponsibility: function() {
+      const maxCharsResponsibility = 200;
+      if (this.newResponsibility) {
+        if (this.responsibilities.length == 10) {
+          return "You can enter a maximum of 10 responsibilities";
+        }
+        if (this.newResponsibility.length > maxCharsResponsibility) {
+          return `The responsibility must be under ${maxCharsResponsibility} characters.`;
+        }
+      }
+      return null;
+    },
+    validResponsibility: function() {
+      return !this.isEmpty(this.newResponsibility) && !this.errorResponsibility;
+    },
   },
   methods: {
     ...mapActions("roles", ["addRole"]),
     addResponsibility: function() {
-      if (!this.isEmpty(this.newResponsibility)) {
+      if (this.validResponsibility) {
         this.responsibilities.push(this.newResponsibility);
         this.newResponsibility = undefined;
       }
