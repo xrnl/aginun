@@ -13,7 +13,7 @@
         <div v-if="$vuetify.breakpoint.smAndDown" class="mb-8">
           <v-divider />
           <div class="d-flex justify-space-between pa-3">
-            <new-item-button @click="dialog = true" />
+            <new-item-button @click="showRoleDialog" />
             <v-btn text color="primary" @click="drawer = true">
               Filter
             </v-btn>
@@ -35,7 +35,7 @@
       :onSetFilter="handleSelectFilter"
       :selectedFilters="selectedFilters"
       :roleAmount="filteredRoles.length"
-      @new="dialog = true"
+      @new="showRoleDialog"
     />
   </div>
 </template>
@@ -85,6 +85,9 @@ export default {
   methods: {
     handleSelectFilter: function(value, type) {
       this.selectedFilters[type] = value;
+    },
+    showRoleDialog: function() {
+      this.dialog = true;
     },
   },
   watch: {

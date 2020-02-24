@@ -1,6 +1,7 @@
 <template>
   <v-dialog :value="value" width="600px" @input="$emit('input', false)">
     <v-card class="pa-4">
+      <h2>New role</h2>
       <validation-observer ref="form" v-slot="{ invalid, handleSubmit }">
         <form @submit.prevent="handleSubmit(publishRole)">
           <validation-provider
@@ -75,13 +76,13 @@
             </v-text-field>
           </validation-provider>
           <v-card v-if="responsibilities.length > 0" class="mb-4">
-            <template v-for="(r, i) in responsibilities">
+            <template v-for="(responsibility, i) in responsibilities">
               <v-divider v-if="i !== 0" :key="`${i}-divider`" />
               <v-list-item
-                :key="`${i}-${r}`"
+                :key="`${i}-${responsibility}`"
                 class="d-flex justify-space-between"
               >
-                <span>{{ r }}</span>
+                <span>{{ responsibility }}</span>
                 <v-btn
                   text
                   icon
@@ -95,24 +96,24 @@
           </v-card>
           <validation-provider
             v-slot="{ errors }"
-            rules="required|max:1000"
+            rules="max:1000"
             name="requirements"
           >
             <v-textarea
               v-model="requirements"
-              label="Requirements"
+              label="Requirements (optional)"
               placeholder="Skills, experience, equipment"
               :error-messages="errors"
             />
           </validation-provider>
           <validation-provider
             v-slot="{ errors }"
-            rules="required|max:1000"
+            rules="max:1000"
             name="description"
           >
             <v-textarea
               v-model="description"
-              label="Description"
+              label="Description (optional)"
               placeholder="Any additional information not specified in the set of responsibilities.
         
 This can include information about the circle or the specific project that the role is needed for."
@@ -147,7 +148,7 @@ This can include information about the circle or the specific project that the r
             v-slot="{ errors }"
             name="email address"
             mode="eager"
-            rules="required|email"
+            rules="required|email|max:50"
           >
             <v-text-field
               v-model="email"
@@ -155,16 +156,27 @@ This can include information about the circle or the specific project that the r
               :error-messages="errors"
             />
           </validation-provider>
-          <v-text-field v-model="mattermostId" label="Mattermost id" />
           <validation-provider
             v-slot="{ errors }"
-            rules="phoneDutch"
+            name="Mattermost Id"
+            mode="eager"
+            rules="mattermost|max:50"
+          >
+            <v-text-field
+              v-model="mattermostId"
+              label="Mattermost id (optional)"
+              :error-messages="errors"
+            />
+          </validation-provider>
+          <validation-provider
+            v-slot="{ errors }"
+            rules="phone|max:20"
             mode="eager"
             name="phone number"
           >
             <v-text-field
               v-model="phone"
-              label="Phone number"
+              label="Phone number (optional)"
               :error-messages="errors"
             />
           </validation-provider>
@@ -172,10 +184,18 @@ This can include information about the circle or the specific project that the r
             <v-btn color="primary" text @click="$emit('input', false)">
               Cancel
             </v-btn>
-
-            <v-btn color="primary" :disabled="false" type="submit">
-              Submit
-            </v-btn>
+            <v-tooltip top>
+              <template v-slot:activator="{ on }">
+                <div v-on="invalid ? on : undefined">
+                  <v-btn color="primary" :disabled="invalid" type="submit">
+                    Submit
+                  </v-btn>
+                </div>
+              </template>
+              <span>
+                Form is incomplete
+              </span>
+            </v-tooltip>
           </v-card-actions>
         </form>
       </validation-observer>
@@ -221,14 +241,19 @@ extend("max", {
   params: ["length"],
   message: "The {_field_} must be under {length} characters.",
 });
-extend("phoneDutch", {
+extend("phone", {
   validate: value => {
-    const dutchPhoneRegex = RegExp(
-      /^((\+|00(\s|\s?-\s?)?)31(\s|\s?-\s?)?(\(0\)[-\s]?)?|0)[1-9]((\s|\s?-\s?)?[0-9])((\s|\s?-\s?)?[0-9])((\s|\s?-\s?)?[0-9])\s?[0-9]\s?[0-9]\s?[0-9]\s?[0-9]\s?[0-9]$/
-    );
-    return dutchPhoneRegex.test(value);
+    const phoneRegex = RegExp(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/);
+    return phoneRegex.test(value);
   },
-  message: "You must enter a valid Dutch phone number",
+  message: "You must enter a valid phone number",
+});
+extend("mattermost", {
+  validate: value => {
+    const mattermostRegex = RegExp(/^@\S+$/);
+    return mattermostRegex.test(value);
+  },
+  message: "You must enter a valid Mattermost Id.",
 });
 
 let initialState = () => ({

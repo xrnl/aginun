@@ -1,14 +1,19 @@
 <template>
-  <v-btn color="primary" @click.stop="$emit('click')">
-    <v-icon>
-      mdi-plus
-    </v-icon>
-    New role
-  </v-btn>
+  <icon-button
+    color="primary"
+    icon="mdi-plus"
+    text="New role"
+    @click="$emit('click')"
+  />
 </template>
 
 <script>
+import IconButton from "@/components/IconButton.vue";
+
 export default {
   name: "NewItemButton",
+  components: {
+    IconButton,
+  },
 };
 </script>
