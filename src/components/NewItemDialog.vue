@@ -1,11 +1,8 @@
 <template>
   <v-dialog :value="value" width="600px" @input="$emit('input', false)">
     <v-card class="pa-4">
-      <validation-observer v-slot="{ invalid, handleSubmit, reset }">
-        <form
-          @submit.prevent="handleSubmit(publishRole)"
-          @reset.prevent="reset"
-        >
+      <validation-observer ref="form" v-slot="{ invalid, handleSubmit }">
+        <form @submit.prevent="handleSubmit(publishRole)">
           <validation-provider
             v-slot="{ errors }"
             rules="required|alpha_spaces|max:30"
@@ -176,7 +173,7 @@ This can include information about the circle or the specific project that the r
               Cancel
             </v-btn>
 
-            <v-btn color="primary" :disabled="invalid" type="submit">
+            <v-btn color="primary" :disabled="false" type="submit">
               Submit
             </v-btn>
           </v-card-actions>
@@ -300,6 +297,10 @@ export default {
 
       this.$emit("input", false);
       this.resetState();
+
+      this.$nextTick(() => {
+        this.$refs.form.reset();
+      });
     },
     isEmpty: text => !text || text.length == 0 || !text.trim(),
   },
