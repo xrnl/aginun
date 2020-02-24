@@ -44,8 +44,7 @@
   },
   "prettier": {
     "semi": true,
-    "trailingComma": "es5",
-    "vueIndentScriptAndStyle": true
+    "trailingComma": "es5"
   },
   "eslintConfig": {
     "root": true,

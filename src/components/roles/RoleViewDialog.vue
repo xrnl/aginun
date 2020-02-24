@@ -2,26 +2,47 @@
   <div>
     <v-dialog
       persistent
-      @click:outside="$router.push('/roles')"
-      @keydown.escape="$router.push('/roles')"
       max-width="750"
       value="true"
+      @click:outside="$router.push('/roles')"
+      @keydown.escape="$router.push('/roles')"
     >
       <v-card v-if="!!role" class="role card">
         <v-card-title>
-          <flex-wrapper direction="column">
-            <h2 class="role title">{{ role.title }}</h2>
-            <flex-wrapper v-if="role.workingGroup || role.localGroup">
-              <h5 class="role subtitle">
-                {{ !!role.workingGroup && role.workingGroup.text }}
-                <span
-                  v-if="!!role.workingGroup && !!role.localGroup"
-                  style="margin: 0 0.25rem;"
-                >
-                  -
-                </span>
-                {{ !!role.localGroup && role.localGroup.text }}
-              </h5>
+          <flex-wrapper
+            classes="flex-wrap align-start"
+            justify-content="space-between"
+            style="width: 100%"
+          >
+            <flex-wrapper direction="column">
+              <h2 class="role title">
+                {{ role.title }}
+              </h2>
+              <flex-wrapper v-if="role.workingGroup || role.localGroup">
+                <h5 class="role subtitle">
+                  {{ !!role.workingGroup && role.workingGroup.text }}
+                  <span
+                    v-if="!!role.workingGroup && !!role.localGroup"
+                    style="margin: 0 0.25rem;"
+                  >
+                    -
+                  </span>
+                  {{ !!role.localGroup && role.localGroup.text }}
+                </h5>
+              </flex-wrapper>
+            </flex-wrapper>
+            <flex-wrapper
+              classes="flex-wrap-reverse justify-md-end mt-2 mt-sm-0"
+            >
+              <v-btn color="primary" class="ml-sm-2 mr-2 mr-sm-0" depressed>
+                Apply
+              </v-btn>
+              <v-btn text class="order-sm-first">
+                <v-icon class="mr-1">
+                  mdi-link
+                </v-icon>
+                Share
+              </v-btn>
             </flex-wrapper>
           </flex-wrapper>
         </v-card-title>
@@ -45,9 +66,19 @@
                 "
               />
               <meta-info
-                v-if="!!role.contactDetails"
-                title="Contact Details"
-                :description="role.contactDetails"
+                v-if="!!role.email"
+                title="Contact Email"
+                :description="role.email"
+              />
+              <meta-info
+                v-if="!!role.phone"
+                title="Phone"
+                :description="role.phone"
+              />
+              <meta-info
+                v-if="!!role.mattermostId"
+                title="Mattermost"
+                :description="role.mattermostId"
               />
             </div>
           </flex-wrapper>
