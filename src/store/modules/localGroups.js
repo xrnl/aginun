@@ -21,14 +21,14 @@ export default {
       { text: "XR Ysselvallei", value: 17 },
       { text: "XR Zaandam", value: 18 },
       { text: "XR Zwolle", value: 19 },
-      { text: "XR NL", value: 20 }
-    ]
+      { text: "XR NL", value: 20 },
+    ],
   },
   getters: {
     filteredGroups: (state, text) => {
       const regex = RegExp(text, "i");
       return state.localGroups.filter(group => regex.test(group.text));
     },
-    getByID: state => id => state.localGroups.find(group => group.id === id)
-  }
+    getByID: state => id => state.localGroups.find(group => group.id === id),
+  },
 };

@@ -9,10 +9,14 @@
             <span class="xr-title">Extinction Rebellion Nederland.</span>
           </h1>
         </div>
+        <new-item-dialog v-model="dialog" />
         <div v-if="$vuetify.breakpoint.smAndDown" class="mb-8">
           <v-divider />
-          <div class="d-flex justify-end pa-3">
-            <v-btn text color="primary" @click="drawer = true">Filter</v-btn>
+          <div class="d-flex justify-space-between pa-3">
+            <new-item-button @click="showRoleDialog" />
+            <v-btn text color="primary" @click="drawer = true">
+              Filter
+            </v-btn>
           </div>
           <v-divider />
         </div>
@@ -31,6 +35,7 @@
       :onSetFilter="handleSelectFilter"
       :selectedFilters="selectedFilters"
       :roleAmount="filteredRoles.length"
+      @new="showRoleDialog"
     />
   </div>
 </template>
@@ -39,22 +44,27 @@
 import RoleCard from "@/components/roles/RoleCard.vue";
 import FilterDrawer from "@/components/FilterDrawer";
 import { mapGetters } from "vuex";
+import NewItemButton from "@/components/NewItemButton";
+import NewItemDialog from "@/components/NewItemDialog";
 
 export default {
   name: "Explore",
   components: {
     RoleCard,
-    FilterDrawer
+    FilterDrawer,
+    NewItemButton,
+    NewItemDialog,
   },
   data: () => ({
     drawer: null,
     drawerWidth: 400,
+    dialog: false,
     //not a huge fan of having to declare these beforehand, will look into another way
     selectedFilters: {
       text: "",
       localGroup: [],
-      workingGroup: []
-    }
+      workingGroup: [],
+    },
   }),
   computed: {
     ...mapGetters("roles", ["getByFilters"]),
@@ -70,21 +80,24 @@ export default {
     },
     isMobile: function() {
       return this.$vuetify.breakpoint.smAndDown;
-    }
+    },
   },
   methods: {
     handleSelectFilter: function(value, type) {
       this.selectedFilters[type] = value;
-    }
+    },
+    showRoleDialog: function() {
+      this.dialog = true;
+    },
   },
   watch: {
     isMobile: function() {
       this.drawer = !this.isMobile;
-    }
+    },
   },
   created: function() {
     this.drawer = !this.isMobile;
-  }
+  },
 };
 </script>
 

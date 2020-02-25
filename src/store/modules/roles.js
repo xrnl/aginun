@@ -10,12 +10,15 @@ export default {
         location: "Zwolle",
         timeCommitment: {
           min: 6,
-          max: 10
+          max: 10,
         },
         description:
           "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        contactDetails: "An Email",
-        responsibilities: "Do cool things"
+        email: "test@extinctionrebellion.nl",
+        mattermostId: "@test",
+        phone: "6666666666",
+        responsibilities: ["Do cool things", "attend meetings", "more..."],
+        requirements: "some basic requirements to do the role",
       },
       {
         id: 2,
@@ -25,12 +28,15 @@ export default {
         location: "Amsterdam",
         timeCommitment: {
           min: 6,
-          max: 10
+          max: 10,
         },
         description:
           "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        contactDetails: "An Email",
-        responsibilities: "Do cool things"
+        email: "test@extinctionrebellion.nl",
+        mattermostId: "@test",
+        phone: "6666666666",
+        responsibilities: ["Do cool things", "attend meetings", "more..."],
+        requirements: "some basic requirements to do the role",
       },
       {
         id: 3,
@@ -40,12 +46,15 @@ export default {
         location: "Amsterdam",
         timeCommitment: {
           min: 1,
-          max: 5
+          max: 5,
         },
         description:
           "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        contactDetails: "An Email",
-        responsibilities: "Do cool things"
+        email: "test@extinctionrebellion.nl",
+        mattermostId: "@test",
+        phone: "6666666666",
+        responsibilities: ["Do cool things", "attend meetings", "more..."],
+        requirements: "some basic requirements to do the role",
       },
       {
         id: 4,
@@ -55,12 +64,15 @@ export default {
         location: "Amsterdam",
         timeCommitment: {
           min: 11,
-          max: 20
+          max: 20,
         },
         description:
           "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        contactDetails: "An Email",
-        responsibilities: "Do cool things"
+        email: "test@extinctionrebellion.nl",
+        mattermostId: "@test",
+        phone: "6666666666",
+        responsibilities: ["Do cool things", "attend meetings", "more..."],
+        requirements: "some basic requirements to do the role",
       },
       {
         id: 5,
@@ -70,12 +82,15 @@ export default {
         location: "Amsterdam",
         timeCommitment: {
           min: 21,
-          max: 30
+          max: 30,
         },
         description:
           "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        contactDetails: "An Email",
-        responsibilities: "Do cool things"
+        email: "test@extinctionrebellion.nl",
+        mattermostId: "@test",
+        phone: "6666666666",
+        responsibilities: ["Do cool things", "attend meetings", "more..."],
+        requirements: "some basic requirements to do the role",
       },
       {
         id: 6,
@@ -85,15 +100,18 @@ export default {
         location: "Den Haag",
         timeCommitment: {
           min: 6,
-          max: 10
+          max: 10,
         },
         description:
           "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        contactDetails: "An Email",
-        responsibilities: "Do cool things"
-      }
+        email: "test@extinctionrebellion.nl",
+        mattermostId: "@test",
+        phone: "6666666666",
+        responsibilities: ["Do cool things", "attend meetings", "more..."],
+        requirements: "some basic requirements to do the role",
+      },
     ],
-    timeCommitment: { min: 1, max: 30 }
+    timeCommitment: { min: 1, max: 30 },
   },
   getters: {
     getByFilters: state => ({ text, workingGroup, localGroup }) => {
@@ -120,7 +138,18 @@ export default {
         return true;
       });
     },
-    getByID: state => id => state.roles.find(role => role.id == id)
+    getByID: state => id => state.roles.find(role => role.id == id),
+    lastId: state => state.roles.slice(-1)[0].id,
   },
-  actions: {}
+  mutations: {
+    addRole: function(state, newRole) {
+      state.roles.push(newRole);
+    },
+  },
+  actions: {
+    addRole: function(context, newRole) {
+      newRole.id = context.getters.lastId + 1;
+      context.commit("addRole", newRole);
+    },
+  },
 };

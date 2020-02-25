@@ -10,14 +10,14 @@ export default {
       { text: "Arts", value: 6 },
       { text: "Finance", value: 7 },
       { text: "Tech", value: 8 },
-      { text: "Legal", value: 9 }
-    ]
+      { text: "Legal", value: 9 },
+    ],
   },
   getters: {
     filteredGroups: (state, text) => {
       const regex = RegExp(text, "i");
       return state.workingGroups.filter(group => regex.test(group.text));
     },
-    getByID: (state, id) => state.workingGroups.find(group => group.id === id)
-  }
+    getByID: (state, id) => state.workingGroups.find(group => group.id === id),
+  },
 };
