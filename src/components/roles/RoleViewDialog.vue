@@ -50,7 +50,35 @@
           </flex-wrapper>
         </v-card-title>
         <v-divider />
-        <v-card-text class="role text">
+        <v-card-text class="role text py-2">
+          <flex-wrapper direction="column">
+            <h4>Apply</h4>
+            <icon-link
+              v-if="role.email"
+              :href="
+                `mailto:${role.email}?subject=Role application: ${role.title}`
+              "
+              :text="role.email"
+              icon="mdi-email"
+            />
+            <icon-link
+              v-if="role.mattermostId"
+              :href="
+                `https://organise.earth/xr-netherlands/messages/${role.mattermostId}`
+              "
+              :text="role.mattermostId"
+              icon="mdi-message"
+            />
+            <icon-link
+              v-if="role.phone"
+              :href="`tel:${role.phone}`"
+              :text="role.phone"
+              icon="mdi-phone"
+            />
+          </flex-wrapper>
+        </v-card-text>
+        <v-divider />
+        <v-card-text class="role text mt-1">
           <flex-wrapper>
             <div class="role description">
               <meta-info
@@ -77,23 +105,6 @@
                 "
               />
             </div>
-            <div class="role sidebar">
-              <meta-info
-                v-if="!!role.email"
-                title="Contact Email"
-                :description="role.email"
-              />
-              <meta-info
-                v-if="!!role.phone"
-                title="Phone"
-                :description="role.phone"
-              />
-              <meta-info
-                v-if="!!role.mattermostId"
-                title="Mattermost"
-                :description="role.mattermostId"
-              />
-            </div>
           </flex-wrapper>
         </v-card-text>
       </v-card>
@@ -102,12 +113,15 @@
 </template>
 <script>
 import FlexWrapper from "../layout/FlexWrapper";
+import IconLink from "@/components/IconLink";
+
 import MetaInfo from "../layout/MetaInfo";
 import { mapGetters } from "vuex";
 export default {
   components: {
     FlexWrapper,
     MetaInfo,
+    IconLink,
   },
   data() {
     return {
@@ -134,7 +148,6 @@ export default {
 <style lang="scss" scoped>
 .role {
   &.text {
-    margin-top: 1rem;
     color: #222 !important;
   }
   &.title {
@@ -148,11 +161,6 @@ export default {
   &.description {
     flex-basis: 66%;
     flex: 6;
-  }
-  &.sidebar {
-    margin-left: 1rem;
-    flex-basis: 33%;
-    flex: 3;
   }
 }
 </style>
