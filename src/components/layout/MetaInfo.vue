@@ -1,8 +1,17 @@
 <template>
   <dl class="detail">
-    <dt class="detail term">{{ title }}</dt>
+    <dt class="detail term">
+      {{ title }}
+    </dt>
     <dd class="detail description">
-      {{ description }}
+      <ul v-if="Array.isArray(description)" class="mb-2">
+        <li v-for="(item, i) of description" :key="i">
+          {{ item }}
+        </li>
+      </ul>
+      <p v-else>
+        {{ description }}
+      </p>
     </dd>
   </dl>
 </template>
@@ -15,7 +24,7 @@ export default {
       required: true,
     },
     description: {
-      type: String,
+      type: [String, Array],
       required: true,
     },
   },
@@ -33,8 +42,6 @@ export default {
   padding: 0;
   &.term {
     font-weight: bold;
-  }
-  &.description {
   }
 }
 </style>

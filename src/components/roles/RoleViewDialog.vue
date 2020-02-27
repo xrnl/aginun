@@ -18,7 +18,7 @@
               <h2 class="role title">
                 {{ role.title }}
               </h2>
-              <flex-wrapper v-if="role.workingGroup || role.localGroup">
+              <div v-if="role.workingGroup || role.localGroup">
                 <h5 class="role subtitle">
                   {{ !!role.workingGroup && role.workingGroup.text }}
                   <span
@@ -29,7 +29,10 @@
                   </span>
                   {{ !!role.localGroup && role.localGroup.text }}
                 </h5>
-              </flex-wrapper>
+              </div>
+              <div v-if="role.publishedDate" style="line-height: 1rem">
+                <span class="caption"> Published on {{ formattedDate }} </span>
+              </div>
             </flex-wrapper>
             <flex-wrapper
               classes="flex-wrap-reverse justify-md-end mt-2 mt-sm-0"
@@ -50,13 +53,21 @@
         <v-card-text class="role text">
           <flex-wrapper>
             <div class="role description">
-              <p>{{ role.description }}</p>
-              <div v-if="!!role.responsibilities">
-                <h4>Responsibilities</h4>
-                <p>{{ role.responsibilities }}</p>
-              </div>
-            </div>
-            <div class="role sidebar">
+              <meta-info
+                v-if="!!role.responsibilities"
+                title="Responsibilities"
+                :description="role.responsibilities"
+              />
+              <meta-info
+                v-if="!!role.description"
+                title="Description"
+                :description="role.description"
+              />
+              <meta-info
+                v-if="!!role.requirements"
+                title="Requirements"
+                :description="role.requirements"
+              />
               <meta-info
                 v-if="!!role.timeCommitment"
                 title="Time Commitment"
@@ -65,6 +76,8 @@
                 ${role.timeCommitment.max} hours/week`
                 "
               />
+            </div>
+            <div class="role sidebar">
               <meta-info
                 v-if="!!role.email"
                 title="Contact Email"
@@ -105,6 +118,15 @@ export default {
     ...mapGetters("roles", ["getByID"]),
     role: function() {
       return this.getByID(this.$route.params.id);
+    },
+    formattedDate: function() {
+      const date = new Date(this.role.publishedDate);
+      const options = {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      };
+      return date.toLocaleDateString("en-GB", options);
     },
   },
 };
