@@ -7,7 +7,7 @@
       @click:outside="$router.push('/roles')"
       @keydown.escape="$router.push('/roles')"
     >
-      <v-card v-if="!!role" class="role card">
+      <v-card v-if="!!role" class="card">
         <v-card-title>
           <flex-wrapper
             classes="flex-wrap align-start"
@@ -15,11 +15,11 @@
             style="width: 100%"
           >
             <flex-wrapper direction="column">
-              <h2 class="role title">
+              <h2 class="boldTitle">
                 {{ role.title }}
               </h2>
               <div v-if="role.workingGroup || role.localGroup">
-                <h5 class="role subtitle">
+                <h5 class="font-weight-regular">
                   {{ !!role.workingGroup && role.workingGroup.text }}
                   <span
                     v-if="!!role.workingGroup && !!role.localGroup"
@@ -37,50 +37,44 @@
             <flex-wrapper
               classes="flex-wrap-reverse justify-md-end mt-2 mt-sm-0"
             >
-              <v-btn color="primary" class="ml-sm-2 mr-2 mr-sm-0" depressed>
+              <v-btn
+                color="primary"
+                class="ml-sm-2 mr-2 mr-sm-0"
+                depressed
+                @click.stop="applyDialog = true"
+              >
                 Apply
               </v-btn>
-              <v-btn text class="order-sm-first">
+              <v-btn class="order-sm-first" depressed>
                 <v-icon class="mr-1">
-                  mdi-link
+                  mdi-check
                 </v-icon>
-                Share
+                Role taken
               </v-btn>
+              <v-menu offset-y left>
+                <template v-slot:activator="{ on }">
+                  <v-btn text icon v-on="on">
+                    <v-icon>
+                      mdi-dots-vertical
+                    </v-icon>
+                  </v-btn>
+                </template>
+                <v-list>
+                  <v-list-item @click="console.log('event for editing role')">
+                    <v-list-item-title>Edit</v-list-item-title>
+                  </v-list-item>
+                  <v-list-item @click="console.log('event for deleting role')">
+                    <v-list-item-title>Delete</v-list-item-title>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
             </flex-wrapper>
           </flex-wrapper>
         </v-card-title>
         <v-divider />
-        <v-card-text class="role text py-2">
-          <flex-wrapper direction="column">
-            <h4>Apply</h4>
-            <icon-link
-              v-if="role.email"
-              :href="
-                `mailto:${role.email}?subject=Role application: ${role.title}`
-              "
-              :text="role.email"
-              icon="mdi-email"
-            />
-            <icon-link
-              v-if="role.mattermostId"
-              :href="
-                `https://organise.earth/xr-netherlands/messages/${role.mattermostId}`
-              "
-              :text="role.mattermostId"
-              icon="mdi-message"
-            />
-            <icon-link
-              v-if="role.phone"
-              :href="`tel:${role.phone}`"
-              :text="role.phone"
-              icon="mdi-phone"
-            />
-          </flex-wrapper>
-        </v-card-text>
-        <v-divider />
-        <v-card-text class="role text mt-1">
+        <v-card-text class="darkFont pt-3">
           <flex-wrapper>
-            <div class="role description">
+            <div>
               <meta-info
                 v-if="!!role.responsibilities"
                 title="Responsibilities"
@@ -109,6 +103,43 @@
         </v-card-text>
       </v-card>
     </v-dialog>
+    <v-dialog v-model="applyDialog" max-width="500" content-class>
+      <v-card>
+        <v-card-title>
+          <h4>Apply</h4>
+        </v-card-title>
+        <v-card-text class="darkFont">
+          <flex-wrapper direction="column">
+            <p>Please apply by contacting the role aide.</p>
+            <icon-link
+              v-if="role.email"
+              :href="
+                `mailto:${role.email}?subject=Role application: ${role.title}`
+              "
+              :text="role.email"
+              label="Email"
+              icon="mdi-email"
+            />
+            <icon-link
+              v-if="role.mattermostId"
+              :href="
+                `https://organise.earth/xr-netherlands/messages/${role.mattermostId}`
+              "
+              :text="role.mattermostId"
+              label="Mattermost"
+              icon="mdi-message"
+            />
+            <icon-link
+              v-if="role.phone"
+              :href="`tel:${role.phone}`"
+              :text="role.phone"
+              label="Phone"
+              icon="mdi-phone"
+            />
+          </flex-wrapper>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 <script>
@@ -125,7 +156,7 @@ export default {
   },
   data() {
     return {
-      dialog: true,
+      applyDialog: false,
     };
   },
   computed: {
@@ -146,21 +177,11 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.role {
-  &.text {
-    color: #222 !important;
-  }
-  &.title {
-    font-size: 1.5rem !important;
-    font-weight: bold;
-  }
-  &.subtitle {
-    font-weight: normal;
-  }
-
-  &.description {
-    flex-basis: 66%;
-    flex: 6;
-  }
+.darkFont {
+  color: #222 !important;
+}
+.boldTitle {
+  font-size: 1.5rem !important;
+  font-weight: bold;
 }
 </style>
