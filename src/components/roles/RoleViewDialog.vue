@@ -10,7 +10,7 @@
       <v-card v-if="!!role" class="card">
         <v-card-title>
           <flex-wrapper
-            classes="flex-wrap align-start"
+            classes="flex-nowrap align-start"
             justify-content="space-between"
             style="width: 100%"
           >
@@ -34,45 +34,27 @@
                 <span class="caption"> Published on {{ formattedDate }} </span>
               </div>
             </flex-wrapper>
-            <flex-wrapper
-              classes="flex-wrap-reverse justify-md-end mt-2 mt-sm-0"
-            >
-              <v-btn
-                color="primary"
-                class="ml-sm-2 mr-2 mr-sm-0"
-                depressed
-                @click.stop="applyDialog = true"
-              >
-                Apply
-              </v-btn>
-              <v-btn class="order-sm-first" depressed>
-                <v-icon class="mr-1">
-                  mdi-check
-                </v-icon>
-                Role taken
-              </v-btn>
-              <v-menu offset-y left>
-                <template v-slot:activator="{ on }">
-                  <v-btn text icon v-on="on">
-                    <v-icon>
-                      mdi-dots-vertical
-                    </v-icon>
-                  </v-btn>
-                </template>
-                <v-list>
-                  <v-list-item @click="console.log('event for editing role')">
-                    <v-list-item-title>Edit</v-list-item-title>
-                  </v-list-item>
-                  <v-list-item @click="console.log('event for deleting role')">
-                    <v-list-item-title>Delete</v-list-item-title>
-                  </v-list-item>
-                </v-list>
-              </v-menu>
-            </flex-wrapper>
+            <v-menu offset-y left>
+              <template v-slot:activator="{ on }">
+                <v-btn text icon v-on="on">
+                  <v-icon>
+                    mdi-dots-vertical
+                  </v-icon>
+                </v-btn>
+              </template>
+              <v-list>
+                <v-list-item @click="console.log('event for editing role')">
+                  <v-list-item-title>Edit</v-list-item-title>
+                </v-list-item>
+                <v-list-item @click="console.log('event for deleting role')">
+                  <v-list-item-title>Delete</v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
           </flex-wrapper>
         </v-card-title>
         <v-divider />
-        <v-card-text class="darkFont pt-3">
+        <v-card-text class="darkFont pt-3 pb-0">
           <flex-wrapper>
             <div>
               <meta-info
@@ -101,6 +83,22 @@
             </div>
           </flex-wrapper>
         </v-card-text>
+        <v-card-actions class="px-6 pt-0 pb-4">
+          <v-btn
+            color="primary"
+            class="mr-1"
+            depressed
+            @click.stop="applyDialog = true"
+          >
+            Apply
+          </v-btn>
+          <v-btn depressed>
+            <v-icon class="mr-1">
+              mdi-check
+            </v-icon>
+            Role taken
+          </v-btn>
+        </v-card-actions>
       </v-card>
     </v-dialog>
     <v-dialog v-model="applyDialog" max-width="500" content-class>
