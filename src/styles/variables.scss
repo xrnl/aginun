@@ -1,6 +1,6 @@
 // this file contains variables for vuetify components
 // Do not change file path as vuetify looks for this specific path.
-@import '~vuetify/src/styles/settings/colors';
+@import "~vuetify/src/styles/settings/colors";
 
 // Globals
 // Change body font
@@ -14,12 +14,13 @@ $color-pack: false;
 
 // set background of light mode to pure white
 $material-light: (
-  'background': map-get($shades, 'white')
+  "background": map-get($shades, "white"),
 );
 
 $material-dark: (
-  'background': #121212, // recommended material design background color
-  'cards': #1e1e1e
+  "background": #121212,
+  // recommended material design background color
+    "cards": #1e1e1e,
 );
 
 // Variables for specific components must come before the import
