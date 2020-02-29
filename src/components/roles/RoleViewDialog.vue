@@ -117,5 +117,11 @@ export default {
     flex-basis: 33%;
     flex: 3;
   }
+
+  &.theme--dark {
+    .text {
+      color: white !important;
+    }
+  }
 }
 </style>
