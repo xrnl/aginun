@@ -60,7 +60,7 @@
           </flex-wrapper>
         </v-card-title>
         <v-divider />
-        <v-card-text class="pt-3 pb-0">
+        <v-card-text class="pt-3 pb-0 solidFont">
           <flex-wrapper>
             <div>
               <meta-info
@@ -112,7 +112,7 @@
         <v-card-title>
           <h4>Apply</h4>
         </v-card-title>
-        <v-card-text>
+        <v-card-text class="solidFont">
           <flex-wrapper direction="column">
             <p>Please apply by contacting the role aide.</p>
             <icon-link
@@ -181,14 +181,16 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-// .darkFont {
-//   color: #222 !important;
-//   &.theme--dark {
-//     .text {
-//       color: white !important;
-//     }
-//   }
-// }
+.solidFont {
+  color: rgba(0, 0, 0, 0.87) !important;
+}
+
+.theme--dark {
+  .solidFont {
+    color: white !important;
+  }
+}
+
 .subHeader {
   font-size: 0.83em;
 }
