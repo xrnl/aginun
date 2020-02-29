@@ -13,6 +13,8 @@
     "core-js": "^3.3.2",
     "graphql-type-json": "^0.2.1",
     "lodash": "^4.17.15",
+    "uniqid": "^5.2.0",
+    "vee-validate": "^3.2.5",
     "vue": "^2.6.10",
     "vue-apollo": "^3.0.0-beta.11",
     "vue-router": "^3.1.3",
@@ -32,7 +34,6 @@
     "@vue/test-utils": "1.0.0-beta.29",
     "babel-eslint": "^10.0.3",
     "eslint": "^5.16.0",
-    "eslint-config-recommended": "^4.0.0",
     "eslint-plugin-graphql": "^2.1.1",
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-vue": "^6.1.2",
@@ -45,14 +46,12 @@
     "vue-cli-plugin-apollo": "^0.21.3",
     "vue-cli-plugin-style-resources-loader": "^0.1.3",
     "vue-cli-plugin-vuetify": "^1.1.1",
-    "vue-eslint-parser": "^7.0.0",
     "vue-template-compiler": "^2.6.10",
     "vuetify-loader": "^1.3.0"
   },
   "prettier": {
     "semi": true,
-    "trailingComma": "es5",
-    "vueIndentScriptAndStyle": true
+    "trailingComma": "es5"
   },
   "eslintConfig": {
     "root": true,
@@ -73,7 +72,9 @@
       "prettier"
     ],
     "rules": {
-      "prettier/prettier": "warn",
+      "prettier/prettier": "error",
+      "no-console": "warn",
+      "no-unused-vars": "warn",
       "vue/max-attributes-per-line": [
         2,
         {
@@ -83,9 +84,7 @@
             "allowFirstLine": false
           }
         }
-      ],
-      "no-console": "warn",
-      "no-unused-vars": "warn"
+      ]
     },
     "parserOptions": {
       "ecmaVersion": 2018,
@@ -100,18 +99,12 @@
         "env": {
           "jest": true
         }
-      },
-      {
-        "files": [
-          ".vue"
-        ],
-        "parser": "vue"
       }
     ],
     "plugins": [
-      "graphql",
       "vue",
-      "prettier"
+      "prettier",
+      "graphql"
     ]
   },
   "postcss": {

@@ -130,7 +130,7 @@
       },
     },
     watch: {
-      $route() {
+      $route(to, from) {
         // react to route changes
         this.viewGroups = false;
         // hide sidebar on mobile devices
@@ -140,7 +140,7 @@
     methods: {
       ...mapMutations("groups", ["updateSelected", "removeGroup"]),
       addGroup: function() {
-        // console.log("this method should show modal/page for adding a group");
+        console.log("this method should show modal/page for adding a group");
         this.removeGroup();
       },
     },

@@ -8,19 +8,19 @@
 </template>
 
 <script>
-  export default {
-    name: "TitleSubtitle",
-    props: {
-      title: {
-        type: String,
-        required: true,
-      },
-      subtitle: {
-        type: String,
-        required: true,
-      },
+export default {
+  name: "TitleSubtitle",
+  props: {
+    title: {
+      type: String,
+      required: true,
     },
-  };
+    subtitle: {
+      type: String,
+      required: true,
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped></style>

@@ -6,7 +6,7 @@ import {
   createApolloClient,
   restartWebsockets,
 } from "vue-cli-plugin-apollo/graphql-client";
-import * as typeDefs from "@/gql/typedefs.gql";
+import * as typeDefs from "@/apollo/gql/typedefs.gql";
 import { resolvers } from "./resolvers";
 
 // Install the vue plugin
@@ -23,22 +23,49 @@ const httpEndpoint =
 const cache = new InMemoryCache();
 cache.writeData({
   data: {
-    selectedLocalGroups: [],
-    selectedWorkingGroups: [],
-    selectedTimeCommitment: [],
-    roleAmount: 0,
-    searchString: "",
-    limit: 20,
+    roleData: {
+      id: "data",
+      __typename: "RoleData",
+      filter: {
+        id: "filter",
+        __typename: "RoleFilter",
+        selectedLocalGroups: null,
+        selectedWorkingGroups: null,
+        selectedTimeCommitmentMin: 0,
+        selectedTimeCommitmentMax: 40,
+        // searchString: "%gr%",
+        searchString: null,
+        limit: 10,
+      },
+      timeCommitmentRange: [0, 40],
+      amount: 0,
+      filtered: {
+        id: "filtered_roles",
+        __typename: "FilteredRoles",
+        roles: [],
+      },
+    },
+    // taskData: {
+    //   __typename: "TaskData",
+    //   filter: {
+    //     __typename: "TaskFilter",
+    //     selectedLocalGroups: null,
+    //     selectedWorkingGroups: null,
+    //     selectedTimeCommitmentMin: 2,
+    //     selectedTimeCommitmentMax: 20,
+    //     searchString: null,
+    //     limit: 10,
+    //   },
+    //   amount: 0,
+    //   filtered: [],
+    // },
     navbarHeight: "64px",
   },
 });
 
-const httpLink = createHttpLink({
-  uri: "https://xr-volunteer-app.herokuapp.com/v1/graphql",
-});
-
 // Config
 const defaultOptions = {
+  httpEndpoint,
   ssr: false,
   cache,
   typeDefs,
@@ -58,7 +85,6 @@ export function createProvider(options = {}) {
   const apolloProvider = new VueApollo({
     defaultClient: apolloClient,
     defaultOptions: {
-      httpLink,
       $query: {
         fetchPolicy: "cache-first",
       },

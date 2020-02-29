@@ -7,7 +7,7 @@
 </template>
 
 <script>
-  export default {
-    name: "GroupRouter",
-  };
+export default {
+  name: "GroupRouter",
+};
 </script>

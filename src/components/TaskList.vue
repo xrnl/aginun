@@ -5,27 +5,27 @@
 </template>
 
 <script>
-  import TaskListItem from "@/components/TaskListItem";
-  import { mapState } from "vuex";
+import TaskListItem from "@/components/TaskListItem";
+import { mapState } from "vuex";
 
-  export default {
-    name: "TaskList",
-    components: {
-      TaskListItem,
-    },
-    data: () => ({}),
-    computed: {
-      ...mapState("tasks", ["tasks"]),
-    },
-  };
+export default {
+  name: "TaskList",
+  components: {
+    TaskListItem,
+  },
+  data: () => ({}),
+  computed: {
+    ...mapState("tasks", ["tasks"]),
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-  @import "~vuetify/src/styles/settings/variables";
+@import "~vuetify/src/styles/settings/variables";
 
-  .task-list {
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-  }
+.task-list {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
 </style>

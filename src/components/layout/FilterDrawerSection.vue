@@ -15,10 +15,10 @@
 </template>
 
 <script>
-  export default {
-    name: "TheFilterDrawerSection",
-    data: () => ({}),
-  };
+export default {
+  name: "TheFilterDrawerSection",
+  data: () => ({}),
+};
 </script>
 
 <style lang="scss" scoped></style>

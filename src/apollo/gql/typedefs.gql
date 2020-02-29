@@ -1,0 +1,64 @@
+type LocalGroup {
+  id: Int
+  name: string
+}
+
+type WorkingGroup {
+  id: Int
+  name: string
+}
+
+type Range {
+  min: Int
+  max: Int
+}
+
+type RoleFilter {
+  limit: Int!
+  searchString: String!
+  selectedLocalGroupIds: [Int!]!
+  selectedWorkingGroupIds: [Int!]!
+  selectedTimeCommitmentMin: Int!
+  selectedTimeCommitmentMax: Int!
+}
+
+# type role {
+#   id: Int!
+#   name: String!
+#   location: String
+#   time_commitment_min: Int!
+#   time_commitment_max: Int!
+#   date_added: Date!
+#   due_date: Date
+#   local_group: LocalGroup!
+#   working_group: WorkingGroup!
+# }
+
+type FilteredRoles {
+  roles: [role]!
+}
+
+type RoleData {
+  filtered: FilteredRoles!
+  timeCommitmentRange: [Int!]!
+  filter: RoleFilter
+  amount: Int
+  # getRoles: [role]!
+}
+
+extend type Mutation {
+  updateLocalGroups(names: [String!]): [local_group!]
+  updateWorkingGroups(names: [String!]): [working_group!]
+  updateTimeCommitmentRange(range: [Int!]): Boolean
+  updateRoleAmount(amount: Int!): Boolean
+  updateSearchString(search: String): Boolean
+  clearFilter: Boolean
+  updateRoleFilter(names: [String!]): Filter
+  updateRoleAmount(amount: Int!): Int
+}
+
+extend type Query {
+  roleData: RoleData!
+  navbarHeight: Int!
+  # localGroupById(id: Int!): LocalGroup
+}

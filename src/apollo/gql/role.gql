@@ -1,0 +1,197 @@
+# fragments
+
+fragment RoleFragment on role {
+  id
+  name
+  location
+  time_commitment_min
+  time_commitment_max
+  date_added
+  due_date
+  local_group {
+    name
+  }
+  working_group {
+    name
+  }
+}
+
+fragment RoleDetailFragment on role {
+  email
+  phone
+  mattermost_id
+  description
+  requirements
+  responsibilities
+  due_date
+  date_added
+}
+
+fragment RoleFilterFragment on RoleFilter {
+  __typename
+  id
+  limit
+  searchString
+  selectedLocalGroups
+  selectedWorkingGroups
+  selectedTimeCommitmentMin
+  selectedTimeCommitmentMax
+}
+
+# queries
+
+query GetRoles(
+  $limit: Int
+  $searchString: String
+  $selectedLocalGroupIds: [Int!]
+  $selectedWorkingGroupIds: [Int!]
+  $selectedTimeCommitmentMin: Int
+  $selectedTimeCommitmentMax: Int
+) {
+  role(
+    where: {
+      local_group: { id: { _in: $selectedLocalGroupIds } }
+      working_group: { id: { _in: $selectedWorkingGroupIds } }
+      time_commitment_min: { _gte: $selectedTimeCommitmentMin }
+      time_commitment_max: { _lte: $selectedTimeCommitmentMax }
+      name: { _ilike: $searchString }
+    }
+    limit: $limit
+  ) {
+    ...RoleFragment
+  }
+}
+
+query GetFilteredRoles {
+  getRoleData @client {
+    filtered {
+      roles {
+        ...RoleFragment
+      }
+    }
+  }
+}
+
+query GetRoleData {
+  roleData @client {
+    filter {
+      # ...RoleFilterFragment
+      limit
+      searchString
+      selectedLocalGroups
+      selectedWorkingGroups
+      selectedTimeCommitmentMin
+      selectedTimeCommitmentMax
+    }
+    amount
+    filtered {
+      roles {
+        ...RoleFragment
+      }
+    }
+    timeCommitmentRange
+  }
+}
+
+query GetTimeCommitmentRangeRole {
+  getRoleData @client {
+    timeCommitmentRange
+  }
+}
+
+query GetFilter {
+  roleData @client {
+    filter {
+      # ...RoleFilterFragment
+      limit
+      searchString
+      selectedLocalGroups
+      selectedWorkingGroups
+      selectedTimeCommitmentMin
+      selectedTimeCommitmentMax
+    }
+  }
+}
+
+#---------------------------------------------------------------------#
+
+query RoleDetailServer($id: Int!) {
+  role(where: { id: { _eq: $id } }) {
+    ...RoleDetailFragment
+  }
+}
+
+query RoleDetailClient($id: Int!) {
+  getRoleData @client {
+    roleDetail(id: $id) {
+      ...RoleFragment
+      ...RoleDetailFragment
+    }
+  }
+}
+
+query RoleAllInfoServer($id: Int!) {
+  role(where: { id: { _eq: $id } }) {
+    ...RoleFragment
+    ...RoleDetailFragment
+  }
+}
+
+query UpdateFilter {
+  roleData @client {
+    filter
+  }
+}
+
+query GetRoleLimit {
+  roleData @client {
+    amount
+    filter {
+      limit
+    }
+  }
+}
+
+# mutations
+
+mutation UpdateRoles($roles: [role]) {
+  updateRoles(roles: $roles) @client
+}
+
+mutation UpdateSearchString($search: String!) {
+  updateSearchString(search: $search) @client
+}
+
+mutation UpdateRoleFilterLocalGroups($names: [String!]) {
+  updateRoleFilter(names: $names) @client
+}
+
+mutation UpdateTimeCommitment($timeCommitment: [Int!]) {
+  updateTimeCommitmentRole(timeCommitment: $timeCommitment) @client
+}
+
+mutation UpdateRoleFilter(
+  $localGroups: [String!]
+  $workingGroups: [String!]
+  $timeCommitment: [Int!]
+  $searchString: String
+) {
+  updateRoleFilter(
+    searchString: $searchString
+    localGroups: $localGroups
+    workingGroups: $workingGroups
+    timeCommitment: $timeCommitment
+  ) @client
+}
+
+mutation UpdateWorkingGroups($names: [String!]) {
+  updateWorkingGroups(names: $names) @client
+}
+
+mutation ClearRoleFilter {
+  clearRoleFilter @client
+}
+
+mutation RoleAmount($amount: Int!) {
+  updateRoleAmount(amount: $amount) @client
+}

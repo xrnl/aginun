@@ -1,0 +1,21 @@
+# queries
+
+query NavbarHeight {
+  navbarHeight @client
+}
+
+query WorkingGroups {
+  working_group {
+    id
+    name
+  }
+}
+
+query LocalGroups {
+  local_group {
+    id
+    name
+  }
+}
+
+# mutations

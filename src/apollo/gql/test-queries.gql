@@ -1,0 +1,41 @@
+mutation insertLocalGroup($objects: [local_group_insert_input!]!) {
+  insert_local_group(objects: $objects) {
+    returning {
+      id
+      name
+    }
+  }
+}
+
+# can't be used, see: // https://github.com/apollographql/apollo-client/issues/4826
+query GetRoles_cant_be_used(
+  $limit: Int
+  $search: String
+  $localGroupIds: [Int!]
+  $workingGroupIds: [Int!]
+  $timeCommitmentMin: Int
+  $timeCommitmentMax: Int
+) {
+  roleData @client {
+    filter {
+      limit @export(as: "limit")
+      searchString @export(as: "search")
+      selectedLocalGroupIds @export(as: "localGroupIds")
+      selectedWorkingGroupIds @export(as: "workingGroupIds")
+      selectedTimeCommitmentMin @export(as: "timeCommitmentMin")
+      selectedTimeCommitmentMax @export(as: "timeCommitmentMax")
+    }
+  }
+  role(
+    where: {
+      local_group: { id: { _in: $localGroupIds } }
+      working_group: { id: { _in: $workingGroupIds } }
+      time_commitment_min: { _gte: $timeCommitmentMin }
+      time_commitment_max: { _lte: $timeCommitmentMax }
+      name: { _ilike: $search }
+    }
+    limit: $limit
+  ) {
+    ...RoleFragment
+  }
+}

@@ -1,9 +1,10 @@
 <template>
   <v-autocomplete
+    :value="value"
     :items="items"
     chips
-    multiple
     small-chips
+    multiple
     class="mt-3"
     :label="label"
     @change="$emit('change', $event)"
@@ -21,28 +22,25 @@
 </template>
 
 <script>
-  export default {
-    name: "AutocompleteCustom",
-    props: {
-      items: {
-        type: Array,
-        required: true,
-      },
-      label: {
-        type: String,
-        required: true,
-      },
+export default {
+  name: "AutocompleteCustom",
+  props: {
+    items: {
+      type: Array,
+      required: true,
     },
-    data: () => ({}),
-    // methods: {
-    //   itemSelected(item) {
-    //     console.log("Selected item!", item.id);
-    //   },
-    //   itemClicked(item) {
-    //     console.log("Clicked item!", item);
-    //   }
-    // }
-  };
+    value: {
+      type: Array,
+      required: false,
+      default: () => [],
+    },
+    label: {
+      type: String,
+      required: true,
+    },
+  },
+  data: () => ({}),
+};
 </script>
 
 <style lang="scss" scoped></style>
