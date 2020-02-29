@@ -18,12 +18,7 @@
       </div>
       <v-divider />
     </div>
-    <grid-list
-      v-if="filteredRoles.length > 0"
-      item-width="300px"
-      item-height="200px"
-      gap="2rem"
-    >
+    <grid-list v-if="filteredRoles.length > 0" gap="2rem">
       <role-card v-for="role in filteredRoles" :key="role.id" :role="role" />
     </grid-list>
     <div v-else class="pa-5 text-center">
@@ -31,13 +26,20 @@
       <p>Try removing filters.</p>
     </div>
     <template v-slot:drawer>
-      <default-drawer>
+      <default-drawer @close-drawer="handleCloseDrawer">
         <template #header>
           <div
             class="d-flex justify-space-between align-center"
             style="width:100%;"
           >
-            <span class="font-weight-bold">Search for positions</span>
+            <div class="d-flex flex-column">
+              <span class="font-weight-bold">
+                Search for positions
+              </span>
+              <span class="font-weight-light">
+                ({{ filteredRoles.length }} positions found)
+              </span>
+            </div>
             <v-btn text color="primary">
               Clear filters
             </v-btn>
@@ -99,6 +101,9 @@ export default {
   methods: {
     handleSelectFilter: function(value, type) {
       this.selectedFilters[type] = value;
+    },
+    handleCloseDrawer: function() {
+      this.isDrawerOpen = false;
     },
   },
 };

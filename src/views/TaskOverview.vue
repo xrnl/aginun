@@ -2,7 +2,7 @@
   <page-with-drawer :is-drawer-open="isDrawerOpen">
     <div class="text-center my-8">
       <h1>
-        Find roles at
+        Find tasks at
         <strong class="xr-title">
           Extinction Rebellion Nederland.
         </strong>
@@ -17,12 +17,7 @@
       </div>
       <v-divider />
     </div>
-    <grid-list
-      v-if="filteredTasks.length > 0"
-      item-width="300px"
-      item-height="200px"
-      gap="2rem"
-    >
+    <grid-list v-if="filteredTasks.length > 0" gap="2rem">
       <task-card v-for="task in filteredTasks" :key="task.id" :task="task" />
     </grid-list>
     <div v-else class="pa-5 text-center">
@@ -30,13 +25,20 @@
       <p>Try removing filters.</p>
     </div>
     <template v-slot:drawer>
-      <default-drawer>
+      <default-drawer @close-drawer="handleCloseDrawer">
         <template #header>
           <div
             class="d-flex justify-space-between align-center"
             style="width:100%;"
           >
-            <span class="font-weight-bold">Search for positions</span>
+            <div class="d-flex flex-column">
+              <span class="font-weight-bold">
+                Search for tasks
+              </span>
+              <span class="font-weight-light">
+                ({{ filteredTasks.length }} tasks found)
+              </span>
+            </div>
             <v-btn text color="primary">
               Clear filters
             </v-btn>
@@ -95,6 +97,9 @@ export default {
   methods: {
     handleSelectFilter: function(value, type) {
       this.selectedFilters[type] = value;
+    },
+    handleCloseDrawer: function() {
+      this.isDrawerOpen = false;
     },
   },
 };

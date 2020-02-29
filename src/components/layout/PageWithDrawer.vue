@@ -3,12 +3,7 @@
     <div :style="containerMargin">
       <slot />
     </div>
-    <div
-      class="drawer"
-      :style="drawerStyle"
-      :class="{ active: isDrawerOpen }"
-      :value="isDrawerOpen"
-    >
+    <div class="drawer" :style="drawerStyle" :class="{ active: isDrawerOpen }">
       <slot name="drawer" />
     </div>
   </div>

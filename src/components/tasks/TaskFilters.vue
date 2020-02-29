@@ -4,7 +4,7 @@
     <div>
       <v-text-field
         :value="selectedFilters.text"
-        label="Facilitator, Writer, Photographer..."
+        label="Poster design, Outreach, Photographer..."
         class="mt-3"
         @input="value => onSetFilter(value, 'text')"
       />
@@ -51,7 +51,7 @@ import { mapState } from "vuex";
 import FilterDrawerSection from "../layout/FilterDrawerSection";
 
 export default {
-  name: "RoleFilters",
+  name: "TaskFilters",
   components: {
     filterSection: FilterDrawerSection,
     AutocompleteCustom,

@@ -8,11 +8,11 @@ export default {
   props: {
     itemWidth: {
       type: String,
-      required: true,
+      default: "300px",
     },
     itemHeight: {
       type: String,
-      required: true,
+      default: "200px",
     },
     gap: {
       type: String,
