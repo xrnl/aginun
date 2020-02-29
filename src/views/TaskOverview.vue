@@ -1,27 +1,24 @@
 <template>
   <page-with-drawer :is-drawer-open="isDrawerOpen">
-    <router-view :key="$route.fullPath" />
     <div class="text-center my-8">
       <h1>
-        Find roles at
+        Find tasks at
         <strong class="xr-title">
           Extinction Rebellion Nederland.
         </strong>
       </h1>
     </div>
-    <new-item-dialog v-model="newRoleDialog" />
-    <div v-if="isMobile" class="mb-8">
+    <div v-if="$vuetify.breakpoint.smAndDown" class="mb-8">
       <v-divider />
-      <div class="d-flex justify-space-between pa-3">
-        <new-item-button @click="showNewRoleDialog" />
+      <div class="d-flex justify-end pa-3">
         <v-btn text color="primary" @click="isDrawerOpen = true">
           Filter
         </v-btn>
       </div>
       <v-divider />
     </div>
-    <grid-list v-if="filteredRoles.length > 0" gap="2rem">
-      <role-card v-for="role in filteredRoles" :key="role.id" :role="role" />
+    <grid-list v-if="filteredTasks.length > 0" gap="2rem">
+      <task-card v-for="task in filteredTasks" :key="task.id" :task="task" />
     </grid-list>
     <div v-else class="pa-5 text-center">
       <h3>No results.</h3>
@@ -36,10 +33,10 @@
           >
             <div class="d-flex flex-column">
               <span class="font-weight-bold">
-                Search for positions
+                Search for tasks
               </span>
               <span class="font-weight-light">
-                ({{ filteredRoles.length }} positions found)
+                ({{ filteredTasks.length }} tasks found)
               </span>
             </div>
             <v-btn text color="primary">
@@ -47,44 +44,33 @@
             </v-btn>
           </div>
         </template>
-        <role-filters
+        <task-filters
           :on-set-filter="handleSelectFilter"
           :selected-filters="selectedFilters"
-          :role-amount="filteredRoles.length"
+          :role-amount="filteredTasks.length"
         />
-        <div v-if="!isMobile" class="text-center mt-4">
-          <new-item-button @click="showNewRoleDialog" />
-        </div>
       </default-drawer>
     </template>
   </page-with-drawer>
 </template>
-
 <script>
+import TaskFilters from "@/components/tasks/TaskFilters.vue";
 import DefaultDrawer from "@/components/layout/DefaultDrawer.vue";
-import PageWithDrawer from "@/components/layout/PageWithDrawer.vue";
-import RoleCard from "@/components/roles/RoleCard.vue";
 import GridList from "@/components/layout/GridList.vue";
-import RoleFilters from "@/components/roles/RoleFilters.vue";
+import TaskCard from "@/components/tasks/TaskCard.vue";
+import PageWithDrawer from "@/components/layout/PageWithDrawer.vue";
 import { mapGetters } from "vuex";
-import NewItemButton from "@/components/NewItemButton";
-import NewItemDialog from "@/components/NewItemDialog";
-
 export default {
-  name: "RolesOverview",
+  name: "TasksOverview",
   components: {
-    RoleCard,
-    RoleFilters,
+    TaskFilters,
     PageWithDrawer,
     GridList,
+    TaskCard,
     DefaultDrawer,
-    NewItemButton,
-    NewItemDialog,
   },
   data: () => ({
-    newRoleDialog: false,
     isDrawerOpen: null,
-    //not a huge fan of having to declare these beforehand, will look into another way
     selectedFilters: {
       text: "",
       localGroup: [],
@@ -92,8 +78,8 @@ export default {
     },
   }),
   computed: {
-    ...mapGetters("roles", ["getByFilters"]),
-    filteredRoles: function() {
+    ...mapGetters("tasks", ["getByFilters"]),
+    filteredTasks: function() {
       return this.getByFilters(this.selectedFilters);
     },
     isMobile: function() {
@@ -115,11 +101,6 @@ export default {
     handleCloseDrawer: function() {
       this.isDrawerOpen = false;
     },
-    showNewRoleDialog: function() {
-      this.newRoleDialog = true;
-    },
   },
 };
 </script>
-
-<style lang="scss" scoped></style>
