@@ -18,18 +18,24 @@
               <h2 class="boldTitle">
                 {{ role.title }}
               </h2>
-              <div v-if="role.workingGroup || role.localGroup">
-                <h5 class="font-weight-regular">
+              <flex-wrapper
+                v-if="role.workingGroup || role.localGroup"
+                class="subHeader"
+                classes="flex-wrap"
+              >
+                <span>
                   {{ !!role.workingGroup && role.workingGroup.text }}
-                  <span
-                    v-if="!!role.workingGroup && !!role.localGroup"
-                    style="margin: 0 0.25rem;"
-                  >
-                    -
-                  </span>
+                </span>
+                <span
+                  v-if="!!role.workingGroup && !!role.localGroup"
+                  style="margin: 0 0.25rem;"
+                >
+                  -
+                </span>
+                <span>
                   {{ !!role.localGroup && role.localGroup.text }}
-                </h5>
-              </div>
+                </span>
+              </flex-wrapper>
               <div v-if="role.publishedDate" style="line-height: 1rem">
                 <span class="caption"> Published on {{ formattedDate }} </span>
               </div>
@@ -178,6 +184,11 @@ export default {
 .darkFont {
   color: #222 !important;
 }
+
+.subHeader {
+  font-size: 0.83em;
+}
+
 .boldTitle {
   font-size: 1.5rem !important;
   font-weight: bold;
