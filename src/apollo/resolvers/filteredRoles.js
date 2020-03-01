@@ -1,4 +1,4 @@
-import { GetRoles, GetFilter } from "../gql/role.gql";
+import { GetRoles, GetFilter } from "../gql/role";
 import gql from "graphql-tag";
 
 /**

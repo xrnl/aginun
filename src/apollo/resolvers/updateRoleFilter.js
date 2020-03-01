@@ -1,5 +1,5 @@
-import { GetFilter } from "../gql/role.gql";
-import { LocalGroups, WorkingGroups } from "../gql/other.gql";
+import { GetFilter } from "../gql/role";
+import { LocalGroups, WorkingGroups } from "../gql/other";
 // import { getRoleData } from "./getRoleData";
 
 // utility functions that maps the names of the groups in the dropdown boxes in the drawer

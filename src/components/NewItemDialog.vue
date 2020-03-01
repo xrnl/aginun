@@ -207,8 +207,8 @@ This can include information about the circle or the specific project that the r
 // import { mapState, mapActions } from "vuex";
 import { extend, ValidationProvider, ValidationObserver } from "vee-validate";
 import { required, alpha_spaces, max, email } from "vee-validate/dist/rules";
-import { LocalGroups, WorkingGroups } from "@/apollo/gql/other.gql";
-import { TimeCommitmentRanges, InsertRole } from "@/apollo/gql/role.gql";
+import { LocalGroups, WorkingGroups } from "@/apollo/gql/other";
+import { TimeCommitmentRanges, InsertRole } from "@/apollo/gql/role";
 
 extend("required", {
   ...required,

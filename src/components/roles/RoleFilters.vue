@@ -48,19 +48,15 @@
 import FlexWrapper from "@/components/layout/FlexWrapper.vue";
 import AutocompleteCustom from "@/components/AutocompleteCustom";
 import FilterDrawerSection from "../layout/FilterDrawerSection";
-import {
-  NavbarHeight,
-  LocalGroups,
-  WorkingGroups,
-} from "@/apollo/gql/other.gql";
+import { NavbarHeight, LocalGroups, WorkingGroups } from "@/apollo/gql/other";
 import {
   // queries
   GetTimeCommitmentRangeRole,
   GetFilter,
   // mutations
   UpdateRoleFilter,
-  ClearFilter,
-} from "@/apollo/gql/role.gql";
+  ClearRoleFilter,
+} from "@/apollo/gql/role";
 
 export default {
   name: "RoleFilters",
@@ -75,6 +71,14 @@ export default {
     filter: {},
     timeCommitmentRange: [],
   }),
+  // beforeCreate() {
+  //   console.log(
+  //     GetTimeCommitmentRangeRole,
+  //     GetFilter,
+  //     UpdateRoleFilter,
+  //     ClearRoleFilter
+  //   );
+  // },
   apollo: {
     navbarHeight: {
       query: NavbarHeight,
@@ -123,7 +127,7 @@ export default {
   methods: {
     clearFilter: function() {
       this.$apollo.mutate({
-        mutation: ClearFilter,
+        mutation: ClearRoleFilter,
       });
     },
     onSetFilter: function(value, key) {

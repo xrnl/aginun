@@ -1,4 +1,4 @@
-import { GetRoleData } from "../gql/role.gql";
+import { GetRoleData } from "../gql/role";
 // import gql from "graphql-tag";
 
 export const getRoleData = async (

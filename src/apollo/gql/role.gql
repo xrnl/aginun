@@ -113,6 +113,27 @@ query TimeCommitmentRanges {
   }
 }
 
+query GetRoleData {
+  roleData @client {
+    filter {
+      # ...RoleFilterFragment
+      limit
+      searchString
+      selectedLocalGroups
+      selectedWorkingGroups
+      selectedTimeCommitmentMin
+      selectedTimeCommitmentMax
+    }
+    amount
+    filtered {
+      roles {
+        ...RoleFragment
+      }
+    }
+    timeCommitmentRange
+  }
+}
+
 # mutations
 
 mutation UpdateSearchString($search: String!) {

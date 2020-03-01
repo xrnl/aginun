@@ -67,7 +67,7 @@ import {
   GetFilter,
   RoleAmount,
   ClearRoleFilter,
-} from "@/apollo/gql/role.gql";
+} from "@/apollo/gql/role";
 import NewItemButton from "@/components/NewItemButton";
 import NewItemDialog from "@/components/NewItemDialog";
 
@@ -82,6 +82,9 @@ export default {
     NewItemButton,
     NewItemDialog,
   },
+  // beforeCreate() {
+  //   console.log(GetRoles, GetFilter, RoleAmount, ClearRoleFilter);
+  // },
   data: () => ({
     newRoleDialog: false,
     isDrawerOpen: null,

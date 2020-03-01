@@ -2,7 +2,7 @@ import {
   FilteredRoles,
   RoleDetailServer,
   RoleAllInfoServer,
-} from "../gql/role.gql";
+} from "../gql/role";
 
 const parseResponsibilities = r => {
   if (r.indexOf("|") === -1) {
@@ -17,6 +17,7 @@ const parseResponsibilities = r => {
 };
 
 export const roleDetail = async (_, { id }, { cache, client }) => {
+  // console.log("[field] roleDetail");
   // let role = cache.data.data[`role:${id}`];
   // console.log("roleDetail", id, `role:${id}`, cache.data.data["local_group:1"]);
   // const roles = cache.readQuery({

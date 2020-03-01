@@ -152,7 +152,8 @@
 import FlexWrapper from "../layout/FlexWrapper";
 import IconLink from "@/components/IconLink";
 import MetaInfo from "../layout/MetaInfo";
-import { RoleDetailClient } from "@/apollo/gql/role.gql";
+import { RoleDetailClient } from "@/apollo/gql/role";
+
 export default {
   components: {
     FlexWrapper,
@@ -182,10 +183,7 @@ export default {
       variables: function() {
         return { id: this.$route.params.id };
       },
-      update(data) {
-        // console.log("ROLE DETAIL", data);
-        return data.getRoleData.roleDetail;
-      },
+      update: data => data.getRoleData.roleDetail,
     },
   },
 };

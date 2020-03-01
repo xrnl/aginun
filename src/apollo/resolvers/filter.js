@@ -1,4 +1,4 @@
-import { GetFilter } from "../gql/role.gql";
+import { GetFilter } from "../gql/role";
 
 export const filter = (...[, , { client }]) => {
   const {
