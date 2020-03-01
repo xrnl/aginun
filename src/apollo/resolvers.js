@@ -1,6 +1,8 @@
 import { getRoleData } from "./resolvers/getRoleData";
 import { updateRoleFilter } from "./resolvers/updateRoleFilter";
 import { timeCommitmentRange } from "./resolvers/timeCommitmentRange";
+import { timeCommitmentRanges } from "./resolvers/timeCommitmentRanges";
+
 // import { filtered } from "./resolvers/filteredRoles";
 import { updateRoleAmount } from "./resolvers/updateRoleAmount";
 import { roleDetail } from "./resolvers/roleDetail";
@@ -17,11 +19,12 @@ const resolvers = {
   },
   RoleData: {
     timeCommitmentRange,
+    timeCommitmentRanges,
     roleDetail,
     // filtered,
   },
 };
 
-console.log("Resolvers", resolvers);
+// console.log("Resolvers", resolvers);
 
 export { resolvers };

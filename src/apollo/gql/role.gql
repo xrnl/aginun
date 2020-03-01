@@ -113,8 +113,6 @@ query GetFilter {
   }
 }
 
-#---------------------------------------------------------------------#
-
 query RoleDetailServer($id: Int!) {
   role(where: { id: { _eq: $id } }) {
     ...RoleDetailFragment
@@ -148,6 +146,21 @@ query GetRoleLimit {
     amount
     filter {
       limit
+    }
+  }
+}
+
+# query TimeCommitmentRanges {
+#   time_commitment_ranges {
+#     range
+#   }
+# }
+
+query TimeCommitmentRanges {
+  getRoleData @client {
+    timeCommitmentRanges {
+      min
+      max
     }
   }
 }
@@ -195,3 +208,76 @@ mutation ClearRoleFilter {
 mutation RoleAmount($amount: Int!) {
   updateRoleAmount(amount: $amount) @client
 }
+
+mutation InsertRole(
+  $name: String!
+  $location: String
+  $time_commitment_min: Int!
+  $time_commitment_max: Int!
+  $local_group_id: Int
+  $working_group_id: Int
+  $email: String!
+  $phone: String
+  $mattermost_id: String
+  $description: String!
+  $requirements: String!
+  $responsibilities: String!
+  $date_added: date
+  $due_date: date
+) {
+  insert_role(
+    objects: {
+      name: $name
+      location: $location
+      time_commitment_min: $time_commitment_min
+      time_commitment_max: $time_commitment_max
+      local_group_id: $local_group_id
+      working_group_id: $working_group_id
+      email: $email
+      phone: $phone
+      mattermost_id: $mattermost_id
+      description: $description
+      requirements: $requirements
+      responsibilities: $responsibilities
+      date_added: $date_added
+      due_date: $due_date
+    }
+  ) {
+    affected_rows
+    # name
+    # location
+    # time_commitment_min
+    # time_commitment_max
+    # local_group_id
+    # working_group_id
+    # email
+    # phone
+    # mattermost_id
+    # description
+    # requirements
+    # responsibilities
+    # date_added
+    # due_date
+  }
+}
+
+# mutation InsertRole {
+#   insert_role(
+#     objects: {
+#       name: $name
+#       location: $location
+#       time_commitment_min: $time_commitment_min
+#       time_commitment_max: $time_commitment_max
+#       local_group_id: $local_group_id
+#       working_group_id: $working_group_id
+#       email: $email
+#       phone: $phone
+#       mattermost_id: $mattermost_id
+#       description: $description
+#       requirements: $requirements
+#       responsibilities: $responsibilities
+#       date_added: $date_added
+#       due_date: $due_date
+#     }
+#   )
+# }

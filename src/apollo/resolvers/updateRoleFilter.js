@@ -52,7 +52,6 @@ export const updateRoleFilter = (
   } = cache.readQuery({
     query: GetFilter,
   });
-  console.log(cache);
 
   if (localGroups) {
     if (localGroups.length) {

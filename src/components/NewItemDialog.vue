@@ -204,9 +204,11 @@ This can include information about the circle or the specific project that the r
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+// import { mapState, mapActions } from "vuex";
 import { extend, ValidationProvider, ValidationObserver } from "vee-validate";
 import { required, alpha_spaces, max, email } from "vee-validate/dist/rules";
+import { LocalGroups, WorkingGroups } from "@/apollo/gql/other.gql";
+import { TimeCommitmentRanges, InsertRole } from "@/apollo/gql/role.gql";
 
 extend("required", {
   ...required,
@@ -283,10 +285,23 @@ export default {
     },
   },
   data: () => initialState(),
+  apollo: {
+    localGroups: {
+      query: LocalGroups,
+      update: data =>
+        data.local_group.map(({ id, name }) => ({ id, text: name })),
+    },
+    workingGroups: {
+      query: WorkingGroups,
+      update: data =>
+        data.working_group.map(({ id, name }) => ({ id, text: name })),
+    },
+    roleTimeCommitments: {
+      query: TimeCommitmentRanges,
+      update: data => data.getRoleData.timeCommitmentRanges,
+    },
+  },
   computed: {
-    ...mapState("meta", ["roleTimeCommitments"]),
-    ...mapState("localGroups", ["localGroups"]),
-    ...mapState("workingGroups", ["workingGroups"]),
     errorResponsibility: function() {
       const maxCharsResponsibility = 200;
       if (this.newResponsibility) {
@@ -304,7 +319,6 @@ export default {
     },
   },
   methods: {
-    ...mapActions("roles", ["addRole"]),
     addResponsibility: function() {
       if (this.validResponsibility) {
         this.responsibilities.push(this.newResponsibility);
@@ -314,11 +328,31 @@ export default {
     resetState: function() {
       Object.assign(this.$data, initialState());
     },
-    publishRole: function() {
+    publishRole: async function() {
       const role = JSON.parse(JSON.stringify(this.$data));
       delete role["newResponsibility"];
 
-      this.addRole(role);
+      // prepare data for query:
+      const variables = {
+        name: role.title,
+        local_group_id: role.localGroup.id,
+        working_group_id: role.workingGroup.id,
+        location: role.location,
+        time_commitment_min: role.timeCommitment.min,
+        time_commitment_max: role.timeCommitment.max,
+        email: role.email,
+        phone: role.phone,
+        mattermost_id: role.mattermostId,
+        description: role.description,
+        requirements: role.requirements,
+        responsibilities: role.responsibilities.join("|"),
+        date_added: new Date(),
+        due_date: role.dueDate,
+      };
+      await this.$apollo.mutate({
+        mutation: InsertRole,
+        variables,
+      });
 
       this.$emit("input", false);
       this.resetState();

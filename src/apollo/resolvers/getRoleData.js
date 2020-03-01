@@ -7,7 +7,7 @@ export const getRoleData = async (
   { cache, client },
   info
 ) => {
-  console.log("[query] getRoleData");
+  // console.log("[query] getRoleData");
   const data = await client.readQuery({
     query: GetRoleData,
   });

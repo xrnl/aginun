@@ -35,7 +35,7 @@ cache.writeData({
         selectedTimeCommitmentMax: 40,
         // searchString: "%gr%",
         searchString: null,
-        limit: 10,
+        limit: 50,
       },
       timeCommitmentRange: [0, 40],
       amount: 0,

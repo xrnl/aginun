@@ -5,14 +5,14 @@ import {
 } from "../gql/role.gql";
 
 const parseResponsibilities = r => {
-  if (r.indexOf("[") === -1) {
+  if (r.indexOf("|") === -1) {
     return r;
   }
   let p = r
-    .replace(/^\[/g, "")
-    .replace(/\]$/g, "")
-    .replace(/"/g, "")
-    .split(",");
+    // .replace(/^\[/g, "")
+    // .replace(/\]$/g, "")
+    // .replace(/"/g, "")
+    .split("|");
   return p;
 };
 
