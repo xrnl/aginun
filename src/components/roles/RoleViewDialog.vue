@@ -54,7 +54,7 @@
                 <v-list-item @click="console.log('event for editing role')">
                   <v-list-item-title>Edit</v-list-item-title>
                 </v-list-item>
-                <v-list-item @click="console.log('event for deleting role')">
+                <v-list-item @click="deleteRole()">
                   <v-list-item-title>Delete</v-list-item-title>
                 </v-list-item>
               </v-list>
@@ -152,7 +152,7 @@
 import FlexWrapper from "../layout/FlexWrapper";
 import IconLink from "@/components/IconLink";
 import MetaInfo from "../layout/MetaInfo";
-import { RoleDetailClient } from "@/apollo/gql/role";
+import { RoleDetailClient, DeleteRole } from "@/apollo/gql/role";
 
 export default {
   components: {
@@ -184,6 +184,14 @@ export default {
         return { id: this.$route.params.id };
       },
       update: data => data.getRoleData.roleDetail,
+    },
+  },
+  methods: {
+    deleteRole() {
+      this.$apollo.mutate({
+        mutation: DeleteRole,
+        variables: { id: this.$route.params.id },
+      });
     },
   },
 };

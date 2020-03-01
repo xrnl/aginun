@@ -10,4 +10,13 @@ module.exports = {
     },
     apollo: { lintGQL: true, enableMocks: true, enableEngine: false },
   },
+
+  // chainWebpack: config => {
+  //   config.module
+  //     .rule("graphql")
+  //     .test(/\.gql$/)
+  //     .use("graphql-tag/loader")
+  //     .loader("graphql-tag/loader")
+  //     .end();
+  // },
 };

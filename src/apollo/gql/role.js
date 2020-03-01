@@ -255,3 +255,12 @@ export const InsertRole = gql`
     }
   }
 `;
+
+export const DeleteRole = gql`
+  mutation DeleteRole($id: Int!) {
+    __typename
+    delete_role(where: { id: { _eq: $id } }) {
+      affected_rows
+    }
+  }
+`;
