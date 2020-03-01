@@ -1,5 +1,7 @@
 # aginun
 
+You can find all information about this project in [the wiki](https://github.com/xrnl/aginun/wiki)
+
 ## Project setup
 ```
 npm install
