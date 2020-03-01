@@ -1,4 +1,4 @@
-import { GetRoles, GetRolesPassingVariables, GetFilter } from "../gql/role.gql";
+import { GetRoles, GetFilter } from "../gql/role.gql";
 import gql from "graphql-tag";
 
 /**
@@ -24,7 +24,7 @@ const query2 = gql`
 `;
 
 export const filtered = async (_, variables, { client }) => {
-  console.log("FILTERED ROLES", variables);
+  // console.log("FILTERED ROLES", variables);
 
   const {
     roleData: { filter },

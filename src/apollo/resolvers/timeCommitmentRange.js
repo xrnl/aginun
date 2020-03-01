@@ -47,6 +47,7 @@ export const timeCommitmentRange = async (...[, , { cache, client }]) => {
   });
 
   // update the filter: set the default commitment range to the full time range
+  // not sure if this is a good way to do it but it works
   updateRoleFilter({}, { timeCommitment: range }, { cache, client });
 
   return range;

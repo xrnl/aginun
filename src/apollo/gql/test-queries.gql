@@ -39,3 +39,71 @@ query GetRoles_cant_be_used(
     ...RoleFragment
   }
 }
+
+query GetFilteredRoles {
+  getRoleData @client {
+    filtered {
+      roles {
+        ...RoleFragment
+      }
+    }
+  }
+}
+
+query GetRoleData {
+  roleData @client {
+    filter {
+      # ...RoleFilterFragment
+      limit
+      searchString
+      selectedLocalGroups
+      selectedWorkingGroups
+      selectedTimeCommitmentMin
+      selectedTimeCommitmentMax
+    }
+    amount
+    filtered {
+      roles {
+        ...RoleFragment
+      }
+    }
+    timeCommitmentRange
+  }
+}
+
+query UpdateFilter {
+  roleData @client {
+    filter
+  }
+}
+
+query GetRoleLimit {
+  roleData @client {
+    amount
+    filter {
+      limit
+    }
+  }
+}
+
+query TimeCommitmentRanges {
+  time_commitment_ranges {
+    range
+  }
+}
+
+mutation UpdateRoles($roles: [role]) {
+  updateRoles(roles: $roles) @client
+}
+
+mutation UpdateRoleFilterLocalGroups($names: [String!]) {
+  updateRoleFilter(names: $names) @client
+}
+
+mutation UpdateTimeCommitment($timeCommitment: [Int!]) {
+  updateTimeCommitmentRole(timeCommitment: $timeCommitment) @client
+}
+
+mutation UpdateWorkingGroups($names: [String!]) {
+  updateWorkingGroups(names: $names) @client
+}

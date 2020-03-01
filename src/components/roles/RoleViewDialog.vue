@@ -152,7 +152,7 @@
 import FlexWrapper from "../layout/FlexWrapper";
 import IconLink from "@/components/IconLink";
 import MetaInfo from "../layout/MetaInfo";
-import { RoleAllInfoServer, RoleDetailClient } from "@/apollo/gql/role.gql";
+import { RoleDetailClient } from "@/apollo/gql/role.gql";
 export default {
   components: {
     FlexWrapper,

@@ -1,6 +1,6 @@
 import { GetFilter } from "../gql/role.gql";
 import { LocalGroups, WorkingGroups } from "../gql/other.gql";
-import { getRoleData } from "./getRoleData";
+// import { getRoleData } from "./getRoleData";
 
 // utility functions that maps the names of the groups in the dropdown boxes in the drawer
 // to their corresponding ids in the database
