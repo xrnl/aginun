@@ -46,8 +46,8 @@ export const GetTimeCommitmentRangeRole = gql`
   }
 `;
 
-export const GetFilter = gql`
-  query GetFilter {
+export const GetRoleFilter = gql`
+  query GetRoleFilter {
     roleData @client {
       filter {
         # ...RoleFilterFragment

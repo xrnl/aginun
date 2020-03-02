@@ -64,7 +64,7 @@ import GridList from "@/components/layout/GridList.vue";
 import RoleFilters from "@/components/roles/RoleFilters.vue";
 import {
   GetRoles,
-  GetFilter,
+  GetRoleFilter,
   RoleAmount,
   ClearRoleFilter,
 } from "@/apollo/gql/role";
@@ -83,7 +83,7 @@ export default {
     NewItemDialog,
   },
   // beforeCreate() {
-  //   console.log(GetRoles, GetFilter, RoleAmount, ClearRoleFilter);
+  //   console.log(GetRoles, GetRoleFilter, RoleAmount, ClearRoleFilter);
   // },
   data: () => ({
     newRoleDialog: false,
@@ -93,7 +93,7 @@ export default {
   }),
   apollo: {
     filter: {
-      query: GetFilter,
+      query: GetRoleFilter,
       update: data => data.roleData.filter,
     },
     filtered: {

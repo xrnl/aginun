@@ -52,7 +52,7 @@ import { NavbarHeight, LocalGroups, WorkingGroups } from "@/apollo/gql/other";
 import {
   // queries
   GetTimeCommitmentRangeRole,
-  GetFilter,
+  GetRoleFilter,
   // mutations
   UpdateRoleFilter,
   ClearRoleFilter,
@@ -74,7 +74,7 @@ export default {
   // beforeCreate() {
   //   console.log(
   //     GetTimeCommitmentRangeRole,
-  //     GetFilter,
+  //     GetRoleFilter,
   //     UpdateRoleFilter,
   //     ClearRoleFilter
   //   );
@@ -85,7 +85,7 @@ export default {
       update: data => data.navbarHeight,
     },
     filter: {
-      query: GetFilter,
+      query: GetRoleFilter,
       update: data => {
         // console.log("FILTER", data);
         const {

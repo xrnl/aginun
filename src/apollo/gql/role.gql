@@ -68,7 +68,7 @@ query GetTimeCommitmentRangeRole {
   }
 }
 
-query GetFilter {
+query GetRoleFilter {
   roleData @client {
     filter {
       # ...RoleFilterFragment

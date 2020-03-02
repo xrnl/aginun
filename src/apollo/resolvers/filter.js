@@ -1,10 +1,10 @@
-import { GetFilter } from "../gql/role";
+import { GetRoleFilter } from "../gql/role";
 
 export const filter = (...[, , { client }]) => {
   const {
     roleData: { filter },
   } = client.readQuery({
-    query: GetFilter,
+    query: GetRoleFilter,
   });
 
   return {

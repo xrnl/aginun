@@ -1,4 +1,4 @@
-import { GetFilter } from "../gql/role";
+import { GetRoleFilter } from "../gql/role";
 import { LocalGroups, WorkingGroups } from "../gql/other";
 // import { getRoleData } from "./getRoleData";
 
@@ -50,7 +50,7 @@ export const updateRoleFilter = (
   const {
     roleData: { filter },
   } = cache.readQuery({
-    query: GetFilter,
+    query: GetRoleFilter,
   });
 
   if (localGroups) {
@@ -87,7 +87,7 @@ export const updateRoleFilter = (
   filter.__typename = "Filter";
 
   client.writeQuery({
-    query: GetFilter,
+    query: GetRoleFilter,
     data: {
       roleData: {
         id: "data",

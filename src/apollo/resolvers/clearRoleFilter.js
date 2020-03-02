@@ -1,4 +1,4 @@
-import { GetFilter } from "../gql/role";
+import { GetRoleFilter } from "../gql/role";
 
 export const clearRoleFilter = (...[, , { client }]) => {
   const filter = {
@@ -13,7 +13,7 @@ export const clearRoleFilter = (...[, , { client }]) => {
   };
 
   client.writeQuery({
-    query: GetFilter,
+    query: GetRoleFilter,
     data: {
       roleData: {
         id: "data",

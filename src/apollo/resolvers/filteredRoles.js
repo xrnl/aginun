@@ -1,4 +1,4 @@
-import { GetRoles, GetFilter } from "../gql/role";
+import { GetRoles, GetRoleFilter } from "../gql/role";
 import gql from "graphql-tag";
 
 /**
@@ -29,7 +29,7 @@ export const filtered = async (_, variables, { client }) => {
   const {
     roleData: { filter },
   } = client.readQuery({
-    query: GetFilter,
+    query: GetRoleFilter,
   });
 
   delete filter.id;
