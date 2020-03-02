@@ -6,7 +6,7 @@ import {
   createApolloClient,
   restartWebsockets,
 } from "vue-cli-plugin-apollo/graphql-client";
-import * as typeDefs from "@/apollo/gql/typedefs.gql";
+import * as typeDefs from "@/apollo/gql/typedefs";
 import { resolvers } from "./resolvers";
 
 // Install the vue plugin
