@@ -178,3 +178,26 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.v-card {
+  &.theme--light {
+    .v-card__text {
+      color: #222;
+    }
+  }
+  &.theme--dark {
+    .v-card__text {
+      color: white !important;
+    }
+  }
+}
+
+.subHeader {
+  font-size: 0.83em;
+}
+
+.boldTitle {
+  font-size: 1.5rem !important;
+  font-weight: bold;
+}
+</style>
