@@ -45,9 +45,19 @@
               :error-messages="errors"
             />
           </validation-provider>
-          <p style="color: gray" class="caption">
-            Responsibilities
-          </p>
+          <validation-provider
+            v-slot="{ errors }"
+            rules="required|max:1000"
+            name="description"
+          >
+            <v-textarea
+              v-model="description"
+              label="Description"
+              placeholder="Purpose of the task and how to complete it. 
+You can also include other relevant information such as the circle or the project that the task is needed for."
+              :error-messages="errors"
+            />
+          </validation-provider>
           <validation-provider
             v-slot="{ errors }"
             rules="max:1000"
@@ -57,20 +67,6 @@
               v-model="requirements"
               label="Requirements (optional)"
               placeholder="Skills, experience, equipment"
-              :error-messages="errors"
-            />
-          </validation-provider>
-          <validation-provider
-            v-slot="{ errors }"
-            rules="max:1000"
-            name="description"
-          >
-            <v-textarea
-              v-model="description"
-              label="Description (optional)"
-              placeholder="Any additional information not specified in the set of responsibilities.
-        
-This can include information about the circle or the specific project that the task is needed for."
               :error-messages="errors"
             />
           </validation-provider>
@@ -214,8 +210,6 @@ extend("mattermost", {
 
 let initialState = () => ({
   title: undefined,
-  newResponsibility: undefined,
-  responsibilities: [],
   description: undefined,
   requirements: undefined,
   timeCommitment: undefined,
@@ -243,36 +237,14 @@ export default {
     ...mapState("meta", ["taskTimeCommitments"]),
     ...mapState("localGroups", ["localGroups"]),
     ...mapState("workingGroups", ["workingGroups"]),
-    errorResponsibility: function() {
-      const maxCharsResponsibility = 200;
-      if (this.newResponsibility) {
-        if (this.responsibilities.length == 10) {
-          return "You can enter a maximum of 10 responsibilities";
-        }
-        if (this.newResponsibility.length > maxCharsResponsibility) {
-          return `The responsibility must be under ${maxCharsResponsibility} characters.`;
-        }
-      }
-      return null;
-    },
-    validResponsibility: function() {
-      return !this.isEmpty(this.newResponsibility) && !this.errorResponsibility;
-    },
   },
   methods: {
     ...mapActions("tasks", ["addTask"]),
-    addResponsibility: function() {
-      if (this.validResponsibility) {
-        this.responsibilities.push(this.newResponsibility);
-        this.newResponsibility = undefined;
-      }
-    },
     resetState: function() {
       Object.assign(this.$data, initialState());
     },
     publishTask: function() {
       const task = JSON.parse(JSON.stringify(this.$data));
-      delete task["newResponsibility"];
 
       this.addTask(task);
 

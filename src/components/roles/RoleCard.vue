@@ -18,6 +18,11 @@
         <span class="overline text-uppercase">hours / week</span>
       </span>
     </template>
+    <template #action>
+      <v-btn text dark color="primary" :to="`roles/view/${role.id}`">
+        Read More
+      </v-btn>
+    </template>
   </default-card>
 </template>
 

@@ -97,18 +97,6 @@
           <validation-provider
             v-slot="{ errors }"
             rules="max:1000"
-            name="requirements"
-          >
-            <v-textarea
-              v-model="requirements"
-              label="Requirements (optional)"
-              placeholder="Skills, experience, equipment"
-              :error-messages="errors"
-            />
-          </validation-provider>
-          <validation-provider
-            v-slot="{ errors }"
-            rules="max:1000"
             name="description"
           >
             <v-textarea
@@ -120,6 +108,19 @@ This can include information about the circle or the specific project that the r
               :error-messages="errors"
             />
           </validation-provider>
+          <validation-provider
+            v-slot="{ errors }"
+            rules="max:1000"
+            name="requirements"
+          >
+            <v-textarea
+              v-model="requirements"
+              label="Requirements (optional)"
+              placeholder="Skills, experience, equipment"
+              :error-messages="errors"
+            />
+          </validation-provider>
+
           <validation-provider
             v-slot="{ errors }"
             rules="requiredSelect"

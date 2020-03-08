@@ -13,6 +13,7 @@
     <div v-if="$vuetify.breakpoint.smAndDown" class="mb-8">
       <v-divider />
       <div class="d-flex justify-end pa-3">
+        <new-item-button label="New Task" @click="showNewTaskDialog" />
         <v-btn text color="primary" @click="isDrawerOpen = true">
           Filter
         </v-btn>
