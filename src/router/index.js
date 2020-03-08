@@ -4,6 +4,7 @@ import VueRouter from "vue-router";
 import RolesOverview from "../views/RolesOverview.vue";
 import RoleViewDialog from "../components/roles/RoleViewDialog.vue";
 import TasksOverview from "../views/TaskOverview.vue";
+import TaskViewDialog from "../components/tasks/TaskViewDialog.vue";
 // import UserProfile from "../views/UserProfile.vue";
 // import UserSettings from "../views/UserSettings.vue";
 // import GroupsOverview from "../views/GroupsOverview.vue";
@@ -25,6 +26,7 @@ const routes = [
     path: "/tasks",
     name: "tasksOverview",
     component: TasksOverview,
+    children: [{ path: "view/:id", component: TaskViewDialog }],
   },
   // {
   //   path: "/user/:username",

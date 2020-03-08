@@ -16,7 +16,7 @@
       </span>
     </template>
     <template #action>
-      <v-btn text dark color="primary">
+      <v-btn text dark color="primary" :to="`tasks/view/${task.id}`">
         Read More
       </v-btn>
     </template>

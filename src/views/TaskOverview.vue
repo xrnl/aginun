@@ -1,5 +1,6 @@
 <template>
   <page-with-drawer :is-drawer-open="isDrawerOpen">
+    <router-view :key="$route.fullPath" />
     <div class="text-center my-8">
       <h1>
         Find tasks at
