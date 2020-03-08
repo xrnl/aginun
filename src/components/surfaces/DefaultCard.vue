@@ -1,6 +1,12 @@
 <template>
   <v-hover v-slot:default="{ hover }">
-    <v-card :elevation="hover ? 12 : 2" width="300" height="200" class="card">
+    <v-card
+      :elevation="hover ? 12 : 2"
+      width="300"
+      height="200"
+      class="card"
+      v-bind="$attrs"
+    >
       <div
         class="transition-wrapper d-flex flex-column full-height"
         :class="{ lighter: hover && $vuetify.theme.dark }"

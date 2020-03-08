@@ -1,5 +1,5 @@
 <template>
-  <default-card>
+  <default-card :to="`tasks/view/${task.id}`">
     <template #title>
       {{ task.title }}
     </template>
@@ -14,11 +14,6 @@
         </span>
         <span class="overline text-uppercase">hours</span>
       </span>
-    </template>
-    <template #action>
-      <v-btn text dark color="primary" :to="`tasks/view/${task.id}`">
-        Read More
-      </v-btn>
     </template>
   </default-card>
 </template>

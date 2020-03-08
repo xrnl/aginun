@@ -1,5 +1,5 @@
 <template>
-  <default-card>
+  <default-card :to="`roles/view/${role.id}`">
     <template #header>
       {{ role.workingGroup.text }}
     </template>
@@ -17,11 +17,6 @@
         </span>
         <span class="overline text-uppercase">hours / week</span>
       </span>
-    </template>
-    <template #action>
-      <v-btn text dark color="primary" :to="`roles/view/${role.id}`">
-        Read More
-      </v-btn>
     </template>
   </default-card>
 </template>
