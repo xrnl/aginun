@@ -1,6 +1,7 @@
 <template>
   <page-with-drawer :is-drawer-open="isDrawerOpen">
     <router-view :key="$route.fullPath" />
+    <new-role-dialog v-model="newRoleDialog" />
     <div class="text-center my-8">
       <h1>
         Find roles at
@@ -9,11 +10,11 @@
         </strong>
       </h1>
     </div>
-    <new-item-dialog v-model="newRoleDialog" />
+
     <div v-if="isMobile" class="mb-8">
       <v-divider />
       <div class="d-flex justify-space-between pa-3">
-        <new-item-button @click="showNewRoleDialog" />
+        <new-item-button label="New Role" @click="showNewRoleDialog" />
         <v-btn text color="primary" @click="isDrawerOpen = true">
           Filter
         </v-btn>
@@ -53,7 +54,7 @@
           :role-amount="filteredRoles.length"
         />
         <div v-if="!isMobile" class="text-center mt-4">
-          <new-item-button @click="showNewRoleDialog" />
+          <new-item-button label="New Role" @click="showNewRoleDialog" />
         </div>
       </default-drawer>
     </template>
@@ -68,7 +69,7 @@ import GridList from "@/components/layout/GridList.vue";
 import RoleFilters from "@/components/roles/RoleFilters.vue";
 import { mapGetters } from "vuex";
 import NewItemButton from "@/components/NewItemButton";
-import NewItemDialog from "@/components/NewItemDialog";
+import NewRoleDialog from "@/components/roles/NewRoleDialog";
 
 export default {
   name: "RolesOverview",
@@ -79,7 +80,7 @@ export default {
     GridList,
     DefaultDrawer,
     NewItemButton,
-    NewItemDialog,
+    NewRoleDialog,
   },
   data: () => ({
     newRoleDialog: false,

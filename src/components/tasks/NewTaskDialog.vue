@@ -1,9 +1,9 @@
 <template>
   <v-dialog :value="value" width="600px" @input="$emit('input', false)">
     <v-card class="pa-4">
-      <h2>New role</h2>
+      <h2>New Task</h2>
       <validation-observer ref="form" v-slot="{ invalid, handleSubmit }">
-        <form @submit.prevent="handleSubmit(publishRole)">
+        <form @submit.prevent="handleSubmit(publishTask)">
           <validation-provider
             v-slot="{ errors }"
             rules="required|alpha_spaces|max:30"
@@ -50,52 +50,6 @@
           </p>
           <validation-provider
             v-slot="{ errors }"
-            :rules="`${responsibilities.length < 1 ? 'requiredList' : ''}`"
-            mode="eager"
-            name="responsibility"
-          >
-            <v-text-field
-              v-model="newResponsibility"
-              label="Add new responsibility"
-              solo
-              :error-messages="errorResponsibility || errors"
-              @keypress.enter="addResponsibility"
-            >
-              <template v-slot:append>
-                <v-btn
-                  text
-                  icon
-                  small
-                  color="primary"
-                  :disabled="!validResponsibility"
-                  @click="addResponsibility"
-                >
-                  <v-icon>mdi-plus</v-icon>
-                </v-btn>
-              </template>
-            </v-text-field>
-          </validation-provider>
-          <v-card v-if="responsibilities.length > 0" class="mb-4">
-            <template v-for="(responsibility, i) in responsibilities">
-              <v-divider v-if="i !== 0" :key="`${i}-divider`" />
-              <v-list-item
-                :key="`${i}-${responsibility}`"
-                class="d-flex justify-space-between"
-              >
-                <span>{{ responsibility }}</span>
-                <v-btn
-                  text
-                  icon
-                  color="gray"
-                  @click="responsibilities.splice(i, 1)"
-                >
-                  <v-icon>mdi-close</v-icon>
-                </v-btn>
-              </v-list-item>
-            </template>
-          </v-card>
-          <validation-provider
-            v-slot="{ errors }"
             rules="max:1000"
             name="requirements"
           >
@@ -116,7 +70,7 @@
               label="Description (optional)"
               placeholder="Any additional information not specified in the set of responsibilities.
         
-This can include information about the circle or the specific project that the role is needed for."
+This can include information about the circle or the specific project that the task is needed for."
               :error-messages="errors"
             />
           </validation-provider>
@@ -127,17 +81,19 @@ This can include information about the circle or the specific project that the r
           >
             <v-select
               v-model="timeCommitment"
-              :items="roleTimeCommitments"
+              :items="taskTimeCommitments"
               item-value="min"
               return-object
               label="Time commitment"
               :error-messages="errors"
             >
               <template v-slot:item="{ item }">
-                {{ item.min }} - {{ item.max }} hours/week
+                {{ item.min }} <span v-if="item.max">-</span>
+                {{ item.max }} hours
               </template>
               <template v-slot:selection="{ item }">
-                {{ item.min }} - {{ item.max }} hours/week
+                {{ item.min }} <span v-if="item.max">-</span>
+                {{ item.max }} hours
               </template>
             </v-select>
           </validation-provider>
@@ -271,7 +227,7 @@ let initialState = () => ({
 });
 
 export default {
-  name: "NewItemDialog",
+  name: "NewTaskDialog",
   components: {
     ValidationProvider,
     ValidationObserver,
@@ -284,7 +240,7 @@ export default {
   },
   data: () => initialState(),
   computed: {
-    ...mapState("meta", ["roleTimeCommitments"]),
+    ...mapState("meta", ["taskTimeCommitments"]),
     ...mapState("localGroups", ["localGroups"]),
     ...mapState("workingGroups", ["workingGroups"]),
     errorResponsibility: function() {
@@ -304,7 +260,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("roles", ["addRole"]),
+    ...mapActions("tasks", ["addTask"]),
     addResponsibility: function() {
       if (this.validResponsibility) {
         this.responsibilities.push(this.newResponsibility);
@@ -314,11 +270,11 @@ export default {
     resetState: function() {
       Object.assign(this.$data, initialState());
     },
-    publishRole: function() {
-      const role = JSON.parse(JSON.stringify(this.$data));
-      delete role["newResponsibility"];
+    publishTask: function() {
+      const task = JSON.parse(JSON.stringify(this.$data));
+      delete task["newResponsibility"];
 
-      this.addRole(role);
+      this.addTask(task);
 
       this.$emit("input", false);
       this.resetState();

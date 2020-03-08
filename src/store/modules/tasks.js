@@ -109,16 +109,11 @@ export default {
       });
     },
     getByID: state => id => state.tasks.find(task => task.id == id),
+    lastId: state => state.tasks.slice(-1)[0].id,
   },
   mutations: {
-    addTask(state, { title, groupId }) {
-      // TODO: obtain new task id from db (in an action instead of mutation)
-      const newId = state.tasks[state.tasks.length - 1].id + 1;
-      state.tasks.push({
-        id: newId,
-        title: title,
-        groupId: groupId,
-      });
+    addTask: function(state, newTask) {
+      state.tasks.push(newTask);
     },
     deleteTask(state, id) {
       const { index } = findWithIndex(state.tasks, id);
@@ -135,5 +130,10 @@ export default {
       state.tasks.splice(index, 1, task);
     },
   },
-  actions: {},
+  actions: {
+    addTask: function(context, newTask) {
+      newTask.id = context.getters.lastId + 1;
+      context.commit("addTask", newTask);
+    },
+  },
 };

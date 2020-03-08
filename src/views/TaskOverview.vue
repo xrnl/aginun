@@ -1,6 +1,7 @@
 <template>
   <page-with-drawer :is-drawer-open="isDrawerOpen">
     <router-view :key="$route.fullPath" />
+    <new-task-dialog v-model="newTaskDialog" />
     <div class="text-center my-8">
       <h1>
         Find tasks at
@@ -50,6 +51,9 @@
           :selected-filters="selectedFilters"
           :role-amount="filteredTasks.length"
         />
+        <div v-if="!isMobile" class="text-center mt-4">
+          <new-item-button label="New Task" @click="showNewTaskDialog" />
+        </div>
       </default-drawer>
     </template>
   </page-with-drawer>
@@ -60,6 +64,8 @@ import DefaultDrawer from "@/components/layout/DefaultDrawer.vue";
 import GridList from "@/components/layout/GridList.vue";
 import TaskCard from "@/components/tasks/TaskCard.vue";
 import PageWithDrawer from "@/components/layout/PageWithDrawer.vue";
+import NewTaskDialog from "@/components/tasks/NewTaskDialog.vue";
+import NewItemButton from "@/components/NewItemButton.vue";
 import { mapGetters } from "vuex";
 export default {
   name: "TasksOverview",
@@ -69,9 +75,12 @@ export default {
     GridList,
     TaskCard,
     DefaultDrawer,
+    NewTaskDialog,
+    NewItemButton,
   },
   data: () => ({
     isDrawerOpen: null,
+    newTaskDialog: false,
     selectedFilters: {
       text: "",
       localGroup: [],
@@ -101,6 +110,9 @@ export default {
     },
     handleCloseDrawer: function() {
       this.isDrawerOpen = false;
+    },
+    showNewTaskDialog: function() {
+      this.newTaskDialog = true;
     },
   },
 };
