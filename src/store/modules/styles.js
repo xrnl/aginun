@@ -1,5 +1,5 @@
 export default {
   state: {
-    navbarHeight: '64px'
-  }
-}
+    navbarHeight: "64px",
+  },
+};

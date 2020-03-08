@@ -6,8 +6,8 @@
     small-chips
     multiple
     class="mt-3"
-    @change="$emit('change', $event)"
     :label="label"
+    @change="$emit('change', $event)"
   >
     <!-- <template v-slot:selection="data">
       <v-chip
