@@ -1,5 +1,5 @@
 <template>
-  <default-card>
+  <default-card :to="`roles/view/${role.id}`">
     <template #header>
       {{ role.workingGroup.text }}
     </template>

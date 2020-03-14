@@ -60,7 +60,7 @@
           </flex-wrapper>
         </v-card-title>
         <v-divider />
-        <v-card-text class="pt-3 pb-0 solidFont">
+        <v-card-text class="pt-3 pb-0">
           <flex-wrapper>
             <div>
               <meta-info
@@ -180,14 +180,17 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped>
-.solidFont {
-  color: rgba(0, 0, 0, 0.87) !important;
-}
-
-.theme--dark {
-  .solidFont {
-    color: white !important;
+<style lang="scss">
+.v-card {
+  &.theme--light {
+    .v-card__text {
+      color: #222;
+    }
+  }
+  &.theme--dark {
+    .v-card__text {
+      color: white !important;
+    }
   }
 }
 

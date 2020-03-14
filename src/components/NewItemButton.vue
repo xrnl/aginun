@@ -2,7 +2,7 @@
   <icon-button
     color="primary"
     icon="mdi-plus"
-    text="New role"
+    :text="label"
     @click="$emit('click')"
   />
 </template>
@@ -14,6 +14,12 @@ export default {
   name: "NewItemButton",
   components: {
     IconButton,
+  },
+  props: {
+    label: {
+      type: String,
+      required: true,
+    },
   },
 };
 </script>
