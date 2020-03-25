@@ -127,6 +127,7 @@ export default {
       },
     ],
     timeCommitment: { min: 1, max: 30 },
+    loading: true,
   },
   getters: {
     getByFilters: state => ({ text, workingGroup, localGroup }) => {
@@ -160,14 +161,18 @@ export default {
     addRole: function(state, newRole) {
       state.roles.push(newRole);
     },
+    setLoading(state, loading) {
+      state.loading = loading;
+    },
   },
   actions: {
     addRole: function(context, newRole) {
       newRole.id = context.getters.lastId + 1;
       context.commit("addRole", newRole);
     },
-    async test() {
-      const response = apolloClient.query({
+    async test({ commit }) {
+      commit("setLoading", true);
+      const response = await apolloClient.query({
         query: gql`
           {
             role {
@@ -177,8 +182,10 @@ export default {
           }
         `,
       });
+
       // eslint-disable-next-line no-console
-      response.then(r => console.log(r.data));
+      console.log(response.data);
+      commit("setLoading", false);
     },
   },
 };

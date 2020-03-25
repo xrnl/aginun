@@ -20,13 +20,18 @@
       </div>
       <v-divider />
     </div>
-    <grid-list v-if="filteredRoles.length > 0" gap="2rem">
-      <role-card v-for="role in filteredRoles" :key="role.id" :role="role" />
-    </grid-list>
-    <div v-else class="pa-5 text-center">
-      <h3>No results.</h3>
-      <p>Try removing filters.</p>
-    </div>
+    <p v-if="loading">
+      loading ...
+    </p>
+    <template v-else>
+      <grid-list v-if="filteredRoles.length > 0" gap="2rem">
+        <role-card v-for="role in filteredRoles" :key="role.id" :role="role" />
+      </grid-list>
+      <div v-else class="pa-5 text-center">
+        <h3>No results.</h3>
+        <p>Try removing filters.</p>
+      </div>
+    </template>
     <template v-slot:drawer>
       <default-drawer @close-drawer="handleCloseDrawer">
         <template #header>
@@ -66,7 +71,7 @@ import PageWithDrawer from "@/components/layout/PageWithDrawer.vue";
 import RoleCard from "@/components/roles/RoleCard.vue";
 import GridList from "@/components/layout/GridList.vue";
 import RoleFilters from "@/components/roles/RoleFilters.vue";
-import { mapGetters } from "vuex";
+import { mapState, mapGetters } from "vuex";
 import NewItemButton from "@/components/NewItemButton";
 import NewItemDialog from "@/components/NewItemDialog";
 
@@ -92,6 +97,7 @@ export default {
     },
   }),
   computed: {
+    ...mapState("roles", ["loading"]),
     ...mapGetters("roles", ["getByFilters"]),
     filteredRoles: function() {
       return this.getByFilters(this.selectedFilters);
