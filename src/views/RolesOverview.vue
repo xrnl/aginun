@@ -105,6 +105,9 @@ export default {
       this.isDrawerOpen = !this.isMobile;
     },
   },
+  beforeCreate() {
+    this.$store.dispatch("roles/test");
+  },
   created: function() {
     this.isDrawerOpen = !this.isMobile;
   },

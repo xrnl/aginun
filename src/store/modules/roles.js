@@ -1,3 +1,6 @@
+import gql from "graphql-tag";
+import { apolloClient } from "@/vue-apollo";
+
 export default {
   state: {
     roles: [
@@ -162,6 +165,20 @@ export default {
     addRole: function(context, newRole) {
       newRole.id = context.getters.lastId + 1;
       context.commit("addRole", newRole);
+    },
+    async test() {
+      const response = apolloClient.query({
+        query: gql`
+          {
+            role {
+              id
+              name
+            }
+          }
+        `,
+      });
+      // eslint-disable-next-line no-console
+      response.then(r => console.log(r.data));
     },
   },
 };
