@@ -19,15 +19,15 @@
                 {{ role.title }}
               </h2>
               <flex-wrapper
-                v-if="role.workingGroup || role.localGroup"
+                v-if="role.workingCircle || role.localGroup"
                 class="subHeader"
                 classes="flex-wrap"
               >
                 <span>
-                  {{ !!role.workingGroup && role.workingGroup.text }}
+                  {{ !!role.workingCircle && role.workingCircle.text }}
                 </span>
                 <span
-                  v-if="!!role.workingGroup && !!role.localGroup"
+                  v-if="!!role.workingCircle && !!role.localGroup"
                   style="margin: 0 0.25rem;"
                 >
                   -

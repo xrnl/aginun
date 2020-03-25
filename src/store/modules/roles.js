@@ -8,7 +8,7 @@ export default {
       {
         id: 1,
         title: "Facilitator",
-        workingGroup: { text: "Action and Logistics", value: 5 },
+        workingCircle: { text: "Action and Logistics", value: 5 },
         localGroup: { text: "XR Zwolle", value: 19 },
         location: "Zwolle",
         timeCommitment: {
@@ -28,7 +28,7 @@ export default {
       {
         id: 2,
         title: "Representative",
-        workingGroup: { text: "Political Strategy", value: 3 },
+        workingCircle: { text: "Political Strategy", value: 3 },
         localGroup: { text: "XR Amsterdam", value: 1 },
         location: "Amsterdam",
         timeCommitment: {
@@ -48,7 +48,7 @@ export default {
       {
         id: 3,
         title: "Photographer",
-        workingGroup: { text: "Media and Communication", value: 1 },
+        workingCircle: { text: "Media and Communication", value: 1 },
         localGroup: { text: "XR NL", value: 20 },
         location: "Amsterdam",
         timeCommitment: {
@@ -68,7 +68,7 @@ export default {
       {
         id: 4,
         title: "Fundraiser",
-        workingGroup: { text: "Finance", value: 7 },
+        workingCircle: { text: "Finance", value: 7 },
         localGroup: { text: "XR NL", value: 20 },
         location: "Amsterdam",
         timeCommitment: {
@@ -88,7 +88,7 @@ export default {
       {
         id: 5,
         title: "Lawyer",
-        workingGroup: { text: "Legal", value: 9 },
+        workingCircle: { text: "Legal", value: 9 },
         localGroup: { text: "XR NL", value: 20 },
         location: "Amsterdam",
         timeCommitment: {
@@ -108,7 +108,7 @@ export default {
       {
         id: 6,
         title: "Action coordinator",
-        workingGroup: { text: "Action and Logistics", value: 5 },
+        workingCircle: { text: "Action and Logistics", value: 5 },
         localGroup: { text: "XR Den Haag", value: 6 },
         location: "Den Haag",
         timeCommitment: {
@@ -130,7 +130,7 @@ export default {
     loading: true,
   },
   getters: {
-    getByFilters: state => ({ text, workingGroup, localGroup }) => {
+    getByFilters: state => ({ text, workingCircle, localGroup }) => {
       // need to make this more resilient and generic, this will get out of hand quickly, but ok for testing
       return state.roles.filter(role => {
         if (
@@ -140,8 +140,8 @@ export default {
           return false;
         }
         if (
-          workingGroup.length > 0 &&
-          !workingGroup.includes(role.workingGroup.value)
+          workingCircle.length > 0 &&
+          !workingCircle.includes(role.workingCircle.value)
         ) {
           return false;
         }

@@ -1,7 +1,7 @@
 <template>
   <default-card>
     <template #header>
-      {{ role.workingGroup.text }}
+      {{ role.workingCircle.text }}
     </template>
     <template #title>
       {{ role.title }}
@@ -48,8 +48,8 @@ export default {
           Number.isInteger(obj.id) &&
           has(obj, "title") &&
           typeof obj.title === "string" &&
-          has(obj, "workingGroup") &&
-          typeof obj.workingGroup === "string" &&
+          has(obj, "workingCircle") &&
+          typeof obj.workingCircle === "string" &&
           has(obj, "localGroup") &&
           typeof obj.localGroup === "string" &&
           has(obj, "location") &&

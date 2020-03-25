@@ -20,10 +20,10 @@
           @change="id => onSetFilter(id, 'localGroup')"
         />
         <autocomplete-custom
-          :value="selectedFilters.workingGroup"
-          :items="workingGroups"
+          :value="selectedFilters.workingCircle"
+          :items="workingCircles"
           label="Working Group"
-          @change="id => onSetFilter(id, 'workingGroup')"
+          @change="id => onSetFilter(id, 'workingCircle')"
         />
       </flex-wrapper>
     </filter-section>
@@ -70,7 +70,7 @@ export default {
   computed: {
     ...mapState("roles", ["timeCommitment"]),
     ...mapState("localGroups", ["localGroups"]),
-    ...mapState("workingGroups", ["workingGroups"]),
+    ...mapState("workingCircles", ["workingCircles"]),
   },
 };
 </script>

@@ -1,7 +1,7 @@
 export default {
   state: {
     //   Will put all of these on a server somewhere with actual id's
-    workingGroups: [
+    workingCircles: [
       { text: "Media and Communication", value: 1 },
       { text: "Outreach and Training", value: 2 },
       { text: "Political Strategy", value: 3 },
@@ -16,8 +16,8 @@ export default {
   getters: {
     filteredGroups: (state, text) => {
       const regex = RegExp(text, "i");
-      return state.workingGroups.filter(group => regex.test(group.text));
+      return state.workingCircles.filter(group => regex.test(group.text));
     },
-    getByID: (state, id) => state.workingGroups.find(group => group.id === id),
+    getByID: (state, id) => state.workingCircles.find(group => group.id === id),
   },
 };

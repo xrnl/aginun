@@ -36,8 +36,8 @@
             name="working group"
           >
             <v-select
-              v-model="workingGroup"
-              :items="workingGroups"
+              v-model="workingCircle"
+              :items="workingCircles"
               item-value="value"
               item-text="text"
               return-object
@@ -264,7 +264,7 @@ let initialState = () => ({
   requirements: undefined,
   timeCommitment: undefined,
   localGroup: undefined,
-  workingGroup: undefined,
+  workingCircle: undefined,
   email: undefined,
   mattermostId: undefined,
   phone: undefined,
@@ -286,7 +286,7 @@ export default {
   computed: {
     ...mapState("meta", ["roleTimeCommitments"]),
     ...mapState("localGroups", ["localGroups"]),
-    ...mapState("workingGroups", ["workingGroups"]),
+    ...mapState("workingCircles", ["workingCircles"]),
     errorResponsibility: function() {
       const maxCharsResponsibility = 200;
       if (this.newResponsibility) {

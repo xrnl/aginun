@@ -74,7 +74,7 @@ export default {
     selectedFilters: {
       text: "",
       localGroup: [],
-      workingGroup: [],
+      workingCircle: [],
     },
   }),
   computed: {
