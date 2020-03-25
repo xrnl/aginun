@@ -22,7 +22,7 @@
         <autocomplete-custom
           :value="selectedFilters.workingCircle"
           :items="workingCircles"
-          label="Working Group"
+          label="Working circle"
           @change="id => onSetFilter(id, 'workingCircle')"
         />
       </flex-wrapper>

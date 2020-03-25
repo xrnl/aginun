@@ -33,7 +33,7 @@
           <validation-provider
             v-slot="{ errors }"
             rules="requiredSelect"
-            name="working group"
+            name="working circle"
           >
             <v-select
               v-model="workingCircle"
@@ -41,7 +41,7 @@
               item-value="value"
               item-text="text"
               return-object
-              label="Working group"
+              label="Working circle"
               :error-messages="errors"
             />
           </validation-provider>
