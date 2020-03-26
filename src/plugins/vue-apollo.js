@@ -7,7 +7,7 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 Vue.use(VueApollo);
 
 const httpLink = createHttpLink({
-  uri: "https://xr-volunteer-app.herokuapp.com/v1/graphql",
+  uri: "http://178.62.229.109/v1/graphql",
 });
 
 const cache = new InMemoryCache();

@@ -112,6 +112,8 @@ export default {
     },
   },
   beforeCreate() {
+    // eslint-disable-next-line no-console
+    console.log(process.env.VUE_APP_API_KEY);
     this.$store.dispatch("roles/test");
   },
   created: function() {

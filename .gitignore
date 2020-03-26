@@ -22,3 +22,6 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+
+# hide VS Code Apollo GraphQL config file with API KEY
+apollo.config.js

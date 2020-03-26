@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { apolloClient } from "@/vue-apollo";
+import { apolloClient } from "@/plugins/vue-apollo";
 
 export default {
   state: {
@@ -174,10 +174,11 @@ export default {
       commit("setLoading", true);
       const response = await apolloClient.query({
         query: gql`
-          {
-            role {
+          query roles {
+            roles {
               id
-              name
+              title
+              description
             }
           }
         `,
