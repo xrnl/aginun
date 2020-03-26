@@ -3,129 +3,7 @@ import { apolloClient } from "@/plugins/vue-apollo";
 
 export default {
   state: {
-    roles: [
-      // Should find a good way to retrieve these from the server, maybe look into graphql?
-      {
-        id: 1,
-        title: "Facilitator",
-        workingCircle: { text: "Action and Logistics", value: 5 },
-        localGroup: { text: "XR Zwolle", value: 19 },
-        location: "Zwolle",
-        timeCommitment: {
-          min: 6,
-          max: 10,
-        },
-        description:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        requirements: "5 years of experience in sociocracy",
-        email: "rogerhallam@protonmail.com",
-        phone: "+31625548987",
-        mattermostId: "@sweetpotatoxr",
-        responsibilities: ["Do cool things", "attend meetings", "more..."],
-        dueDate: "2020-06-09T14:00:00+01:00",
-        publishedDate: "2020-01-09T14:00:00+01:00",
-      },
-      {
-        id: 2,
-        title: "Representative",
-        workingCircle: { text: "Political Strategy", value: 3 },
-        localGroup: { text: "XR Amsterdam", value: 1 },
-        location: "Amsterdam",
-        timeCommitment: {
-          min: 6,
-          max: 10,
-        },
-        description:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        requirements: "5 years of experience in sociocracy",
-        email: "rogerhallam@protonmail.com",
-        phone: "+31625548987",
-        mattermostId: "@sweetpotatoxr",
-        responsibilities: ["Do cool things", "attend meetings", "more..."],
-        dueDate: "2020-06-09T14:00:00+01:00",
-        publishedDate: "2020-01-09T14:00:00+01:00",
-      },
-      {
-        id: 3,
-        title: "Photographer",
-        workingCircle: { text: "Media and Communication", value: 1 },
-        localGroup: { text: "XR NL", value: 20 },
-        location: "Amsterdam",
-        timeCommitment: {
-          min: 1,
-          max: 5,
-        },
-        description:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        requirements: "5 years of experience in sociocracy",
-        email: "rogerhallam@protonmail.com",
-        phone: "+31625548987",
-        mattermostId: "@sweetpotatoxr",
-        responsibilities: ["Do cool things", "attend meetings", "more..."],
-        dueDate: "2020-06-09T14:00:00+01:00",
-        publishedDate: "2020-01-09T14:00:00+01:00",
-      },
-      {
-        id: 4,
-        title: "Fundraiser",
-        workingCircle: { text: "Finance", value: 7 },
-        localGroup: { text: "XR NL", value: 20 },
-        location: "Amsterdam",
-        timeCommitment: {
-          min: 11,
-          max: 20,
-        },
-        description:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        requirements: "5 years of experience in sociocracy",
-        email: "rogerhallam@protonmail.com",
-        phone: "+31625548987",
-        mattermostId: "@sweetpotatoxr",
-        responsibilities: ["Do cool things", "attend meetings", "more..."],
-        dueDate: "2020-06-09T14:00:00+01:00",
-        publishedDate: "2020-01-09T14:00:00+01:00",
-      },
-      {
-        id: 5,
-        title: "Lawyer",
-        workingCircle: { text: "Legal", value: 9 },
-        localGroup: { text: "XR NL", value: 20 },
-        location: "Amsterdam",
-        timeCommitment: {
-          min: 21,
-          max: 30,
-        },
-        description:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        requirements: "5 years of experience in sociocracy",
-        email: "rogerhallam@protonmail.com",
-        phone: "+31625548987",
-        mattermostId: "@sweetpotatoxr",
-        responsibilities: ["Do cool things", "attend meetings", "more..."],
-        dueDate: "2020-06-09T14:00:00+01:00",
-        publishedDate: "2020-01-09T14:00:00+01:00",
-      },
-      {
-        id: 6,
-        title: "Action coordinator",
-        workingCircle: { text: "Action and Logistics", value: 5 },
-        localGroup: { text: "XR Den Haag", value: 6 },
-        location: "Den Haag",
-        timeCommitment: {
-          min: 6,
-          max: 10,
-        },
-        description:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        requirements: "5 years of experience in sociocracy",
-        email: "rogerhallam@protonmail.com",
-        phone: "+31625548987",
-        mattermostId: "@sweetpotatoxr",
-        responsibilities: ["Do cool things", "attend meetings", "more..."],
-        dueDate: "2020-06-09T14:00:00+01:00",
-        publishedDate: "2020-01-09T14:00:00+01:00",
-      },
-    ],
+    roles: [],
     timeCommitment: { min: 1, max: 30 },
     loading: true,
   },
@@ -161,6 +39,9 @@ export default {
     addRole: function(state, newRole) {
       state.roles.push(newRole);
     },
+    setRoles(state, roles) {
+      state.roles = roles;
+    },
     setLoading(state, loading) {
       state.loading = loading;
     },
@@ -178,14 +59,29 @@ export default {
             roles {
               id
               title
+              responsibilities
               description
+              requirements
+              timeCommitmentMin
+              timeCommitmentMax
+              email
+              mattermostId
+              phone
+              createdDate
+              dueDate
+              workingCircle {
+                title
+                id
+              }
+              localGroup {
+                title
+                id
+              }
             }
           }
         `,
       });
-
-      // eslint-disable-next-line no-console
-      console.log(response.data);
+      commit("setRoles", response.data.roles);
       commit("setLoading", false);
     },
   },

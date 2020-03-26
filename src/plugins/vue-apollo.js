@@ -8,6 +8,9 @@ Vue.use(VueApollo);
 
 const httpLink = createHttpLink({
   uri: "http://178.62.229.109/v1/graphql",
+  headers: {
+    "x-hasura-admin-secret": process.env.VUE_APP_API_KEY,
+  },
 });
 
 const cache = new InMemoryCache();

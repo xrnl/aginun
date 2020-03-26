@@ -24,7 +24,7 @@
                 classes="flex-wrap"
               >
                 <span>
-                  {{ !!role.workingCircle && role.workingCircle.text }}
+                  {{ !!role.workingCircle && role.workingCircle.title }}
                 </span>
                 <span
                   v-if="!!role.workingCircle && !!role.localGroup"
@@ -33,7 +33,7 @@
                   -
                 </span>
                 <span>
-                  {{ !!role.localGroup && role.localGroup.text }}
+                  {{ !!role.localGroup && role.localGroup.title }}
                 </span>
               </flex-wrapper>
               <div v-if="role.publishedDate" style="line-height: 1rem">
@@ -82,8 +82,8 @@
                 v-if="!!role.timeCommitment"
                 title="Time Commitment"
                 :description="
-                  `${role.timeCommitment.min} -
-                ${role.timeCommitment.max} hours/week`
+                  `${role.timeCommitmentMin} -
+                ${role.timeCommitmentMax} hours/week`
                 "
               />
             </div>
