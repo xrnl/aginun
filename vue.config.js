@@ -9,4 +9,13 @@ module.exports = {
       patterns: [path.resolve(__dirname, "./src/styles/global.scss")],
     },
   },
+  chainWebpack: config => {
+    // GraphQL Loader
+    config.module
+      .rule("graphql")
+      .test(/\.(graphql|gql)$/)
+      .use("graphql-tag/loader")
+      .loader("graphql-tag/loader")
+      .end();
+  },
 };

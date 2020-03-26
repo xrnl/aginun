@@ -1,0 +1,22 @@
+fragment roleFields on role {
+  id
+  title
+  responsibilities
+  description
+  requirements
+  timeCommitmentMin
+  timeCommitmentMax
+  email
+  mattermostId
+  phone
+  createdDate
+  dueDate
+  workingCircle {
+    title
+    id
+  }
+  localGroup {
+    title
+    id
+  }
+}

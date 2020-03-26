@@ -1,5 +1,6 @@
 import gql from "graphql-tag";
 import { apolloClient } from "@/plugins/vue-apollo";
+import roleFields from "@/GraphQL/fragments.gql";
 
 export default {
   state: {
@@ -57,28 +58,10 @@ export default {
         query: gql`
           query roles {
             roles {
-              id
-              title
-              responsibilities
-              description
-              requirements
-              timeCommitmentMin
-              timeCommitmentMax
-              email
-              mattermostId
-              phone
-              createdDate
-              dueDate
-              workingCircle {
-                title
-                id
-              }
-              localGroup {
-                title
-                id
-              }
+              ...roleFields
             }
           }
+          ${roleFields}
         `,
       });
       commit("setRoles", response.data.roles);
