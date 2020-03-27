@@ -20,47 +20,37 @@
       </div>
       <v-divider />
     </div>
-    <div
-      v-if="isLoadingRoles"
-      class="d-flex flex-column justify-center align-center"
-    >
-      <p>
-        Loading roles
-      </p>
-      <scale-loader
-        :loading="isLoadingRoles"
-        :color="themeColor('shade')"
-        :radius="1"
-      />
-    </div>
-    <template v-else>
-      <template v-if="filteredRoles.length > 0">
-        <grid-list gap="2rem">
-          <role-card
-            v-for="role in filteredRoles"
-            :key="role.id"
-            :role="role"
-          />
-        </grid-list>
-        <infinite-loading
-          :identifier="infiniteScrollIdentifier"
-          spinner="waveDots"
-          @infinite="loadMoreRoles"
-        >
-          <!-- no message is shown when user has scrolled down to the last role -->
-          <template #no-results>
-            <span />
-          </template>
-          <template #no-more>
-            <span />
-          </template>
-        </infinite-loading>
-      </template>
-
-      <div v-else class="pa-5 text-center">
-        <h3>No results.</h3>
-        <p>Try removing filters.</p>
-      </div>
+    <template>
+      <grid-list gap="2rem">
+        <role-card v-for="role in filteredRoles" :key="role.id" :role="role" />
+      </grid-list>
+      <infinite-loading
+        :identifier="infiniteScrollIdentifier"
+        spinner="waveDots"
+        @infinite="loadRoles"
+      >
+        <template #spinner>
+          <div class="d-flex flex-column justify-center align-center">
+            <p>
+              Loading roles
+            </p>
+            <scale-loader
+              :loading="true"
+              :color="themeColor('shade')"
+              :radius="1"
+            />
+          </div>
+        </template>
+        <template #no-results>
+          <div class="pa-5 text-center">
+            <h3>No results.</h3>
+            <p>Try removing filters.</p>
+          </div>
+        </template>
+        <template #no-more>
+          <span />
+        </template>
+      </infinite-loading>
     </template>
     <template v-slot:drawer>
       <default-drawer @close-drawer="handleCloseDrawer">
@@ -131,7 +121,7 @@ export default {
     },
   }),
   computed: {
-    ...mapState("roles", ["isLoadingRoles", "infiniteScrollIdentifier"]),
+    ...mapState("roles", ["infiniteScrollIdentifier"]),
     ...mapGetters("roles", ["getByFilters"]),
     ...mapGetters("styles", ["themeColor"]),
     filteredRoles: function() {
@@ -146,14 +136,11 @@ export default {
       this.isDrawerOpen = !this.isMobile;
     },
   },
-  beforeCreate() {
-    this.$store.dispatch("roles/loadRoles");
-  },
   created: function() {
     this.isDrawerOpen = !this.isMobile;
   },
   methods: {
-    ...mapActions("roles", ["loadMoreRoles"]),
+    ...mapActions("roles", ["loadRoles"]),
     handleSelectFilter: function(value, type) {
       this.selectedFilters[type] = value;
     },

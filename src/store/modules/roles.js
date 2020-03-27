@@ -5,8 +5,7 @@ export default {
   state: {
     roles: [],
     timeCommitment: { min: 1, max: 30 },
-    isLoadingRoles: true,
-    paginationLimit: 20, // we load 20 roles at a time. More are loaded dynamically
+    paginationLimit: 1, // number of roles loaded at a time. More are loaded on scroll down.
     paginationOffset: 0,
     infiniteScrollIdentifier: false, // on change infinite scroll knows new roles were loaded
   },
@@ -48,11 +47,9 @@ export default {
     setRoles(state, roles) {
       state.roles = roles;
     },
-    setLoadingRoles(state, loading) {
-      state.isLoadingRoles = loading;
-    },
     resetPagination(state) {
-      state.paginationOffset = state.paginationLimit;
+      // called whenever a new filter is applied
+      state.paginationOffset = 0;
       state.infiniteScrollIdentifier = !state.infiniteScrollIdentifier;
     },
     nextPagination(state) {
@@ -64,20 +61,7 @@ export default {
       newRole.id = context.getters.lastId + 1;
       context.commit("addRole", newRole);
     },
-    async loadRoles({ state, commit }) {
-      commit("setLoadingRoles", true);
-      const response = await apolloClient.query({
-        query: RolesQuery,
-        variables: {
-          limit: state.paginationLimit,
-          offset: 0,
-        },
-      });
-      commit("setRoles", response.data.roles);
-      commit("setLoadingRoles", false);
-      commit("resetPagination");
-    },
-    async loadMoreRoles({ state, commit }, scrollState) {
+    async loadRoles({ state, commit }, scrollState) {
       const response = await apolloClient.query({
         query: RolesQuery,
         variables: {
@@ -89,7 +73,11 @@ export default {
       const newRoles = response.data.roles;
 
       if (newRoles.length) {
-        commit("addRoles", newRoles);
+        if (state.paginationOffset == 0) {
+          commit("setRoles", newRoles);
+        } else {
+          commit("addRoles", newRoles);
+        }
         commit("nextPagination");
         scrollState.loaded();
       } else {
