@@ -1,7 +1,6 @@
-/* eslint-disable no-console */
 import { apolloClient } from "@/plugins/vue-apollo";
 import RolesQuery from "@/GraphQL/roles.gql";
-import throttle from "lodash/throttle";
+import debounce from "lodash/debounce";
 import Vue from "vue";
 
 export default {
@@ -43,7 +42,7 @@ export default {
       // TODO: add role to backend, pass result to addRole
       commit("addRole", newRole);
     },
-    loadRoles: throttle(async function(
+    loadRoles: debounce(async function(
       { state, getters, commit, rootState, rootGetters, dispatch },
       scrollState
     ) {
