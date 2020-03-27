@@ -3,8 +3,9 @@
   <div>
     <div>
       <v-text-field
-        :value="selectedFilters.text"
-        label="Poster design, Outreach, Photographer..."
+        :value="selectedFilters.title"
+        label="Search tasks"
+        placeholder="Poster design, Outreach, Photographer..."
         class="mt-3"
         @input="value => onSetFilter(value, 'text')"
       />
@@ -70,8 +71,8 @@ export default {
   }),
   computed: {
     ...mapState("roles", ["timeCommitment"]),
-    ...mapState("localGroups", ["localGroups"]),
-    ...mapState("workingCircles", ["workingCircles"]),
+    ...mapState("groups", ["localGroups"]),
+    ...mapState("groups", ["workingCircles"]),
   },
 };
 </script>

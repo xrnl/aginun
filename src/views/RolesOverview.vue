@@ -22,7 +22,7 @@
     </div>
     <template>
       <grid-list gap="2rem">
-        <role-card v-for="role in filteredRoles" :key="role.id" :role="role" />
+        <role-card v-for="role in roles" :key="role.id" :role="role" />
       </grid-list>
       <infinite-loading
         :identifier="infiniteScrollIdentifier"
@@ -64,19 +64,15 @@
                 Search for positions
               </span>
               <span class="font-weight-light">
-                ({{ filteredRoles.length }} positions found)
+                ({{ roles.length }} positions found)
               </span>
             </div>
-            <v-btn text color="primary">
+            <v-btn text color="primary" @click="setDefaultFilters">
               Clear filters
             </v-btn>
           </div>
         </template>
-        <role-filters
-          :on-set-filter="handleSelectFilter"
-          :selected-filters="selectedFilters"
-          :role-amount="filteredRoles.length"
-        />
+        <role-filters />
         <div v-if="!isMobile" class="text-center mt-4">
           <new-item-button @click="showNewRoleDialog" />
         </div>
@@ -113,20 +109,10 @@ export default {
   data: () => ({
     newRoleDialog: false,
     isDrawerOpen: null,
-    //not a huge fan of having to declare these beforehand, will look into another way
-    selectedFilters: {
-      text: "",
-      localGroup: [],
-      workingCircle: [],
-    },
   }),
   computed: {
-    ...mapState("roles", ["infiniteScrollIdentifier"]),
-    ...mapGetters("roles", ["getByFilters"]),
+    ...mapState("roles", ["roles", "infiniteScrollIdentifier"]),
     ...mapGetters("styles", ["themeColor"]),
-    filteredRoles: function() {
-      return this.getByFilters(this.selectedFilters);
-    },
     isMobile: function() {
       return this.$vuetify.breakpoint.smAndDown;
     },
@@ -140,10 +126,7 @@ export default {
     this.isDrawerOpen = !this.isMobile;
   },
   methods: {
-    ...mapActions("roles", ["loadRoles"]),
-    handleSelectFilter: function(value, type) {
-      this.selectedFilters[type] = value;
-    },
+    ...mapActions("roles", ["loadRoles", "setDefaultFilters"]),
     handleCloseDrawer: function() {
       this.isDrawerOpen = false;
     },

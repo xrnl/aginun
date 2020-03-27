@@ -1,41 +1,17 @@
 import { apolloClient } from "@/plugins/vue-apollo";
 import RolesQuery from "@/GraphQL/roles.gql";
+import Vue from "vue";
 
 export default {
   state: {
     roles: [],
-    timeCommitment: { min: 1, max: 30 },
     paginationLimit: 1, // number of roles loaded at a time. More are loaded on scroll down.
     paginationOffset: 0,
     infiniteScrollIdentifier: false, // on change infinite scroll knows new roles were loaded
+    selectedFilters: {},
   },
   getters: {
-    getByFilters: state => ({ text, workingCircle, localGroup }) => {
-      // need to make this more resilient and generic, this will get out of hand quickly, but ok for testing
-      return state.roles.filter(role => {
-        if (
-          text !== "" &&
-          !role.title.toLowerCase().includes(text.toLowerCase())
-        ) {
-          return false;
-        }
-        if (
-          workingCircle.length > 0 &&
-          !workingCircle.includes(role.workingCircle.value)
-        ) {
-          return false;
-        }
-        if (
-          localGroup.length > 0 &&
-          !localGroup.includes(role.localGroup.value)
-        ) {
-          return false;
-        }
-        return true;
-      });
-    },
     getByID: state => id => state.roles.find(role => role.id == id),
-    lastId: state => state.roles.slice(-1)[0].id,
   },
   mutations: {
     addRole(state, newRole) {
@@ -48,18 +24,20 @@ export default {
       state.roles = roles;
     },
     resetPagination(state) {
-      // called whenever a new filter is applied
       state.paginationOffset = 0;
       state.infiniteScrollIdentifier = !state.infiniteScrollIdentifier;
     },
     nextPagination(state) {
       state.paginationOffset += state.paginationLimit;
     },
+    setFilter(state, { filterType, filterValue }) {
+      Vue.set(state.selectedFilters, filterType, filterValue);
+    },
   },
   actions: {
-    addRole: function(context, newRole) {
-      newRole.id = context.getters.lastId + 1;
-      context.commit("addRole", newRole);
+    addRole: function({ commit }, newRole) {
+      // TODO: add role to backend, pass result to addRole
+      commit("addRole", newRole);
     },
     async loadRoles({ state, commit }, scrollState) {
       const response = await apolloClient.query({
@@ -83,6 +61,22 @@ export default {
       } else {
         scrollState.complete();
       }
+    },
+    setFilter({ commit }, payload) {
+      commit("setFilter", payload);
+      // commit("resetPagination");
+    },
+    setDefaultFilters({ commit, rootGetters }) {
+      commit("setFilter", { filterType: "title", filterValue: "" });
+      commit("setFilter", { filterType: "localGroups", filterValue: [] });
+      commit("setFilter", { filterType: "workingCircles", filterValue: [] });
+      commit("setFilter", {
+        filterType: "timeCommitment",
+        filterValue: [
+          rootGetters["defaults/timeCommitmentRange"].min,
+          rootGetters["defaults/timeCommitmentRange"].max,
+        ],
+      });
     },
   },
 };

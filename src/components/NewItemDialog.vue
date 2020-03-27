@@ -23,8 +23,8 @@
             <v-select
               v-model="localGroup"
               :items="localGroups"
-              item-value="value"
-              item-text="text"
+              item-value="id"
+              item-text="title"
               return-object
               label="Local group"
               :error-messages="errors"
@@ -38,8 +38,8 @@
             <v-select
               v-model="workingCircle"
               :items="workingCircles"
-              item-value="value"
-              item-text="text"
+              item-value="id"
+              item-text="title"
               return-object
               label="Working circle"
               :error-messages="errors"
@@ -127,7 +127,7 @@ This can include information about the circle or the specific project that the r
           >
             <v-select
               v-model="timeCommitment"
-              :items="roleTimeCommitments"
+              :items="timeCommitments"
               item-value="min"
               return-object
               label="Time commitment"
@@ -284,9 +284,9 @@ export default {
   },
   data: () => initialState(),
   computed: {
-    ...mapState("meta", ["roleTimeCommitments"]),
-    ...mapState("localGroups", ["localGroups"]),
-    ...mapState("workingCircles", ["workingCircles"]),
+    ...mapState("default", ["timeCommitments"]),
+    ...mapState("groups", ["localGroups"]),
+    ...mapState("groups", ["workingCircles"]),
     errorResponsibility: function() {
       const maxCharsResponsibility = 200;
       if (this.newResponsibility) {
