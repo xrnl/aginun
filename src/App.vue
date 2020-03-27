@@ -18,9 +18,6 @@ export default {
   data: () => ({
     drawer: null, // vuetify determines initial state based on screen size
   }),
-  beforeCreate() {
-    this.$store.dispatch("groups/loadGroups");
-  },
 };
 </script>
 

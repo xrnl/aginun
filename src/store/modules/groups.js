@@ -6,6 +6,10 @@ export default {
     localGroups: [],
     workingCircles: [],
   },
+  getters: {
+    localGroupIds: state => state.localGroups.map(g => g.id),
+    workingCircleIds: state => state.workingCircles.map(g => g.id),
+  },
   mutations: {
     setLocalGroups(state, localGroups) {
       state.localGroups = localGroups;

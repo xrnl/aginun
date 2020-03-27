@@ -284,7 +284,7 @@ export default {
   },
   data: () => initialState(),
   computed: {
-    ...mapState("default", ["timeCommitments"]),
+    ...mapState("defaults", ["timeCommitments"]),
     ...mapState("groups", ["localGroups"]),
     ...mapState("groups", ["workingCircles"]),
     errorResponsibility: function() {

@@ -30,7 +30,8 @@
         @infinite="loadRoles"
       >
         <template #spinner>
-          <div class="d-flex flex-column justify-center align-center">
+          <div class="d-flex flex-column justify-center align-center mt-5">
+            <!-- TODO: only show loading if the loading takes longer than X ms. When it is too short it looks broken -->
             <p>
               Loading roles
             </p>
@@ -103,6 +104,7 @@ export default {
     DefaultDrawer,
     NewItemButton,
     NewItemDialog,
+    // eslint-disable-next-line vue/no-unused-components
     ScaleLoader,
     InfiniteLoading,
   },

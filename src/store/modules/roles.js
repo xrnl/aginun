@@ -1,17 +1,20 @@
+/* eslint-disable no-console */
 import { apolloClient } from "@/plugins/vue-apollo";
 import RolesQuery from "@/GraphQL/roles.gql";
+import throttle from "lodash/throttle";
 import Vue from "vue";
 
 export default {
   state: {
     roles: [],
-    paginationLimit: 1, // number of roles loaded at a time. More are loaded on scroll down.
+    paginationLimit: 20, // number of roles loaded at a time. More are loaded on scroll down.
     paginationOffset: 0,
     infiniteScrollIdentifier: false, // on change infinite scroll knows new roles were loaded
     selectedFilters: {},
   },
   getters: {
     getByID: state => id => state.roles.find(role => role.id == id),
+    isNewQuery: state => state.paginationOffset == 0,
   },
   mutations: {
     addRole(state, newRole) {
@@ -23,7 +26,8 @@ export default {
     setRoles(state, roles) {
       state.roles = roles;
     },
-    resetPagination(state) {
+    reloadRoles(state) {
+      state.roles = [];
       state.paginationOffset = 0;
       state.infiniteScrollIdentifier = !state.infiniteScrollIdentifier;
     },
@@ -39,35 +43,68 @@ export default {
       // TODO: add role to backend, pass result to addRole
       commit("addRole", newRole);
     },
-    async loadRoles({ state, commit }, scrollState) {
+    loadRoles: throttle(async function(
+      { state, getters, commit, rootState, rootGetters, dispatch },
+      scrollState
+    ) {
+      // load group data if it doesn't exist yet. Necessary for the next block
+      if (
+        !rootState.groups.localGroups.length ||
+        !rootState.groups.workingCircles.length
+      ) {
+        await dispatch("groups/loadGroups", {}, { root: true });
+      }
+
+      /* 
+      When no local group is selected, we search roles from all local groups. Same for working circles.
+      TODO: A better solution is to have reactive queries which remove the working group or local circle `where`
+      filter from the query if none have been selected.
+      */
+      const localGroupIds = state.selectedFilters.localGroups.length
+        ? state.selectedFilters.localGroups
+        : rootGetters["groups/localGroupIds"];
+      const workingCircleIds = state.selectedFilters.workingCircles.length
+        ? state.selectedFilters.workingCircles
+        : rootGetters["groups/workingCircleIds"];
+
       const response = await apolloClient.query({
         query: RolesQuery,
         variables: {
           limit: state.paginationLimit,
           offset: state.paginationOffset,
+          localGroupIds: localGroupIds,
+          workingCircleIds: workingCircleIds,
+          timeCommitmentMin: state.selectedFilters.timeCommitment[0],
+          timeCommitmentMax: state.selectedFilters.timeCommitment[1],
+          search: `%${state.selectedFilters.search}%`,
         },
       });
 
       const newRoles = response.data.roles;
 
+      if (getters.isNewQuery) {
+        commit("setRoles", newRoles);
+      } else {
+        commit("addRoles", newRoles);
+      }
+
       if (newRoles.length) {
-        if (state.paginationOffset == 0) {
-          commit("setRoles", newRoles);
-        } else {
-          commit("addRoles", newRoles);
-        }
-        commit("nextPagination");
         scrollState.loaded();
+        commit("nextPagination");
+        if (newRoles.length < state.paginationLimit) {
+          scrollState.complete();
+        }
       } else {
         scrollState.complete();
       }
     },
+    1000),
     setFilter({ commit }, payload) {
       commit("setFilter", payload);
-      // commit("resetPagination");
+      commit("reloadRoles");
     },
     setDefaultFilters({ commit, rootGetters }) {
-      commit("setFilter", { filterType: "title", filterValue: "" });
+      commit("setFilter", { filterType: "search", filterValue: "" });
       commit("setFilter", { filterType: "localGroups", filterValue: [] });
       commit("setFilter", { filterType: "workingCircles", filterValue: [] });
       commit("setFilter", {
@@ -77,6 +114,8 @@ export default {
           rootGetters["defaults/timeCommitmentRange"].max,
         ],
       });
+
+      commit("reloadRoles");
     },
   },
 };

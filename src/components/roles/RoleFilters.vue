@@ -2,11 +2,11 @@
   <div>
     <div>
       <v-text-field
-        :value="selectedFilters.title"
+        :value="selectedFilters.search"
         label="Search by role title"
         placeholder="Facilitator, Writer, Photographer..."
         class="mt-3"
-        @input="setFilter({ filterType: 'title', filterValue: $event })"
+        @input="debounceSearchUpdate"
       />
     </div>
     <filter-section>
@@ -54,6 +54,7 @@ import FlexWrapper from "@/components/layout/FlexWrapper.vue";
 import AutocompleteCustom from "@/components/AutocompleteCustom";
 import { mapState, mapGetters, mapActions } from "vuex";
 import FilterDrawerSection from "../layout/FilterDrawerSection";
+import debounce from "lodash/debounce";
 
 export default {
   name: "RoleFilters",
@@ -72,6 +73,9 @@ export default {
   },
   methods: {
     ...mapActions("roles", ["setFilter"]),
+    debounceSearchUpdate: debounce(function($event) {
+      this.setFilter({ filterType: "search", filterValue: $event });
+    }, 500),
   },
 };
 </script>
