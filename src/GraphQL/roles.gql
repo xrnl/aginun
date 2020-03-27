@@ -20,3 +20,9 @@ fragment roleFields on role {
     id
   }
 }
+
+query RolesQuery($limit: Int!, $offset: Int!) {
+  roles(order_by: { createdDate: desc }, limit: $limit, offset: $offset) {
+    ...roleFields
+  }
+}

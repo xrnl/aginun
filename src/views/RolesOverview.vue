@@ -1,6 +1,7 @@
 <template>
-  <page-with-drawer :is-drawer-open="isDrawerOpen">
+  <page-with-drawer :is-drawer-open="isDrawerOpen" class="pb-5">
     <router-view :key="$route.fullPath" />
+    <new-item-dialog v-model="newRoleDialog" />
     <div class="text-center my-8">
       <h1>
         Find roles at
@@ -9,7 +10,6 @@
         </strong>
       </h1>
     </div>
-    <new-item-dialog v-model="newRoleDialog" />
     <div v-if="isMobile" class="mb-8">
       <v-divider />
       <div class="d-flex justify-space-between pa-3">
@@ -20,20 +20,43 @@
       </div>
       <v-divider />
     </div>
-    <div v-if="loading" class="d-flex flex-column justify-center align-center">
+    <div
+      v-if="isLoadingRoles"
+      class="d-flex flex-column justify-center align-center"
+    >
       <p>
         Loading roles
       </p>
       <scale-loader
-        :loading="loading"
+        :loading="isLoadingRoles"
         :color="themeColor('shade')"
         :radius="1"
       />
     </div>
     <template v-else>
-      <grid-list v-if="filteredRoles.length > 0" gap="2rem">
-        <role-card v-for="role in filteredRoles" :key="role.id" :role="role" />
-      </grid-list>
+      <template v-if="filteredRoles.length > 0">
+        <grid-list gap="2rem">
+          <role-card
+            v-for="role in filteredRoles"
+            :key="role.id"
+            :role="role"
+          />
+        </grid-list>
+        <infinite-loading
+          :identifier="infiniteScrollIdentifier"
+          spinner="waveDots"
+          @infinite="loadMoreRoles"
+        >
+          <!-- no message is shown when user has scrolled down to the last role -->
+          <template #no-results>
+            <span />
+          </template>
+          <template #no-more>
+            <span />
+          </template>
+        </infinite-loading>
+      </template>
+
       <div v-else class="pa-5 text-center">
         <h3>No results.</h3>
         <p>Try removing filters.</p>
@@ -78,10 +101,11 @@ import PageWithDrawer from "@/components/layout/PageWithDrawer.vue";
 import RoleCard from "@/components/roles/RoleCard.vue";
 import GridList from "@/components/layout/GridList.vue";
 import RoleFilters from "@/components/roles/RoleFilters.vue";
-import { mapState, mapGetters } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
 import NewItemButton from "@/components/NewItemButton";
 import NewItemDialog from "@/components/NewItemDialog";
 import { ScaleLoader } from "@saeris/vue-spinners";
+import InfiniteLoading from "vue-infinite-loading";
 
 export default {
   name: "RolesOverview",
@@ -94,6 +118,7 @@ export default {
     NewItemButton,
     NewItemDialog,
     ScaleLoader,
+    InfiniteLoading,
   },
   data: () => ({
     newRoleDialog: false,
@@ -106,7 +131,7 @@ export default {
     },
   }),
   computed: {
-    ...mapState("roles", ["loading"]),
+    ...mapState("roles", ["isLoadingRoles", "infiniteScrollIdentifier"]),
     ...mapGetters("roles", ["getByFilters"]),
     ...mapGetters("styles", ["themeColor"]),
     filteredRoles: function() {
@@ -122,12 +147,13 @@ export default {
     },
   },
   beforeCreate() {
-    this.$store.dispatch("roles/test");
+    this.$store.dispatch("roles/loadRoles");
   },
   created: function() {
     this.isDrawerOpen = !this.isMobile;
   },
   methods: {
+    ...mapActions("roles", ["loadMoreRoles"]),
     handleSelectFilter: function(value, type) {
       this.selectedFilters[type] = value;
     },
