@@ -36,7 +36,7 @@
                   {{ !!role.localGroup && role.localGroup.title }}
                 </span>
               </flex-wrapper>
-              <div v-if="role.publishedDate" style="line-height: 1rem">
+              <div v-if="role.createdDate" style="line-height: 1rem">
                 <span class="caption"> Published on {{ formattedDate }} </span>
               </div>
             </flex-wrapper>
@@ -169,7 +169,7 @@ export default {
       return this.getByID(this.$route.params.id);
     },
     formattedDate: function() {
-      const date = new Date(this.role.publishedDate);
+      const date = new Date(this.role.createdDate);
       const options = {
         year: "numeric",
         month: "long",

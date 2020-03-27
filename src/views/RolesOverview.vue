@@ -20,9 +20,16 @@
       </div>
       <v-divider />
     </div>
-    <p v-if="loading">
-      loading ...
-    </p>
+    <div v-if="loading" class="d-flex flex-column justify-center align-center">
+      <p>
+        Loading roles
+      </p>
+      <scale-loader
+        :loading="loading"
+        :color="themeColor('shade')"
+        :radius="1"
+      />
+    </div>
     <template v-else>
       <grid-list v-if="filteredRoles.length > 0" gap="2rem">
         <role-card v-for="role in filteredRoles" :key="role.id" :role="role" />
@@ -74,6 +81,7 @@ import RoleFilters from "@/components/roles/RoleFilters.vue";
 import { mapState, mapGetters } from "vuex";
 import NewItemButton from "@/components/NewItemButton";
 import NewItemDialog from "@/components/NewItemDialog";
+import { ScaleLoader } from "@saeris/vue-spinners";
 
 export default {
   name: "RolesOverview",
@@ -85,6 +93,7 @@ export default {
     DefaultDrawer,
     NewItemButton,
     NewItemDialog,
+    ScaleLoader,
   },
   data: () => ({
     newRoleDialog: false,
@@ -99,6 +108,7 @@ export default {
   computed: {
     ...mapState("roles", ["loading"]),
     ...mapGetters("roles", ["getByFilters"]),
+    ...mapGetters("styles", ["themeColor"]),
     filteredRoles: function() {
       return this.getByFilters(this.selectedFilters);
     },

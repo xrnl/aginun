@@ -57,7 +57,7 @@ export default {
       const response = await apolloClient.query({
         query: gql`
           query roles {
-            roles {
+            roles(order_by: { createdDate: desc }) {
               ...roleFields
             }
           }
