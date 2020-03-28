@@ -1,5 +1,20 @@
 import gql from "graphql-tag";
 
+const RoleSummaryFieldsFragment = gql`
+  fragment RoleSummaryFields on role {
+    id
+    title
+    timeCommitmentMin
+    timeCommitmentMax
+    workingCircle {
+      title
+    }
+    localGroup {
+      title
+    }
+  }
+`;
+
 const RoleFieldsFragment = gql`
   fragment RoleFields on role {
     id
@@ -49,10 +64,10 @@ export const RolesQuery = gql`
       limit: $limit
       offset: $offset
     ) {
-      ...RoleFields
+      ...RoleSummaryFields
     }
   }
-  ${RoleFieldsFragment}
+  ${RoleSummaryFieldsFragment}
 `;
 
 export const RoleQuery = gql`

@@ -1,11 +1,12 @@
 import { apolloClient } from "@/plugins/vue-apollo";
 import { RolesQuery } from "@/GraphQL/roles";
-import debounce from "lodash/debounce";
+import throttle from "lodash/throttle";
 import Vue from "vue";
 
 export default {
   state: {
     roles: [],
+    isLoadingRoles: true,
     paginationLimit: 20, // number of roles loaded at a time. More are loaded on scroll down.
     paginationOffset: 0,
     infiniteScrollIdentifier: false, // on change infinite scroll knows new roles were loaded
@@ -25,6 +26,9 @@ export default {
     setRoles(state, roles) {
       state.roles = roles;
     },
+    setLoadingState(state, isLoading) {
+      state.isLoadingRoles = isLoading;
+    },
     reloadRoles(state) {
       state.roles = [];
       state.paginationOffset = 0;
@@ -42,10 +46,11 @@ export default {
       // TODO: add role to backend, pass result to addRole
       commit("addRole", newRole);
     },
-    loadRoles: debounce(async function(
+    loadRoles: throttle(async function(
       { state, getters, commit, rootState, rootGetters, dispatch },
       scrollState
     ) {
+      commit("setLoadingState", true);
       // load group data if it doesn't exist yet. Necessary for the next block
       if (
         !rootState.groups.localGroups.length ||
@@ -96,8 +101,10 @@ export default {
       } else {
         scrollState.complete();
       }
+
+      commit("setLoadingState", false);
     },
-    1000),
+    500),
     setFilter({ commit }, payload) {
       commit("setFilter", payload);
       commit("reloadRoles");

@@ -7,7 +7,12 @@
       @click:outside="$router.push('/roles')"
       @keydown.escape="$router.push('/roles')"
     >
-      <v-card v-if="!!role" class="card">
+      <v-skeleton-loader
+        v-if="$apollo.loading"
+        class="mx-auto"
+        type="article"
+      />
+      <v-card v-else class="card">
         <v-card-title>
           <flex-wrapper
             classes="flex-nowrap align-start"
@@ -149,7 +154,6 @@
 <script>
 import FlexWrapper from "../layout/FlexWrapper";
 import IconLink from "@/components/IconLink";
-
 import MetaInfo from "../layout/MetaInfo";
 import { RoleQuery } from "@/GraphQL/roles";
 

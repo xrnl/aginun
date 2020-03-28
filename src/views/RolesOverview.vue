@@ -21,32 +21,40 @@
       <v-divider />
     </div>
     <template>
-      <grid-list gap="2rem">
-        <role-card v-for="role in roles" :key="role.id" :role="role" />
-      </grid-list>
+      <transition name="fade" mode="out-in">
+        <div
+          v-if="isLoadingRoles"
+          key="loading"
+          class="d-flex flex-column justify-center align-center mt-5"
+        >
+          <spinner text="Loading roles" />
+        </div>
+        <grid-list
+          v-if="!isLoadingRoles && roles.length"
+          key="roles"
+          gap="2rem"
+        >
+          <role-card v-for="role in roles" :key="role.id" :role="role" />
+        </grid-list>
+        <div
+          v-if="!isLoadingRoles && !roles.length"
+          key="noRoles"
+          class="pa-5 text-center"
+        >
+          <h3>No results.</h3>
+          <p>Try removing filters.</p>
+        </div>
+      </transition>
       <infinite-loading
         :identifier="infiniteScrollIdentifier"
-        spinner="waveDots"
         @infinite="loadRoles"
       >
+        <!-- override default slots with empty values. We place spinner and messages outside for smooth transitions -->
         <template #spinner>
-          <div class="d-flex flex-column justify-center align-center mt-5">
-            <!-- TODO: only show loading if the loading takes longer than X ms. When it is too short it looks broken -->
-            <p>
-              Loading roles
-            </p>
-            <scale-loader
-              :loading="true"
-              :color="themeColor('shade')"
-              :radius="1"
-            />
-          </div>
+          <span />
         </template>
         <template #no-results>
-          <div class="pa-5 text-center">
-            <h3>No results.</h3>
-            <p>Try removing filters.</p>
-          </div>
+          <span />
         </template>
         <template #no-more>
           <span />
@@ -88,11 +96,11 @@ import PageWithDrawer from "@/components/layout/PageWithDrawer.vue";
 import RoleCard from "@/components/roles/RoleCard.vue";
 import GridList from "@/components/layout/GridList.vue";
 import RoleFilters from "@/components/roles/RoleFilters.vue";
-import { mapState, mapGetters, mapActions } from "vuex";
+import { mapState, mapActions } from "vuex";
 import NewItemButton from "@/components/NewItemButton";
 import NewItemDialog from "@/components/NewItemDialog";
-import { ScaleLoader } from "@saeris/vue-spinners";
 import InfiniteLoading from "vue-infinite-loading";
+import Spinner from "@/components/Spinner";
 
 export default {
   name: "RolesOverview",
@@ -104,17 +112,19 @@ export default {
     DefaultDrawer,
     NewItemButton,
     NewItemDialog,
-    // eslint-disable-next-line vue/no-unused-components
-    ScaleLoader,
     InfiniteLoading,
+    Spinner,
   },
   data: () => ({
     newRoleDialog: false,
     isDrawerOpen: null,
   }),
   computed: {
-    ...mapState("roles", ["roles", "infiniteScrollIdentifier"]),
-    ...mapGetters("styles", ["themeColor"]),
+    ...mapState("roles", [
+      "roles",
+      "isLoadingRoles",
+      "infiniteScrollIdentifier",
+    ]),
     isMobile: function() {
       return this.$vuetify.breakpoint.smAndDown;
     },
