@@ -151,7 +151,8 @@ import FlexWrapper from "../layout/FlexWrapper";
 import IconLink from "@/components/IconLink";
 
 import MetaInfo from "../layout/MetaInfo";
-import { mapGetters } from "vuex";
+import { RoleQuery } from "@/GraphQL/roles";
+
 export default {
   components: {
     FlexWrapper,
@@ -161,13 +162,20 @@ export default {
   data() {
     return {
       applyDialog: false,
+      role: {},
     };
   },
-  computed: {
-    ...mapGetters("roles", ["getByID"]),
-    role: function() {
-      return this.getByID(this.$route.params.id);
+  apollo: {
+    role: {
+      query: RoleQuery,
+      variables() {
+        return {
+          roleId: this.$route.params.id,
+        };
+      },
     },
+  },
+  computed: {
     formattedDate: function() {
       const date = new Date(this.role.createdDate);
       const options = {

@@ -1,5 +1,5 @@
 import { apolloClient } from "@/plugins/vue-apollo";
-import RolesQuery from "@/GraphQL/roles.gql";
+import { RolesQuery } from "@/GraphQL/roles";
 import debounce from "lodash/debounce";
 import Vue from "vue";
 
