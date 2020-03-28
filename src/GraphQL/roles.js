@@ -8,9 +8,11 @@ const RoleSummaryFieldsFragment = gql`
     timeCommitmentMax
     workingCircle {
       title
+      id
     }
     localGroup {
       title
+      id
     }
   }
 `;

@@ -7,109 +7,118 @@
       @click:outside="$router.push('/roles')"
       @keydown.escape="$router.push('/roles')"
     >
-      <v-skeleton-loader
-        v-if="$apollo.loading"
-        class="mx-auto"
-        type="article"
-      />
-      <v-card v-else class="card">
-        <v-card-title>
-          <flex-wrapper
-            classes="flex-nowrap align-start"
-            justify-content="space-between"
-            style="width: 100%"
-          >
-            <flex-wrapper direction="column">
-              <h2 class="boldTitle">
-                {{ role.title }}
-              </h2>
+      <v-card>
+        <transition name="fade" mode="out-in">
+          <v-skeleton-loader
+            v-if="$apollo.loading"
+            key="roleLoading"
+            class="mx-auto"
+            type="article"
+          />
+          <div v-else key="role">
+            <v-card-title>
               <flex-wrapper
-                v-if="role.workingCircle || role.localGroup"
-                class="subHeader"
-                classes="flex-wrap"
+                classes="flex-nowrap align-start"
+                justify-content="space-between"
+                style="width: 100%"
               >
-                <span>
-                  {{ !!role.workingCircle && role.workingCircle.title }}
-                </span>
-                <span
-                  v-if="!!role.workingCircle && !!role.localGroup"
-                  style="margin: 0 0.25rem;"
-                >
-                  -
-                </span>
-                <span>
-                  {{ !!role.localGroup && role.localGroup.title }}
-                </span>
+                <flex-wrapper direction="column">
+                  <h2 class="boldTitle">
+                    {{ role.title }}
+                  </h2>
+                  <flex-wrapper
+                    v-if="role.workingCircle || role.localGroup"
+                    class="subHeader"
+                    classes="flex-wrap"
+                  >
+                    <span>
+                      {{ !!role.workingCircle && role.workingCircle.title }}
+                    </span>
+                    <span
+                      v-if="!!role.workingCircle && !!role.localGroup"
+                      style="margin: 0 0.25rem;"
+                    >
+                      -
+                    </span>
+                    <span>
+                      {{ !!role.localGroup && role.localGroup.title }}
+                    </span>
+                  </flex-wrapper>
+                  <div v-if="role.createdDate" style="line-height: 1rem">
+                    <span class="caption">
+                      Published on {{ formattedDate }}
+                    </span>
+                  </div>
+                </flex-wrapper>
+                <v-menu offset-y left>
+                  <template v-slot:activator="{ on }">
+                    <v-btn text icon v-on="on">
+                      <v-icon>
+                        mdi-dots-vertical
+                      </v-icon>
+                    </v-btn>
+                  </template>
+                  <v-list>
+                    <v-list-item @click="console.log('event for editing role')">
+                      <v-list-item-title>Edit</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item
+                      @click="console.log('event for deleting role')"
+                    >
+                      <v-list-item-title>Delete</v-list-item-title>
+                    </v-list-item>
+                  </v-list>
+                </v-menu>
               </flex-wrapper>
-              <div v-if="role.createdDate" style="line-height: 1rem">
-                <span class="caption"> Published on {{ formattedDate }} </span>
-              </div>
-            </flex-wrapper>
-            <v-menu offset-y left>
-              <template v-slot:activator="{ on }">
-                <v-btn text icon v-on="on">
-                  <v-icon>
-                    mdi-dots-vertical
-                  </v-icon>
-                </v-btn>
-              </template>
-              <v-list>
-                <v-list-item @click="console.log('event for editing role')">
-                  <v-list-item-title>Edit</v-list-item-title>
-                </v-list-item>
-                <v-list-item @click="console.log('event for deleting role')">
-                  <v-list-item-title>Delete</v-list-item-title>
-                </v-list-item>
-              </v-list>
-            </v-menu>
-          </flex-wrapper>
-        </v-card-title>
-        <v-divider />
-        <v-card-text class="pt-3 pb-0 solidFont">
-          <flex-wrapper>
-            <div>
-              <meta-info
-                v-if="!!role.responsibilities"
-                title="Responsibilities"
-                :description="role.responsibilities"
-              />
-              <meta-info
-                v-if="!!role.description"
-                title="Description"
-                :description="role.description"
-              />
-              <meta-info
-                v-if="!!role.requirements"
-                title="Requirements"
-                :description="role.requirements"
-              />
-              <meta-info
-                v-if="!!role.timeCommitment"
-                title="Time Commitment"
-                :description="
-                  `${role.timeCommitmentMin} -
+            </v-card-title>
+            <v-divider />
+            <v-card-text class="pt-3 pb-0 solidFont">
+              <flex-wrapper>
+                <div>
+                  <meta-info
+                    v-if="!!role.responsibilities"
+                    title="Responsibilities"
+                    :description="role.responsibilities"
+                  />
+                  <meta-info
+                    v-if="!!role.description"
+                    title="Description"
+                    :description="role.description"
+                  />
+                  <meta-info
+                    v-if="!!role.requirements"
+                    title="Requirements"
+                    :description="role.requirements"
+                  />
+                  <meta-info
+                    v-if="!!role.timeCommitment"
+                    title="Time Commitment"
+                    :description="
+                      `${role.timeCommitmentMin} -
                 ${role.timeCommitmentMax} hours/week`
-                "
-              />
-            </div>
-          </flex-wrapper>
-        </v-card-text>
-        <v-card-actions class="px-6 pt-0 pb-4">
-          <v-btn
-            color="primary"
-            class="mr-1"
-            depressed
-            @click.stop="applyDialog = true"
-          >
-            Apply
-          </v-btn>
-          <v-btn depressed>
-            <v-icon class="mr-1">
-              mdi-check
-            </v-icon>
-            Role taken
-          </v-btn>
-        </v-card-actions>
+                    "
+                  />
+                </div>
+              </flex-wrapper>
+            </v-card-text>
+            <v-card-actions class="px-6 pt-0 pb-4">
+              <v-btn
+                color="primary"
+                class="mr-1"
+                depressed
+                @click.stop="applyDialog = true"
+              >
+                Apply
+              </v-btn>
+              <v-btn depressed>
+                <v-icon class="mr-1">
+                  mdi-check
+                </v-icon>
+                Role taken
+              </v-btn>
+            </v-card-actions>
+          </div>
+        </transition>
       </v-card>
     </v-dialog>
     <v-dialog v-model="applyDialog" max-width="500" content-class>
@@ -158,6 +167,7 @@ import MetaInfo from "../layout/MetaInfo";
 import { RoleQuery } from "@/GraphQL/roles";
 
 export default {
+  name: "RoleViewDialog",
   components: {
     FlexWrapper,
     MetaInfo,
@@ -166,6 +176,7 @@ export default {
   data() {
     return {
       applyDialog: false,
+      testLoading: true,
       role: {},
     };
   },
