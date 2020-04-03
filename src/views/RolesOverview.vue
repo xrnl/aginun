@@ -1,5 +1,5 @@
 <template>
-  <page-with-drawer :is-drawer-open="isDrawerOpen">
+  <page-with-drawer :is-drawer-open="isDrawerOpen" class="pb-5">
     <router-view :key="$route.fullPath" />
     <new-role-dialog v-model="newRoleDialog" />
     <div class="text-center my-8">
@@ -10,7 +10,6 @@
         </strong>
       </h1>
     </div>
-
     <div v-if="isMobile" class="mb-8">
       <v-divider />
       <div class="d-flex justify-space-between pa-3">
@@ -21,13 +20,47 @@
       </div>
       <v-divider />
     </div>
-    <grid-list v-if="filteredRoles.length > 0" gap="2rem">
-      <role-card v-for="role in filteredRoles" :key="role.id" :role="role" />
-    </grid-list>
-    <div v-else class="pa-5 text-center">
-      <h3>No results.</h3>
-      <p>Try removing filters.</p>
-    </div>
+    <template>
+      <transition name="fade" mode="out-in">
+        <div
+          v-if="isLoadingRoles"
+          key="loading"
+          class="d-flex flex-column justify-center align-center mt-5"
+        >
+          <spinner text="Loading roles" />
+        </div>
+        <grid-list
+          v-if="!isLoadingRoles && roles.length"
+          key="roles"
+          gap="2rem"
+        >
+          <role-card v-for="role in roles" :key="role.id" :role="role" />
+        </grid-list>
+        <div
+          v-if="!isLoadingRoles && !roles.length"
+          key="noRoles"
+          class="pa-5 text-center"
+        >
+          <h3>No results.</h3>
+          <p>Try removing filters.</p>
+        </div>
+      </transition>
+      <infinite-loading
+        :identifier="infiniteScrollIdentifier"
+        @infinite="loadRoles"
+      >
+        <!-- override default slots with empty values. We place spinner and messages outside for smooth transitions -->
+        <template #spinner>
+          <span />
+        </template>
+        <template #no-results>
+          <span />
+        </template>
+        <template #no-more>
+          <span />
+        </template>
+      </infinite-loading>
+    </template>
     <template v-slot:drawer>
       <default-drawer @close-drawer="handleCloseDrawer">
         <template #header>
@@ -40,19 +73,15 @@
                 Search for positions
               </span>
               <span class="font-weight-light">
-                ({{ filteredRoles.length }} positions found)
+                ({{ roles.length }} positions found)
               </span>
             </div>
-            <v-btn text color="primary">
+            <v-btn text color="primary" @click="setDefaultFilters">
               Clear filters
             </v-btn>
           </div>
         </template>
-        <role-filters
-          :on-set-filter="handleSelectFilter"
-          :selected-filters="selectedFilters"
-          :role-amount="filteredRoles.length"
-        />
+        <role-filters />
         <div v-if="!isMobile" class="text-center mt-4">
           <new-item-button label="New Role" @click="showNewRoleDialog" />
         </div>
@@ -67,9 +96,11 @@ import PageWithDrawer from "@/components/layout/PageWithDrawer.vue";
 import RoleCard from "@/components/roles/RoleCard.vue";
 import GridList from "@/components/layout/GridList.vue";
 import RoleFilters from "@/components/roles/RoleFilters.vue";
-import { mapGetters } from "vuex";
+import { mapState, mapActions } from "vuex";
 import NewItemButton from "@/components/NewItemButton";
 import NewRoleDialog from "@/components/roles/NewRoleDialog";
+import InfiniteLoading from "vue-infinite-loading";
+import Spinner from "@/components/Spinner";
 
 export default {
   name: "RolesOverview",
@@ -81,22 +112,19 @@ export default {
     DefaultDrawer,
     NewItemButton,
     NewRoleDialog,
+    InfiniteLoading,
+    Spinner,
   },
   data: () => ({
     newRoleDialog: false,
     isDrawerOpen: null,
-    //not a huge fan of having to declare these beforehand, will look into another way
-    selectedFilters: {
-      text: "",
-      localGroup: [],
-      workingGroup: [],
-    },
   }),
   computed: {
-    ...mapGetters("roles", ["getByFilters"]),
-    filteredRoles: function() {
-      return this.getByFilters(this.selectedFilters);
-    },
+    ...mapState("roles", [
+      "roles",
+      "isLoadingRoles",
+      "infiniteScrollIdentifier",
+    ]),
     isMobile: function() {
       return this.$vuetify.breakpoint.smAndDown;
     },
@@ -110,9 +138,7 @@ export default {
     this.isDrawerOpen = !this.isMobile;
   },
   methods: {
-    handleSelectFilter: function(value, type) {
-      this.selectedFilters[type] = value;
-    },
+    ...mapActions("roles", ["loadRoles", "setDefaultFilters"]),
     handleCloseDrawer: function() {
       this.isDrawerOpen = false;
     },

@@ -59,7 +59,7 @@
         </flex-wrapper>
       </v-card-title>
       <v-divider />
-      <v-card-text class="pt-3 pb-0 solidFont">
+      <v-card-text class="pt-3 pb-0">
         <flex-wrapper>
           <div>
             <!-- <meta-info
@@ -110,7 +110,7 @@
         <v-card-title>
           <h4>Apply</h4>
         </v-card-title>
-        <v-card-text class="solidFont">
+        <v-card-text>
           <flex-wrapper direction="column">
             <p>Please apply by contacting the task aide.</p>
             <icon-link

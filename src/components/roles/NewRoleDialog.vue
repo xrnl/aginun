@@ -23,8 +23,8 @@
             <v-select
               v-model="localGroup"
               :items="localGroups"
-              item-value="value"
-              item-text="text"
+              item-value="id"
+              item-text="title"
               return-object
               label="Local group"
               :error-messages="errors"
@@ -33,15 +33,15 @@
           <validation-provider
             v-slot="{ errors }"
             rules="requiredSelect"
-            name="working group"
+            name="working circle"
           >
             <v-select
-              v-model="workingGroup"
-              :items="workingGroups"
-              item-value="value"
-              item-text="text"
+              v-model="workingCircle"
+              :items="workingCircles"
+              item-value="id"
+              item-text="title"
               return-object
-              label="Working group"
+              label="Working circle"
               :error-messages="errors"
             />
           </validation-provider>
@@ -128,7 +128,7 @@ This can include information about the circle or the specific project that the r
           >
             <v-select
               v-model="timeCommitment"
-              :items="roleTimeCommitments"
+              :items="timeCommitments"
               item-value="min"
               return-object
               label="Time commitment"
@@ -265,7 +265,7 @@ let initialState = () => ({
   requirements: undefined,
   timeCommitment: undefined,
   localGroup: undefined,
-  workingGroup: undefined,
+  workingCircle: undefined,
   email: undefined,
   mattermostId: undefined,
   phone: undefined,
@@ -285,9 +285,9 @@ export default {
   },
   data: () => initialState(),
   computed: {
-    ...mapState("meta", ["roleTimeCommitments"]),
-    ...mapState("localGroups", ["localGroups"]),
-    ...mapState("workingGroups", ["workingGroups"]),
+    ...mapState("defaults", ["timeCommitments"]),
+    ...mapState("groups", ["localGroups"]),
+    ...mapState("groups", ["workingCircles"]),
     errorResponsibility: function() {
       const maxCharsResponsibility = 200;
       if (this.newResponsibility) {

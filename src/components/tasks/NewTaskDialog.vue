@@ -77,7 +77,7 @@ You can also include other relevant information such as the circle or the projec
           >
             <v-select
               v-model="timeCommitment"
-              :items="taskTimeCommitments"
+              :items="timeCommitments"
               item-value="min"
               return-object
               label="Time commitment"
@@ -234,7 +234,7 @@ export default {
   },
   data: () => initialState(),
   computed: {
-    ...mapState("meta", ["taskTimeCommitments"]),
+    ...mapState("defaults", ["timeCommitments"]),
     ...mapState("localGroups", ["localGroups"]),
     ...mapState("workingGroups", ["workingGroups"]),
   },

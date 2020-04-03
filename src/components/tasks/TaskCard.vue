@@ -4,7 +4,7 @@
       {{ task.title }}
     </template>
     <template #subtitle>
-      {{ task.localGroup.text }}, {{ task.workingGroup.text }}
+      {{ task.localGroup.title }}, {{ task.workingCircle.title }}
     </template>
     <template #meta>
       <span class="d-flex flex-column justify-center">
