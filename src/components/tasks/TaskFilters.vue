@@ -3,8 +3,9 @@
   <div>
     <div>
       <v-text-field
-        :value="selectedFilters.text"
-        label="Poster design, Outreach, Photographer..."
+        :value="selectedFilters.title"
+        label="Search tasks"
+        placeholder="Poster design, Outreach, Photographer..."
         class="mt-3"
         @input="value => onSetFilter(value, 'text')"
       />
@@ -21,10 +22,10 @@
           @change="id => onSetFilter(id, 'localGroup')"
         />
         <autocomplete-custom
-          :value="selectedFilters.workingGroup"
-          :items="workingGroups"
-          label="Working Group"
-          @change="id => onSetFilter(id, 'workingGroup')"
+          :value="selectedFilters.workingCircle"
+          :items="workingCircles"
+          label="Working circle"
+          @change="id => onSetFilter(id, 'workingCircle')"
         />
       </flex-wrapper>
     </filter-section>
@@ -70,8 +71,8 @@ export default {
   }),
   computed: {
     ...mapState("roles", ["timeCommitment"]),
-    ...mapState("localGroups", ["localGroups"]),
-    ...mapState("workingGroups", ["workingGroups"]),
+    ...mapState("groups", ["localGroups"]),
+    ...mapState("groups", ["workingCircles"]),
   },
 };
 </script>

@@ -2,23 +2,15 @@
   <v-autocomplete
     :value="value"
     :items="items"
+    item-value="id"
+    item-text="title"
     chips
     small-chips
     multiple
     class="mt-3"
     :label="label"
     @change="$emit('change', $event)"
-  >
-    <!-- <template v-slot:selection="data">
-      <v-chip
-        close
-        color="primary"
-
-      >
-        {{ data }}
-      </v-chip>
-    </template>-->
-  </v-autocomplete>
+  />
 </template>
 
 <script>

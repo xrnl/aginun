@@ -8,7 +8,7 @@ export default {
         title: "Make posters for an upcoming action",
         completed: true,
         // TEMP: same with roles, everything will be done on the serverside, just here for demo purposes
-        workingGroup: { text: "Political Strategy", value: 3 },
+        workingCircle: { text: "Political Strategy", value: 3 },
         localGroup: { text: "XR Amsterdam", value: 1 },
         description:
           "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
@@ -27,7 +27,7 @@ export default {
         id: 2,
         title: "We need a photographer!",
         completed: false,
-        workingGroup: { text: "Finance", value: 7 },
+        workingCircle: { text: "Finance", value: 7 },
         localGroup: { text: "XR NL", value: 20 },
         description:
           "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
@@ -47,7 +47,7 @@ export default {
         title:
           "Can someone help me bake a cake? (it's for an action, i promise)",
         completed: false,
-        workingGroup: { text: "Action and Logistics", value: 5 },
+        workingCircle: { text: "Action and Logistics", value: 5 },
         localGroup: { text: "XR Den Haag", value: 6 },
         description:
           "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
@@ -66,7 +66,7 @@ export default {
         id: 4,
         title: "Give a talk at this cool location.",
         completed: false,
-        workingGroup: { text: "Action and Logistics", value: 5 },
+        workingCircle: { text: "Action and Logistics", value: 5 },
         localGroup: { text: "XR Zwolle", value: 19 },
         description:
           "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
@@ -84,7 +84,7 @@ export default {
     ],
   },
   getters: {
-    getByFilters: state => ({ text, workingGroup, localGroup }) => {
+    getByFilters: state => ({ text, workingCircle, localGroup }) => {
       // need to make this more resilient and generic, this will get out of hand quickly, but ok for testing
       return state.tasks.filter(task => {
         if (
@@ -94,8 +94,8 @@ export default {
           return false;
         }
         if (
-          workingGroup.length > 0 &&
-          !workingGroup.includes(task.workingGroup.value)
+          workingCircle.length > 0 &&
+          !workingCircle.includes(task.workingCircle.value)
         ) {
           return false;
         }
