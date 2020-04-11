@@ -80,6 +80,7 @@ In this file, you will have to replace `<API_KEY>` with the development API key,
 ```
 npm run test:unit
 ```
+Add the `-s` or `--silent` flag to avoid NPM error messages if tests fail. 
 
 ### End-to-end tests
 ```
