@@ -11,6 +11,7 @@ import { getCleanInputFromObject } from "../../utils/getCleanInput";
 
 function getInputFromNewRole(newRole) {
   const {
+    id,
     title,
     email,
     description,
@@ -24,6 +25,7 @@ function getInputFromNewRole(newRole) {
   } = newRole;
 
   return {
+    id,
     title,
     email,
     responsibilities,
@@ -113,6 +115,7 @@ export default {
       console.log(response);
     },
     updateRole: async function({ commit }, newRole) {
+      console.log(newRole);
       const input = getCleanInputFromObject(getInputFromNewRole(newRole));
 
       const response = await apolloClient.mutate({
