@@ -3,6 +3,7 @@ import { mount, createLocalVue } from "@vue/test-utils";
 import TheAppBar from "@/components/TheAppBar.vue";
 import Vuex from "vuex";
 import Vuetify from "vuetify";
+import { state } from "@/store/modules/styles";
 
 describe("TheAppBar", () => {
   let store;
@@ -11,7 +12,10 @@ describe("TheAppBar", () => {
   localVue.use(Vuex);
 
   beforeAll(() => {
-    store = new Vuex.Store({ state: { styles: { navbarHeight: "64px" } } });
+    store = new Vuex.Store({
+      modules: { styles: { state } },
+      namedspace: true,
+    });
     vuetify = new Vuetify({ theme: { dark: false } });
   });
 
