@@ -97,7 +97,7 @@ export default {
 
       const input = getInputFromNewRole(newRole);
 
-      const response = await apolloClient.mutate({
+      await apolloClient.mutate({
         mutation: CreateRoleMutation,
         variables: { input: [input] },
         update: (
@@ -111,14 +111,11 @@ export default {
           commit("addRole", returning[0]);
         },
       });
-
-      console.log(response);
     },
     updateRole: async function({ commit }, newRole) {
-      console.log(newRole);
       const input = getCleanInputFromObject(getInputFromNewRole(newRole));
 
-      const response = await apolloClient.mutate({
+      await apolloClient.mutate({
         mutation: UpdateRoleMutation,
         variables: { id: newRole.id, input },
         update: (
@@ -132,18 +129,15 @@ export default {
           commit("editRole", returning[0]);
         },
       });
-
-      console.log(response);
     },
     deleteRole: async function({ commit }, roleID) {
-      const response = await apolloClient.mutate({
+      await apolloClient.mutate({
         mutation: DeleteRoleMutation,
         variables: { id: roleID },
         update: () => {
           commit("deleteRole", roleID);
         },
       });
-      console.log(response);
     },
     loadRoles: throttle(async function(
       { state, getters, commit, rootState, rootGetters, dispatch },

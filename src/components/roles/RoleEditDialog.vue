@@ -1,4 +1,6 @@
 <template>
+  <!-- TODO: This is very similar (almost the same) as the create, at this point it would be nice if we could get a generic solution for this.
+        Will have to look into this once we will implement the tasks.-->
   <v-dialog :value="value" width="600px" @input="$emit('input', false)">
     <v-card class="pa-4">
       <h2>Edit role</h2>
@@ -289,10 +291,9 @@ export default {
   },
   data: () => initialState(),
   created: function() {
+    //   This feels a little dangerous, find a cleaner way
     const keys = Object.keys(this.role);
     keys.forEach(value => (this[value] = this.role[value]));
-    console.log(keys);
-    console.log(this.role);
   },
   computed: {
     ...mapState("defaults", ["timeCommitments"]),

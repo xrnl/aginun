@@ -71,7 +71,7 @@
                     <v-list-item @click="isEditOpen = true">
                       <v-list-item-title>Edit</v-list-item-title>
                     </v-list-item>
-                    <v-list-item @click="openDeleteConfirmation">
+                    <v-list-item @click="isDeleteOpen = true">
                       <v-list-item-title>Delete</v-list-item-title>
                     </v-list-item>
                   </v-list>
@@ -192,12 +192,6 @@ export default {
       testLoading: true,
       role: {},
     };
-  },
-  methods: {
-    openDeleteConfirmation: function() {
-      console.log("open");
-      this.isDeleteOpen = true;
-    },
   },
   apollo: {
     role: {
