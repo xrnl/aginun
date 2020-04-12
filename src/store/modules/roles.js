@@ -2,6 +2,7 @@ import { apolloClient } from "@/plugins/vue-apollo";
 import { RolesQuery } from "@/GraphQL/roles";
 import throttle from "lodash/throttle";
 import Vue from "vue";
+import { CreateRoleMutation } from "../../GraphQL/roles";
 
 export default {
   state: {
@@ -42,9 +43,56 @@ export default {
     },
   },
   actions: {
-    addRole: function({ commit }, newRole) {
+    addRole: async function({ commit }, newRole) {
+      if (!newRole) {
+        console.error("NewRole not found");
+        return;
+      }
+      const {
+        title,
+        email,
+        description,
+        requirements,
+        phone,
+        mattermostId,
+        localGroup,
+        responsibilities,
+        timeCommitment,
+        workingCircle,
+      } = newRole;
+
+      const input = {
+        title,
+        email,
+        responsibilities,
+        description,
+        requirements,
+        phone,
+        mattermostId,
+        localGroupId: localGroup.id,
+        workingCircleId: workingCircle.id,
+        timeCommitmentMax: timeCommitment.max,
+        timeCommitmentMin: timeCommitment.min,
+      };
+
+      const response = await apolloClient.mutate({
+        mutation: CreateRoleMutation,
+        variables: { input: [input] },
+        update: (
+          store,
+          {
+            data: {
+              insert_role: { returning },
+            },
+          }
+        ) => {
+          commit("addRole", returning[0]);
+        },
+      });
+
+      console.log(response);
       // TODO: add role to backend, pass result to addRole
-      commit("addRole", newRole);
+      // commit("addRole", newRole);
     },
     loadRoles: throttle(async function(
       { state, getters, commit, rootState, rootGetters, dispatch },

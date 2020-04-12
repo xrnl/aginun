@@ -1,5 +1,34 @@
 import gql from "graphql-tag";
 
+export const CreateRoleMutation = gql`
+  mutation CreateRole($input: [role_insert_input!]!) {
+    insert_role(objects: $input) {
+      returning {
+        id
+        title
+        responsibilities
+        description
+        requirements
+        dueDate
+        createdDate
+        timeCommitmentMin
+        timeCommitmentMax
+        workingCircle {
+          id
+          title
+        }
+        localGroup {
+          id
+          title
+        }
+        email
+        phone
+        mattermostId
+      }
+    }
+  }
+`;
+
 const RoleSummaryFieldsFragment = gql`
   fragment RoleSummaryFields on role {
     id
