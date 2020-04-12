@@ -3,7 +3,7 @@ export const state = {
 };
 
 export const getters = {
-  themeColor() {
+  getThemeColor() {
     return function _(color) {
       return this.$vuetify.theme.dark
         ? this.$vuetify.theme.themes.dark[color]

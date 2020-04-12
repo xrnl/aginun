@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
-import { mount, createLocalVue } from "@vue/test-utils";
-import TheAppBar from "@/components/TheAppBar.vue";
+import { mount, createLocalVue, shallowMount } from "@vue/test-utils";
+import TheAppBar from "@/components/TheAppBar";
 import Vuex from "vuex";
 import Vuetify from "vuetify";
-import { state } from "@/store/modules/styles";
+import { state as stylesState } from "@/store/modules/styles";
 
 describe("TheAppBar", () => {
   let store;
@@ -13,8 +13,7 @@ describe("TheAppBar", () => {
 
   beforeAll(() => {
     store = new Vuex.Store({
-      modules: { styles: { state } },
-      namedspace: true,
+      modules: { styles: { state: stylesState }, namespaced: true },
     });
     vuetify = new Vuetify({ theme: { dark: false } });
   });
@@ -28,11 +27,57 @@ describe("TheAppBar", () => {
     });
   };
 
+  it("has navbar height of 64px", () => {
+    const wrapper = mountFunction();
+    expect(wrapper.find("div").attributes("style")).toBe("height: 64px;");
+  });
+
   it("toggles between light and dark mode", async () => {
     const wrapper = mountFunction();
     const isDark = wrapper.vm.$vuetify.theme.dark;
     wrapper.find("button").trigger("click");
     await localVue.nextTick();
     expect(wrapper.vm.$vuetify.theme.dark).not.toBe(isDark);
+  });
+});
+
+import Spinner from "@/components/Spinner";
+import { ScaleLoader } from "@saeris/vue-spinners";
+
+describe("Spinner", () => {
+  const localVue = createLocalVue();
+  let store;
+  let getThemeColor;
+  localVue.use(Vuex);
+
+  beforeAll(() => {
+    const getThemeColor = () => () => jest.fn();
+
+    store = new Vuex.Store({
+      modules: { styles: { getters: { getThemeColor }, namespaced: true } },
+    });
+  });
+
+  const mountFunction = options => {
+    return shallowMount(Spinner, { localVue, store, ...options });
+  };
+
+  it("by default loads spinner and no text", () => {
+    const wrapper = mountFunction();
+    expect(wrapper.contains(ScaleLoader)).toBeTruthy();
+    expect(wrapper.contains("p")).not.toBeTruthy();
+  });
+
+  it("renders text", () => {
+    const text = "text";
+    const wrapper = mountFunction({ propsData: { text } });
+    expect(wrapper.find("p").text()).toBe(text);
+  });
+
+  it("renders themeColor from getter", () => {
+    const themeColor = "primary";
+    mountFunction({ propsData: { themeColor } });
+    expect(getThemeColor).toBeCalledTimes(1);
+    expect(getThemeColor).toBeCalledWith(themeColor);
   });
 });

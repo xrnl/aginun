@@ -3,7 +3,11 @@
     <p v-if="text">
       {{ text }}
     </p>
-    <scale-loader :loading="true" :color="themeColor(color)" :radius="1" />
+    <scale-loader
+      :loading="true"
+      :color="getThemeColor(themeColor)"
+      :radius="1"
+    />
   </div>
 </template>
 
@@ -17,7 +21,7 @@ export default {
     ScaleLoader,
   },
   props: {
-    color: {
+    themeColor: {
       type: String,
       default: "shade",
     },
@@ -28,7 +32,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("styles", ["themeColor"]),
+    ...mapGetters("styles", ["getThemeColor"]),
   },
 };
 </script>
