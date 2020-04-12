@@ -1,34 +1,5 @@
 import gql from "graphql-tag";
 
-export const CreateRoleMutation = gql`
-  mutation CreateRole($input: [role_insert_input!]!) {
-    insert_role(objects: $input) {
-      returning {
-        id
-        title
-        responsibilities
-        description
-        requirements
-        dueDate
-        createdDate
-        timeCommitmentMin
-        timeCommitmentMax
-        workingCircle {
-          id
-          title
-        }
-        localGroup {
-          id
-          title
-        }
-        email
-        phone
-        mattermostId
-      }
-    }
-  }
-`;
-
 const RoleSummaryFieldsFragment = gql`
   fragment RoleSummaryFields on role {
     id
@@ -108,4 +79,35 @@ export const RoleQuery = gql`
     }
   }
   ${RoleFieldsFragment}
+`;
+
+export const CreateRoleMutation = gql`
+  mutation CreateRole($input: [role_insert_input!]!) {
+    insert_role(objects: $input) {
+      returning {
+        ...RoleFields
+      }
+    }
+  }
+  ${RoleFieldsFragment}
+`;
+
+export const UpdateRoleMutation = gql`
+  mutation UpdateRole($id: Int!, $input: role_set_input!) {
+    update_role(where: { id: { _eq: $id } }, _set: $input) {
+      affected_rows
+      returning {
+        ...RoleFields
+      }
+    }
+  }
+  ${RoleFieldsFragment}
+`;
+
+export const DeleteRoleMutation = gql`
+  mutation DeleteRole($id: Int!) {
+    delete_role(where: { id: { _eq: $id } }) {
+      affected_rows
+    }
+  }
 `;

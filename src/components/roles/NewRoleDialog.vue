@@ -305,7 +305,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("roles", ["addRole"]),
+    ...mapActions("roles", ["createRole"]),
     addResponsibility: function() {
       if (this.validResponsibility) {
         this.responsibilities.push(this.newResponsibility);
@@ -319,7 +319,7 @@ export default {
       const role = JSON.parse(JSON.stringify(this.$data));
       delete role["newResponsibility"];
 
-      this.addRole(role);
+      this.createRole(role);
 
       this.$emit("input", false);
       this.resetState();

@@ -2,7 +2,41 @@ import { apolloClient } from "@/plugins/vue-apollo";
 import { RolesQuery } from "@/GraphQL/roles";
 import throttle from "lodash/throttle";
 import Vue from "vue";
-import { CreateRoleMutation } from "../../GraphQL/roles";
+import {
+  CreateRoleMutation,
+  UpdateRoleMutation,
+  DeleteRoleMutation,
+} from "../../GraphQL/roles";
+import { getCleanInputFromObject } from "../../utils/getCleanInput";
+
+function getInputFromNewRole(newRole) {
+  const {
+    title,
+    email,
+    description,
+    requirements,
+    phone,
+    mattermostId,
+    localGroup,
+    responsibilities,
+    timeCommitment,
+    workingCircle,
+  } = newRole;
+
+  return {
+    title,
+    email,
+    responsibilities,
+    description,
+    requirements,
+    phone,
+    mattermostId,
+    localGroupId: localGroup.id,
+    workingCircleId: workingCircle.id,
+    timeCommitmentMax: timeCommitment.max,
+    timeCommitmentMin: timeCommitment.min,
+  };
+}
 
 export default {
   state: {
@@ -21,8 +55,18 @@ export default {
     addRole(state, newRole) {
       state.roles.unshift(newRole);
     },
+    deleteRole(state, roleID) {
+      const roleIndex = state.roles.findIndex(role => role.id === roleID);
+      if (roleIndex > -1) {
+        state.roles.splice(roleIndex, 1);
+      }
+    },
     addRoles(state, newRoles) {
       state.roles.push.apply(state.roles, newRoles);
+    },
+    editRole(state, newRole) {
+      const roleIndex = state.roles.findIndex(role => role.id === newRole.id);
+      state.roles[roleIndex] = newRole;
     },
     setRoles(state, roles) {
       state.roles = roles;
@@ -43,37 +87,13 @@ export default {
     },
   },
   actions: {
-    addRole: async function({ commit }, newRole) {
+    createRole: async function({ commit }, newRole) {
       if (!newRole) {
         console.error("NewRole not found");
         return;
       }
-      const {
-        title,
-        email,
-        description,
-        requirements,
-        phone,
-        mattermostId,
-        localGroup,
-        responsibilities,
-        timeCommitment,
-        workingCircle,
-      } = newRole;
 
-      const input = {
-        title,
-        email,
-        responsibilities,
-        description,
-        requirements,
-        phone,
-        mattermostId,
-        localGroupId: localGroup.id,
-        workingCircleId: workingCircle.id,
-        timeCommitmentMax: timeCommitment.max,
-        timeCommitmentMin: timeCommitment.min,
-      };
+      const input = getInputFromNewRole(newRole);
 
       const response = await apolloClient.mutate({
         mutation: CreateRoleMutation,
@@ -91,8 +111,36 @@ export default {
       });
 
       console.log(response);
-      // TODO: add role to backend, pass result to addRole
-      // commit("addRole", newRole);
+    },
+    updateRole: async function({ commit }, newRole) {
+      const input = getCleanInputFromObject(getInputFromNewRole(newRole));
+
+      const response = await apolloClient.mutate({
+        mutation: UpdateRoleMutation,
+        variables: { id: newRole.id, input },
+        update: (
+          store,
+          {
+            data: {
+              update_role: { returning },
+            },
+          }
+        ) => {
+          commit("editRole", returning[0]);
+        },
+      });
+
+      console.log(response);
+    },
+    deleteRole: async function({ commit }, roleID) {
+      const response = await apolloClient.mutate({
+        mutation: DeleteRoleMutation,
+        variables: { id: roleID },
+        update: () => {
+          commit("deleteRole", roleID);
+        },
+      });
+      console.log(response);
     },
     loadRoles: throttle(async function(
       { state, getters, commit, rootState, rootGetters, dispatch },

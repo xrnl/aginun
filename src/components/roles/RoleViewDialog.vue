@@ -1,5 +1,12 @@
 <template>
   <div>
+    <div v-if="!!role.id">
+      <role-deletion-confirm
+        v-model="isDeleteOpen"
+        :role-title="role.title"
+        :role-id="role.id"
+      />
+    </div>
     <v-dialog
       persistent
       max-width="750"
@@ -62,9 +69,7 @@
                     <v-list-item @click="console.log('event for editing role')">
                       <v-list-item-title>Edit</v-list-item-title>
                     </v-list-item>
-                    <v-list-item
-                      @click="console.log('event for deleting role')"
-                    >
+                    <v-list-item @click="openDeleteConfirmation">
                       <v-list-item-title>Delete</v-list-item-title>
                     </v-list-item>
                   </v-list>
@@ -164,6 +169,7 @@
 import FlexWrapper from "../layout/FlexWrapper";
 import IconLink from "@/components/IconLink";
 import MetaInfo from "../layout/MetaInfo";
+import RoleDeletionConfirm from "./DeleteRoleConfirmation";
 import { RoleQuery } from "@/GraphQL/roles";
 
 export default {
@@ -172,13 +178,21 @@ export default {
     FlexWrapper,
     MetaInfo,
     IconLink,
+    RoleDeletionConfirm,
   },
   data() {
     return {
+      isDeleteOpen: false,
       applyDialog: false,
       testLoading: true,
       role: {},
     };
+  },
+  methods: {
+    openDeleteConfirmation: function() {
+      console.log("open");
+      this.isDeleteOpen = true;
+    },
   },
   apollo: {
     role: {
