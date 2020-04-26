@@ -6,7 +6,7 @@
         :role-title="role.title"
         :role-id="role.id"
       />
-      <role-edit-dialog v-model="isEditOpen" :role="roleForEditing" />
+      <role-edit-dialog v-model="isEditOpen" :role="role" />
     </div>
 
     <v-dialog
@@ -204,13 +204,6 @@ export default {
     },
   },
   computed: {
-    roleForEditing: function() {
-      if (!this.role || !this.role.id) {
-        return {};
-      }
-
-      return this.role;
-    },
     formattedDate: function() {
       const date = new Date(this.role.createdDate);
       const options = {
