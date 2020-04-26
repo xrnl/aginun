@@ -13,7 +13,7 @@
           Cancel
         </v-btn>
         <v-btn color="error" @click="onDeleteRole">
-          Remove
+          Delete
         </v-btn>
       </v-card-actions>
     </v-card>

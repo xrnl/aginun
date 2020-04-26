@@ -7,38 +7,6 @@ import {
   UpdateRoleMutation,
   DeleteRoleMutation,
 } from "../../GraphQL/roles";
-import { getCleanInputFromObject } from "../../utils/getCleanInput";
-
-function getInputFromNewRole(newRole) {
-  const {
-    id,
-    title,
-    email,
-    description,
-    requirements,
-    phone,
-    mattermostId,
-    localGroup,
-    responsibilities,
-    timeCommitment,
-    workingCircle,
-  } = newRole;
-
-  return {
-    id,
-    title,
-    email,
-    responsibilities,
-    description,
-    requirements,
-    phone,
-    mattermostId,
-    localGroupId: localGroup.id,
-    workingCircleId: workingCircle.id,
-    timeCommitmentMax: timeCommitment.max,
-    timeCommitmentMin: timeCommitment.min,
-  };
-}
 
 export default {
   state: {
@@ -95,11 +63,9 @@ export default {
         return;
       }
 
-      const input = getInputFromNewRole(newRole);
-
       await apolloClient.mutate({
         mutation: CreateRoleMutation,
-        variables: { input: [input] },
+        variables: { input: [newRole] },
         update: (
           store,
           {
@@ -113,11 +79,9 @@ export default {
       });
     },
     updateRole: async function({ commit }, newRole) {
-      const input = getCleanInputFromObject(getInputFromNewRole(newRole));
-
       await apolloClient.mutate({
         mutation: UpdateRoleMutation,
-        variables: { id: newRole.id, input },
+        variables: { id: newRole.id, input: newRole },
         update: (
           store,
           {

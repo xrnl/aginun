@@ -208,15 +208,8 @@ export default {
       if (!this.role || !this.role.id) {
         return {};
       }
-      const newRole = {
-        ...this.role,
-        timeCommitment: {
-          min: this.role.timeCommitmentMin,
-          max: this.role.timeCommitmentMax,
-        },
-      };
 
-      return newRole;
+      return this.role;
     },
     formattedDate: function() {
       const date = new Date(this.role.createdDate);

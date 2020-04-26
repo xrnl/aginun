@@ -21,11 +21,10 @@
             name="local group"
           >
             <v-select
-              v-model="localGroup"
+              v-model="localGroupId"
               :items="localGroups"
               item-value="id"
               item-text="title"
-              return-object
               label="Local group"
               :error-messages="errors"
             />
@@ -36,11 +35,10 @@
             name="working circle"
           >
             <v-select
-              v-model="workingCircle"
+              v-model="workingCircleId"
               :items="workingCircles"
               item-value="id"
               item-text="title"
-              return-object
               label="Working circle"
               :error-messages="errors"
             />
@@ -127,12 +125,13 @@ This can include information about the circle or the specific project that the r
             name="time commitment"
           >
             <v-select
-              v-model="timeCommitment"
+              v-model="timeCommitmentMin"
               :items="timeCommitments"
               item-value="min"
               return-object
               label="Time commitment"
               :error-messages="errors"
+              @change="onTimeCommitmentChange"
             >
               <template v-slot:item="{ item }">
                 {{ item.min }} - {{ item.max }} hours/week
@@ -263,9 +262,10 @@ let initialState = () => ({
   responsibilities: [],
   description: undefined,
   requirements: undefined,
-  timeCommitment: undefined,
-  localGroup: undefined,
-  workingCircle: undefined,
+  localGroupId: undefined,
+  workingCircleId: undefined,
+  timeCommitmentMin: undefined,
+  timeCommitmentMax: undefined,
   email: undefined,
   mattermostId: undefined,
   phone: undefined,
@@ -312,12 +312,17 @@ export default {
         this.newResponsibility = undefined;
       }
     },
+    onTimeCommitmentChange: function(timeCommitment) {
+      this.timeCommitmentMin = timeCommitment.min;
+      this.timeCommitmentMax = timeCommitment.max;
+    },
     resetState: function() {
       Object.assign(this.$data, initialState());
     },
     publishRole: function() {
       const role = JSON.parse(JSON.stringify(this.$data));
       delete role["newResponsibility"];
+      delete role["$apolloData"];
 
       this.createRole(role);
 
