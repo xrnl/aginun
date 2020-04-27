@@ -80,3 +80,34 @@ export const RoleQuery = gql`
   }
   ${RoleFieldsFragment}
 `;
+
+export const CreateRoleMutation = gql`
+  mutation CreateRole($input: [role_insert_input!]!) {
+    insert_role(objects: $input) {
+      returning {
+        ...RoleFields
+      }
+    }
+  }
+  ${RoleFieldsFragment}
+`;
+
+export const UpdateRoleMutation = gql`
+  mutation UpdateRole($id: Int!, $input: role_set_input!) {
+    update_role(where: { id: { _eq: $id } }, _set: $input) {
+      affected_rows
+      returning {
+        ...RoleFields
+      }
+    }
+  }
+  ${RoleFieldsFragment}
+`;
+
+export const DeleteRoleMutation = gql`
+  mutation DeleteRole($id: Int!) {
+    delete_role(where: { id: { _eq: $id } }) {
+      affected_rows
+    }
+  }
+`;

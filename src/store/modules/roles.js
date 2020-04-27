@@ -2,6 +2,11 @@ import { apolloClient } from "@/plugins/vue-apollo";
 import { RolesQuery } from "@/GraphQL/roles";
 import throttle from "lodash/throttle";
 import Vue from "vue";
+import {
+  CreateRoleMutation,
+  UpdateRoleMutation,
+  DeleteRoleMutation,
+} from "../../GraphQL/roles";
 
 export default {
   state: {
@@ -20,8 +25,18 @@ export default {
     addRole(state, newRole) {
       state.roles.unshift(newRole);
     },
+    deleteRole(state, roleID) {
+      const roleIndex = state.roles.findIndex(role => role.id === roleID);
+      if (roleIndex > -1) {
+        state.roles.splice(roleIndex, 1);
+      }
+    },
     addRoles(state, newRoles) {
       state.roles.push.apply(state.roles, newRoles);
+    },
+    editRole(state, newRole) {
+      const roleIndex = state.roles.findIndex(role => role.id === newRole.id);
+      state.roles[roleIndex] = newRole;
     },
     setRoles(state, roles) {
       state.roles = roles;
@@ -42,9 +57,51 @@ export default {
     },
   },
   actions: {
-    addRole: function({ commit }, newRole) {
-      // TODO: add role to backend, pass result to addRole
-      commit("addRole", newRole);
+    createRole: async function({ commit }, newRole) {
+      if (!newRole) {
+        console.error("NewRole not found");
+        return;
+      }
+
+      await apolloClient.mutate({
+        mutation: CreateRoleMutation,
+        variables: { input: [newRole] },
+        update: (
+          store,
+          {
+            data: {
+              insert_role: { returning },
+            },
+          }
+        ) => {
+          commit("addRole", returning[0]);
+        },
+      });
+    },
+    updateRole: async function({ commit }, newRole) {
+      await apolloClient.mutate({
+        mutation: UpdateRoleMutation,
+        variables: { id: newRole.id, input: newRole },
+        update: (
+          store,
+          {
+            data: {
+              update_role: { returning },
+            },
+          }
+        ) => {
+          commit("editRole", returning[0]);
+        },
+      });
+    },
+    deleteRole: async function({ commit }, roleID) {
+      await apolloClient.mutate({
+        mutation: DeleteRoleMutation,
+        variables: { id: roleID },
+        update: () => {
+          commit("deleteRole", roleID);
+        },
+      });
     },
     loadRoles: throttle(async function(
       { state, getters, commit, rootState, rootGetters, dispatch },

@@ -1,5 +1,14 @@
 <template>
   <div>
+    <div v-if="!!role.id">
+      <role-deletion-confirm
+        v-model="isDeleteOpen"
+        :role-title="role.title"
+        :role-id="role.id"
+      />
+      <role-edit-dialog v-model="isEditOpen" :role="role" />
+    </div>
+
     <v-dialog
       persistent
       max-width="750"
@@ -59,12 +68,10 @@
                     </v-btn>
                   </template>
                   <v-list>
-                    <v-list-item @click="console.log('event for editing role')">
+                    <v-list-item @click="isEditOpen = true">
                       <v-list-item-title>Edit</v-list-item-title>
                     </v-list-item>
-                    <v-list-item
-                      @click="console.log('event for deleting role')"
-                    >
+                    <v-list-item @click="isDeleteOpen = true">
                       <v-list-item-title>Delete</v-list-item-title>
                     </v-list-item>
                   </v-list>
@@ -164,6 +171,8 @@
 import FlexWrapper from "../layout/FlexWrapper";
 import IconLink from "@/components/IconLink";
 import MetaInfo from "../layout/MetaInfo";
+import RoleDeletionConfirm from "./DeleteRoleConfirmation";
+import RoleEditDialog from "./RoleEditDialog";
 import { RoleQuery } from "@/GraphQL/roles";
 
 export default {
@@ -172,9 +181,13 @@ export default {
     FlexWrapper,
     MetaInfo,
     IconLink,
+    RoleDeletionConfirm,
+    RoleEditDialog,
   },
   data() {
     return {
+      isDeleteOpen: false,
+      isEditOpen: false,
       applyDialog: false,
       testLoading: true,
       role: {},
