@@ -1,6 +1,6 @@
 # How to contribute to the Extinction Rebellion volunteer platform. 
 
-This guide explains how you can contribute to the development of the volunteer platform of Extinction Rebellion NL. If you want to learn more about the project and why you contribution matters, please read the [project purpose](https://github.com/xrnl/aginun/wiki/Purpose). 
+This guide explains how you can contribute to the development of the volunteer platform of Extinction Rebellion NL. If you want to learn more about the project, please read the [project purpose](https://github.com/xrnl/aginun/wiki/Purpose). 
 
 To contribute in any of the ways specified in this guide you will need a free [Github](https://github.com/) account.
 
@@ -27,7 +27,7 @@ If you have an idea for a feature to improve the application, first read the [ro
 
 After you submit your feature request, a project maintainer will give you one of the following answers:
 
-* The feature will be implemented in the current version. In this case you can directly start [developing your feature](https://github.com/xrnl/aginun/wiki/Functional-Specification). 
+* The feature will be implemented in the current version. In this case you can directly start [developing your feature](https://github.com/xrnl/aginun/blob/master/CONTRIBUTING.md#how-to-contribute). 
 * The feature will be implemented in a future version, and is added to the page of [future functionalities](https://github.com/xrnl/aginun/wiki/Future-functionalities). In this case you are encouraged not to develop your proposed feature, and instead develop features assigned to the next version, as these have a higher priority. 
 * The feature will not be implemented, along with an explanation of why this feature is rejected. 
 
@@ -91,6 +91,4 @@ There are a few ways that you can get in contact with the people working on this
 
 ## Improving this document 
 
-If you want to improve the quality of these guidelines, [make a pull request](https://github.com/xrnl/aginun/blob/master/CONTRIBUTING.md#How-to-make-a-pull-request) with your changes. 
-
-
+If you want to improve the quality of these guidelines, [make a pull request](https://github.com/xrnl/aginun/blob/master/CONTRIBUTING.md#How-to-make-a-pull-request) with your changes.
