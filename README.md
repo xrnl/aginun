@@ -2,7 +2,7 @@
 
 * Read [the wiki](https://github.com/xrnl/aginun/wiki) to learn more about the project.
 * Read [the contributing guidelines](https://github.com/xrnl/aginun/blob/master/CONTRIBUTING.md) to learn how you can contribute to the project.
-* Read the [instructions for getting support](https://github.com/xrnl/aginun/blob/master/SUPPORT.md) if you need help.
+* Read [the instructions for getting support](https://github.com/xrnl/aginun/blob/master/SUPPORT.md) if you need help.
 
 ## Installation
 
