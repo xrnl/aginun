@@ -1,7 +1,8 @@
 # aginun
 
-You can find all information about this project in [the wiki](https://github.com/xrnl/aginun/wiki)
-
+* Read [the wiki](https://github.com/xrnl/aginun/wiki) to learn more about the project.
+* Read [the contributing guidelines](https://github.com/xrnl/aginun/blob/master/CONTRIBUTING.md) to learn how you can contribute to the project.
+* Read the [instructions for getting support](https://github.com/xrnl/aginun/blob/master/SUPPORT.md) if you need help.
 
 ## Installation
 
@@ -76,12 +77,14 @@ In this file, you will have to replace `<API_KEY>` with the development API key,
 
 ## Testing
 
-### Unit tests
+### Unit tests
+
 ```
 npm run test:unit
 ```
 
 ### End-to-end tests
+
 ```
 npm run test:e2e
 ```
