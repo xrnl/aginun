@@ -10,6 +10,6 @@ If you have any questions that are not answered in the [project wiki](https://gi
 
 We encourage you to communicate publicly on the volunteer platform channel so that everyone in the community can reply to questions and benefits from insights. For sensitive communication, such as security vulnerabilities or violations of the code of conduct, you can communicate directly to our email.
 
-## Request the API key
+## Request API key or back end password
 
-Email [tech@extinctionrebellion.nl](mailto:tech@extinctionrebellion.nl) to request the development API key needed to run the application locally.
+Email [tech@extinctionrebellion.nl](mailto:tech@extinctionrebellion.nl) to request the development API key or the password to the development backend.
