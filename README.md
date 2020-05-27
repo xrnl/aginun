@@ -1,8 +1,20 @@
 # aginun
 
-* Read [the wiki](https://github.com/xrnl/aginun/wiki) to learn more about the project.
-* Read [the contributing guidelines](https://github.com/xrnl/aginun/blob/master/CONTRIBUTING.md) to learn how you can contribute to the project.
-* Read [the instructions for getting support](https://github.com/xrnl/aginun/blob/master/SUPPORT.md) if you need help.
+> Peer-to-peer volunteer platform for Extinction Rebellion: an international, grassroots, decentralized movement of tens of thousands of people who act together to justly address one of the greatest crisis of our times.
+
+## Purpose 
+
+## Why rebel 
+
+We are developers who joined Extinction Rebellion because we feel a moral duty to use our knowledge and skills to solve the Climate and Ecological Emergency. This emergency is a present reality for the families who are labelled climate refugees, the indigenous communities whose land has been destroyed, and the countless species that are forced into extinction every day. We joined Extinction Rebellion because it is our best and last hope to protect life on Earth. 
+
+## Why develop this application
+
+We are developing this volunteer platform to make it easier for Extinction Rebellion groups to find help with roles and tasks, and easier for people to find roles and tasks in Extinction Rebellion that they wish to volunteer for. We believe that this platform is a critical tool to grow the movement, make it more resilient, and increase our chances of addressing the present crisis.
+
+But we cannot do it alone. We need your help&emdash;no matter who you are, what skills you have or how much time you can dedicate. In the [contributing guidelines](https://github.com/xrnl/aginun/blob/master/CONTRIBUTING.md) you can learn how you can contribute to the project.
+
+If you want to get in contact or learn more about the project, please read the [instructions for getting support](https://github.com/xrnl/aginun/blob/master/SUPPORT.md).
 
 ## Installation
 
