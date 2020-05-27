@@ -9,3 +9,7 @@ If you have any questions that are not answered in the [project wiki](https://gi
   2. Send a message on the public [volunteer platform channel](https://organise.earth/xr-netherlands/channels/volunteer-platform) of the Extinction Rebellion Mattermost.
 
 We encourage you to communicate publicly on the volunteer platform channel so that everyone in the community can reply to questions and benefits from insights. For sensitive communication, such as security vulnerabilities or violations of the code of conduct, you can communicate directly to our email.
+
+## Request the API key
+
+Email [tech@extinctionrebellion.nl](mailto:tech@extinctionrebellion.nl) to request the development API key needed to run the application locally.
