@@ -1,4 +1,8 @@
-> Peer-to-peer volunteer platform for Extinction Rebellion: an international, grassroots, decentralized movement of tens of thousands of people who act together to justly address one of the greatest crisis of our times.
+<p align="center"><a href="https://rebellion.global/" target="_blank"><img width="200" src="https://user-images.githubusercontent.com/15846595/83038003-c6157b80-a03c-11ea-9605-325b4990e7bd.png" alt="XR logo"></a></p>
+
+<p align="center"><a href="https://rebellion.global/" target="_blank"><img src="https://img.shields.io/badge/rebel-for%20life-success" alt="XR website"></a></p>
+
+> Peer-to-peer volunteer platform of Extinction Rebellion: an international, grassroots, decentralized movement of tens of thousands of people who act together to justly address one of the greatest crisis of our times.
 
 ## Purpose
 
