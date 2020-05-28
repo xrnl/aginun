@@ -2,7 +2,7 @@
 name: Request a feature
 about: How would you like to improve the application?
 title: ''
-labels: ''
+labels: suggestion
 assignees: ''
 
 ---
