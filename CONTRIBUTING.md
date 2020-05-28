@@ -12,11 +12,11 @@ If you want to get in contact or learn more about the project, check out the [in
 
 If you have found a problem in the application, fisrt search [the project issues](https://github.com/xrnl/aginun/issues?q=is%3Aissue+is%3Aopen+label%3Abug) to see if it has already been reported. If the problem hasn't been reported, create a [new issue](https://github.com/xrnl/aginun/issues/new) with the following requirements: 
 
-* Use a clear descriptive title explaining the problem.
-* Assign the `bug` label to help maintainers distinguish this problem from less urgent issues.  
-* Describe the exact steps you took that led to the problem. For example, 1. Opened the application in Firefox 2. Clicked on a role 3. Clicked on the button to apply to the role. Explaining these steps is very important for maintainers to reproduce your problem, examine it and find a way to fix it.  
-* Describe what you expected to happen after following all these steps and what actually hapenned. For example, I expcted to find the contact information to apply to the role, but instead the application went back to the list of all roles. 
-* Add any additional comments.  
+1. Use a clear descriptive title explaining the problem.
+2. Assign the `bug` label to help maintainers distinguish this problem from less urgent issues.  
+3. Describe the exact steps you took that led to the problem. For example, 1. Opened the application in Firefox 2. Clicked on a role 3. Clicked on the button to apply to the role. Explaining these steps is very important for maintainers to reproduce your problem, examine it and find a way to fix it.  
+4. Describe what you expected to happen after following all these steps and what actually hapenned. For example, I expcted to find the contact information to apply to the role, but instead the application went back to the list of all roles. 
+5. Add any additional comments.  
 
 After you submit the issue explaining your problem, you are highly encouraged to develop a fix for the problem. Learn how you can do this in the section [Contributing to the code](https://github.com/xrnl/aginun/blob/master/CONTRIBUTING.md#Contributing-to-the-code). 
 
@@ -24,10 +24,10 @@ After you submit the issue explaining your problem, you are highly encouraged to
 
 If you have an idea for a feature to improve the application, first read the [roadmap](https://github.com/xrnl/aginun/wiki/Roadmap) and the [future functionalities](https://github.com/xrnl/aginun/wiki/Future-functionalities) page to see if your idea will already be developed, and search the [existing suggestions](https://github.com/xrnl/aginun/issues?q=is%3Aopen+is%3Aissue+label%3Asuggestion) to see if it has already been suggested. If you can't find anything, create a [new issue](https://github.com/xrnl/aginun/issues/new) with the following requirements: 
 
-* Use a clear descriptive title explaining your feature. 
-* Add the `suggestion` label to help maintainers distinguish your idea from other issues.
-* Explain what problem your idea solves.
-* Describe a step-by-step use case of your feature. See the [functional specification](https://github.com/xrnl/aginun/wiki/Functional-Specification) for example use cases.  
+1. Use a clear descriptive title explaining your feature. 
+2. Add the `suggestion` label to help maintainers distinguish your idea from other issues.
+3. Explain what problem your idea solves.
+4. Describe a step-by-step use case of your feature. See the [functional specification](https://github.com/xrnl/aginun/wiki/Functional-Specification) for example use cases.  
 
 After you submit your feature request, a project maintainer will give you one of the following answers within 2 days:
 
@@ -62,27 +62,27 @@ If you plan to start working on an issue, please leave a comment in that issue s
 
 ### How to contribute
 
-#### Install and run the application
+#### 1: Install and run the application
 
 You can install and run the application by following the intructions in the [README](https://github.com/xrnl/aginun#install).
 
-#### Follow the Development model
+#### 2: Follow the Development model
 
 In this project, we use the _fork and pull_ [collaborative development model](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-collaborative-development-models) to collaboratively change the code. If you haven't worked with this model before, we recommend following [this guide](https://blog.scottlowe.org/2015/01/27/using-fork-branch-git-workflow/).  
 
-#### Make your changes
+#### 3: Make your changes
 
 Once you have installed the application and it is configured according to the _fork and pull_ model, you can make your changes to the code.
 
-#### Test your code
+#### 4: Test your code
 
 It is highly recommended that you write unit tests for any code you submit. This will help ensure that any code you write works as expected, and will make it easy to identify if any future changes breaks your code.  
 
-### Make sure all tests pass
+#### 5: Make sure all tests pass
 
 Before submitting your change, you need to make sure that they do not break existing functionality. To do that, [run all tests](https://github.com/xrnl/aginun#test) and fix your code if any of the tests do not pass.
 
-#### Lint and Prettify code
+#### 6: Lint and Prettify code
 
 Any code you submit must:
   * Not have any errors detectable by [ESLint](https://eslint.org/). ESLint enables us to easily detect and solve common problems in our code.  
@@ -90,16 +90,16 @@ Any code you submit must:
 
 To easily write code that meets these requirements, we recommend using [this setup](https://github.com/xrnl/aginun/wiki/Recommended-setup).
 
-#### Make a pull request
+#### 7: Make a pull request
 
 When your code is ready to be submitted, make a pull request with the following details:
-  * Merge into the `master` branch of the `xrnl` repository.
-  * Reference any issues that this pull request closes, using one of the [Github issue linking keywords](https://help.github.com/en/github/managing-your-work-on-github/linking-a-pull-request-to-an-issue#linking-a-pull-request-to-an-issue-using-a-keyword).
-  * Explain all changes you have made in this pull request. If this pull request changes the interface you should include screenshots of the interface before and after your changes.  
-  * Explain why you have made these changes.
-  * Explain parts of the code that might be difficult to understand. This makes it much easier for the maintainer to review your code. 
+  1. Merge into the `master` branch of the `xrnl` repository.
+  2. Reference any issues that this pull request closes, using one of the [Github issue linking keywords](https://help.github.com/en/github/managing-your-work-on-github/linking-a-pull-request-to-an-issue#linking-a-pull-request-to-an-issue-using-a-keyword).
+  3. Explain all changes you have made in this pull request. If this pull request changes the interface you should include screenshots of the interface before and after your changes.  
+  4. Explain why you have made these changes.
+  5. Explain parts of the code that might be difficult to understand. This makes it much easier for the maintainer to review your code. 
 
-When you submit or update your pull request, you should receive a reply within 2 days.
+When you submit or update your pull request, you should receive a reply within 2 days. If the reviewer request changes, you should repeat steps 3 to 6. Note that you don't need to make a new pull request. You can push to your branch and the pull request will be automatically updated with your latest changes.
 
 ## Contribute without programming 
 
