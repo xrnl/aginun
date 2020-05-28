@@ -62,9 +62,25 @@ If you plan to start working on an issue, please leave a comment in that issue s
 
 ### How to contribute
 
-#### Development model
+#### Install and run the application
 
-In this project, we use the _fork and pull_ [collaborative development model](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-collaborative-development-models) to make changes to the code. If you haven't worked with this model before, we recommend following [this guide](https://blog.scottlowe.org/2015/01/27/using-fork-branch-git-workflow/).  
+You can install and run the application by following the intructions in the [README](https://github.com/xrnl/aginun#install).
+
+#### Follow the Development model
+
+In this project, we use the _fork and pull_ [collaborative development model](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-collaborative-development-models) to collaboratively change the code. If you haven't worked with this model before, we recommend following [this guide](https://blog.scottlowe.org/2015/01/27/using-fork-branch-git-workflow/).  
+
+#### Make your changes
+
+Once you have installed the application and it is configured according to the _fork and pull_ model, you can make your changes to the code.
+
+#### Test your code
+
+It is highly recommended that you write unit tests for any code you submit. This will help ensure that any code you write works as expected, and will make it easy to identify if any future changes breaks your code.  
+
+### Make sure all tests pass
+
+Before submitting your change, you need to make sure that they do not break existing functionality. To do that, [run all tests](https://github.com/xrnl/aginun#test) and fix your code if any of the tests do not pass.
 
 #### Lint and Prettify code
 
@@ -74,17 +90,9 @@ Any code you submit must:
 
 To easily write code that meets these requirements, we recommend using [this setup](https://github.com/xrnl/aginun/wiki/Recommended-setup).
 
-#### Write tests for your code
+#### Make a pull request
 
-It is highly recommended that you write unit tests for any code you submit. This will help ensure that any code you write works as expected, and will make it easy to identify if any future changes breaks your code.  
-
-#### Make sure that all tests pass
-
-Before making a pull request, you need to make sure that your changes do not break existing functionality. To do that, [run all tests](https://github.com/xrnl/aginun#testing) and fix your code if any of the tests do not pass. 
-
-#### How to make a pull request
-
-When you make a pull request with your changes you should:
+When your code is ready to be submitted, make a pull request with the following details:
   * Merge into the `master` branch of the `xrnl` repository.
   * Reference any issues that this pull request closes, using one of the [Github issue linking keywords](https://help.github.com/en/github/managing-your-work-on-github/linking-a-pull-request-to-an-issue#linking-a-pull-request-to-an-issue-using-a-keyword).
   * Explain all changes you have made in this pull request. If this pull request changes the interface you should include screenshots of the interface before and after your changes.  
