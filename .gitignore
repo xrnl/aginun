@@ -25,3 +25,6 @@ yarn-error.log*
 
 # hide VS Code Apollo GraphQL config file with API KEY
 apollo.config.js
+
+# wiki
+*.wiki

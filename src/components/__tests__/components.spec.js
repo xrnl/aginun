@@ -35,8 +35,8 @@ describe("TheAppBar", () => {
   it("toggles between light and dark mode", async () => {
     const wrapper = mountFunction();
     const isDark = wrapper.vm.$vuetify.theme.dark;
-    wrapper.find("button").trigger("click");
-    await localVue.nextTick();
+    const button =  wrapper.find("button");
+    await button.trigger("click");
     expect(wrapper.vm.$vuetify.theme.dark).not.toBe(isDark);
   });
 });
@@ -47,12 +47,13 @@ import { ScaleLoader } from "@saeris/vue-spinners";
 describe("Spinner", () => {
   const localVue = createLocalVue();
   let store;
-  let getThemeColor;
+  let themeColorFn;
   localVue.use(Vuex);
 
   beforeAll(() => {
-    const getThemeColor = () => () => jest.fn();
-
+	themeColorFn = jest.fn(color => '#AAA');
+	const getThemeColor = () => themeColorFn;
+		
     store = new Vuex.Store({
       modules: { styles: { getters: { getThemeColor }, namespaced: true } },
     });
@@ -76,8 +77,9 @@ describe("Spinner", () => {
 
   it("renders themeColor from getter", () => {
     const themeColor = "primary";
-    mountFunction({ propsData: { themeColor } });
-    expect(getThemeColor).toBeCalledTimes(1);
-    expect(getThemeColor).toBeCalledWith(themeColor);
+    const wrapper = mountFunction({ propsData: { themeColor } });
+    expect(themeColorFn).toBeCalled();
+    expect(themeColorFn).toBeCalledWith(themeColor);
   });
+
 });
