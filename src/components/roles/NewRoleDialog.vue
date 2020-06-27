@@ -3,7 +3,10 @@
     <v-card class="pa-4">
       <h2>New role</h2>
       <validation-observer ref="form" v-slot="{ invalid, handleSubmit }">
-        <form @submit.prevent="handleSubmit(publishRole)">
+        <form
+          @submit.prevent="handleSubmit(publishRole)"
+          @keypress.enter.prevent
+        >
           <validation-provider
             v-slot="{ errors }"
             rules="required|alpha_spaces|max:30"
