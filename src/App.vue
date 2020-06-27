@@ -4,11 +4,6 @@
     <v-content>
       <router-view />
     </v-content>
-    <v-footer absolute inset app class="font-weight-medium">
-      <v-col class="text-center" cols="12">
-        {{ new Date().getFullYear() }} — <strong>Aginun</strong>
-      </v-col>
-    </v-footer>
   </v-app>
 </template>
 
