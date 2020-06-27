@@ -43,6 +43,7 @@
 
 <script>
 import IconLink from "@/components/IconLink";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "TheAppBar",
@@ -51,21 +52,23 @@ export default {
   },
   data: () => ({
     contactSupportDialog: false,
-    alert: true,
-    alert_message: "Alert",
   }),
+  computed: {
+    ...mapState("alerts", ["alert", "alert_message"]),
+  },
   mounted: function() {
     if (alert) {
       this.hide_alert();
     }
   },
   methods: {
+    ...mapActions("alerts", ["setAlert"]),
     toggleDarkMode: function() {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
     },
     hide_alert: function() {
       window.setInterval(() => {
-        this.alert = false;
+        this.setAlert(false);
       }, 3000);
     },
   },
