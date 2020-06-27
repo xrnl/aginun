@@ -41,8 +41,13 @@
           key="noRoles"
           class="pa-5 text-center"
         >
-          <h3>No results.</h3>
-          <p>Try removing filters.</p>
+          <div v-if="isUsingFilters">
+            <h3>No results.</h3>
+            <p>Try removing filters.</p>
+          </div>
+          <div v-else>
+            <p>There are currently no published roles.</p>
+          </div>
         </div>
       </transition>
       <infinite-loading
@@ -96,7 +101,7 @@ import PageWithDrawer from "@/components/layout/PageWithDrawer.vue";
 import RoleCard from "@/components/roles/RoleCard.vue";
 import GridList from "@/components/layout/GridList.vue";
 import RoleFilters from "@/components/roles/RoleFilters.vue";
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapGetters } from "vuex";
 import NewItemButton from "@/components/NewItemButton";
 import NewRoleDialog from "@/components/roles/NewRoleDialog";
 import InfiniteLoading from "vue-infinite-loading";
@@ -123,8 +128,10 @@ export default {
     ...mapState("roles", [
       "roles",
       "isLoadingRoles",
+      "selectedFilters",
       "infiniteScrollIdentifier",
     ]),
+    ...mapGetters("roles", ["isUsingFilters"]),
     isMobile: function() {
       return this.$vuetify.breakpoint.smAndDown;
     },

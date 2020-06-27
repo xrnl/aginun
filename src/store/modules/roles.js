@@ -20,6 +20,17 @@ export default {
   getters: {
     getByID: state => id => state.roles.find(role => role.id == id),
     isNewQuery: state => state.paginationOffset == 0,
+    isUsingFilters(state, getters, rootState, rootGetters) {
+      return (
+        state.selectedFilters.workingCircles.length ||
+        state.selectedFilters.localGroups.length ||
+        state.selectedFilters.search ||
+        state.selectedFilters.timeCommitment[0] !=
+          rootGetters["defaults/timeCommitmentRange"].min ||
+        state.selectedFilters.timeCommitment[1] !=
+          rootGetters["defaults/timeCommitmentRange"].max
+      );
+    },
   },
   mutations: {
     addRole(state, newRole) {
@@ -163,10 +174,12 @@ export default {
     },
     500),
     setFilter({ commit }, payload) {
+      commit("setLoadingState", true);
       commit("setFilter", payload);
       commit("reloadRoles");
     },
     setDefaultFilters({ commit, rootGetters }) {
+      commit("setLoadingState", true);
       commit("setFilter", { filterType: "search", filterValue: "" });
       commit("setFilter", { filterType: "localGroups", filterValue: [] });
       commit("setFilter", { filterType: "workingCircles", filterValue: [] });
