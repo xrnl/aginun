@@ -353,6 +353,8 @@ export default {
       }
       this.$emit("input", false);
       this.resetState();
+      this.displayAlert("Role edited");
+
       this.$nextTick(() => {
         this.$refs.form.reset();
       });

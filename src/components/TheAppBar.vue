@@ -6,7 +6,9 @@
     class="bottom-border"
   >
     <v-spacer />
-    <v-alert :value="alert" type="success"> {{ alert_message }} </v-alert>
+    <v-alert :value="alert" type="success" transition="slide-y-transition">
+      {{ alert_message }}
+    </v-alert>
     <v-btn text @click.stop="contactSupportDialog = true">
       Support <v-icon> mdi-help-circle-outline </v-icon>
     </v-btn>

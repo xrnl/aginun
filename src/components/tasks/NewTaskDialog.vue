@@ -243,6 +243,7 @@ export default {
   },
   methods: {
     ...mapActions("tasks", ["addTask"]),
+    ...mapActions("alerts", ["displayAlert"]),
     resetState: function() {
       Object.assign(this.$data, initialState());
     },
@@ -257,6 +258,8 @@ export default {
       this.$nextTick(() => {
         this.$refs.form.reset();
       });
+
+      this.displayAlert("Task created");
     },
     isEmpty: text => !text || text.length == 0 || !text.trim(),
   },
