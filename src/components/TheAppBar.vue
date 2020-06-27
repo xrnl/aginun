@@ -6,6 +6,7 @@
     class="bottom-border"
   >
     <v-spacer />
+    <v-alert :value="alert" type="success"> {{ alert_message }} </v-alert>
     <v-btn text @click.stop="contactSupportDialog = true">
       Support <v-icon> mdi-help-circle-outline </v-icon>
     </v-btn>
@@ -50,10 +51,22 @@ export default {
   },
   data: () => ({
     contactSupportDialog: false,
+    alert: true,
+    alert_message: "Alert",
   }),
+  mounted: function() {
+    if (alert) {
+      this.hide_alert();
+    }
+  },
   methods: {
     toggleDarkMode: function() {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
+    },
+    hide_alert: function() {
+      window.setInterval(() => {
+        this.alert = false;
+      }, 3000);
     },
   },
 };
