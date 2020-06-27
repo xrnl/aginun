@@ -331,6 +331,7 @@ export default {
   },
   methods: {
     ...mapActions("roles", ["updateRole", "createRole"]),
+    ...mapActions("alerts", ["displayAlert"]),
     addResponsibility: function() {
       if (this.validResponsibility) {
         this.role.responsibilities.push(this.newResponsibility);
@@ -355,6 +356,8 @@ export default {
       this.$nextTick(() => {
         this.$refs.form.reset();
       });
+
+      this.displayAlert("Role successfully created!");
     },
     isEmpty: text => !text || text.length == 0 || !text.trim(),
   },
