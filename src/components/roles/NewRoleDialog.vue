@@ -5,7 +5,7 @@
       <validation-observer ref="form" v-slot="{ invalid, handleSubmit }">
         <form
           @submit.prevent="handleSubmit(publishRole)"
-          @keydown.enter.prevent
+          @keypress.enter.prevent
         >
           <validation-provider
             v-slot="{ errors }"
