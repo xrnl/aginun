@@ -11,8 +11,7 @@ export default {
   methods: {
     ...mapActions("roles", ["createRole"]),
     onSubmit: function() {
-      const role = JSON.parse(JSON.stringify(this.$data.role));
-      this.createRole(role);
+      this.createRole(this.role);
       this.$emit("input", false);
       this.resetState();
       this.$nextTick(() => {

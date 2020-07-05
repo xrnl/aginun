@@ -26,8 +26,7 @@ export default {
   methods: {
     ...mapActions("roles", ["updateRole"]),
     onSubmit: function() {
-      const role = JSON.parse(JSON.stringify(this.$data.role));
-      this.updateRole({ id: this.editRole.id, ...role });
+      this.updateRole({ id: this.editRole.id, ...this.role });
       this.$emit("input", false);
       this.$nextTick(() => {
         this.$refs.form.reset();
