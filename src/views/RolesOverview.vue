@@ -1,7 +1,7 @@
 <template>
   <page-with-drawer :is-drawer-open="isDrawerOpen" class="pb-5">
     <router-view :key="$route.fullPath" />
-    <new-role-dialog v-model="newRoleDialog" />
+    <role-edit-dialog v-model="newRoleDialog" />
     <div class="text-center my-8">
       <h1>
         Find roles at
@@ -103,7 +103,7 @@ import GridList from "@/components/layout/GridList.vue";
 import RoleFilters from "@/components/roles/RoleFilters.vue";
 import { mapState, mapActions, mapGetters } from "vuex";
 import NewItemButton from "@/components/NewItemButton";
-import NewRoleDialog from "@/components/roles/NewRoleDialog";
+import RoleEditDialog from "@/components/roles/RoleEditDialog";
 import InfiniteLoading from "vue-infinite-loading";
 import Spinner from "@/components/Spinner";
 
@@ -116,7 +116,7 @@ export default {
     GridList,
     DefaultDrawer,
     NewItemButton,
-    NewRoleDialog,
+    RoleEditDialog,
     InfiniteLoading,
     Spinner,
   },
