@@ -39,11 +39,11 @@ export default {
   },
   methods: {
     ...mapActions("roles", ["deleteRole"]),
-    ...mapActions("alerts", ["displayAlert"]),
+    ...mapActions("alerts", ["displaySuccess"]),
     onDeleteRole: function() {
       this.deleteRole(this.roleId);
       this.$emit("input", false);
-      this.displayAlert("Role deleted");
+      this.displaySuccess("Role deleted");
       this.$router.push("/roles");
     },
   },

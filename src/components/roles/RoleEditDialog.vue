@@ -331,7 +331,7 @@ export default {
   },
   methods: {
     ...mapActions("roles", ["updateRole", "createRole"]),
-    ...mapActions("alerts", ["displayAlert"]),
+    ...mapActions("alerts", ["displaySuccess"]),
     addResponsibility: function() {
       if (this.validResponsibility) {
         this.role.responsibilities.push(this.newResponsibility);
@@ -353,13 +353,11 @@ export default {
       }
       this.$emit("input", false);
       this.resetState();
-      this.displayAlert("Role edited");
-
       this.$nextTick(() => {
         this.$refs.form.reset();
       });
 
-      this.displayAlert("Role successfully created!");
+      this.displaySuccess(this.editRole ? "Role edited" : "Role created");
     },
     isEmpty: text => !text || text.length == 0 || !text.trim(),
   },

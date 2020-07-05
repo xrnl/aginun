@@ -1,23 +1,26 @@
 export default {
   state: {
-    alert: true,
-    alert_message: "Test",
+    alert: undefined,
   },
   mutations: {
     setAlert(state, alert) {
       state.alert = alert;
     },
-    setAlertMessage(state, alert_message) {
-      state.alert_message = alert_message;
-    },
   },
   actions: {
-    setAlert({ commit }, state) {
-      commit("setAlert", state);
+    displaySuccess({ commit }, message) {
+      commit("setAlert", {
+        message: message,
+        color: "success",
+        icon: "mdi-checkbox-marked-circle-outline",
+      });
     },
-    displayAlert({ commit }, message) {
-      commit("setAlertMessage", message);
-      commit("setAlert", true);
+    displayError({ commit }, message) {
+      commit("setAlert", {
+        message: message,
+        color: "error",
+        icon: "mdi-alert",
+      });
     },
   },
 };
