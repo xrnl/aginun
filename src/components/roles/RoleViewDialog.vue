@@ -6,7 +6,7 @@
         :role-title="role.title"
         :role-id="role.id"
       />
-      <role-edit-dialog v-model="isEditOpen" :role="role" />
+      <role-edit-dialog v-model="isEditOpen" :edit-role="role" />
     </div>
 
     <v-dialog

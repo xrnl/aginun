@@ -6,7 +6,7 @@ export default {
   name: "RoleEditDialog",
   mixins: [EditDialogMixin],
   props: {
-    role: {
+    editRole: {
       required: true,
       type: Object,
     },
@@ -15,24 +15,20 @@ export default {
     form_title: "Edit Role",
   }),
   created: function() {
-    //   This feels a little dangerous, find a cleaner way
-    const keys = Object.keys(this.role);
-    keys.forEach(value => (this[value] = this.role[value]));
-    this.workingCircleId = this.role.workingCircle.id;
-    this.localGroupId = this.role.localGroup.id;
+    for (var key in this.role) {
+      if (key in this.editRole) {
+        this.role[key] = this.editRole[key];
+      }
+    }
+    this.role.workingCircleId = this.editRole.workingCircle.id;
+    this.role.localGroupId = this.editRole.localGroup.id;
   },
   methods: {
     ...mapActions("roles", ["updateRole"]),
     onSubmit: function() {
-      const role = JSON.parse(JSON.stringify(this.$data));
-      delete role["newResponsibility"];
-      delete role["$apolloData"];
-      delete role["form_title"];
-
-      this.updateRole({ id: this.role.id, ...role });
-
+      const role = JSON.parse(JSON.stringify(this.$data.role));
+      this.updateRole({ id: this.editRole.id, ...role });
       this.$emit("input", false);
-
       this.$nextTick(() => {
         this.$refs.form.reset();
       });

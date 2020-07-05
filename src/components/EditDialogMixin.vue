@@ -10,7 +10,7 @@
             name="title"
           >
             <v-text-field
-              v-model="title"
+              v-model="role.title"
               label="Title"
               :error-messages="errors"
             />
@@ -21,7 +21,7 @@
             name="local group"
           >
             <v-select
-              v-model="localGroupId"
+              v-model="role.localGroupId"
               :items="localGroups"
               item-value="id"
               item-text="title"
@@ -35,7 +35,7 @@
             name="working circle"
           >
             <v-select
-              v-model="workingCircleId"
+              v-model="role.workingCircleId"
               :items="workingCircles"
               item-value="id"
               item-text="title"
@@ -48,7 +48,7 @@
           </p>
           <validation-provider
             v-slot="{ errors }"
-            :rules="`${responsibilities.length < 1 ? 'requiredList' : ''}`"
+            :rules="`${role.responsibilities.length < 1 ? 'requiredList' : ''}`"
             mode="eager"
             name="responsibility"
           >
@@ -73,8 +73,8 @@
               </template>
             </v-text-field>
           </validation-provider>
-          <v-card v-if="responsibilities.length > 0" class="mb-4">
-            <template v-for="(responsibility, i) in responsibilities">
+          <v-card v-if="role.responsibilities.length > 0" class="mb-4">
+            <template v-for="(responsibility, i) in role.responsibilities">
               <v-divider v-if="i !== 0" :key="`${i}-divider`" />
               <v-list-item
                 :key="`${i}-${responsibility}`"
@@ -85,7 +85,7 @@
                   text
                   icon
                   color="gray"
-                  @click="responsibilities.splice(i, 1)"
+                  @click="role.responsibilities.splice(i, 1)"
                 >
                   <v-icon>mdi-close</v-icon>
                 </v-btn>
@@ -98,7 +98,7 @@
             name="description"
           >
             <v-textarea
-              v-model="description"
+              v-model="role.description"
               label="Description (optional)"
               placeholder="Any additional information not specified in the set of responsibilities.
         
@@ -112,7 +112,7 @@ This can include information about the circle or the specific project that the r
             name="requirements"
           >
             <v-textarea
-              v-model="requirements"
+              v-model="role.requirements"
               label="Requirements (optional)"
               placeholder="Skills, experience, equipment"
               :error-messages="errors"
@@ -125,7 +125,7 @@ This can include information about the circle or the specific project that the r
             name="time commitment"
           >
             <v-select
-              v-model="timeCommitmentMin"
+              v-model="role.timeCommitmentMin"
               :items="timeCommitments"
               item-value="min"
               return-object
@@ -151,7 +151,7 @@ This can include information about the circle or the specific project that the r
             rules="required|email|max:50"
           >
             <v-text-field
-              v-model="email"
+              v-model="role.email"
               label="Email"
               :error-messages="errors"
             />
@@ -163,7 +163,7 @@ This can include information about the circle or the specific project that the r
             rules="mattermost|max:50"
           >
             <v-text-field
-              v-model="mattermostId"
+              v-model="role.mattermostId"
               label="Mattermost id (optional)"
               :error-messages="errors"
             />
@@ -175,7 +175,7 @@ This can include information about the circle or the specific project that the r
             name="phone number"
           >
             <v-text-field
-              v-model="phone"
+              v-model="role.phone"
               label="Phone number (optional)"
               :error-messages="errors"
             />
@@ -257,18 +257,20 @@ extend("mattermost", {
 });
 
 let initialState = () => ({
-  title: undefined,
+  role: {
+    title: undefined,
+    responsibilities: [],
+    description: undefined,
+    requirements: undefined,
+    localGroupId: undefined,
+    workingCircleId: undefined,
+    timeCommitmentMin: undefined,
+    timeCommitmentMax: undefined,
+    email: undefined,
+    mattermostId: undefined,
+    phone: undefined,
+  },
   newResponsibility: undefined,
-  responsibilities: [],
-  description: undefined,
-  requirements: undefined,
-  localGroupId: undefined,
-  workingCircleId: undefined,
-  timeCommitmentMin: undefined,
-  timeCommitmentMax: undefined,
-  email: undefined,
-  mattermostId: undefined,
-  phone: undefined,
 });
 
 export default {
@@ -291,7 +293,7 @@ export default {
     errorResponsibility: function() {
       const maxCharsResponsibility = 200;
       if (this.newResponsibility) {
-        if (this.responsibilities.length == 10) {
+        if (this.role.responsibilities.length == 10) {
           return "You can enter a maximum of 10 responsibilities";
         }
         if (this.newResponsibility.length > maxCharsResponsibility) {
@@ -307,13 +309,13 @@ export default {
   methods: {
     addResponsibility: function() {
       if (this.validResponsibility) {
-        this.responsibilities.push(this.newResponsibility);
+        this.role.responsibilities.push(this.newResponsibility);
         this.newResponsibility = undefined;
       }
     },
     onTimeCommitmentChange: function(timeCommitment) {
-      this.timeCommitmentMin = timeCommitment.min;
-      this.timeCommitmentMax = timeCommitment.max;
+      this.role.timeCommitmentMin = timeCommitment.min;
+      this.role.timeCommitmentMax = timeCommitment.max;
     },
     resetState: function() {
       Object.assign(this.$data, initialState());

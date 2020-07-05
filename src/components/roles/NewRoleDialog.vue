@@ -11,16 +11,10 @@ export default {
   methods: {
     ...mapActions("roles", ["createRole"]),
     onSubmit: function() {
-      const role = JSON.parse(JSON.stringify(this.$data));
-      delete role["newResponsibility"];
-      delete role["$apolloData"];
-      delete role["form_title"];
-
+      const role = JSON.parse(JSON.stringify(this.$data.role));
       this.createRole(role);
-
       this.$emit("input", false);
       this.resetState();
-
       this.$nextTick(() => {
         this.$refs.form.reset();
       });
