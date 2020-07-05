@@ -6,8 +6,7 @@ export default {
   name: "NewRoleDialog",
   mixins: [EditDialogMixin],
   data: () => ({
-    newRoleDialog: false,
-    isDrawerOpen: null,
+    form_title: "New Role",
   }),
   methods: {
     ...mapActions("roles", ["createRole"]),
@@ -15,6 +14,7 @@ export default {
       const role = JSON.parse(JSON.stringify(this.$data));
       delete role["newResponsibility"];
       delete role["$apolloData"];
+      delete role["form_title"];
 
       this.createRole(role);
 

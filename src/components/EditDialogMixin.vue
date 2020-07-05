@@ -1,7 +1,7 @@
 <template>
   <v-dialog :value="value" width="600px" @input="$emit('input', false)">
     <v-card class="pa-4">
-      <h2>New role</h2>
+      <h2>{{ form_title }}</h2>
       <validation-observer ref="form" v-slot="{ invalid, handleSubmit }">
         <form @submit.prevent="handleSubmit(onSubmit)" @keypress.enter.prevent>
           <validation-provider
