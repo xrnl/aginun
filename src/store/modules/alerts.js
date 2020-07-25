@@ -1,10 +1,15 @@
 export default {
   state: {
-    alert: undefined,
+    alertOn: false,
+    alert: {},
   },
   mutations: {
     setAlert(state, alert) {
       state.alert = alert;
+      state.alertOn = true;
+    },
+    disableAlert(state) {
+      state.alertOn = false;
     },
   },
   actions: {

@@ -6,11 +6,10 @@
     class="bottom-border"
   >
     <v-snackbar
-      v-model="alert"
-      :color="alert.color"
       transition="v-expand-transition"
-      timeout="5000"
-      auto-height
+      :color="alert.color"
+      :value="alertOn"
+      @input="disableAlert"
     >
       {{ alert.message }}
       <v-icon dark> {{ alert.icon }} </v-icon>
@@ -52,7 +51,7 @@
 
 <script>
 import IconLink from "@/components/IconLink";
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 
 export default {
   name: "TheAppBar",
@@ -63,12 +62,13 @@ export default {
     contactSupportDialog: false,
   }),
   computed: {
-    ...mapState("alerts", ["alert"]),
+    ...mapState("alerts", ["alert", "alertOn"]),
   },
   methods: {
     toggleDarkMode: function() {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
     },
+    ...mapMutations("alerts", ["disableAlert"]),
   },
 };
 </script>
