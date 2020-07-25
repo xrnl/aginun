@@ -5,15 +5,6 @@
     flat
     class="bottom-border"
   >
-    <v-snackbar
-      transition="v-expand-transition"
-      :color="alert.color"
-      :value="alertOn"
-      @input="disableAlert"
-    >
-      {{ alert.message }}
-      <v-icon dark> {{ alert.icon }} </v-icon>
-    </v-snackbar>
     <v-spacer />
     <v-btn text @click.stop="contactSupportDialog = true">
       Support <v-icon> mdi-help-circle-outline </v-icon>
@@ -51,7 +42,6 @@
 
 <script>
 import IconLink from "@/components/IconLink";
-import { mapState, mapMutations } from "vuex";
 
 export default {
   name: "TheAppBar",
@@ -61,14 +51,10 @@ export default {
   data: () => ({
     contactSupportDialog: false,
   }),
-  computed: {
-    ...mapState("alerts", ["alert", "alertOn"]),
-  },
   methods: {
     toggleDarkMode: function() {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
     },
-    ...mapMutations("alerts", ["disableAlert"]),
   },
 };
 </script>
