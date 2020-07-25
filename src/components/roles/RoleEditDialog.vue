@@ -310,6 +310,9 @@ export default {
     validResponsibility: function() {
       return !this.isEmpty(this.newResponsibility) && !this.errorResponsibility;
     },
+    formTitle: function() {
+      return this.editRole ? "Edit Role" : "New Role";
+    },
   },
   watch: {
     editRole: {
