@@ -290,19 +290,6 @@ export default {
     },
   },
   data: () => initialState(),
-  beforeUpdate: function() {
-    if (this.editRole) {
-      for (var key in this.role) {
-        if (key in this.editRole) {
-          this.role[key] = this.editRole[key];
-        }
-      }
-      this.role.workingCircleId = this.editRole.workingCircle.id;
-      this.role.localGroupId = this.editRole.localGroup.id;
-      this.form_title = "Edit Role";
-    } else {
-      this.form_title = "New Role";
-    }
   },
   computed: {
     ...mapState("defaults", ["timeCommitments"]),
