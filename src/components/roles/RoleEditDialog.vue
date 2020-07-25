@@ -324,6 +324,22 @@ export default {
       return !this.isEmpty(this.newResponsibility) && !this.errorResponsibility;
     },
   },
+  watch: {
+    editRole: {
+      handler: function(editRole) {
+        if (editRole) {
+          for (var key in this.role) {
+            if (key in editRole) {
+              this.role[key] = editRole[key];
+            }
+          }
+          this.role.workingCircleId = this.editRole.workingCircle.id;
+          this.role.localGroupId = this.editRole.localGroup.id;
+        }
+      },
+      immediate: true,
+    },
+  },
   methods: {
     ...mapActions("roles", ["updateRole", "createRole"]),
     addResponsibility: function() {
