@@ -290,7 +290,6 @@ export default {
     },
   },
   data: () => initialState(),
-  },
   computed: {
     ...mapState("defaults", ["timeCommitments"]),
     ...mapState("groups", ["localGroups"]),
