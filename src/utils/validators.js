@@ -15,3 +15,7 @@ export const makeObjectValidator = objectExpectedStructure => {
 
 export const isArrayValid = (arrayToValidate, isItemValid) =>
   arrayToValidate.every(item => isItemValid(item));
+
+export const iconValidator = iconName => {
+  return iconName.startsWith("mdi-");
+};

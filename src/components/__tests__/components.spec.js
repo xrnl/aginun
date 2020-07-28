@@ -86,7 +86,7 @@ describe("Spinner", () => {
 
 import AutocompleteCustom from "@/components/AutocompleteCustom";
 
-describe.only("AutocompleteCustom", () => {
+describe("AutocompleteCustom", () => {
   const localVue = createLocalVue();
 
   let vuetify;
@@ -112,12 +112,12 @@ describe.only("AutocompleteCustom", () => {
       ...options,
     });
 
-  it("prop label is rendered", function() {
+  it("prop label is rendered", () => {
     const wrapper = mountFunction();
     expect(wrapper.find("label").text()).toBe(label);
   });
 
-  it("prop items validation works", function() {
+  it("prop items validation works", () => {
     const validator = AutocompleteCustom.props.items.validator;
 
     expect(validator(items)).toBeTruthy();
@@ -129,11 +129,66 @@ describe.only("AutocompleteCustom", () => {
     expect(validator(itemsInvalidTypes)).toBeFalsy();
   });
 
-  it("prop selectedItemsIds validation works", function() {
+  it("prop selectedItemsIds validation works", () => {
     const validator = AutocompleteCustom.props.selectedItemsIds.validator;
 
     expect(validator([1, 2])).toBeTruthy();
     expect(validator([1, 2.5])).toBeFalsy();
     expect(validator(["1", "2"])).toBeFalsy();
+  });
+});
+
+import IconButton from "@/components/IconButton";
+import { themeColorNames } from "@/utils/defaults";
+
+describe.only("IconButton", () => {
+  const localVue = createLocalVue();
+
+  let vuetify;
+  const text = "add";
+  const icon = "mdi-plus";
+  const themeColor = "primary";
+
+  beforeAll(() => {
+    vuetify = new Vuetify();
+  });
+
+  const mountFunction = options =>
+    mount(IconButton, {
+      localVue,
+      vuetify,
+      propsData: {
+        text,
+        icon,
+        themeColor,
+      },
+      ...options,
+    });
+
+  it("prop text is rendered", () => {
+    const wrapper = mountFunction();
+    expect(wrapper.find("button > span").text()).toBe(text);
+  });
+
+  it("prop icon is rendered", () => {
+    const wrapper = mountFunction();
+    expect(wrapper.find(`i.v-icon.${icon}`).exists()).toBeTruthy();
+  });
+
+  it("prop color validation works", () => {
+    const validator = IconButton.props.themeColor.validator;
+
+    themeColorNames.forEach(themeColor =>
+      expect(validator(themeColor)).toBeTruthy()
+    );
+
+    expect(validator("#000000")).toBeFalsy();
+  });
+
+  it("prop icon validation works", function() {
+    const validator = IconButton.props.icon.validator;
+
+    expect(validator("mdi-plus")).toBeTruthy();
+    expect(validator("plus-icon")).toBeFalsy();
   });
 });

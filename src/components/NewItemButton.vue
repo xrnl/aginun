@@ -1,6 +1,6 @@
 <template>
   <icon-button
-    color="primary"
+    theme-color="primary"
     icon="mdi-plus"
     :text="label"
     @click="$emit('click')"

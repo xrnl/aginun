@@ -8,16 +8,21 @@
 </template>
 
 <script>
+import { themeColorNames } from "@/utils/defaults";
+import { iconValidator } from "@/utils/validators";
+
 export default {
   name: "IconButton",
   props: {
-    color: {
+    themeColor: {
       type: String,
       required: true,
+      validator: themeColor => themeColorNames.includes(themeColor),
     },
     icon: {
       type: String,
       required: true,
+      validator: iconValidator,
     },
     text: {
       type: String,
