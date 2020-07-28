@@ -72,7 +72,7 @@
       "prettier"
     ],
     "rules": {
-      "prettier/prettier": "error",
+      "prettier/prettier": "warn",
       "vue/max-attributes-per-line": [
         2,
         {
