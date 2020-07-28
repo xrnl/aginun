@@ -141,7 +141,7 @@ describe("AutocompleteCustom", () => {
 import IconButton from "@/components/IconButton";
 import { themeColorNames } from "@/utils/defaults";
 
-describe.only("IconButton", () => {
+describe("IconButton", () => {
   const localVue = createLocalVue();
 
   let vuetify;
@@ -190,5 +190,53 @@ describe.only("IconButton", () => {
 
     expect(validator("mdi-plus")).toBeTruthy();
     expect(validator("plus-icon")).toBeFalsy();
+  });
+
+  it("button click emits click event", async () => {
+    const wrapper = mountFunction();
+    const button = wrapper.find("button");
+    await button.trigger("click");
+    expect(wrapper.emitted().click).toBeTruthy();
+  });
+});
+
+import NewItemButton from "@/components/NewItemButton";
+
+describe.only("NewItemButton", () => {
+  const localVue = createLocalVue();
+
+  let vuetify;
+  const text = "New role";
+  const icon = "mdi-plus";
+
+  beforeAll(() => {
+    vuetify = new Vuetify();
+  });
+
+  const mountFunction = options =>
+    mount(NewItemButton, {
+      localVue,
+      vuetify,
+      propsData: {
+        text,
+      },
+      ...options,
+    });
+
+  it("prop text is rendered", () => {
+    const wrapper = mountFunction();
+    expect(wrapper.find("button > span").text()).toBe(text);
+  });
+
+  it("plus icon is rendered", () => {
+    const wrapper = mountFunction();
+    expect(wrapper.find(`i.v-icon.${icon}`).exists()).toBeTruthy();
+  });
+
+  it("button click emits click event", async () => {
+    const wrapper = mountFunction();
+    const button = wrapper.find("button");
+    await button.trigger("click");
+    expect(wrapper.emitted().click).toBeTruthy();
   });
 });

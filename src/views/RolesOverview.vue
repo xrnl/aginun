@@ -13,7 +13,7 @@
     <div v-if="isMobile" class="mb-8">
       <v-divider />
       <div class="d-flex justify-space-between pa-3">
-        <new-item-button label="New Role" @click="showNewRoleDialog" />
+        <new-item-button text="New Role" @click="showNewRoleDialog" />
         <v-btn text color="primary" @click="isDrawerOpen = true">
           Filter
         </v-btn>
@@ -83,7 +83,7 @@
         </template>
         <role-filters />
         <div v-if="!isMobile" class="text-center mt-4">
-          <new-item-button label="New Role" @click="showNewRoleDialog" />
+          <new-item-button text="New Role" @click="showNewRoleDialog" />
         </div>
       </default-drawer>
     </template>
