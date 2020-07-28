@@ -66,8 +66,8 @@ describe("Spinner", () => {
 
   it("by default loads spinner and no text", () => {
     const wrapper = mountFunction();
-    expect(wrapper.find(ScaleLoader)).toBeTruthy();
-    expect(wrapper.find("p")).not.toBeTruthy();
+    expect(wrapper.findComponent(ScaleLoader).exists()).toBeTruthy();
+    expect(wrapper.find("p").exists()).not.toBeTruthy();
   });
 
   it("renders text", () => {
@@ -243,7 +243,7 @@ describe("NewItemButton", () => {
 
 import IconLink from "@/components/IconLink";
 
-describe.only("IconLink", () => {
+describe("IconLink", () => {
   const localVue = createLocalVue();
 
   let vuetify;
