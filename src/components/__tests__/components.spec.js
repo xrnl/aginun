@@ -185,7 +185,7 @@ describe("IconButton", () => {
     expect(validator("#000000")).toBeFalsy();
   });
 
-  it("prop icon validation works", function() {
+  it("prop icon validation works", () => {
     const validator = IconButton.props.icon.validator;
 
     expect(validator("mdi-plus")).toBeTruthy();
@@ -202,7 +202,7 @@ describe("IconButton", () => {
 
 import NewItemButton from "@/components/NewItemButton";
 
-describe.only("NewItemButton", () => {
+describe("NewItemButton", () => {
   const localVue = createLocalVue();
 
   let vuetify;
@@ -238,5 +238,71 @@ describe.only("NewItemButton", () => {
     const button = wrapper.find("button");
     await button.trigger("click");
     expect(wrapper.emitted().click).toBeTruthy();
+  });
+});
+
+import IconLink from "@/components/IconLink";
+
+describe.only("IconLink", () => {
+  const localVue = createLocalVue();
+
+  let vuetify;
+
+  const href = "https://organise.earth";
+  const linkText = "@username";
+  const label = "Mattermost";
+  const icon = "mdi-message";
+
+  beforeAll(() => {
+    vuetify = new Vuetify();
+  });
+
+  const mountFunction = options =>
+    mount(IconLink, {
+      localVue,
+      vuetify,
+      propsData: {
+        href,
+        linkText,
+        label,
+        icon,
+      },
+      ...options,
+    });
+
+  it("prop href validation works", () => {
+    const validator = IconLink.props.href.validator;
+
+    expect(validator("https://organise.earth")).toBeTruthy();
+    expect(validator("mailto:test@protonmail.com")).toBeTruthy();
+    expect(validator("tel:+31625549011")).toBeTruthy();
+    expect(validator("www.organise.earth")).toBeFalsy();
+  });
+
+  it("prop icon validation works", () => {
+    const validator = IconLink.props.icon.validator;
+
+    expect(validator("mdi-plus")).toBeTruthy();
+    expect(validator("plus-icon")).toBeFalsy();
+  });
+
+  it("href prop is rendered", () => {
+    const wrapper = mountFunction();
+    expect(wrapper.find("a").attributes("href")).toBe(href);
+  });
+
+  it("linkText prop is rendered", () => {
+    const wrapper = mountFunction();
+    expect(wrapper.find("a").text()).toBe(linkText);
+  });
+
+  it("label prop is rendered", () => {
+    const wrapper = mountFunction();
+    expect(wrapper.find("span").text()).toBe(label);
+  });
+
+  it("prop icon is rendered", () => {
+    const wrapper = mountFunction();
+    expect(wrapper.find(`i.v-icon.${icon}`).exists()).toBeTruthy();
   });
 });

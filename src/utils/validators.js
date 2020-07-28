@@ -19,3 +19,8 @@ export const isArrayValid = (arrayToValidate, isItemValid) =>
 export const iconValidator = iconName => {
   return iconName.startsWith("mdi-");
 };
+
+export const hrefValidator = href => {
+  const validHrefPrefixes = ["http://", "https://", "mailto:", "tel:"];
+  return validHrefPrefixes.some(hrefPrefix => href.startsWith(hrefPrefix));
+};
