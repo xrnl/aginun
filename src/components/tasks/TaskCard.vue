@@ -23,7 +23,7 @@
   </default-card>
 </template>
 <script>
-import DefaultCard from "@/components/layout/DefaultCard.vue";
+import DefaultCard from "@/components/surfaces/DefaultCard.vue";
 export default {
   components: { DefaultCard },
   props: {
