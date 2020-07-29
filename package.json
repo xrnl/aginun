@@ -112,7 +112,6 @@
   },
   "browserslist": ["> 1%", "last 2 versions"],
   "jest": {
-    "preset": "@vue/cli-plugin-unit-jest",
-    "setupFiles": ["<rootDir>/tests/unit/setup.js"]
+    "preset": "@vue/cli-plugin-unit-jest"
   }
 }

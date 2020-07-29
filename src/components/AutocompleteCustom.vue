@@ -1,7 +1,7 @@
 <template>
   <v-autocomplete
     :items="items"
-    :value="selectedItems"
+    :value="selectedItemsIds"
     item-value="id"
     item-text="title"
     chips

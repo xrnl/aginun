@@ -1,5 +1,5 @@
 <template>
-  <v-btn :color="color" @click.stop="$emit('click')">
+  <v-btn :color="themeColor" @click.stop="$emit('click')">
     <v-icon>
       {{ icon }}
     </v-icon>
