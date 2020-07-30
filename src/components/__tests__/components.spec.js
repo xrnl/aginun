@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { mount, createLocalVue, shallowMount } from "@vue/test-utils";
+import { mount, createLocalVue } from "@vue/test-utils";
 import TheAppBar from "@/components/TheAppBar";
 import Vue from "vue";
 import Vuex from "vuex";
@@ -29,9 +29,11 @@ describe("TheAppBar", () => {
       ...options,
     });
 
-  it("has navbar height of 64px", () => {
+  it("has height defined in store", () => {
     const wrapper = mountFunction();
-    expect(wrapper.find("div").attributes("style")).toBe("height: 64px;");
+    expect(wrapper.find("div").attributes("style")).toBe(
+      `height: ${stylesState.navbarHeight};`
+    );
   });
 
   it("toggles between light and dark mode", async () => {
@@ -45,42 +47,47 @@ describe("TheAppBar", () => {
 
 import Spinner from "@/components/Spinner";
 import { ScaleLoader } from "@saeris/vue-spinners";
+import { getThemeColor } from "@/utils/utilities.js";
 
 describe("Spinner", () => {
   const localVue = createLocalVue();
 
-  let store;
-  let themeColorFn;
+  let vuetify;
   localVue.use(Vuex);
 
   beforeAll(() => {
-    themeColorFn = jest.fn(color => "#AAA");
-    const getThemeColor = () => themeColorFn;
-    store = new Vuex.Store({
-      modules: { styles: { getters: { getThemeColor }, namespaced: true } },
+    vuetify = new Vuetify({
+      theme: { dark: false, themes: { light: { primary: "#3A62A8" } } },
     });
   });
 
   const mountFunction = options =>
-    shallowMount(Spinner, { localVue, store, ...options });
+    mount(Spinner, { localVue, vuetify, ...options });
 
-  it("by default loads spinner and no text", () => {
+  const spinnerSelector = "div > div > div";
+
+  it("by default renders spinner and no text", () => {
     const wrapper = mountFunction();
-    expect(wrapper.findComponent(ScaleLoader).exists()).toBeTruthy();
-    expect(wrapper.find("p").exists()).not.toBeTruthy();
+    const spinnerTags = wrapper.findAll(spinnerSelector);
+    expect(spinnerTags.length).toBeGreaterThan(0);
+    expect(wrapper.find("p").exists()).toBeFalsy();
   });
 
-  it("renders text", () => {
+  it("prop text is rendered", () => {
     const text = "text";
     const wrapper = mountFunction({ propsData: { text } });
     expect(wrapper.find("p").text()).toBe(text);
   });
 
-  it("renders themeColor from getter", () => {
+  it("prop themeColor is rendered", () => {
     const themeColor = "primary";
     const wrapper = mountFunction({ propsData: { themeColor } });
-    expect(themeColorFn).toBeCalled();
-    expect(themeColorFn).toBeCalledWith(themeColor);
+    const color = getThemeColor(wrapper.vm.$vuetify.theme, themeColor);
+    const spinnerTags = wrapper.findAll(spinnerSelector);
+
+    for (var i = 0; i < spinnerTags.length; i++) {
+      expect(spinnerTags.at(i).attributes("color")).toBe(color);
+    }
   });
 });
 
@@ -94,6 +101,7 @@ describe("AutocompleteCustom", () => {
     { id: 1, title: "Enschede" },
     { id: 2, title: "Brabant" },
   ];
+
   const label = "Local group";
 
   beforeAll(() => {
@@ -136,6 +144,21 @@ describe("AutocompleteCustom", () => {
     expect(validator([1, 2.5])).toBeFalsy();
     expect(validator(["1", "2"])).toBeFalsy();
   });
+
+  it("selected items are rendered", () => {
+    const selectedItemsIds = items.map(item => item.id);
+    const wrapper = mountFunction({
+      propsData: {
+        label,
+        items,
+        selectedItemsIds,
+      },
+    });
+    const renderedItems = wrapper.findAll("v-chip__content");
+    for (var i = 0; i < renderedItems.length; i++) {
+      expect(renderedItems.at(i).text()).toBe(items[i].title);
+    }
+  });
 });
 
 import IconButton from "@/components/IconButton";
@@ -173,6 +196,11 @@ describe("IconButton", () => {
   it("prop icon is rendered", () => {
     const wrapper = mountFunction();
     expect(wrapper.find(`i.v-icon.${icon}`).exists()).toBeTruthy();
+  });
+
+  it("prop themeColor is rendered", () => {
+    const wrapper = mountFunction();
+    expect(wrapper.find("button").classes()).toContain(themeColor);
   });
 
   it("prop color validation works", () => {

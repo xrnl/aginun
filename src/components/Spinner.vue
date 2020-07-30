@@ -3,17 +3,13 @@
     <p v-if="text">
       {{ text }}
     </p>
-    <scale-loader
-      :loading="true"
-      :color="getThemeColor(themeColor)"
-      :radius="1"
-    />
+    <scale-loader :loading="true" :color="color" :radius="1" />
   </div>
 </template>
 
 <script>
 import { ScaleLoader } from "@saeris/vue-spinners";
-import { mapGetters } from "vuex";
+import { getThemeColor } from "@/utils/utilities.js";
 
 export default {
   name: "Spinner",
@@ -32,7 +28,9 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("styles", ["getThemeColor"]),
+    color() {
+      return getThemeColor(this.$vuetify.theme, this.themeColor);
+    },
   },
 };
 </script>
