@@ -7,7 +7,9 @@
     @input="disableAlert"
   >
     {{ alert.message }}
-    <v-icon dark> {{ alert.icon }} </v-icon>
+    <v-icon dark>
+      {{ alert.icon }}
+    </v-icon>
   </v-snackbar>
 </template>
 

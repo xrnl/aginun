@@ -1,8 +1,8 @@
 <template>
   <icon-button
-    color="primary"
+    theme-color="primary"
     icon="mdi-plus"
-    :text="label"
+    :text="text"
     @click="$emit('click')"
   />
 </template>
@@ -16,7 +16,7 @@ export default {
     IconButton,
   },
   props: {
-    label: {
+    text: {
       type: String,
       required: true,
     },

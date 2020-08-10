@@ -1,7 +1,7 @@
 <template>
   <v-autocomplete
-    :value="value"
     :items="items"
+    :value="selectedItemsIds"
     item-value="id"
     item-text="title"
     chips
@@ -14,24 +14,31 @@
 </template>
 
 <script>
+import { makeObjectValidator, isArrayValid } from "@/utils/validators";
+
 export default {
   name: "AutocompleteCustom",
   props: {
     items: {
       type: Array,
       required: true,
+      validator: items => {
+        const objectValidator = makeObjectValidator({
+          id: "number",
+          title: "string",
+        });
+        return isArrayValid(items, objectValidator);
+      },
     },
-    value: {
+    selectedItemsIds: {
       type: Array,
       required: true,
+      validator: items => isArrayValid(items, Number.isInteger),
     },
     label: {
       type: String,
       required: true,
     },
   },
-  data: () => ({}),
 };
 </script>
-
-<style lang="scss" scoped></style>

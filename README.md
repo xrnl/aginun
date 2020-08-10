@@ -39,8 +39,18 @@ The back end of this application runs on [Hasura](https://hasura.io/). The datab
 
 ## Test
 
-* Run unit tests with the command `npm run test:unit`
-* Run end-to-end tests with the command `npm run test:e2e`
+
+### Unit tests
+```
+npm run test:unit
+```
+Add the `-s` or `--silent` flag to avoid NPM error messages if tests fail. 
+
+### End to End tests (to be implemented)
+
+```
+npm run test:e2e
+```
 
 ## Build 
 
