@@ -73,6 +73,7 @@
     ],
     "rules": {
       "prettier/prettier": "warn",
+      "no-console": "warn",
       "vue/max-attributes-per-line": [
         2,
         {
