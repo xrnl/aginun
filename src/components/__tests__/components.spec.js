@@ -35,14 +35,6 @@ describe("TheAppBar", () => {
       `height: ${stylesState.navbarHeight};`
     );
   });
-
-  it("toggles between light and dark mode", async () => {
-    const wrapper = mountFunction();
-    const isDark = wrapper.vm.$vuetify.theme.dark;
-    const button = wrapper.find("button");
-    await button.trigger("click");
-    expect(wrapper.vm.$vuetify.theme.dark).not.toBe(isDark);
-  });
 });
 
 import Spinner from "@/components/Spinner";
