@@ -76,7 +76,7 @@ export default {
         case 9: case 14:
           return "green-light";
           break;
-        case 12: case 13:
+        case 12:  case 13:
           return "purple-light";
           break;
         default:

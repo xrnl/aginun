@@ -15,8 +15,6 @@ export default {
       state.localGroups = localGroups;
     },
     setWorkingCircles(state, workingCircles) {
-      console.log(workingCircles);
-
       state.workingCircles = workingCircles;
     },
   },
