@@ -5,19 +5,20 @@
     flat
     class="bottom-border"
   >
+      <img src="https://extinctionrebellion.nl/app/uploads/2019/02/XR-NL-Black.svg" class="img-fluid" alt="" width="155.49" height="76.02">
+    <v-toolbar-title>Vacatures</v-toolbar-title>
     <v-spacer />
     <v-btn text @click.stop="contactSupportDialog = true">
       Support <v-icon> mdi-help-circle-outline </v-icon>
     </v-btn>
-    <v-btn icon @click="toggleDarkMode">
+    <!-- <v-btn icon @click="toggleDarkMode">
       <v-icon>mdi-invert-colors</v-icon>
-    </v-btn>
+    </v-btn> -->
     <v-dialog v-model="contactSupportDialog" max-width="450">
       <v-card>
         <v-card-title class="headline">
           Need help?
         </v-card-title>
-
         <v-card-text>
           For help and feedback contact us via:
           <flex-wrapper direction="column">
@@ -52,9 +53,9 @@ export default {
     contactSupportDialog: false,
   }),
   methods: {
-    toggleDarkMode: function() {
-      this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
-    },
+    // toggleDarkMode: function() {
+    //   this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
+    // },
   },
 };
 </script>

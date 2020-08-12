@@ -1,9 +1,8 @@
 <template>
   <v-hover v-slot:default="{ hover }">
     <v-card
-      :elevation="hover ? 12 : 2"
       width="300"
-      height="200"
+      height="180"
       class="card"
       v-bind="$attrs"
     >
@@ -19,10 +18,10 @@
         </template>
         <div class="pa-3 d-flex flex-column justify-space-between flex-grow-1">
           <div>
-            <h3><slot name="title" /></h3>
-            <div class="caption">
-              <slot name="subtitle" />
-            </div>
+            <h3>
+              <slot name="title" />
+            </h3>
+            <slot name="subtitle" />
             <v-card-text
               v-if="!!$slots.content && !!$slots.content[0]"
               class="pa-3"
@@ -45,9 +44,60 @@
 </template>
 
 <script>
-export default {};
+export default {
+  name: "DefaultCard",
+  props: {
+    colour: {
+      type: String,
+      required: false,
+    },
+  },
+};
 </script>
 <style lang="scss" scoped>
+.v-card {
+  // box-shadow: none;
+  background: map-get($theme-colors, "yellow");
+}
+
+.blue-light {
+  background: $blue-light;
+}
+
+.yellow-light {
+  background: $yellow-light;
+}
+
+.khaki-light {
+  background: $khaki-light;
+}
+
+.red-light {
+  background: $red-light;
+}
+
+.navy-light {
+  background: $navy-light;
+}
+
+.pink-light {
+  background: $pink-light;
+}
+
+.purple-light {
+  background: $purple-light;
+}
+
+.lemon-light {
+  background: $lemon-light;
+}
+
+.green-light {
+  background: $green-light;
+}
+
+
+
 .full-height {
   height: 100%;
 }
