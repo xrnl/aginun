@@ -143,8 +143,6 @@ export default {
     },
   },
   created: function() {
-    console.log(this.roles);
-
     this.isDrawerOpen = !this.isMobile;
   },
   methods: {

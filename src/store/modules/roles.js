@@ -50,8 +50,6 @@ export default {
       state.roles[roleIndex] = newRole;
     },
     setRoles(state, roles) {
-      console.log(roles);
-
       state.roles = roles;
     },
     setLoadingState(state, isLoading) {
