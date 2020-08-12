@@ -8,7 +8,7 @@
 
 ### why rebel
 
-We are developers who joined Extinction Rebellion because we feel a moral duty to use our knowledge and skills to solve the Climate and Ecological Emergency. This emergency is a present reality for the families who are labelled climate refugees, the indigenous communities whose land has been destroyed, and the countless species that are forced into extinction every day. Governments have failed to act and are driving us towards social and ecollogical collapse. We joined Extinction Rebellion because it is our best and last hope to protect life on Earth. 
+We are developers who joined Extinction Rebellion because we feel a moral duty to use our knowledge and skills to solve the Climate and Ecological Emergency. This emergency is a present reality for the families who are labelled climate refugees, the indigenous communities whose land has been destroyed, and the countless species that are forced into extinction every day. Governments have failed to act and are driving us towards social and ecollogical collapse. We joined Extinction Rebellion because it is our best and last hope to protect life on Earth.
 
 ### why this project
 
@@ -24,10 +24,10 @@ You can install the application in your own computer by following these simple s
 
 1. Clone the repository by running `git clone https://github.com/xrnl/aginun.git` in your terminal.
 2. Navigate into the project directory (`cd aginun`) and install packages with the command `npm install`
-3. [Request the development API key](https://github.com/xrnl/aginun/blob/master/SUPPORT.md).  
-4. Once you have the API key, store it in a file named `.env.local` as follows: `VUE_APP_API_KEY=<API_KEY>`, where `<API_KEY>` is the value of the API key. 
+3. [Request the development API key](https://github.com/xrnl/aginun/blob/master/SUPPORT.md).
+4. Once you have the API key, store it in a file named `.env.local` as follows: `VUE_APP_API_KEY=<API_KEY>`, where `<API_KEY>` is the value of the API key.
 
-If you wish edit the code of this application, we recommend using [this setup](https://github.com/xrnl/aginun/wiki/Recommended-setup). 
+If you wish edit the code of this application, we recommend using [this setup](https://github.com/xrnl/aginun/wiki/Recommended-setup).
 
 ## Run
 
@@ -52,6 +52,6 @@ Add the `-s` or `--silent` flag to avoid NPM error messages if tests fail.
 npm run test:e2e
 ```
 
-## Build 
+## Build
 
 Compile and minify for production with `npm run build`
