@@ -17,7 +17,7 @@
 <script>
 import { getThemeColor } from "@/utils/utilities.js";
 import lottie from "lottie-web";
-import animationData from "../assets/animations/data.json";
+import animationData from "../assets/animations/xr-spinner.json";
 
 export default {
   name: "Spinner",
