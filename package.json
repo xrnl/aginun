@@ -19,6 +19,7 @@
     "dotenv": "^8.2.0",
     "graphql": "^14.6.0",
     "lodash": "^4.17.15",
+    "lottie-web": "^5.7.1",
     "vee-validate": "^3.2.5",
     "vue": "^2.6.10",
     "vue-apollo": "^3.0.3",
@@ -100,7 +101,10 @@
         }
       }
     ],
-    "plugins": ["vue", "prettier"]
+    "plugins": [
+      "vue",
+      "prettier"
+    ]
   },
   "prettier": {
     "semi": true,
@@ -111,7 +115,10 @@
       "autoprefixer": {}
     }
   },
-  "browserslist": ["> 1%", "last 2 versions"],
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ],
   "jest": {
     "preset": "@vue/cli-plugin-unit-jest"
   }

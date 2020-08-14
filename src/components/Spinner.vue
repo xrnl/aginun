@@ -3,18 +3,32 @@
     <p v-if="text">
       {{ text }}
     </p>
-    <scale-loader :loading="true" :color="color" :radius="1" />
+    <div id="spinner" ref="spinnerContainer"></div>
   </div>
 </template>
 
+<style scoped>
+#spinner {
+  width: 50px;
+  height: 50px;
+}
+</style>
+
 <script>
-import { ScaleLoader } from "@saeris/vue-spinners";
 import { getThemeColor } from "@/utils/utilities.js";
+import lottie from "lottie-web";
+import animationData from "../assets/animations/data.json";
 
 export default {
   name: "Spinner",
-  components: {
-    ScaleLoader,
+  mounted() {
+    lottie.loadAnimation({
+      container: this.$refs.spinnerContainer,
+      renderer: "svg",
+      loop: true,
+      autoplay: true,
+      animationData,
+    });
   },
   props: {
     themeColor: {
