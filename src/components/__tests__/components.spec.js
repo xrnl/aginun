@@ -56,7 +56,7 @@ describe("Spinner", () => {
   const mountFunction = options =>
     mount(Spinner, { localVue, vuetify, ...options });
 
-  const spinnerSelector = "div > div > div";
+  const spinnerSelector = "div > div > svg";
 
   it("by default renders spinner and no text", () => {
     const wrapper = mountFunction();

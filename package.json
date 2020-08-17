@@ -40,6 +40,7 @@
     "@vue/eslint-config-prettier": "^5.0.0",
     "@vue/test-utils": "^1.0.3",
     "babel-eslint": "^10.0.3",
+    "canvas": "^2.6.1",
     "eslint": "^5.16.0",
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-vue": "^6.1.2",
