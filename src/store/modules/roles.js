@@ -169,16 +169,38 @@ export default {
     },
     500),
 
-    setFilter({ commit }, payload) {
+    async setFilter({ commit, state, rootState, dispatch }, payload) {
       commit("setLoadingState", true);
       commit("setFilter", payload);
 
       // Add to the search params
-      var searchParams = new URLSearchParams(window.location.search);
-      var v = Array.isArray(payload.filterValue)
-        ? payload.filterValue.join("-")
-        : payload.filterValue;
-      searchParams.set(payload.filterType, v);
+      const searchParams = new URLSearchParams(window.location.search);
+
+      if (payload.filterType == "search") {
+        searchParams.set(payload.filterType, payload.filterValue);
+      }
+
+      if (payload.filterType == "localGroups") {
+        console.log(rootState.groups.localGroups);
+        const names = payload.filterValue.map(id => {
+          return encodeURI(
+            rootState.groups.localGroups.find(group => group.id == id).title
+          );
+        });
+
+        searchParams.set(payload.filterType, names.join("-"));
+      }
+
+      if (payload.filterType == "workingCircles") {
+        console.log(rootState.groups.workingCircles);
+        const names = payload.filterValue.map(id => {
+          return encodeURI(
+            rootState.groups.workingCircles.find(wc => wc.id == id).title
+          );
+        });
+
+        searchParams.set(payload.filterType, names.join("-"));
+      }
 
       var newRelativePathQuery =
         window.location.pathname + "?" + searchParams.toString();
@@ -187,12 +209,35 @@ export default {
       commit("reloadRoles");
     },
 
-    setDefaultFilters({ commit, rootGetters }) {
+    async setInitialFilters({ commit, rootGetters, rootState, dispatch }) {
       commit("setLoadingState", true);
+
+      // load group data if it doesn't exist yet. Necessary for the next block
+      if (
+        !rootState.groups.localGroups.length ||
+        !rootState.groups.workingCircles.length
+      ) {
+        await dispatch("groups/loadGroups", {}, { root: true });
+      }
 
       var searchParams = new URLSearchParams(window.location.search);
       var localGroups = searchParams.get("localGroups");
       var workingCircles = searchParams.get("workingCircles");
+
+      function getLocalGroupIdByName(name) {
+        const decoded = decodeURI(name);
+        return rootState.groups.localGroups.find(
+          group => group.title == decoded
+        ).id;
+      }
+
+      function getWorkingCircleIdByName(name) {
+        const decoded = decodeURI(name);
+        const circle = rootState.groups.workingCircles.find(
+          group => group.title == decoded
+        );
+        return circle ? circle.id : null;
+      }
 
       commit("setFilter", {
         filterType: "search",
@@ -201,13 +246,13 @@ export default {
       commit("setFilter", {
         filterType: "localGroups",
         filterValue: localGroups
-          ? localGroups.split("-").map(n => parseInt(n))
+          ? localGroups.split("-").map(getLocalGroupIdByName)
           : [],
       });
       commit("setFilter", {
         filterType: "workingCircles",
         filterValue: workingCircles
-          ? workingCircles.split("-").map(n => parseInt(n))
+          ? workingCircles.split("-").map(getWorkingCircleIdByName)
           : [],
       });
       commit("setFilter", {
@@ -217,6 +262,33 @@ export default {
           rootGetters["defaults/timeCommitmentRange"].max,
         ],
       });
+
+      commit("reloadRoles");
+    },
+
+    setDefaultFilters({ commit, rootGetters }) {
+      commit("setFilter", {
+        filterType: "search",
+        filterValue: "",
+      });
+      commit("setFilter", {
+        filterType: "localGroups",
+        filterValue: [],
+      });
+      commit("setFilter", {
+        filterType: "workingCircles",
+        filterValue: [],
+      });
+      commit("setFilter", {
+        filterType: "timeCommitment",
+        filterValue: [
+          rootGetters["defaults/timeCommitmentRange"].min,
+          rootGetters["defaults/timeCommitmentRange"].max,
+        ],
+      });
+
+      // Clear query string
+      history.pushState(null, "", window.location.pathname);
 
       commit("reloadRoles");
     },

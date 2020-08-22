@@ -69,7 +69,7 @@ export default {
     ...mapGetters("defaults", ["timeCommitmentRange"]),
   },
   beforeMount() {
-    this.$store.dispatch("roles/setDefaultFilters");
+    this.$store.dispatch("roles/setInitialFilters");
   },
   methods: {
     ...mapActions("roles", ["setFilter"]),
