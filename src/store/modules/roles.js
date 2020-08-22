@@ -168,16 +168,48 @@ export default {
       commit("setLoadingState", false);
     },
     500),
+
     setFilter({ commit }, payload) {
       commit("setLoadingState", true);
       commit("setFilter", payload);
+
+      // Add to the search params
+      var searchParams = new URLSearchParams(window.location.search);
+      var v = Array.isArray(payload.filterValue)
+        ? payload.filterValue.join("-")
+        : payload.filterValue;
+      searchParams.set(payload.filterType, v);
+
+      var newRelativePathQuery =
+        window.location.pathname + "?" + searchParams.toString();
+      history.pushState(null, "", newRelativePathQuery);
+
       commit("reloadRoles");
     },
+
     setDefaultFilters({ commit, rootGetters }) {
       commit("setLoadingState", true);
-      commit("setFilter", { filterType: "search", filterValue: "" });
-      commit("setFilter", { filterType: "localGroups", filterValue: [] });
-      commit("setFilter", { filterType: "workingCircles", filterValue: [] });
+
+      var searchParams = new URLSearchParams(window.location.search);
+      var localGroups = searchParams.get("localGroups");
+      var workingCircles = searchParams.get("workingCircles");
+
+      commit("setFilter", {
+        filterType: "search",
+        filterValue: searchParams.get("search") || "",
+      });
+      commit("setFilter", {
+        filterType: "localGroups",
+        filterValue: localGroups
+          ? localGroups.split("-").map(n => parseInt(n))
+          : [],
+      });
+      commit("setFilter", {
+        filterType: "workingCircles",
+        filterValue: workingCircles
+          ? workingCircles.split("-").map(n => parseInt(n))
+          : [],
+      });
       commit("setFilter", {
         filterType: "timeCommitment",
         filterValue: [
