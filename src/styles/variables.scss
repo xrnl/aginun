@@ -25,7 +25,6 @@ $material-dark: (
     "cards": #1e1e1e,
 );
 
-
 // ROOTS
 $border-radius-root: 0;
 
@@ -34,8 +33,6 @@ $body-font-family: 'Crimson Text', serif;
 $font-size-root: 18px;
 
 // $heading-font-family: 'FucXed', sans-serif !default;
-
-$heading-font-family: "Times New Roman", Times, serif;
 
 $headings: (
   'h1': (
@@ -52,12 +49,12 @@ $headings: (
   )
 );
 
-
 // These variables will overwrite the vuetify variables
 // BTN
 // $btn-letter-spacing: 2px;
 $btn-font-weight: 600;
 
+// Variables for specific components must come before the import
 
 // Any component modifications must be imported at the bottom
 // Example:
