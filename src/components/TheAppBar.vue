@@ -5,15 +5,12 @@
     flat
     class="bottom-border"
   >
-      <img src="https://extinctionrebellion.nl/app/uploads/2019/02/XR-NL-Black.svg" class="img-fluid" alt="" width="155.49" height="76.02">
-    <v-toolbar-title>Vacatures</v-toolbar-title>
+    <img src="@/assets/images/xr.svg" class="logo img-fluid" alt="" width="48" height="48">
+    <v-toolbar-title><h2>Vacatures</h2></v-toolbar-title>
     <v-spacer />
     <v-btn text @click.stop="contactSupportDialog = true">
       Support <v-icon> mdi-help-circle-outline </v-icon>
     </v-btn>
-    <!-- <v-btn icon @click="toggleDarkMode">
-      <v-icon>mdi-invert-colors</v-icon>
-    </v-btn> -->
     <v-dialog v-model="contactSupportDialog" max-width="450">
       <v-card>
         <v-card-title class="headline">
@@ -55,14 +52,14 @@ export default {
     contactSupportDialog: false,
   }),
   methods: {
-    // toggleDarkMode: function() {
-    //   this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
-    // },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.logo{
+  margin-right: 1rem;
+}
 .bottom-border {
   border-bottom-style: solid;
   border-bottom-width: 1px;

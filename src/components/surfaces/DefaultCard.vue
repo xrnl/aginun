@@ -55,48 +55,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.v-card {
-  // box-shadow: none;
-  background: map-get($theme-colors, "yellow");
-}
-
-.blue-light {
-  background: $blue-light;
-}
-
-.yellow-light {
-  background: $yellow-light;
-}
-
-.khaki-light {
-  background: $khaki-light;
-}
-
-.red-light {
-  background: $red-light;
-}
-
-.navy-light {
-  background: $navy-light;
-}
-
-.pink-light {
-  background: $pink-light;
-}
-
-.purple-light {
-  background: $purple-light;
-}
-
-.lemon-light {
-  background: $lemon-light;
-}
-
-.green-light {
-  background: $green-light;
-}
-
-
 
 .full-height {
   height: 100%;

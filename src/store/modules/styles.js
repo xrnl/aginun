@@ -1,6 +1,6 @@
 export default {
   state: {
-    navbarHeight: "91px",
+    navbarHeight: "64px",
   },
   getters: {
     themeColor() {

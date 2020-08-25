@@ -41,7 +41,6 @@ export default {
   },
   methods: {
     getColour: function(workingCircle) {
-
       switch (workingCircle.id) {
         case 1:
           return "khaki-light";
