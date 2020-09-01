@@ -5,7 +5,10 @@
   url('~@/assets/fonts/FUCXEDCAPSLatin-Regular.woff') format('woff');
 }
 
-@import url('https://fonts.googleapis.com/css?family=Crimson+Text');
+@font-face {
+  font-family: 'Crimson Text';
+  src: url('~@/assets/fonts/CrimsonText-Regular.ttf') format('truetype');
+}
 
 h1,h2,h3,h4,h5{
   font-family: 'FucXed';

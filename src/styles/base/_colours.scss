@@ -1,67 +1,42 @@
 $theme-colors: (
-  "primary": #21a73d,
-  "green": #21a73d,
+  "primary": #4ea648,
+  "green": #4ea648,
   "yellow": #ffc113,
   "pink": #ed9bc4,
   "red": #dc4f00,
   "orange": #f19631,
+  "lemon": #ded712,
   "blue": #75d0f1,
   "black": #000,
   "navy": #3860aa,
   "purple": #906198,
   "white": #fff,
+  "khaki": #97ab3f
 ) !default;
 
+// These colours were found at: https://rebellion.global/news/#blog
+$theme-colors-light: (
+  "blue-light": lightenColor( map-get($theme-colors, "blue"), 16%),
+  "orange-light": lightenColou( map-get($theme-colors, "orange"), 12%),
+  "yellow-light": lightenColor( map-get($theme-colors, "yellow"), 25%),
+  "khaki-light": lightenColor( map-get($theme-colors, "khaki"), 20%),
+  "red-light": lightenColor( map-get($theme-colors, "red"), 20%),
+  "navy-light": lightenColor( map-get($theme-colors, "navy"), 20%),
+  "pink-light": lightenColor( map-get($theme-colors, "pink"), 10%),
+  "purple-light": lightenColor( map-get($theme-colors, "purple"), 20%),
+  "green-light": lightenColor( map-get($theme-colors, "green"), 20%),
+);
 
-$blue-light: #ceebf8;
-$blue-light: lighten(map-get($theme-colors, "blue"), 20%);
-
-$orange-light: #ffc11e;
-$yellow-light: lighten(map-get($theme-colors, "orange"), 20%);
-// orange
-$khaki-light: #c2d081;
-$yellow-light: lighten(map-get($theme-colors, "yellow"), 20%);
-$red-light: #de7345;
-$navy-light: #748cbe;
-$pink-light: #fbb6ce;
-$purple-light: #a77fad;
-$lemon-light: #f4f07a;
-$green-light: #4ea648;
-
-
-
-.blue-light {
-  background: $blue-light;
+@function lightenColor($color, $percentage) {
+  @return lighten($color, $percentage);
 }
 
-.yellow-light {
-  background: $yellow-light;
+@mixin bg-variant($parent, $color) {
+  #{$parent} {
+    background-color: $color !important;
+  }
 }
 
-.khaki-light {
-  background: $khaki-light;
-}
-
-.red-light {
-  background: $red-light;
-}
-
-.navy-light {
-  background: $navy-light;
-}
-
-.pink-light {
-  background: $pink-light;
-}
-
-.purple-light {
-  background: $purple-light;
-}
-
-.lemon-light {
-  background: $lemon-light;
-}
-
-.green-light {
-  background: $green-light;
+@each $color, $value in $theme-colors-light {
+  @include bg-variant(".bg-#{$color}", $value);
 }

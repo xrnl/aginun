@@ -4,6 +4,7 @@
       width="300"
       height="180"
       class="card"
+      :class="`bg-${color}`"
       v-bind="$attrs"
     >
       <div
@@ -47,7 +48,7 @@
 export default {
   name: "DefaultCard",
   props: {
-    colour: {
+    color: {
       type: String,
       required: false,
     },
