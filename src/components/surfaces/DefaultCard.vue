@@ -51,12 +51,12 @@ export default {
     color: {
       type: String,
       required: false,
+      default: "angry-light",
     },
   },
 };
 </script>
 <style lang="scss" scoped>
-
 .full-height {
   height: 100%;
 }

@@ -74,7 +74,7 @@
       "prettier"
     ],
     "rules": {
-      "prettier/prettier": "warn",
+      "prettier/prettier": "off",
       "no-console": "warn",
       "vue/max-attributes-per-line": [
         2,
@@ -85,7 +85,8 @@
             "allowFirstLine": false
           }
         }
-      ]
+      ],
+      "vue/html-indent": "off"
     },
     "parserOptions": {
       "ecmaVersion": 2018,

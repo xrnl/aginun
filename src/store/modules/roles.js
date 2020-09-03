@@ -69,6 +69,11 @@ export default {
   },
   actions: {
     createRole: async function({ commit }, newRole) {
+      if (!newRole) {
+        // console.error("NewRole not found");
+        return;
+      }
+
       await apolloClient.mutate({
         mutation: CreateRoleMutation,
         variables: { input: [newRole] },
@@ -168,117 +173,16 @@ export default {
       commit("setLoadingState", false);
     },
     500),
-
-    async setFilter({ commit, state, rootState, dispatch }, payload) {
+    setFilter({ commit }, payload) {
       commit("setLoadingState", true);
       commit("setFilter", payload);
-
-      // Add to the search params
-      const searchParams = new URLSearchParams(window.location.search);
-
-      if (payload.filterType == "search") {
-        searchParams.set(payload.filterType, payload.filterValue);
-      }
-
-      if (payload.filterType == "localGroups") {
-        console.log(rootState.groups.localGroups);
-        const names = payload.filterValue.map(id => {
-          return encodeURI(
-            rootState.groups.localGroups.find(group => group.id == id).title
-          );
-        });
-
-        searchParams.set(payload.filterType, names.join("-"));
-      }
-
-      if (payload.filterType == "workingCircles") {
-        console.log(rootState.groups.workingCircles);
-        const names = payload.filterValue.map(id => {
-          return encodeURI(
-            rootState.groups.workingCircles.find(wc => wc.id == id).title
-          );
-        });
-
-        searchParams.set(payload.filterType, names.join("-"));
-      }
-
-      var newRelativePathQuery =
-        window.location.pathname + "?" + searchParams.toString();
-      history.pushState(null, "", newRelativePathQuery);
-
       commit("reloadRoles");
     },
-
-    async setInitialFilters({ commit, rootGetters, rootState, dispatch }) {
-      commit("setLoadingState", true);
-
-      // load group data if it doesn't exist yet. Necessary for the next block
-      if (
-        !rootState.groups.localGroups.length ||
-        !rootState.groups.workingCircles.length
-      ) {
-        await dispatch("groups/loadGroups", {}, { root: true });
-      }
-
-      var searchParams = new URLSearchParams(window.location.search);
-      var localGroups = searchParams.get("localGroups");
-      var workingCircles = searchParams.get("workingCircles");
-
-      function getLocalGroupIdByName(name) {
-        const decoded = decodeURI(name);
-        return rootState.groups.localGroups.find(
-          group => group.title == decoded
-        ).id;
-      }
-
-      function getWorkingCircleIdByName(name) {
-        const decoded = decodeURI(name);
-        const circle = rootState.groups.workingCircles.find(
-          group => group.title == decoded
-        );
-        return circle ? circle.id : null;
-      }
-
-      commit("setFilter", {
-        filterType: "search",
-        filterValue: searchParams.get("search") || "",
-      });
-      commit("setFilter", {
-        filterType: "localGroups",
-        filterValue: localGroups
-          ? localGroups.split("-").map(getLocalGroupIdByName)
-          : [],
-      });
-      commit("setFilter", {
-        filterType: "workingCircles",
-        filterValue: workingCircles
-          ? workingCircles.split("-").map(getWorkingCircleIdByName)
-          : [],
-      });
-      commit("setFilter", {
-        filterType: "timeCommitment",
-        filterValue: [
-          rootGetters["defaults/timeCommitmentRange"].min,
-          rootGetters["defaults/timeCommitmentRange"].max,
-        ],
-      });
-
-      commit("reloadRoles");
-    },
-
     setDefaultFilters({ commit, rootGetters }) {
-      commit("setFilter", {
-        filterType: "search",
-        filterValue: "",
-      });
-      commit("setFilter", {
-        filterType: "localGroups",
-        filterValue: [],
-      });
-      commit("setFilter", {
-        filterType: "workingCircles",
-        filterValue: [],
-      });
+      commit("setLoadingState", true);
+      commit("setFilter", { filterType: "search", filterValue: "" });
+      commit("setFilter", { filterType: "localGroups", filterValue: [] });
+      commit("setFilter", { filterType: "workingCircles", filterValue: [] });
       commit("setFilter", {
         filterType: "timeCommitment",
         filterValue: [
@@ -286,9 +190,6 @@ export default {
           rootGetters["defaults/timeCommitmentRange"].max,
         ],
       });
-
-      // Clear query string
-      history.pushState(null, "", window.location.pathname);
 
       commit("reloadRoles");
     },

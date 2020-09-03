@@ -5,9 +5,15 @@
     flat
     class="bottom-border"
   >
-  <router-link class="logo-link" to="/about">
-    <img src="@/assets/images/xr.svg" class="logo-link__icon img-fluid" alt="" width="48" height="48">
-  </router-link>
+    <router-link class="logo-link" to="/about">
+      <img
+        src="@/assets/images/xr.svg"
+        class="logo-link__icon img-fluid"
+        alt=""
+        width="48"
+        height="48"
+      >
+    </router-link>
     <v-toolbar-title><h2>Vacatures</h2></v-toolbar-title>
     <v-spacer />
     <v-btn text @click.stop="contactSupportDialog = true">
@@ -53,17 +59,16 @@ export default {
   data: () => ({
     contactSupportDialog: false,
   }),
-  methods: {
-  },
+  methods: {},
 };
 </script>
 
 <style lang="scss" scoped>
-.logo-link{
+.logo-link {
   display: flex;
   justify-self: center;
   align-items: center;
-  &__icon{
+  &__icon {
     margin-right: 1rem;
   }
 }

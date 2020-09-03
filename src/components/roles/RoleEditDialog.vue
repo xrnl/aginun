@@ -1,16 +1,18 @@
 <template>
+  <!-- TODO: This is very similar (almost the same) as the create, at this point it would be nice if we could get a generic solution for this.
+        Will have to look into this once we will implement the tasks.-->
   <v-dialog :value="value" width="600px" @input="$emit('input', false)">
     <v-card class="pa-4">
-      <h2>{{ formTitle }}</h2>
+      <h2>Edit role</h2>
       <validation-observer ref="form" v-slot="{ invalid, handleSubmit }">
-        <form @submit.prevent="handleSubmit(onSubmit)" @keypress.enter.prevent>
+        <form @submit.prevent="handleSubmit(onEditRole)" @keydown.enter.prevent>
           <validation-provider
             v-slot="{ errors }"
             rules="required|alpha_spaces|max:30"
             name="title"
           >
             <v-text-field
-              v-model="role.title"
+              v-model="title"
               label="Title"
               :error-messages="errors"
             />
@@ -21,7 +23,7 @@
             name="local group"
           >
             <v-select
-              v-model="role.localGroupId"
+              v-model="localGroupId"
               :items="localGroups"
               item-value="id"
               item-text="title"
@@ -35,7 +37,7 @@
             name="working circle"
           >
             <v-select
-              v-model="role.workingCircleId"
+              v-model="workingCircleId"
               :items="workingCircles"
               item-value="id"
               item-text="title"
@@ -48,7 +50,7 @@
           </p>
           <validation-provider
             v-slot="{ errors }"
-            :rules="`${role.responsibilities.length < 1 ? 'requiredList' : ''}`"
+            :rules="`${responsibilities.length < 1 ? 'requiredList' : ''}`"
             mode="eager"
             name="responsibility"
           >
@@ -73,8 +75,8 @@
               </template>
             </v-text-field>
           </validation-provider>
-          <v-card v-if="role.responsibilities.length > 0" class="mb-4">
-            <template v-for="(responsibility, i) in role.responsibilities">
+          <v-card v-if="responsibilities.length > 0" class="mb-4">
+            <template v-for="(responsibility, i) in responsibilities">
               <v-divider v-if="i !== 0" :key="`${i}-divider`" />
               <v-list-item
                 :key="`${i}-${responsibility}`"
@@ -85,7 +87,7 @@
                   text
                   icon
                   color="gray"
-                  @click="role.responsibilities.splice(i, 1)"
+                  @click="responsibilities.splice(i, 1)"
                 >
                   <v-icon>mdi-close</v-icon>
                 </v-btn>
@@ -98,10 +100,10 @@
             name="description"
           >
             <v-textarea
-              v-model="role.description"
+              v-model="description"
               label="Description (optional)"
               placeholder="Any additional information not specified in the set of responsibilities.
-        
+
 This can include information about the circle or the specific project that the role is needed for."
               :error-messages="errors"
             />
@@ -112,7 +114,7 @@ This can include information about the circle or the specific project that the r
             name="requirements"
           >
             <v-textarea
-              v-model="role.requirements"
+              v-model="requirements"
               label="Requirements (optional)"
               placeholder="Skills, experience, equipment"
               :error-messages="errors"
@@ -125,7 +127,7 @@ This can include information about the circle or the specific project that the r
             name="time commitment"
           >
             <v-select
-              v-model="role.timeCommitmentMin"
+              v-model="timeCommitmentMin"
               :items="timeCommitments"
               item-value="min"
               return-object
@@ -151,7 +153,7 @@ This can include information about the circle or the specific project that the r
             rules="required|email|max:50"
           >
             <v-text-field
-              v-model="role.email"
+              v-model="email"
               label="Email"
               :error-messages="errors"
             />
@@ -163,7 +165,7 @@ This can include information about the circle or the specific project that the r
             rules="mattermost|max:50"
           >
             <v-text-field
-              v-model="role.mattermostId"
+              v-model="mattermostId"
               label="Mattermost id (optional)"
               :error-messages="errors"
             />
@@ -175,7 +177,7 @@ This can include information about the circle or the specific project that the r
             name="phone number"
           >
             <v-text-field
-              v-model="role.phone"
+              v-model="phone"
               label="Phone number (optional)"
               :error-messages="errors"
             />
@@ -257,20 +259,18 @@ extend("mattermost", {
 });
 
 let initialState = () => ({
-  role: {
-    title: undefined,
-    responsibilities: [],
-    description: undefined,
-    requirements: undefined,
-    localGroupId: undefined,
-    workingCircleId: undefined,
-    timeCommitmentMin: undefined,
-    timeCommitmentMax: undefined,
-    email: undefined,
-    mattermostId: undefined,
-    phone: undefined,
-  },
+  title: undefined,
   newResponsibility: undefined,
+  responsibilities: [],
+  description: undefined,
+  requirements: undefined,
+  localGroupId: undefined,
+  workingCircleId: undefined,
+  timeCommitmentMin: undefined,
+  timeCommitmentMax: undefined,
+  email: undefined,
+  mattermostId: undefined,
+  phone: undefined,
 });
 
 export default {
@@ -284,20 +284,20 @@ export default {
       required: true,
       type: Boolean,
     },
-    editRole: {
-      default: null,
+    role: {
+      required: true,
       type: Object,
     },
   },
   data: () => initialState(),
-  computed: {
+    computed: {
     ...mapState("defaults", ["timeCommitments"]),
     ...mapState("groups", ["localGroups"]),
     ...mapState("groups", ["workingCircles"]),
     errorResponsibility: function() {
       const maxCharsResponsibility = 200;
       if (this.newResponsibility) {
-        if (this.role.responsibilities.length == 10) {
+        if (this.responsibilities.length == 10) {
           return "You can enter a maximum of 10 responsibilities";
         }
         if (this.newResponsibility.length > maxCharsResponsibility) {
@@ -309,55 +309,41 @@ export default {
     validResponsibility: function() {
       return !this.isEmpty(this.newResponsibility) && !this.errorResponsibility;
     },
-    formTitle: function() {
-      return this.editRole ? "Edit Role" : "New Role";
-    },
   },
-  watch: {
-    editRole: {
-      handler: function(editRole) {
-        if (editRole) {
-          for (var key in this.role) {
-            if (key in editRole) {
-              this.role[key] = editRole[key];
-            }
-          }
-          this.role.workingCircleId = this.editRole.workingCircle.id;
-          this.role.localGroupId = this.editRole.localGroup.id;
-        }
-      },
-      immediate: true,
-    },
+  created: function() {
+    //   This feels a little dangerous, find a cleaner way
+    const keys = Object.keys(this.role);
+    keys.forEach(value => (this[value] = this.role[value]));
+    this.workingCircleId = this.role.workingCircle.id;
+    this.localGroupId = this.role.localGroup.id;
   },
   methods: {
-    ...mapActions("roles", ["updateRole", "createRole"]),
-    ...mapActions("alerts", ["displaySuccess"]),
+    ...mapActions("roles", ["updateRole"]),
     addResponsibility: function() {
       if (this.validResponsibility) {
-        this.role.responsibilities.push(this.newResponsibility);
+        this.responsibilities.push(this.newResponsibility);
         this.newResponsibility = undefined;
       }
     },
     onTimeCommitmentChange: function(timeCommitment) {
-      this.role.timeCommitmentMin = timeCommitment.min;
-      this.role.timeCommitmentMax = timeCommitment.max;
+      this.timeCommitmentMin = timeCommitment.min;
+      this.timeCommitmentMax = timeCommitment.max;
     },
     resetState: function() {
       Object.assign(this.$data, initialState());
     },
-    onSubmit: function() {
-      if (this.editRole) {
-        this.updateRole({ id: this.editRole.id, ...this.role });
-      } else {
-        this.createRole(this.role);
-      }
+    onEditRole: function() {
+      const role = JSON.parse(JSON.stringify(this.$data));
+      delete role["newResponsibility"];
+      delete role["$apolloData"];
+
+      this.updateRole({ id: this.role.id, ...role });
+
       this.$emit("input", false);
-      this.resetState();
+
       this.$nextTick(() => {
         this.$refs.form.reset();
       });
-
-      this.displaySuccess(this.editRole ? "Role edited" : "Role created");
     },
     isEmpty: text => !text || text.length == 0 || !text.trim(),
   },
