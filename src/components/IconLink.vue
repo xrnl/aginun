@@ -4,19 +4,22 @@
       {{ icon }}
     </v-icon>
     <span class="font-weight-bold">{{ label }} </span>
-    <a :href="href" target="_blank">{{ text }}</a>
+    <a :href="href" target="_blank">{{ linkText }}</a>
   </div>
 </template>
 
 <script>
+import { hrefValidator, iconValidator } from "@/utils/validators";
+
 export default {
   name: "IconLink",
   props: {
     href: {
       required: true,
       type: String,
+      validator: hrefValidator,
     },
-    text: {
+    linkText: {
       required: true,
       type: String,
     },
@@ -28,6 +31,7 @@ export default {
     icon: {
       required: true,
       type: String,
+      validator: iconValidator,
     },
   },
 };

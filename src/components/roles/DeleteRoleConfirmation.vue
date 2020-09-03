@@ -4,7 +4,8 @@
       <v-card-title>
         <h3>
           Are you sure you want to delete
-          <span class="carrier">{{ roleTitle }}</span>?
+          <span class="carrier">{{ roleTitle }}</span>
+          ?
         </h3>
       </v-card-title>
       <v-card-actions class="d-flex justify-end">
@@ -38,9 +39,11 @@ export default {
   },
   methods: {
     ...mapActions("roles", ["deleteRole"]),
+    ...mapActions("alerts", ["displaySuccess"]),
     onDeleteRole: function() {
       this.deleteRole(this.roleId);
       this.$emit("input", false);
+      this.displaySuccess("Role deleted");
       this.$router.push("/roles");
     },
   },

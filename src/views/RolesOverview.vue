@@ -5,7 +5,7 @@
     <div v-if="isMobile" class="mb-8">
       <v-divider />
       <div class="d-flex justify-space-between pa-3">
-        <new-item-button label="New Role" @click="showNewRoleDialog" />
+        <new-item-button text="New Role" @click="showNewRoleDialog" />
         <v-btn text color="primary" @click="isDrawerOpen = true">
           Filter
         </v-btn>
@@ -80,7 +80,7 @@
         </template>
         <role-filters />
         <div v-if="!isMobile" class="text-center mt-4">
-          <new-item-button label="New Role" @click="showNewRoleDialog" />
+          <new-item-button text="New Role" @click="showNewRoleDialog" />
         </div>
       </default-drawer>
     </template>
@@ -95,7 +95,7 @@ import GridList from "@/components/layout/GridList.vue";
 import RoleFilters from "@/components/roles/RoleFilters.vue";
 import { mapState, mapActions, mapGetters } from "vuex";
 import NewItemButton from "@/components/NewItemButton";
-import NewRoleDialog from "@/components/roles/NewRoleDialog";
+import RoleEditDialog from "@/components/roles/RoleEditDialog";
 import InfiniteLoading from "vue-infinite-loading";
 import Spinner from "@/components/Spinner";
 
@@ -108,7 +108,7 @@ export default {
     GridList,
     DefaultDrawer,
     NewItemButton,
-    NewRoleDialog,
+    RoleEditDialog,
     InfiniteLoading,
     Spinner,
   },

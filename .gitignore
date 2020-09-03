@@ -26,5 +26,4 @@ yarn-error.log*
 # VS Code Apollo GraphQL config file with API KEY
 apollo.config.js
 
-# wiki 
 *.wiki

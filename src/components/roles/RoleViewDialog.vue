@@ -6,7 +6,7 @@
         :role-title="role.title"
         :role-id="role.id"
       />
-      <role-edit-dialog v-model="isEditOpen" :role="role" />
+      <role-edit-dialog v-model="isEditOpen" :edit-role="role" />
     </div>
 
     <v-dialog
@@ -141,7 +141,7 @@
               :href="
                 `mailto:${role.email}?subject=Role application: ${role.title}`
               "
-              :text="role.email"
+              :link-text="role.email"
               label="Email"
               icon="mdi-email"
             />
@@ -150,14 +150,14 @@
               :href="
                 `https://organise.earth/xr-netherlands/messages/${role.mattermostId}`
               "
-              :text="role.mattermostId"
+              :link-text="role.mattermostId"
               label="Mattermost"
               icon="mdi-message"
             />
             <icon-link
               v-if="role.phone"
               :href="`tel:${role.phone}`"
-              :text="role.phone"
+              :link-text="role.phone"
               label="Phone"
               icon="mdi-phone"
             />

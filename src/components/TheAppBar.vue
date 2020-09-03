@@ -29,13 +29,13 @@
           <flex-wrapper direction="column">
             <icon-link
               href="mailto:integration@extinctionrebellion.nl"
-              text="integration@extinctionrebellion.nl"
+              link-text="integration@extinctionrebellion.nl"
               label="Email"
               icon="mdi-email"
             />
             <icon-link
               href="https://organise.earth/xr-netherlands/messages/@vacancies_support_xrnl"
-              text="@vacancies_support_xrnl"
+              link-text="@vacancies_support_xrnl"
               label="Mattermost"
               icon="mdi-message"
             />
@@ -48,11 +48,13 @@
 
 <script>
 import IconLink from "@/components/IconLink";
+import FlexWrapper from "@/components/layout/FlexWrapper";
 
 export default {
   name: "TheAppBar",
   components: {
     IconLink,
+    FlexWrapper,
   },
   data: () => ({
     contactSupportDialog: false,
