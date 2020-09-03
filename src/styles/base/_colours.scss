@@ -10,6 +10,7 @@ $theme-colors: (
   "black": #000,
   "navy": #3860aa,
   "purple": #906198,
+  "angry": rgb(200, 0, 130),
   "white": #fff,
   "khaki": #97ab3f
 ) !default;
@@ -17,7 +18,8 @@ $theme-colors: (
 // These colours were found at: https://rebellion.global/news/#blog
 $theme-colors-light: (
   "blue-light": lightenColor( map-get($theme-colors, "blue"), 16%),
-  "orange-light": lightenColou( map-get($theme-colors, "orange"), 12%),
+  "orange-light": lightenColor( map-get($theme-colors, "orange"), 12%),
+  "angry-light": lightenColor( map-get($theme-colors, "angry"), 25%),
   "yellow-light": lightenColor( map-get($theme-colors, "yellow"), 25%),
   "khaki-light": lightenColor( map-get($theme-colors, "khaki"), 20%),
   "red-light": lightenColor( map-get($theme-colors, "red"), 20%),

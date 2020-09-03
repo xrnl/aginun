@@ -103,7 +103,7 @@
               v-model="description"
               label="Description (optional)"
               placeholder="Any additional information not specified in the set of responsibilities.
-        
+
 This can include information about the circle or the specific project that the role is needed for."
               :error-messages="errors"
             />
@@ -290,14 +290,7 @@ export default {
     },
   },
   data: () => initialState(),
-  created: function() {
-    //   This feels a little dangerous, find a cleaner way
-    const keys = Object.keys(this.role);
-    keys.forEach(value => (this[value] = this.role[value]));
-    this.workingCircleId = this.role.workingCircle.id;
-    this.localGroupId = this.role.localGroup.id;
-  },
-  computed: {
+    computed: {
     ...mapState("defaults", ["timeCommitments"]),
     ...mapState("groups", ["localGroups"]),
     ...mapState("groups", ["workingCircles"]),
@@ -316,6 +309,13 @@ export default {
     validResponsibility: function() {
       return !this.isEmpty(this.newResponsibility) && !this.errorResponsibility;
     },
+  },
+  created: function() {
+    //   This feels a little dangerous, find a cleaner way
+    const keys = Object.keys(this.role);
+    keys.forEach(value => (this[value] = this.role[value]));
+    this.workingCircleId = this.role.workingCircle.id;
+    this.localGroupId = this.role.localGroup.id;
   },
   methods: {
     ...mapActions("roles", ["updateRole"]),

@@ -70,7 +70,7 @@ export default {
   actions: {
     createRole: async function({ commit }, newRole) {
       if (!newRole) {
-        console.error("NewRole not found");
+        // console.error("NewRole not found");
         return;
       }
 
