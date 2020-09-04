@@ -1,7 +1,7 @@
 <template>
   <page-with-drawer :is-drawer-open="isDrawerOpen" class="pb-5">
     <router-view :key="$route.fullPath" />
-    <new-role-dialog v-model="newRoleDialog" />
+    <role-edit-dialog v-model="newRoleDialog" />
     <div v-if="isMobile" class="mb-8">
       <v-divider />
       <div class="d-flex justify-space-between pa-3">
@@ -147,5 +147,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped></style>
