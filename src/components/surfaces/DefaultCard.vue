@@ -1,10 +1,10 @@
 <template>
   <v-hover v-slot:default="{ hover }">
     <v-card
-      :elevation="hover ? 12 : 2"
       width="300"
-      height="200"
+      height="180"
       class="card"
+      :class="`bg-${color}`"
       v-bind="$attrs"
     >
       <div
@@ -19,10 +19,10 @@
         </template>
         <div class="pa-3 d-flex flex-column justify-space-between flex-grow-1">
           <div>
-            <h3><slot name="title" /></h3>
-            <div class="caption">
-              <slot name="subtitle" />
-            </div>
+            <h3>
+              <slot name="title" />
+            </h3>
+            <slot name="subtitle" />
             <v-card-text
               v-if="!!$slots.content && !!$slots.content[0]"
               class="pa-3"
@@ -45,7 +45,16 @@
 </template>
 
 <script>
-export default {};
+export default {
+  name: "DefaultCard",
+  props: {
+    color: {
+      type: String,
+      required: false,
+      default: "angry-light",
+    },
+  },
+};
 </script>
 <style lang="scss" scoped>
 .full-height {

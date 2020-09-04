@@ -1,6 +1,7 @@
 import "@mdi/font/css/materialdesignicons.css";
 import Vue from "vue";
-import Vuetify from "vuetify/lib";
+import Vuetify from "vuetify/lib/framework";
+// ^ this used to be slow because we used vuetify/lib. Using vuetify/lib/framework is faster (https://github.com/vuetifyjs/vuetify/issues/9612)
 
 Vue.use(Vuetify);
 

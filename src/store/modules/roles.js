@@ -122,7 +122,7 @@ export default {
         await dispatch("groups/loadGroups", {}, { root: true });
       }
 
-      /* 
+      /*
       When no local group is selected, we search roles from all local groups. Same for working circles.
       TODO: A better solution is to have reactive queries which remove the working group or local circle `where`
       filter from the query if none have been selected.

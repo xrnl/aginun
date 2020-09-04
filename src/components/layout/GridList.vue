@@ -8,11 +8,11 @@ export default {
   props: {
     itemWidth: {
       type: String,
-      default: "300px",
+      default: "260px",
     },
     itemHeight: {
       type: String,
-      default: "200px",
+      default: "180px",
     },
     gap: {
       type: String,
@@ -35,5 +35,6 @@ export default {
   display: grid;
   align-items: start;
   justify-content: center;
+  margin: 3rem;
 }
 </style>

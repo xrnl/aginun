@@ -5,19 +5,25 @@
     flat
     class="bottom-border"
   >
+    <router-link class="logo-link" to="/about">
+      <img
+        src="@/assets/images/xr.svg"
+        class="logo-link__icon img-fluid"
+        alt=""
+        width="48"
+        height="48"
+      >
+    </router-link>
+    <v-toolbar-title><h2>Vacatures</h2></v-toolbar-title>
     <v-spacer />
     <v-btn text @click.stop="contactSupportDialog = true">
       Support <v-icon> mdi-help-circle-outline </v-icon>
-    </v-btn>
-    <v-btn icon @click="toggleDarkMode">
-      <v-icon>mdi-invert-colors</v-icon>
     </v-btn>
     <v-dialog v-model="contactSupportDialog" max-width="450">
       <v-card>
         <v-card-title class="headline">
           Need help?
         </v-card-title>
-
         <v-card-text>
           For help and feedback contact us via:
           <flex-wrapper direction="column">
@@ -53,15 +59,19 @@ export default {
   data: () => ({
     contactSupportDialog: false,
   }),
-  methods: {
-    toggleDarkMode: function() {
-      this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
-    },
-  },
+  methods: {},
 };
 </script>
 
 <style lang="scss" scoped>
+.logo-link {
+  display: flex;
+  justify-self: center;
+  align-items: center;
+  &__icon {
+    margin-right: 1rem;
+  }
+}
 .bottom-border {
   border-bottom-style: solid;
   border-bottom-width: 1px;

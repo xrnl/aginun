@@ -1,6 +1,16 @@
 @font-face {
-  font-family: 'FUCXEDCAPS';
+  font-family: 'FucXed';
   src:
   url('~@/assets/fonts/FUCXEDCAPSLatin-Regular.woff2') format('woff2'),
   url('~@/assets/fonts/FUCXEDCAPSLatin-Regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Crimson Text';
+  src: url('~@/assets/fonts/CrimsonText-Regular.ttf') format('truetype');
+}
+
+h1,h2,h3,h4,h5{
+  font-family: 'FucXed';
+  letter-spacing: 1px;
 }

@@ -1,8 +1,9 @@
 // styles in this file are available from all components
 @import "base/typography";
+@import "variables";
 
 .xr-title {
-  font-family: "FUCXEDCAPS";
+  font-family: "FucXed";
 }
 
 // transitions
@@ -15,3 +16,10 @@
 .fade-leave-to {
   opacity: 0;
 }
+
+.v-btn{
+  font-family: 'FucXed';
+  padding: .5rem 1rem;
+  box-shadow: none;
+}
+

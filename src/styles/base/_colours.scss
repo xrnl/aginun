@@ -1,0 +1,44 @@
+$theme-colors: (
+  "primary": #4ea648,
+  "green": #4ea648,
+  "yellow": #ffc113,
+  "pink": #ed9bc4,
+  "red": #dc4f00,
+  "orange": #f19631,
+  "lemon": #ded712,
+  "blue": #75d0f1,
+  "black": #000,
+  "navy": #3860aa,
+  "purple": #906198,
+  "angry": rgb(200, 0, 130),
+  "white": #fff,
+  "khaki": #97ab3f
+) !default;
+
+// These colours were found at: https://rebellion.global/news/#blog
+$theme-colors-light: (
+  "blue-light": lightenColor( map-get($theme-colors, "blue"), 16%),
+  "orange-light": lightenColor( map-get($theme-colors, "orange"), 12%),
+  "angry-light": lightenColor( map-get($theme-colors, "angry"), 25%),
+  "yellow-light": lightenColor( map-get($theme-colors, "yellow"), 25%),
+  "khaki-light": lightenColor( map-get($theme-colors, "khaki"), 20%),
+  "red-light": lightenColor( map-get($theme-colors, "red"), 20%),
+  "navy-light": lightenColor( map-get($theme-colors, "navy"), 20%),
+  "pink-light": lightenColor( map-get($theme-colors, "pink"), 10%),
+  "purple-light": lightenColor( map-get($theme-colors, "purple"), 20%),
+  "green-light": lightenColor( map-get($theme-colors, "green"), 20%),
+);
+
+@function lightenColor($color, $percentage) {
+  @return lighten($color, $percentage);
+}
+
+@mixin bg-variant($parent, $color) {
+  #{$parent} {
+    background-color: $color !important;
+  }
+}
+
+@each $color, $value in $theme-colors-light {
+  @include bg-variant(".bg-#{$color}", $value);
+}

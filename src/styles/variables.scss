@@ -1,6 +1,8 @@
 // this file contains variables for vuetify components
 // Do not change file path as vuetify looks for this specific path.
-@import "~vuetify/src/styles/settings/colors";
+// @import "~vuetify/src/styles/settings/colors";
+@import "~vuetify/src/styles/styles.sass";
+@import "./base/_colours.scss";
 
 // Globals
 // Change body font
@@ -23,10 +25,38 @@ $material-dark: (
     "cards": #1e1e1e,
 );
 
+// ROOTS
+$border-radius-root: 0;
+
+// FONTS
+$body-font-family: 'Crimson Text', serif;
+$font-size-root: 18px;
+
+// $heading-font-family: 'FucXed', sans-serif !default;
+
+$headings: (
+  'h1': (
+    'size': 3.3125rem,
+    'line-height': 1.15em
+  ),
+  'h2': (
+    'size': 2.25rem,
+    'line-height': 1.5em
+  ),
+  'h3': (
+    'size': 12.25rem,
+    'line-height': 1.5em
+  )
+);
+
+// These variables will overwrite the vuetify variables
+// BTN
+// $btn-letter-spacing: 2px;
+$btn-font-weight: 600;
+
 // Variables for specific components must come before the import
-// Example:
-// $btn-letter-spacing: 0;
 
 // Any component modifications must be imported at the bottom
 // Example:
 // @import '~vuetify/src/components/VBtn/variables';
+// @import '~vuetify/src/styles/styles';
