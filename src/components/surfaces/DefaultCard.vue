@@ -30,7 +30,7 @@
               <slot name="content" />
             </v-card-text>
           </div>
-          <div class="d-flex flex-wrap justify-space-between align-end mt-5">
+          <div class="d-flex flex-wrap justify-space-between align-end">
             <span class="d-flex flex-column justify-center">
               <slot name="meta" />
             </span>
