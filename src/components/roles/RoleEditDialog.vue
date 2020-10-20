@@ -330,11 +330,10 @@ export default {
     },
   },
   created: function() {
-    //   This feels a little dangerous, find a cleaner way
     const keys = Object.keys(this.role);
     keys.forEach(value => (this[value] = this.role[value]));
-    this.workingCircleId = this.role.workingCircle.id;
-    this.localGroupId = this.role.localGroup.id;
+    this.workingCircleId = this.role.workingCircleId;
+    this.localGroupId = this.role.localGroupId;
   },
   methods: {
     ...mapActions("roles", ["updateRole", "createRole"]),
