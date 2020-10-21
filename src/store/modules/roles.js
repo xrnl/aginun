@@ -14,7 +14,7 @@ export default {
     isLoadingRoles: true,
     paginationLimit: 20, // number of roles loaded at a time. More are loaded on scroll down.
     paginationOffset: 0,
-    infiniteScrollIdentifier: false, // on change infinite scroll knows new roles were loaded
+    infiniteScrollId: true, // when this variable changes new roles are loaded
     selectedFilters: {},
   },
   getters: {
@@ -55,10 +55,16 @@ export default {
     setLoadingState(state, isLoading) {
       state.isLoadingRoles = isLoading;
     },
-    reloadRoles(state) {
+    clearRoles(state) {
       state.roles = [];
       state.paginationOffset = 0;
-      state.infiniteScrollIdentifier = !state.infiniteScrollIdentifier;
+    },
+    triggerReload(state) {
+      // InfiniteLoading component triggers @infinite method (loadRoles)
+      // when infiniteScrollId value changes AND
+      // user is scrolled at the bottom of the page
+      // (achieved by clearing roles before updating infiniteScrollId)
+      state.infiniteScrollId = !state.infiniteScrollId;
     },
     nextPagination(state) {
       state.paginationOffset += state.paginationLimit;
@@ -168,12 +174,20 @@ export default {
       commit("setLoadingState", false);
     },
     500),
-    setFilter({ commit }, payload) {
+    reloadRoles: async function({ commit }) {
+      commit("clearRoles");
+      // timeout necessary because old roles must completely transition out
+      // before InfiniteLoading component calls @infinite method
+      await setTimeout(() => {
+        commit("triggerReload");
+      }, 1000);
+    },
+    setFilter({ commit, dispatch }, payload) {
       commit("setLoadingState", true);
       commit("setFilter", payload);
-      commit("reloadRoles");
+      dispatch("reloadRoles");
     },
-    setDefaultFilters({ commit, rootGetters }) {
+    setDefaultFilters({ commit, dispatch, rootGetters }) {
       commit("setLoadingState", true);
       commit("setFilter", { filterType: "search", filterValue: "" });
       commit("setFilter", { filterType: "localGroups", filterValue: [] });
@@ -186,7 +200,7 @@ export default {
         ],
       });
 
-      commit("reloadRoles");
+      dispatch("reloadRoles");
     },
   },
 };
