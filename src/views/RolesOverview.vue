@@ -12,52 +12,50 @@
       </div>
       <v-divider />
     </div>
-    <template>
-      <transition name="fade" mode="out-in">
+    <transition name="fade" mode="out-in">
+      <grid-list key="roles" gap="1rem" v-if="!!roles.length">
+        <role-card v-for="role in roles" :key="role.id" :role="role" />
+      </grid-list>
+      <div
+        key="loading"
+        v-if="!roles.length && isLoadingRoles"
+        class="d-flex flex-column justify-center align-center mt-5"
+      >
+        <spinner text="Loading roles" />
+      </div>
+      <div
+        v-if="!roles.length && !isLoadingRoles"
+        key="noRoles"
+        class="pa-5 text-center"
+      >
+        <div v-if="isUsingFilters">
+          <h3>No results.</h3>
+          <p>Try removing filters.</p>
+        </div>
+        <div v-else>
+          <p>There are currently no published roles.</p>
+        </div>
+      </div>
+    </transition>
+    <infinite-loading :identifier="infiniteScrollId" @infinite="loadRoles">
+      <template #spinner>
+        <!-- show spinner without transition for loading additional roles -->
         <div
-          v-if="isLoadingRoles"
           key="loading"
+          v-if="!!roles.length"
           class="d-flex flex-column justify-center align-center mt-5"
         >
           <spinner text="Loading roles" />
         </div>
-        <grid-list
-          v-if="!isLoadingRoles && roles.length"
-          key="roles"
-          gap="1rem"
-        >
-          <role-card v-for="role in roles" :key="role.id" :role="role" />
-        </grid-list>
-        <div
-          v-if="!isLoadingRoles && !roles.length"
-          key="noRoles"
-          class="pa-5 text-center"
-        >
-          <div v-if="isUsingFilters">
-            <h3>No results.</h3>
-            <p>Try removing filters.</p>
-          </div>
-          <div v-else>
-            <p>There are currently no published roles.</p>
-          </div>
-        </div>
-      </transition>
-      <infinite-loading
-        :identifier="infiniteScrollIdentifier"
-        @infinite="loadRoles"
-      >
-        <!-- override default slots with empty values. We place spinner and messages outside for smooth transitions -->
-        <template #spinner>
-          <span />
-        </template>
-        <template #no-results>
-          <span />
-        </template>
-        <template #no-more>
-          <span />
-        </template>
-      </infinite-loading>
-    </template>
+        <span v-else />
+      </template>
+      <template #no-results>
+        <span />
+      </template>
+      <template #no-more>
+        <span />
+      </template>
+    </infinite-loading>
     <template v-slot:drawer>
       <default-drawer @close-drawer="handleCloseDrawer">
         <template #header>
@@ -69,8 +67,10 @@
               <span class="font-weight-bold">
                 Search for positions
               </span>
-              <span class="font-weight-light">
-                ({{ roles.length }} positions found)
+              <span class="font-weight-light" v-if="isMobile">
+                (<span v-if="!isLoadingRoles">{{ roles.length }}</span>
+                <span v-else>...</span>
+                positions found)
               </span>
             </div>
             <v-btn text color="primary" @click="setDefaultFilters">
@@ -121,7 +121,7 @@ export default {
       "roles",
       "isLoadingRoles",
       "selectedFilters",
-      "infiniteScrollIdentifier",
+      "infiniteScrollId",
     ]),
     ...mapGetters("roles", ["isUsingFilters"]),
     isMobile: function() {
