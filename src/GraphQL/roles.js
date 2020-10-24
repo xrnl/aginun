@@ -31,6 +31,7 @@ const RoleFieldsFragment = gql`
     phone
     createdDate
     dueDate
+    filledDate
     workingCircle {
       title
       id
@@ -60,6 +61,7 @@ export const RolesQuery = gql`
           { timeCommitmentMin: { _gte: $timeCommitmentMin } }
           { timeCommitmentMax: { _lte: $timeCommitmentMax } }
           { title: { _ilike: $search } }
+          { filledDate: { _is_null: true } }
         ]
       }
       order_by: { createdDate: desc }
@@ -95,9 +97,22 @@ export const CreateRoleMutation = gql`
 export const UpdateRoleMutation = gql`
   mutation UpdateRole($id: Int!, $input: role_set_input!) {
     update_role(where: { id: { _eq: $id } }, _set: $input) {
-      affected_rows
       returning {
         ...RoleFields
+      }
+    }
+  }
+  ${RoleFieldsFragment}
+`;
+
+export const FillRoleMutation = gql`
+  mutation FillRole($id: Int!, $filledDate: timestamptz!) {
+    update_role(
+      where: { id: { _eq: $id } }
+      _set: { filledDate: $filledDate }
+    ) {
+      returning {
+        id
       }
     }
   }

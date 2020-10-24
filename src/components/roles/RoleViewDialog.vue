@@ -59,7 +59,7 @@
                     </span>
                   </div>
                 </flex-wrapper>
-                <v-menu offset-y left>
+                <v-menu offset-y left v-if="!role.filledDate">
                   <template v-slot:activator="{ on }">
                     <v-btn text icon v-on="on">
                       <v-icon>
@@ -79,51 +79,64 @@
               </flex-wrapper>
             </v-card-title>
             <v-divider />
-            <v-card-text class="pt-3 pb-0">
-              <flex-wrapper>
-                <div>
-                  <meta-info
-                    v-if="!!role.responsibilities"
-                    title="Responsibilities"
-                    :description="role.responsibilities"
-                  />
-                  <meta-info
-                    v-if="!!role.description"
-                    title="Description"
-                    :description="role.description"
-                  />
-                  <meta-info
-                    v-if="!!role.requirements"
-                    title="Requirements"
-                    :description="role.requirements"
-                  />
-                  <meta-info
-                    v-if="!!role.timeCommitment"
-                    title="Time Commitment"
-                    :description="
-                      `${role.timeCommitmentMin} -
+            <template v-if="!role.filledDate">
+              <v-card-text class="pt-3 pb-0">
+                <flex-wrapper>
+                  <div>
+                    <meta-info
+                      v-if="!!role.responsibilities"
+                      title="Responsibilities"
+                      :description="role.responsibilities"
+                    />
+                    <meta-info
+                      v-if="!!role.description"
+                      title="Description"
+                      :description="role.description"
+                    />
+                    <meta-info
+                      v-if="!!role.requirements"
+                      title="Requirements"
+                      :description="role.requirements"
+                    />
+                    <meta-info
+                      v-if="!!role.timeCommitment"
+                      title="Time Commitment"
+                      :description="
+                        `${role.timeCommitmentMin} -
                 ${role.timeCommitmentMax} hours/week`
-                    "
-                  />
-                </div>
-              </flex-wrapper>
-            </v-card-text>
-            <v-card-actions class="px-6 pt-0 pb-4">
-              <v-btn
-                color="primary"
-                class="mr-1"
-                depressed
-                @click.stop="applyDialog = true"
-              >
-                Apply
-              </v-btn>
-              <v-btn depressed>
-                <v-icon class="mr-1">
-                  mdi-check
-                </v-icon>
-                Role taken
-              </v-btn>
-            </v-card-actions>
+                      "
+                    />
+                  </div>
+                </flex-wrapper>
+              </v-card-text>
+              <v-card-actions class="px-6 pt-0 pb-4">
+                <v-btn
+                  color="primary"
+                  class="mr-1"
+                  depressed
+                  @click.stop="applyDialog = true"
+                >
+                  Apply
+                </v-btn>
+                <v-btn depressed @click="onFillRole">
+                  <v-icon class="mr-1">
+                    mdi-check
+                  </v-icon>
+                  Role filled
+                </v-btn>
+              </v-card-actions>
+            </template>
+            <div v-else class="pa-5 text-center">
+              <h3>
+                This role has been filled.
+              </h3>
+              <p>
+                You can still
+                <a @click.stop="applyDialog = true">contact the role aide</a>
+                to ask about this role or other similar opportunities in this
+                circle.
+              </p>
+            </div>
           </div>
         </transition>
       </v-card>
@@ -131,11 +144,14 @@
     <v-dialog v-model="applyDialog" max-width="500" content-class>
       <v-card>
         <v-card-title>
-          <h4>Apply</h4>
+          <h4 v-if="!role.filledDate">Apply</h4>
+          <h4 v-else>Contact</h4>
         </v-card-title>
         <v-card-text>
           <flex-wrapper direction="column">
-            <p>Please apply by contacting the role aide.</p>
+            <p v-if="!role.filledDate">
+              Please apply by contacting the role aide.
+            </p>
             <icon-link
               v-if="role.email"
               :href="
@@ -174,6 +190,7 @@ import MetaInfo from "../layout/MetaInfo";
 import RoleDeletionConfirm from "./DeleteRoleConfirmation";
 import RoleEditDialog from "./RoleEditDialog";
 import { RoleQuery } from "@/GraphQL/roles";
+import { mapActions } from "vuex";
 
 export default {
   name: "RoleViewDialog",
@@ -201,6 +218,16 @@ export default {
           roleId: this.$route.params.id,
         };
       },
+    },
+  },
+  methods: {
+    ...mapActions("roles", ["fillRole"]),
+    ...mapActions("alerts", ["displaySuccess"]),
+    onFillRole() {
+      this.fillRole(this.role.id);
+      this.$emit("input", false);
+      this.displaySuccess("Role filled");
+      this.$router.push("/roles");
     },
   },
   computed: {

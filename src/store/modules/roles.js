@@ -6,6 +6,7 @@ import {
   CreateRoleMutation,
   UpdateRoleMutation,
   DeleteRoleMutation,
+  FillRoleMutation,
 } from "../../GraphQL/roles";
 
 export default {
@@ -103,6 +104,16 @@ export default {
           }
         ) => {
           commit("editRole", returning[0]);
+        },
+      });
+    },
+    fillRole: async function({ commit }, roleID) {
+      const now = new Date(Date.now()).toISOString();
+      await apolloClient.mutate({
+        mutation: FillRoleMutation,
+        variables: { id: roleID, filledDate: now },
+        update: () => {
+          commit("deleteRole", roleID);
         },
       });
     },
