@@ -31,6 +31,7 @@ const RoleFieldsFragment = gql`
     phone
     createdDate
     dueDate
+    filledDate
     workingCircle {
       title
       id
