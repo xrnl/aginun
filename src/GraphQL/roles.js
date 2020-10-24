@@ -60,6 +60,7 @@ export const RolesQuery = gql`
           { timeCommitmentMin: { _gte: $timeCommitmentMin } }
           { timeCommitmentMax: { _lte: $timeCommitmentMax } }
           { title: { _ilike: $search } }
+          { filledDate: { _is_null: true } }
         ]
       }
       order_by: { createdDate: desc }
