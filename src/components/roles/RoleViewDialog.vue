@@ -117,11 +117,11 @@
               >
                 Apply
               </v-btn>
-              <v-btn depressed>
+              <v-btn depressed @click="onFillRole">
                 <v-icon class="mr-1">
                   mdi-check
                 </v-icon>
-                Role taken
+                Role filled
               </v-btn>
             </v-card-actions>
           </div>
@@ -174,6 +174,7 @@ import MetaInfo from "../layout/MetaInfo";
 import RoleDeletionConfirm from "./DeleteRoleConfirmation";
 import RoleEditDialog from "./RoleEditDialog";
 import { RoleQuery } from "@/GraphQL/roles";
+import { mapActions } from "vuex";
 
 export default {
   name: "RoleViewDialog",
@@ -201,6 +202,16 @@ export default {
           roleId: this.$route.params.id,
         };
       },
+    },
+  },
+  methods: {
+    ...mapActions("roles", ["fillRole"]),
+    ...mapActions("alerts", ["displaySuccess"]),
+    onFillRole() {
+      this.fillRole(this.role.id);
+      this.$emit("input", false);
+      this.displaySuccess("Role filled");
+      this.$router.push("/roles");
     },
   },
   computed: {
