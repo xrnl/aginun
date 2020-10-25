@@ -6,6 +6,7 @@
     item-text="title"
     chips
     small-chips
+    deletable-chips
     multiple
     class="mt-3"
     :label="label"

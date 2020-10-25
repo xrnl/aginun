@@ -7,6 +7,7 @@
         placeholder="Facilitator, Writer, Photographer..."
         class="mt-3"
         @input="debounceSearchUpdate"
+        clearable
       />
     </div>
     <filter-section>
@@ -74,7 +75,8 @@ export default {
   methods: {
     ...mapActions("roles", ["setFilter"]),
     debounceSearchUpdate: debounce(function($event) {
-      this.setFilter({ filterType: "search", filterValue: $event });
+      const filterValue = $event ? $event : "";
+      this.setFilter({ filterType: "search", filterValue });
     }, 500),
   },
 };
