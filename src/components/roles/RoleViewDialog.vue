@@ -99,7 +99,7 @@
                       :description="role.requirements"
                     />
                     <meta-info
-                      v-if="!!role.timeCommitment"
+                      v-if="!!role.timeCommitmentMin"
                       title="Time Commitment"
                       :description="
                         `${role.timeCommitmentMin} -
