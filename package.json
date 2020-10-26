@@ -108,24 +108,19 @@
         }
       }
     ],
-    "plugins": [
-      "vue",
-      "prettier"
-    ]
+    "plugins": ["vue", "prettier"]
   },
   "prettier": {
     "semi": true,
-    "trailingComma": "es5"
+    "trailingComma": "es5",
+    "arrowParens": "avoid"
   },
   "postcss": {
     "plugins": {
       "autoprefixer": {}
     }
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions"
-  ],
+  "browserslist": ["> 1%", "last 2 versions"],
   "jest": {
     "preset": "@vue/cli-plugin-unit-jest"
   }

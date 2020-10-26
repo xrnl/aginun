@@ -228,7 +228,15 @@ extend("requiredSelect", {
   message: "You must select a {_field_}.",
 });
 extend("requiredList", {
-  validate: () => false,
+  validate: () => {
+    return {
+      valid: false,
+      data: {
+        required: false,
+      },
+    };
+  },
+  computesRequired: true,
   message: "You must add at least one {_field_}.",
 });
 extend("email", { ...email, message: "You must enter a valid email address." });
