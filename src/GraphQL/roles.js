@@ -6,6 +6,7 @@ const RoleSummaryFieldsFragment = gql`
     title
     timeCommitmentMin
     timeCommitmentMax
+    dueDate
     workingCircle {
       title
       id
@@ -52,6 +53,7 @@ export const RolesQuery = gql`
     $timeCommitmentMin: Int!
     $timeCommitmentMax: Int!
     $search: String!
+    $dueDate: timestamptz
   ) {
     roles(
       where: {
@@ -63,6 +65,7 @@ export const RolesQuery = gql`
           { title: { _ilike: $search } }
           { filledDate: { _is_null: true } }
         ]
+        _or: [{ dueDate: { _gte: $dueDate } }, { dueDate: { _is_null: true } }]
       }
       order_by: { createdDate: desc }
       limit: $limit

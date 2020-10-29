@@ -326,3 +326,45 @@ describe("IconLink", () => {
     expect(wrapper.find(`i.v-icon.${icon}`).exists()).toBeTruthy();
   });
 });
+
+import DatePickerCustom from "@/components/DatePickerCustom";
+
+describe("DatePickerCustom", () => {
+  const localVue = createLocalVue();
+  let vuetify;
+  const label = "Due Date";
+
+  beforeAll(() => {
+    vuetify = new Vuetify();
+  });
+
+  const mountFunction = date =>
+    mount(DatePickerCustom, {
+      localVue,
+      vuetify,
+      propsData: {
+        label,
+        date,
+      },
+    });
+
+  it("prop label is rendered", () => {
+    const wrapper = mountFunction();
+    expect(wrapper.find("label").text()).toBe(label);
+  });
+
+  it("prop date is shown in DD/MM/YYYY format in the input field when passed", () => {
+    let date = new Date().toISOString();
+    const wrapper = mountFunction(date);
+    const [year, month, day] = date.split("-");
+    const formattedDate = `${day.substr(0, 2)}/${month.substr(0, 2)}/${year}`;
+
+    expect(wrapper.find("input").element.value).toBe(formattedDate);
+  });
+
+  it("input field is empty when no date is passed as prop", () => {
+    const wrapper = mountFunction();
+
+    expect(wrapper.find("input").element.value).toBe("");
+  });
+});
