@@ -180,6 +180,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 .v-card {
+  padding: 10px;
+
   &.theme--light {
     .v-card__text {
       color: #222;

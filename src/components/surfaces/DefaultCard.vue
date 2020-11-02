@@ -2,7 +2,7 @@
   <v-hover v-slot:default="{ hover }">
     <v-card
       width="300"
-      height="180"
+      height="200"
       class="card"
       :class="`bg-${color}`"
       v-bind="$attrs"

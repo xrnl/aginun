@@ -37,7 +37,7 @@ export default {
   components: {
     DefaultCard,
   },
-    props: {
+  props: {
     role: {
       type: Object,
       required: true,
@@ -54,4 +54,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.v-card {
+  padding: 10px;
+}
+</style>
