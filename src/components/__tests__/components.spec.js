@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { mount, createLocalVue } from "@vue/test-utils";
 import TheAppBar from "@/components/TheAppBar";
 import Vue from "vue";
@@ -328,7 +327,7 @@ describe("IconLink", () => {
 
 import DatePickerField from "@/components/DatePickerField";
 
-describe.only("DatePickerField", () => {
+describe("DatePickerField", () => {
   const localVue = createLocalVue();
   let vuetify;
   const label = "Application deadline";
@@ -365,15 +364,18 @@ describe.only("DatePickerField", () => {
     expect(wrapper.get("input").element.value).toBe("");
   });
 
-  // it.only("emits an update with the date", async () => {
-  //   const wrapper = mountFunction(new Date().toISOString());
-  //   await wrapper.setData({ showMenu: true });
-  //   await wrapper
-  //     // the first available date is today
-  //     .get(".v-picker .v-btn:not(.v-btn--disabled)")
-  //     .trigger("click");
-
-  //   console.log(await wrapper.get(".v-picker").html());
-  //   // expect(wrapper.emitted().update).toBe(new Date().toISOString());
-  // });
+  it("emits an update with the correct date", async () => {
+    const wrapper = mountFunction();
+    await wrapper.setData({ showMenu: true });
+    await wrapper
+      // the first date available is today
+      .get(".v-date-picker-table .v-btn:not(.v-btn--disabled)")
+      .trigger("click");
+    const emitted = wrapper.emitted().update[0][0];
+    const expected = new Date();
+    // the date we receive will always be at midnight,
+    // so we need to set the expected date to match it
+    expected.setUTCHours(0, 0, 0, 0);
+    expect(emitted).toBe(expected.toISOString());
+  });
 });
