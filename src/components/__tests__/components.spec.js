@@ -38,7 +38,6 @@ describe("TheAppBar", () => {
 });
 
 import Spinner from "@/components/Spinner";
-import { ScaleLoader } from "@saeris/vue-spinners";
 import { getThemeColor } from "@/utils/utilities.js";
 
 describe("Spinner", () => {
@@ -327,19 +326,19 @@ describe("IconLink", () => {
   });
 });
 
-import DatePickerCustom from "@/components/DatePickerCustom";
+import DatePickerField from "@/components/DatePickerField";
 
-describe("DatePickerCustom", () => {
+describe.only("DatePickerField", () => {
   const localVue = createLocalVue();
   let vuetify;
-  const label = "Due Date";
+  const label = "Application deadline";
 
   beforeAll(() => {
     vuetify = new Vuetify();
   });
 
   const mountFunction = date =>
-    mount(DatePickerCustom, {
+    mount(DatePickerField, {
       localVue,
       vuetify,
       propsData: {
@@ -350,7 +349,7 @@ describe("DatePickerCustom", () => {
 
   it("prop label is rendered", () => {
     const wrapper = mountFunction();
-    expect(wrapper.find("label").text()).toBe(label);
+    expect(wrapper.get("label").text()).toBe(label);
   });
 
   it("prop date is shown in DD/MM/YYYY format in the input field when passed", () => {
@@ -358,13 +357,23 @@ describe("DatePickerCustom", () => {
     const wrapper = mountFunction(date);
     const [year, month, day] = date.split("-");
     const formattedDate = `${day.substr(0, 2)}/${month.substr(0, 2)}/${year}`;
-
-    expect(wrapper.find("input").element.value).toBe(formattedDate);
+    expect(wrapper.get("input").element.value).toBe(formattedDate);
   });
 
   it("input field is empty when no date is passed as prop", () => {
     const wrapper = mountFunction();
-
-    expect(wrapper.find("input").element.value).toBe("");
+    expect(wrapper.get("input").element.value).toBe("");
   });
+
+  // it.only("emits an update with the date", async () => {
+  //   const wrapper = mountFunction(new Date().toISOString());
+  //   await wrapper.setData({ showMenu: true });
+  //   await wrapper
+  //     // the first available date is today
+  //     .get(".v-picker .v-btn:not(.v-btn--disabled)")
+  //     .trigger("click");
+
+  //   console.log(await wrapper.get(".v-picker").html());
+  //   // expect(wrapper.emitted().update).toBe(new Date().toISOString());
+  // });
 });

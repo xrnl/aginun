@@ -10,7 +10,6 @@
       <v-text-field
         :value="formatDate(date)"
         :label="label"
-        prepend-icon="mdi-calendar"
         readonly
         v-bind="attrs"
         v-on="on"
@@ -29,7 +28,7 @@
 
 <script>
 export default {
-  name: "DatePickerCustom",
+  name: "DatePickerField",
   props: {
     date: {
       type: String,

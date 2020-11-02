@@ -118,9 +118,9 @@ This can include information about the circle or the specific project that the r
               :error-messages="errors"
             />
           </validation-provider>
-          <date-picker-custom
+          <date-picker-field
             :date="role.dueDate"
-            label="Due date"
+            label="Application deadline"
             @update="onDueDateChange"
           />
           <validation-provider
@@ -211,7 +211,7 @@ This can include information about the circle or the specific project that the r
 import { mapState, mapActions } from "vuex";
 import { extend, ValidationProvider, ValidationObserver } from "vee-validate";
 import { required, alpha_spaces, max, email } from "vee-validate/dist/rules";
-import DatePickerCustom from "@/components/DatePickerCustom";
+import DatePickerField from "@/components/DatePickerField";
 
 extend("required", {
   ...required,
@@ -292,7 +292,7 @@ export default {
   components: {
     ValidationProvider,
     ValidationObserver,
-    DatePickerCustom,
+    DatePickerField,
   },
   props: {
     value: {

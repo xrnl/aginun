@@ -108,7 +108,7 @@
                     />
                     <meta-info
                       v-if="role.dueDate"
-                      title="Due Date"
+                      title="Application deadline"
                       :description="formatDate(role.dueDate)"
                     />
                   </div>
