@@ -13,12 +13,12 @@
       <v-divider />
     </div>
     <transition name="fade" mode="out-in">
-      <grid-list key="roles" gap="1rem" v-if="!!roles.length">
+      <grid-list v-if="!!roles.length" key="roles" gap="1rem">
         <role-card v-for="role in roles" :key="role.id" :role="role" />
       </grid-list>
       <div
-        key="loading"
         v-if="!roles.length && isLoadingRoles"
+        key="loading"
         class="d-flex flex-column justify-center align-center mt-5"
       >
         <spinner text="Loading roles" />
@@ -41,8 +41,8 @@
       <template #spinner>
         <!-- show spinner without transition for loading additional roles -->
         <div
-          key="loading"
           v-if="!!roles.length"
+          key="loading"
           class="d-flex flex-column justify-center align-center mt-5"
         >
           <spinner text="Loading roles" />
@@ -67,7 +67,7 @@
               <span class="font-weight-bold">
                 Search for positions
               </span>
-              <span class="font-weight-light" v-if="isMobile">
+              <span v-if="isMobile" class="font-weight-light">
                 (<span v-if="!isLoadingRoles">{{ roles.length }}</span>
                 <span v-else>...</span>
                 positions found)
