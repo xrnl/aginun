@@ -55,7 +55,7 @@
                   </flex-wrapper>
                   <div v-if="role.createdDate" style="line-height: 1rem">
                     <span class="caption">
-                      Published on {{ formattedDate }}
+                      Published on {{ formatDate(role.createdDate) }}
                     </span>
                   </div>
                 </flex-wrapper>
@@ -106,10 +106,15 @@
                 ${role.timeCommitmentMax} hours/week`
                       "
                     />
+                    <meta-info
+                      v-if="role.dueDate"
+                      title="Application deadline"
+                      :description="formatDate(role.dueDate)"
+                    />
                   </div>
                 </flex-wrapper>
               </v-card-text>
-              <v-card-actions class="px-6 pt-0 pb-4">
+              <v-card-actions class="px-4 pt-0 pb-4">
                 <v-btn
                   color="primary"
                   class="mr-1"
@@ -229,16 +234,14 @@ export default {
       this.displaySuccess("Role filled");
       this.$router.push("/roles");
     },
-  },
-  computed: {
-    formattedDate: function() {
-      const date = new Date(this.role.createdDate);
+    formatDate(date) {
+      const formattedDate = new Date(date);
       const options = {
         year: "numeric",
         month: "long",
         day: "numeric",
       };
-      return date.toLocaleDateString("en-GB", options);
+      return formattedDate.toLocaleDateString("en-GB", options);
     },
   },
 };

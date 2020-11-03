@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { mount, createLocalVue } from "@vue/test-utils";
 import TheAppBar from "@/components/TheAppBar";
 import Vue from "vue";
@@ -38,7 +37,6 @@ describe("TheAppBar", () => {
 });
 
 import Spinner from "@/components/Spinner";
-import { ScaleLoader } from "@saeris/vue-spinners";
 import { getThemeColor } from "@/utils/utilities.js";
 
 describe("Spinner", () => {
@@ -324,5 +322,60 @@ describe("IconLink", () => {
   it("prop icon is rendered", () => {
     const wrapper = mountFunction();
     expect(wrapper.find(`i.v-icon.${icon}`).exists()).toBeTruthy();
+  });
+});
+
+import DatePickerField from "@/components/DatePickerField";
+
+describe("DatePickerField", () => {
+  const localVue = createLocalVue();
+  let vuetify;
+  const label = "Application deadline";
+
+  beforeAll(() => {
+    vuetify = new Vuetify();
+  });
+
+  const mountFunction = date =>
+    mount(DatePickerField, {
+      localVue,
+      vuetify,
+      propsData: {
+        label,
+        date,
+      },
+    });
+
+  it("prop label is rendered", () => {
+    const wrapper = mountFunction();
+    expect(wrapper.get("label").text()).toBe(label);
+  });
+
+  it("prop date is shown in DD/MM/YYYY format in the input field when passed", () => {
+    let date = new Date().toISOString();
+    const wrapper = mountFunction(date);
+    const [year, month, day] = date.split("-");
+    const formattedDate = `${day.substr(0, 2)}/${month.substr(0, 2)}/${year}`;
+    expect(wrapper.get("input").element.value).toBe(formattedDate);
+  });
+
+  it("input field is empty when no date is passed as prop", () => {
+    const wrapper = mountFunction();
+    expect(wrapper.get("input").element.value).toBe("");
+  });
+
+  it("emits an update with the correct date", async () => {
+    const wrapper = mountFunction();
+    await wrapper.setData({ showMenu: true });
+    await wrapper
+      // the first date available is today
+      .get(".v-date-picker-table .v-btn:not(.v-btn--disabled)")
+      .trigger("click");
+    const emitted = wrapper.emitted().update[0][0];
+    const expected = new Date();
+    // the date we receive will always be at midnight,
+    // so we need to set the expected date to match it
+    expected.setUTCHours(0, 0, 0, 0);
+    expect(emitted).toBe(expected.toISOString());
   });
 });

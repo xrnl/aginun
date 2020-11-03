@@ -31,7 +31,7 @@ If you wish edit the code of this application, we recommend using [this setup](h
 
 ## Run
 
-Once you have installed tha application, you can run it with the command `npm run serve`. When the application is running, you can access it at [localhost:8080](http://localhost:8080).
+Once you have installed tha application, you can run it with the command `npm start`. When the application is running, you can access it at [localhost:8080](http://localhost:8080).
 
 ## Edit back end
 
@@ -39,12 +39,13 @@ The back end of this application runs on [Hasura](https://hasura.io/). The datab
 
 ## Test
 
-
 ### Unit tests
+
 ```
 npm run test:unit
 ```
-Add the `-s` or `--silent` flag to avoid NPM error messages if tests fail. 
+
+Add the `-s` or `--silent` flag to avoid NPM error messages if tests fail.
 
 ### End to End tests (to be implemented)
 

@@ -118,7 +118,11 @@ This can include information about the circle or the specific project that the r
               :error-messages="errors"
             />
           </validation-provider>
-
+          <date-picker-field
+            :date="role.dueDate"
+            label="Application deadline"
+            @update="onDueDateChange"
+          />
           <validation-provider
             v-slot="{ errors }"
             rules="requiredSelect"
@@ -207,6 +211,7 @@ This can include information about the circle or the specific project that the r
 import { mapState, mapActions } from "vuex";
 import { extend, ValidationProvider, ValidationObserver } from "vee-validate";
 import { required, alpha_spaces, max, email } from "vee-validate/dist/rules";
+import DatePickerField from "@/components/DatePickerField";
 
 extend("required", {
   ...required,
@@ -277,6 +282,7 @@ let initialState = () => ({
     email: undefined,
     mattermostId: undefined,
     phone: undefined,
+    dueDate: undefined,
   },
   newResponsibility: undefined,
 });
@@ -286,6 +292,7 @@ export default {
   components: {
     ValidationProvider,
     ValidationObserver,
+    DatePickerField,
   },
   props: {
     value: {
@@ -355,6 +362,9 @@ export default {
     onTimeCommitmentChange: function(timeCommitment) {
       this.role.timeCommitmentMin = timeCommitment.min;
       this.role.timeCommitmentMax = timeCommitment.max;
+    },
+    onDueDateChange: function(duedate) {
+      this.role.dueDate = duedate;
     },
     resetState: function() {
       Object.assign(this.$data, initialState());

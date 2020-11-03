@@ -161,6 +161,7 @@ export default {
           timeCommitmentMin: state.selectedFilters.timeCommitment[0],
           timeCommitmentMax: state.selectedFilters.timeCommitment[1],
           search: `%${state.selectedFilters.search}%`,
+          dueDate: new Date(Date.now()).toISOString(),
         },
       });
 

@@ -6,8 +6,8 @@
         label="Search by role title"
         placeholder="Facilitator, Writer, Photographer..."
         class="mt-3"
-        @input="debounceSearchUpdate"
         clearable
+        @input="debounceSearchUpdate"
       />
     </div>
     <filter-section>
