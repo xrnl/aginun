@@ -59,7 +59,7 @@
                     </span>
                   </div>
                 </flex-wrapper>
-                <v-menu offset-y left v-if="!role.filledDate">
+                <v-menu v-if="!role.filledDate" offset-y left>
                   <template v-slot:activator="{ on }">
                     <v-btn text icon v-on="on">
                       <v-icon>
@@ -149,8 +149,12 @@
     <v-dialog v-model="applyDialog" max-width="500" content-class>
       <v-card>
         <v-card-title>
-          <h4 v-if="!role.filledDate">Apply</h4>
-          <h4 v-else>Contact</h4>
+          <h4 v-if="!role.filledDate">
+            Apply
+          </h4>
+          <h4 v-else>
+            Contact
+          </h4>
         </v-card-title>
         <v-card-text>
           <flex-wrapper direction="column">
