@@ -162,13 +162,13 @@ This can include information about the circle or the specific project that the r
           </validation-provider>
           <validation-provider
             v-slot="{ errors }"
-            name="Mattermost Id"
+            name="Mattermost id"
             mode="eager"
-            rules="mattermost|max:50"
+            rules="required|mattermost|max:50"
           >
             <v-text-field
               v-model="role.mattermostId"
-              label="Mattermost id (optional)"
+              label="Mattermost id"
               :error-messages="errors"
             />
           </validation-provider>
