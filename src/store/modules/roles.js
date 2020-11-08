@@ -8,6 +8,7 @@ import {
   DeleteRoleMutation,
   FillRoleMutation,
 } from "../../GraphQL/roles";
+import router from "../../router";
 
 export default {
   state: {
@@ -171,7 +172,7 @@ export default {
 
       if (errors) {
         commit("setServerError", true);
-        commit("setLoadingState", false);
+        router.push("/error");
         return;
       } else {
         commit("setServerError", false);
