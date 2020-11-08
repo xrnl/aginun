@@ -11,17 +11,17 @@ describe("makeObjectValidator", () => {
     id: "number",
     title: "string",
   });
-  it("should return a validator function based on the object passed", () => {
+  it("returns a validator function based on the object passed", () => {
     expect(isFunction(validatorFn)).toBe(true);
   });
-  it("should return true when the object matches the structure expected", () => {
+  it("returns true when the object matches the structure", () => {
     const objToValidate = {
       id: 3,
       title: "title",
     };
     expect(validatorFn(objToValidate)).toBe(true);
   });
-  it("should return false when the object doesn't match the structure expected", () => {
+  it("returns false when the object doesn't match the structure", () => {
     const objToValidate = {
       id: "id",
     };
@@ -30,12 +30,12 @@ describe("makeObjectValidator", () => {
 });
 
 describe("isArrayValid", () => {
-  it("should return true when all the items in the array pass the function provided", () => {
+  it("returns true when all array items pass the validation function", () => {
     const array = ["a", "b", "c"];
     const result = isArrayValid(array, isNaN);
     expect(result).toBe(true);
   });
-  it("should return false when all the items in the array pass the function provided", () => {
+  it("returns false when all array items pass the validation function", () => {
     const array = [1, 2, 3];
     const result = isArrayValid(array, isNaN);
     expect(result).toBe(false);
@@ -43,19 +43,28 @@ describe("isArrayValid", () => {
 });
 
 describe("iconValidator", () => {
-  it("should return true when the provided string starts with 'mdi-'", () => {
+  it("returns true when the string starts with 'mdi-'", () => {
     expect(iconValidator("mdi-icon")).toBe(true);
   });
-  it("should return false when the provided string doesn't start with 'mdi-'", () => {
+  it("returns false when the string doesn't start with 'mdi-'", () => {
     expect(iconValidator("icon")).toBe(false);
   });
 });
 
 describe("hrefValidator", () => {
-  it("should return true when the provided string starts with one of the valid prefixes", () => {
+  it("returns true when the string starts with http://", () => {
+    expect(hrefValidator("http://extinctionrebellion.nl")).toBe(true);
+  });
+  it("returns true when the string starts with https://", () => {
     expect(hrefValidator("https://extinctionrebellion.nl")).toBe(true);
   });
-  it("should return false when the provided string doesn't start with one of the valid prefixes", () => {
+  it("returns true when the string starts with mailto:", () => {
+    expect(hrefValidator("mailto:extinction@rebellion.nl")).toBe(true);
+  });
+  it("returns true when the string starts with tel:", () => {
+    expect(hrefValidator("tel:+0123456789")).toBe(true);
+  });
+  it("returns false when the string doesn't start with one of the valid prefixes", () => {
     expect(hrefValidator("extinctionrebellion.nl")).toBe(false);
   });
 });
