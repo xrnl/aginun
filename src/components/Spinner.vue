@@ -9,7 +9,7 @@
 
 <script>
 import { ScaleLoader } from "@saeris/vue-spinners";
-import { getThemeColor } from "@/utils/utilities.js";
+import { getThemeColor } from "@/utils/getThemeColor.js";
 
 export default {
   name: "Spinner",
