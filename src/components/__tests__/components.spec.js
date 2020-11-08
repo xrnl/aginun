@@ -2,6 +2,7 @@ import { mount, createLocalVue } from "@vue/test-utils";
 import TheAppBar from "@/components/TheAppBar";
 import Vue from "vue";
 import Vuex from "vuex";
+import VueRouter from "vue-router";
 import Vuetify from "vuetify";
 import { state as stylesState } from "@/store/modules/styles";
 
@@ -12,6 +13,8 @@ describe("TheAppBar", () => {
   let vuetify;
   const localVue = createLocalVue();
   localVue.use(Vuex);
+  localVue.use(VueRouter);
+  const router = new VueRouter();
 
   beforeAll(() => {
     store = new Vuex.Store({
@@ -25,6 +28,7 @@ describe("TheAppBar", () => {
       localVue,
       store,
       vuetify,
+      router,
       ...options,
     });
 
@@ -37,7 +41,7 @@ describe("TheAppBar", () => {
 });
 
 import Spinner from "@/components/Spinner";
-import { getThemeColor } from "@/utils/utilities.js";
+import { getThemeColor } from "@/utils/getThemeColor.js";
 
 describe("Spinner", () => {
   const localVue = createLocalVue();
