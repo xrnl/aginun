@@ -30,7 +30,7 @@
 <script>
 
 import { mapState } from "vuex";
-import DefaultCard from "@/components/surfaces/DefaultCard.vue";
+import DefaultCard from "@/components/layout/DefaultCard.vue";
 
 export default {
   name: "RoleCard",
