@@ -18,6 +18,11 @@ const cache = new InMemoryCache();
 const apolloClient = new ApolloClient({
   link: httpLink,
   cache,
+  defaultOptions: {
+    query: {
+      errorPolicy: "all",
+    },
+  },
 });
 
 const apolloProvider = new VueApollo({

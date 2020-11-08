@@ -23,8 +23,28 @@
       >
         <spinner text="Loading roles" />
       </div>
+      <div v-if="serverError" class="px-6 text-center">
+        <p v-if="!isDevMode">
+          Something went wrong 😧
+          <br />
+          Please email
+          <a href="mailto:tech@extinctionrebellion.nl">
+            tech@extinctionrebellion.nl
+          </a>
+          for help.
+        </p>
+        <p v-else>
+          Failed to connect to the server. Please make sure you have set the
+          server API key.
+          <br />
+          If the problem persists please contact
+          <a href="mailto:tech@extinctionrebellion.nl">
+            tech@extinctionrebellion.nl
+          </a>
+        </p>
+      </div>
       <div
-        v-if="!roles.length && !isLoadingRoles"
+        v-else-if="!roles.length && !isLoadingRoles"
         key="noRoles"
         class="pa-5 text-center"
       >
@@ -115,6 +135,7 @@ export default {
   data: () => ({
     newRoleDialog: false,
     isDrawerOpen: null,
+    isDevMode: process.env.NODE_ENV !== "production",
   }),
   computed: {
     ...mapState("roles", [
@@ -122,6 +143,7 @@ export default {
       "isLoadingRoles",
       "selectedFilters",
       "infiniteScrollId",
+      "serverError",
     ]),
     ...mapGetters("roles", ["isUsingFilters"]),
     isMobile: function() {
