@@ -123,12 +123,6 @@ describe("AutocompleteCustom", () => {
     const validator = AutocompleteCustom.props.items.validator;
 
     expect(validator(items)).toBeTruthy();
-
-    const itemsInvalidKeys = items.concat([{ value: 0, text: "test" }]);
-    expect(validator(itemsInvalidKeys)).toBeFalsy();
-
-    const itemsInvalidTypes = items.concat([{ id: "0", title: 0 }]);
-    expect(validator(itemsInvalidTypes)).toBeFalsy();
   });
 
   it("prop selectedItemsIds validation works", () => {
