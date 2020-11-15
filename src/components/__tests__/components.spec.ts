@@ -18,12 +18,12 @@ describe("TheAppBar", () => {
 
   beforeAll(() => {
     store = new Vuex.Store({
-      modules: { styles: { state: stylesState }, namespaced: true },
+      modules: { styles: { state: stylesState, namespaced: true } },
     });
     vuetify = new Vuetify({ theme: { dark: false } });
   });
 
-  const mountFunction = options =>
+  const mountFunction = (options?: any) =>
     mount(TheAppBar, {
       localVue,
       store,
@@ -55,7 +55,7 @@ describe("Spinner", () => {
     });
   });
 
-  const mountFunction = options =>
+  const mountFunction = (options?: any) =>
     mount(Spinner, { localVue, vuetify, ...options });
 
   const spinnerSelector = "div > div > div";
@@ -102,7 +102,7 @@ describe("AutocompleteCustom", () => {
     vuetify = new Vuetify();
   });
 
-  const mountFunction = options =>
+  const mountFunction = (options?: any) =>
     mount(AutocompleteCustom, {
       localVue,
       vuetify,
@@ -170,7 +170,7 @@ describe("IconButton", () => {
     vuetify = new Vuetify();
   });
 
-  const mountFunction = options =>
+  const mountFunction = (options?: any) =>
     mount(IconButton, {
       localVue,
       vuetify,
@@ -235,7 +235,7 @@ describe("NewItemButton", () => {
     vuetify = new Vuetify();
   });
 
-  const mountFunction = options =>
+  const mountFunction = (options?: any) =>
     mount(NewItemButton, {
       localVue,
       vuetify,
@@ -279,7 +279,7 @@ describe("IconLink", () => {
     vuetify = new Vuetify();
   });
 
-  const mountFunction = options =>
+  const mountFunction = (options?: any) =>
     mount(IconLink, {
       localVue,
       vuetify,
@@ -340,7 +340,7 @@ describe("DatePickerField", () => {
     vuetify = new Vuetify();
   });
 
-  const mountFunction = date =>
+  const mountFunction = (date?: string) =>
     mount(DatePickerField, {
       localVue,
       vuetify,
@@ -360,12 +360,12 @@ describe("DatePickerField", () => {
     const wrapper = mountFunction(date);
     const [year, month, day] = date.split("-");
     const formattedDate = `${day.substr(0, 2)}/${month.substr(0, 2)}/${year}`;
-    expect(wrapper.get("input").element.value).toBe(formattedDate);
+    expect(wrapper.get("input").element.nodeValue).toBe(formattedDate);
   });
 
   it("input field is empty when no date is passed as prop", () => {
     const wrapper = mountFunction();
-    expect(wrapper.get("input").element.value).toBe("");
+    expect(wrapper.get("input").element.nodeValue).toBe("");
   });
 
   it("emits an update with the correct date", async () => {
@@ -375,7 +375,7 @@ describe("DatePickerField", () => {
       // the first date available is today
       .get(".v-date-picker-table .v-btn:not(.v-btn--disabled)")
       .trigger("click");
-    const emitted = wrapper.emitted().update[0][0];
+    const emitted = wrapper.emitted().update?.[0][0];
     const expected = new Date();
     // the date we receive will always be at midnight,
     // so we need to set the expected date to match it

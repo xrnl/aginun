@@ -52,8 +52,12 @@ const storeData = { modules: {} };
     // Get the modules object for the current path.
     const { modules } = getNamespace(storeData, modulePath);
 
+    // Check if modulePath item exists
+    const modulePathItem = modulePath.pop();
+    if (!modulePathItem) return;
+
     // Add the module to our modules object.
-    modules[modulePath.pop()] = {
+    modules[modulePathItem] = {
       // Modules are namespaced by default.
       namespaced: true,
       ...moduleDefinition,
