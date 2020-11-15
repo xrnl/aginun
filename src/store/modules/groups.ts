@@ -2,6 +2,7 @@ import { apolloClient } from "@/plugins/vue-apollo";
 import gql from "graphql-tag";
 
 export default {
+  namespaced: true,
   state: {
     localGroups: [],
     workingCircles: [],

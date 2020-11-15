@@ -1,4 +1,5 @@
-export default {
+const defaults = {
+  namespaced: true,
   state: {
     timeCommitments: [
       { min: 1, max: 5 },
@@ -16,3 +17,5 @@ export default {
     },
   },
 };
+
+export default defaults;

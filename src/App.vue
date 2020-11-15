@@ -2,9 +2,9 @@
   <v-app>
     <feedback-alert />
     <the-app-bar />
-    <v-content>
+    <v-main>
       <router-view />
-    </v-content>
+    </v-main>
   </v-app>
 </template>
 

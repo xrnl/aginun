@@ -10,6 +10,7 @@ import {
 } from "../../GraphQL/roles";
 
 export default {
+  namespaced: true,
   state: {
     roles: [],
     isLoadingRoles: true,
@@ -27,9 +28,9 @@ export default {
         state.selectedFilters.localGroups.length ||
         state.selectedFilters.search ||
         state.selectedFilters.timeCommitment[0] !=
-          rootGetters["defaults/timeCommitmentRange"].min ||
+        rootGetters["defaults/timeCommitmentRange"].min ||
         state.selectedFilters.timeCommitment[1] !=
-          rootGetters["defaults/timeCommitmentRange"].max
+        rootGetters["defaults/timeCommitmentRange"].max
       );
     },
   },
@@ -75,7 +76,7 @@ export default {
     },
   },
   actions: {
-    createRole: async function({ commit }, newRole) {
+    createRole: async function ({ commit }, newRole) {
       await apolloClient.mutate({
         mutation: CreateRoleMutation,
         variables: { input: [newRole] },
@@ -91,7 +92,7 @@ export default {
         },
       });
     },
-    updateRole: async function({ commit }, newRole) {
+    updateRole: async function ({ commit }, newRole) {
       await apolloClient.mutate({
         mutation: UpdateRoleMutation,
         variables: { id: newRole.id, input: newRole },
@@ -107,7 +108,7 @@ export default {
         },
       });
     },
-    fillRole: async function({ commit }, roleID) {
+    fillRole: async function ({ commit }, roleID) {
       const now = new Date(Date.now()).toISOString();
       await apolloClient.mutate({
         mutation: FillRoleMutation,
@@ -117,7 +118,7 @@ export default {
         },
       });
     },
-    deleteRole: async function({ commit }, roleID) {
+    deleteRole: async function ({ commit }, roleID) {
       await apolloClient.mutate({
         mutation: DeleteRoleMutation,
         variables: { id: roleID },
@@ -126,7 +127,7 @@ export default {
         },
       });
     },
-    loadRoles: throttle(async function(
+    loadRoles: throttle(async function (
       { state, getters, commit, rootState, rootGetters, dispatch },
       scrollState
     ) {
@@ -185,8 +186,8 @@ export default {
 
       commit("setLoadingState", false);
     },
-    500),
-    reloadRoles: async function({ commit }) {
+      500),
+    reloadRoles: async function ({ commit }) {
       commit("clearRoles");
       // timeout necessary because old roles must completely transition out
       // before InfiniteLoading component calls @infinite method
