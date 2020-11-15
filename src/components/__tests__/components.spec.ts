@@ -1,5 +1,5 @@
 import { mount, createLocalVue } from "@vue/test-utils";
-import TheAppBar from "@/components/TheAppBar";
+import TheAppBar from "@/components/TheAppBar.vue";
 import Vue from "vue";
 import Vuex from "vuex";
 import VueRouter from "vue-router";
@@ -40,7 +40,7 @@ describe("TheAppBar", () => {
   });
 });
 
-import Spinner from "@/components/Spinner";
+import Spinner from "@/components/Spinner.vue";
 import { getThemeColor } from "@/utils/getThemeColor.js";
 
 describe("Spinner", () => {
@@ -85,7 +85,7 @@ describe("Spinner", () => {
   });
 });
 
-import AutocompleteCustom from "@/components/AutocompleteCustom";
+import AutocompleteCustom from "@/components/AutocompleteCustom.vue";
 
 describe("AutocompleteCustom", () => {
   const localVue = createLocalVue();
@@ -120,13 +120,13 @@ describe("AutocompleteCustom", () => {
   });
 
   it("prop items validation works", () => {
-    const validator = AutocompleteCustom.props.items.validator;
+    const validator = AutocompleteCustom["props"].items.validator;
 
     expect(validator(items)).toBeTruthy();
   });
 
   it("prop selectedItemsIds validation works", () => {
-    const validator = AutocompleteCustom.props.selectedItemsIds.validator;
+    const validator = AutocompleteCustom["props"].selectedItemsIds.validator;
 
     expect(validator([1, 2])).toBeTruthy();
     expect(validator([1, 2.5])).toBeFalsy();
@@ -149,7 +149,7 @@ describe("AutocompleteCustom", () => {
   });
 });
 
-import IconButton from "@/components/IconButton";
+import IconButton from "@/components/IconButton.vue";
 import { themeColorNames } from "@/utils/defaults";
 
 describe("IconButton", () => {
@@ -192,7 +192,7 @@ describe("IconButton", () => {
   });
 
   it("prop color validation works", () => {
-    const validator = IconButton.props.themeColor.validator;
+    const validator = IconButton["props"].themeColor.validator;
 
     themeColorNames.forEach(themeColor =>
       expect(validator(themeColor)).toBeTruthy()
@@ -202,7 +202,7 @@ describe("IconButton", () => {
   });
 
   it("prop icon validation works", () => {
-    const validator = IconButton.props.icon.validator;
+    const validator = IconButton["props"].icon.validator;
 
     expect(validator("mdi-plus")).toBeTruthy();
     expect(validator("plus-icon")).toBeFalsy();
@@ -216,7 +216,7 @@ describe("IconButton", () => {
   });
 });
 
-import NewItemButton from "@/components/NewItemButton";
+import NewItemButton from "@/components/NewItemButton.vue";
 
 describe("NewItemButton", () => {
   const localVue = createLocalVue();
@@ -257,7 +257,7 @@ describe("NewItemButton", () => {
   });
 });
 
-import IconLink from "@/components/IconLink";
+import IconLink from "@/components/IconLink.vue";
 
 describe("IconLink", () => {
   const localVue = createLocalVue();
@@ -287,7 +287,7 @@ describe("IconLink", () => {
     });
 
   it("prop href validation works", () => {
-    const validator = IconLink.props.href.validator;
+    const validator = IconLink["props"].href.validator;
 
     expect(validator("https://organise.earth")).toBeTruthy();
     expect(validator("mailto:test@protonmail.com")).toBeTruthy();
@@ -296,7 +296,7 @@ describe("IconLink", () => {
   });
 
   it("prop icon validation works", () => {
-    const validator = IconLink.props.icon.validator;
+    const validator = IconLink["props"].icon.validator;
 
     expect(validator("mdi-plus")).toBeTruthy();
     expect(validator("plus-icon")).toBeFalsy();
@@ -323,7 +323,7 @@ describe("IconLink", () => {
   });
 });
 
-import DatePickerField from "@/components/DatePickerField";
+import DatePickerField from "@/components/DatePickerField.vue";
 
 describe("DatePickerField", () => {
   const localVue = createLocalVue();
@@ -369,11 +369,11 @@ describe("DatePickerField", () => {
       // the first date available is today
       .get(".v-date-picker-table .v-btn:not(.v-btn--disabled)")
       .trigger("click");
-    const emitted = wrapper.emitted().update?.[0][0];
+    const emitted = wrapper.emitted()["update"];
     const expected = new Date();
     // the date we receive will always be at midnight,
     // so we need to set the expected date to match it
     expected.setUTCHours(0, 0, 0, 0);
-    expect(emitted).toBe(expected.toISOString());
+    expect(emitted ? emitted[0][0] : undefined).toBe(expected.toISOString());
   });
 });
