@@ -46,6 +46,7 @@ npm run test:unit
 ```
 
 Add the `-s` or `--silent` flag to avoid NPM error messages if tests fail.
+During development, the `test:unit:dev` command can be used to keep the tests running.
 
 ### End to End tests (to be implemented)
 
