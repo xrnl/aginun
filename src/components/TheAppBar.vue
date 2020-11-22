@@ -12,10 +12,16 @@
         alt=""
         width="48"
         height="48"
-      >
+      />
     </router-link>
     <v-toolbar-title><h2>Vacatures</h2></v-toolbar-title>
     <v-spacer />
+    <v-btn v-if="!$store.state.user.loggedIn" text @click.stop="login">
+      Login
+    </v-btn>
+    <v-btn v-else text @click.stop="logout">
+      Logout
+    </v-btn>
     <v-btn text @click.stop="contactSupportDialog = true">
       Support <v-icon> mdi-help-circle-outline </v-icon>
     </v-btn>
@@ -59,7 +65,17 @@ export default {
   data: () => ({
     contactSupportDialog: false,
   }),
-  methods: {},
+  methods: {
+    login() {
+      const username = "kaj-dev";
+      const password = "test";
+
+      this.$store.dispatch("user/login", {username, password});
+    },
+    logout() {
+      this.$store.dispatch("user/logout");
+    }
+  },
 };
 </script>
 

@@ -4,9 +4,12 @@ import Vue from "vue";
 import Vuex from "vuex";
 import VueRouter from "vue-router";
 import Vuetify from "vuetify";
+import axios from "axios";
+import VueAxios from "vue-axios";
 import { state as stylesState } from "@/store/modules/styles";
 
 Vue.use(Vuetify);
+Vue.use(VueAxios, axios);
 
 describe("TheAppBar", () => {
   let store;
