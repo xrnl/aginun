@@ -17,22 +17,22 @@ export default {
     href: {
       required: true,
       type: String,
-      validator: hrefValidator,
+      validator: hrefValidator
     },
     linkText: {
       required: true,
-      type: String,
+      type: String
     },
     label: {
       required: false,
       default: "",
-      type: String,
+      type: String
     },
     icon: {
       required: true,
       type: String,
-      validator: iconValidator,
-    },
-  },
+      validator: iconValidator
+    }
+  }
 };
 </script>

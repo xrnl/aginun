@@ -21,16 +21,16 @@ export default {
   props: {
     title: {
       type: String,
-      required: true,
+      required: true
     },
     description: {
       type: [String, Array],
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {};
-  },
+  }
 };
 </script>
 

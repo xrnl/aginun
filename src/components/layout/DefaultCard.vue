@@ -1,16 +1,7 @@
 <template>
   <v-hover v-slot:default="{ hover }">
-    <v-card
-      width="300"
-      height="180"
-      class="card"
-      :class="`bg-${color}`"
-      v-bind="$attrs"
-    >
-      <div
-        class="transition-wrapper d-flex flex-column full-height"
-        :class="{ lighter: hover && $vuetify.theme.dark }"
-      >
+    <v-card width="300" height="180" class="card" :class="`bg-${color}`" v-bind="$attrs">
+      <div class="transition-wrapper d-flex flex-column full-height" :class="{ lighter: hover && $vuetify.theme.dark }">
         <template v-if="!!$slots.header && !!$slots.header[0]">
           <div class="d-flex align-center pa-3">
             <slot name="header" />
@@ -23,10 +14,7 @@
               <slot name="title" />
             </h3>
             <slot name="subtitle" />
-            <v-card-text
-              v-if="!!$slots.content && !!$slots.content[0]"
-              class="pa-3"
-            >
+            <v-card-text v-if="!!$slots.content && !!$slots.content[0]" class="pa-3">
               <slot name="content" />
             </v-card-text>
           </div>
@@ -51,9 +39,9 @@ export default {
     color: {
       type: String,
       required: false,
-      default: "angry-light",
-    },
-  },
+      default: "angry-light"
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

@@ -19,17 +19,13 @@
           :items="localGroups"
           :selected-items-ids="selectedFilters.localGroups"
           label="Local Group"
-          @change="
-            setFilter({ filterType: 'localGroups', filterValue: $event })
-          "
+          @change="setFilter({ filterType: 'localGroups', filterValue: $event })"
         />
         <autocomplete-custom
           :items="workingCircles"
           :selected-items-ids="selectedFilters.workingCircles"
           label="Working circle"
-          @change="
-            setFilter({ filterType: 'workingCircles', filterValue: $event })
-          "
+          @change="setFilter({ filterType: 'workingCircles', filterValue: $event })"
         />
       </flex-wrapper>
     </filter-section>
@@ -52,33 +48,37 @@
 
 <script>
 import FlexWrapper from "@/components/layout/FlexWrapper.vue";
-import AutocompleteCustom from "@/components/AutocompleteCustom";
-import { mapState, mapGetters, mapActions } from "vuex";
-import FilterDrawerSection from "../layout/FilterDrawerSection";
+import AutocompleteCustom from "@/components/AutocompleteCustom.vue";
+import { mapState, mapActions } from "vuex";
 import debounce from "lodash/debounce";
+import { timeCommitmentRange } from "@/constants/timeCommitments";
+import FilterDrawerSection from "../layout/FilterDrawerSection.vue";
 
 export default {
   name: "RoleFilters",
   components: {
     filterSection: FilterDrawerSection,
     AutocompleteCustom,
-    FlexWrapper,
+    FlexWrapper
   },
+  data: () => ({
+    timeCommitmentRange
+  }),
   computed: {
     ...mapState("groups", ["localGroups", "workingCircles"]),
-    ...mapState("roles", ["selectedFilters"]),
-    ...mapGetters("defaults", ["timeCommitmentRange"]),
+    ...mapState("roles", ["selectedFilters"])
   },
   beforeMount() {
     this.$store.dispatch("roles/setDefaultFilters");
   },
   methods: {
     ...mapActions("roles", ["setFilter"]),
+    // eslint-disable-next-line func-names
     debounceSearchUpdate: debounce(function($event) {
-      const filterValue = $event ? $event : "";
+      const filterValue = $event || "";
       this.setFilter({ filterType: "search", filterValue });
-    }, 500),
-  },
+    }, 500)
+  }
 };
 </script>
 

@@ -16,11 +16,11 @@ export default {
   name: "App",
   components: {
     TheAppBar,
-    FeedbackAlert,
+    FeedbackAlert
   },
   data: () => ({
-    drawer: null, // vuetify determines initial state based on screen size
-  }),
+    drawer: null // vuetify determines initial state based on screen size
+  })
 };
 </script>
 

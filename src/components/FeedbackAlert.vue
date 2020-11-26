@@ -1,11 +1,5 @@
 <template>
-  <v-snackbar
-    transition="v-expand-transition"
-    top
-    :color="alert.color"
-    :value="alertOn"
-    @input="disableAlert"
-  >
+  <v-snackbar transition="v-expand-transition" top :color="alert.color" :value="alertOn" @input="disableAlert">
     {{ alert.message }}
     <v-icon dark>
       {{ alert.icon }}
@@ -19,11 +13,11 @@ import { mapState, mapMutations } from "vuex";
 export default {
   name: "FeedbackAlert",
   computed: {
-    ...mapState("alerts", ["alert", "alertOn"]),
+    ...mapState("alerts", ["alert", "alertOn"])
   },
   methods: {
-    ...mapMutations("alerts", ["disableAlert"]),
-  },
+    ...mapMutations("alerts", ["disableAlert"])
+  }
 };
 </script>
 

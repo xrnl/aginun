@@ -1,11 +1,7 @@
 <template>
   <div>
     <div v-if="!!role.id">
-      <role-deletion-confirm
-        v-model="isDeleteOpen"
-        :role-title="role.title"
-        :role-id="role.id"
-      />
+      <role-deletion-confirm v-model="isDeleteOpen" :role-title="role.title" :role-id="role.id" />
       <role-edit-dialog v-model="isEditOpen" :edit-role="role" />
     </div>
 
@@ -18,35 +14,19 @@
     >
       <v-card>
         <transition name="fade" mode="out-in">
-          <v-skeleton-loader
-            v-if="$apollo.loading"
-            key="roleLoading"
-            class="mx-auto"
-            type="article"
-          />
+          <v-skeleton-loader v-if="$apollo.loading" key="roleLoading" class="mx-auto" type="article" />
           <div v-else key="role">
             <v-card-title>
-              <flex-wrapper
-                classes="flex-nowrap align-start"
-                justify-content="space-between"
-                style="width: 100%"
-              >
+              <flex-wrapper classes="flex-nowrap align-start" justify-content="space-between" style="width: 100%">
                 <flex-wrapper direction="column">
                   <h2 class="boldTitle">
                     {{ role.title }}
                   </h2>
-                  <flex-wrapper
-                    v-if="role.workingCircle || role.localGroup"
-                    class="subHeader"
-                    classes="flex-wrap"
-                  >
+                  <flex-wrapper v-if="role.workingCircle || role.localGroup" class="subHeader" classes="flex-wrap">
                     <span>
                       {{ !!role.workingCircle && role.workingCircle.title }}
                     </span>
-                    <span
-                      v-if="!!role.workingCircle && !!role.localGroup"
-                      style="margin: 0 0.25rem;"
-                    >
+                    <span v-if="!!role.workingCircle && !!role.localGroup" style="margin: 0 0.25rem;">
                       -
                     </span>
                     <span>
@@ -54,9 +34,7 @@
                     </span>
                   </flex-wrapper>
                   <div v-if="role.createdDate" style="line-height: 1rem">
-                    <span class="caption">
-                      Published on {{ formatDate(role.createdDate) }}
-                    </span>
+                    <span class="caption"> Published on {{ formatDate(role.createdDate) }} </span>
                   </div>
                 </flex-wrapper>
                 <v-menu v-if="!role.filledDate" offset-y left>
@@ -88,16 +66,8 @@
                       title="Responsibilities"
                       :description="role.responsibilities"
                     />
-                    <meta-info
-                      v-if="!!role.description"
-                      title="Description"
-                      :description="role.description"
-                    />
-                    <meta-info
-                      v-if="!!role.requirements"
-                      title="Requirements"
-                      :description="role.requirements"
-                    />
+                    <meta-info v-if="!!role.description" title="Description" :description="role.description" />
+                    <meta-info v-if="!!role.requirements" title="Requirements" :description="role.requirements" />
                     <meta-info
                       v-if="!!role.timeCommitmentMin"
                       title="Time Commitment"
@@ -115,12 +85,7 @@
                 </flex-wrapper>
               </v-card-text>
               <v-card-actions class="px-4 pt-0 pb-4">
-                <v-btn
-                  color="primary"
-                  class="mr-1"
-                  depressed
-                  @click.stop="applyDialog = true"
-                >
+                <v-btn color="primary" class="mr-1" depressed @click.stop="applyDialog = true">
                   Apply
                 </v-btn>
                 <v-btn depressed @click="onFillRole">
@@ -138,8 +103,7 @@
               <p>
                 You can still
                 <a @click.stop="applyDialog = true">contact the role aide</a>
-                to ask about this role or other similar opportunities in this
-                circle.
+                to ask about this role or other similar opportunities in this circle.
               </p>
             </div>
           </div>
@@ -163,18 +127,14 @@
             </p>
             <icon-link
               v-if="role.email"
-              :href="
-                `mailto:${role.email}?subject=Role application: ${role.title}`
-              "
+              :href="`mailto:${role.email}?subject=Role application: ${role.title}`"
               :link-text="role.email"
               label="Email"
               icon="mdi-email"
             />
             <icon-link
               v-if="role.mattermostId"
-              :href="
-                `https://organise.earth/xr-netherlands/messages/${role.mattermostId}`
-              "
+              :href="`https://organise.earth/xr-netherlands/messages/${role.mattermostId}`"
               :link-text="role.mattermostId"
               label="Mattermost"
               icon="mdi-message"
@@ -193,13 +153,13 @@
   </div>
 </template>
 <script>
-import FlexWrapper from "../layout/FlexWrapper";
-import IconLink from "@/components/IconLink";
-import MetaInfo from "../layout/MetaInfo";
-import RoleDeletionConfirm from "./DeleteRoleConfirmation";
-import RoleEditDialog from "./RoleEditDialog";
+import IconLink from "@/components/IconLink.vue";
 import { RoleQuery } from "@/GraphQL/roles";
 import { mapActions } from "vuex";
+import FlexWrapper from "../layout/FlexWrapper.vue";
+import MetaInfo from "../layout/MetaInfo.vue";
+import RoleDeletionConfirm from "./DeleteRoleConfirmation.vue";
+import RoleEditDialog from "./RoleEditDialog.vue";
 
 export default {
   name: "RoleViewDialog",
@@ -208,7 +168,7 @@ export default {
     MetaInfo,
     IconLink,
     RoleDeletionConfirm,
-    RoleEditDialog,
+    RoleEditDialog
   },
   data() {
     return {
@@ -216,7 +176,7 @@ export default {
       isEditOpen: false,
       applyDialog: false,
       testLoading: true,
-      role: {},
+      role: {}
     };
   },
   apollo: {
@@ -224,10 +184,10 @@ export default {
       query: RoleQuery,
       variables() {
         return {
-          roleId: this.$route.params.id,
+          roleId: this.$route.params.id
         };
-      },
-    },
+      }
+    }
   },
   methods: {
     ...mapActions("roles", ["fillRole"]),
@@ -243,11 +203,11 @@ export default {
       const options = {
         year: "numeric",
         month: "long",
-        day: "numeric",
+        day: "numeric"
       };
       return formattedDate.toLocaleDateString("en-GB", options);
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="scss">

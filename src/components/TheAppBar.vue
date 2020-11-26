@@ -1,24 +1,11 @@
 <template>
-  <v-app-bar
-    app
-    :height="$store.state.styles.navbarHeight"
-    flat
-    class="bottom-border"
-  >
+  <v-app-bar app :height="navbarHeight" flat class="bottom-border">
     <router-link class="logo-link" to="/about">
-      <img
-        src="@/assets/images/xr.svg"
-        class="logo-link__icon img-fluid"
-        alt=""
-        width="48"
-        height="48"
-      />
+      <img src="@/assets/images/xr.svg" class="logo-link__icon img-fluid" alt="" width="48" height="48" />
     </router-link>
     <v-toolbar-title><h2>Vacatures</h2></v-toolbar-title>
     <v-spacer />
-    <v-btn text @click.stop="contactSupportDialog = true">
-      Support <v-icon> mdi-help-circle-outline </v-icon>
-    </v-btn>
+    <v-btn text @click.stop="contactSupportDialog = true"> Support <v-icon> mdi-help-circle-outline </v-icon> </v-btn>
     <v-dialog v-model="contactSupportDialog" max-width="450">
       <v-card>
         <v-card-title class="headline">
@@ -50,18 +37,20 @@
 import IconLink from "@/components/IconLink";
 import FlexWrapper from "@/components/layout/FlexWrapper";
 import { contactEmail } from "@/constants/contacts";
+import styles from "@/constants/styles";
 
 export default {
   name: "TheAppBar",
   components: {
     IconLink,
-    FlexWrapper,
+    FlexWrapper
   },
   data: () => ({
     contactSupportDialog: false,
     contactEmail,
+    navbarHeight: styles.navbarHeight
   }),
-  methods: {},
+  methods: {}
 };
 </script>
 

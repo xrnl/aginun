@@ -110,10 +110,7 @@ export const UpdateRoleMutation = gql`
 
 export const FillRoleMutation = gql`
   mutation FillRole($id: Int!, $filledDate: timestamptz!) {
-    update_role(
-      where: { id: { _eq: $id } }
-      _set: { filledDate: $filledDate }
-    ) {
+    update_role(where: { id: { _eq: $id } }, _set: { filledDate: $filledDate }) {
       returning {
         id
       }

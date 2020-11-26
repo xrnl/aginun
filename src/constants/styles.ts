@@ -1,4 +1,4 @@
-export const state = {
+export default {
   navbarHeight: "64px",
   workingCircleColours: {
     "Action & Logistics": "khaki-light",
@@ -14,6 +14,6 @@ export const state = {
     Tech: "blue-light",
     "Rebellion Support Circle": "pink-light",
     "Coordination Circle": "purple-light",
-    "Future of Democracy": "green-light",
-  },
+    "Future of Democracy": "green-light"
+  }
 };

@@ -9,28 +9,28 @@
 
 <script>
 import { ScaleLoader } from "@saeris/vue-spinners";
-import { getThemeColor } from "@/utils/getThemeColor.js";
+import getThemeColor from "@/utils/getThemeColor";
 
 export default {
   name: "Spinner",
   components: {
-    ScaleLoader,
+    ScaleLoader
   },
   props: {
     themeColor: {
       type: String,
-      default: "shade",
+      default: "shade"
     },
     text: {
       type: String,
       required: false,
-      default: undefined,
-    },
+      default: undefined
+    }
   },
   computed: {
     color() {
       return getThemeColor(this.$vuetify.theme, this.themeColor);
-    },
-  },
+    }
+  }
 };
 </script>
