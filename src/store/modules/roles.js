@@ -151,7 +151,7 @@ export default {
         ? state.selectedFilters.workingCircles
         : rootGetters["groups/workingCircleIds"];
 
-      const response = await apolloClient.query({
+      const { data } = await apolloClient.query({
         query: RolesQuery,
         variables: {
           limit: state.paginationLimit,
@@ -165,7 +165,7 @@ export default {
         },
       });
 
-      const newRoles = response.data.roles;
+      const newRoles = data.roles;
 
       if (getters.isNewQuery) {
         commit("setRoles", newRoles);

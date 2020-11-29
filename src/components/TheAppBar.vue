@@ -12,7 +12,7 @@
         alt=""
         width="48"
         height="48"
-      >
+      />
     </router-link>
     <v-toolbar-title><h2>Vacatures</h2></v-toolbar-title>
     <v-spacer />
@@ -28,8 +28,8 @@
           For help and feedback contact us via:
           <flex-wrapper direction="column">
             <icon-link
-              href="mailto:integration@extinctionrebellion.nl"
-              link-text="integration@extinctionrebellion.nl"
+              :href="`mailto:${contactEmail}`"
+              :link-text="contactEmail"
               label="Email"
               icon="mdi-email"
             />
@@ -49,6 +49,7 @@
 <script>
 import IconLink from "@/components/IconLink";
 import FlexWrapper from "@/components/layout/FlexWrapper";
+import { contactEmail } from "@/constants/contacts";
 
 export default {
   name: "TheAppBar",
@@ -58,6 +59,7 @@ export default {
   },
   data: () => ({
     contactSupportDialog: false,
+    contactEmail,
   }),
   methods: {},
 };
