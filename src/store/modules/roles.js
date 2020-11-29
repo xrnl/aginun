@@ -8,7 +8,6 @@ import {
   DeleteRoleMutation,
   FillRoleMutation,
 } from "../../GraphQL/roles";
-import router from "../../router";
 
 export default {
   state: {
@@ -18,7 +17,6 @@ export default {
     paginationOffset: 0,
     infiniteScrollId: true, // when this variable changes new roles are loaded
     selectedFilters: {},
-    serverError: false,
   },
   getters: {
     getByID: state => id => state.roles.find(role => role.id == id),
@@ -57,9 +55,6 @@ export default {
     },
     setLoadingState(state, isLoading) {
       state.isLoadingRoles = isLoading;
-    },
-    setServerError(state, hasError) {
-      state.serverError = hasError;
     },
     clearRoles(state) {
       state.roles = [];
@@ -156,7 +151,7 @@ export default {
         ? state.selectedFilters.workingCircles
         : rootGetters["groups/workingCircleIds"];
 
-      const { data, errors } = await apolloClient.query({
+      const { data } = await apolloClient.query({
         query: RolesQuery,
         variables: {
           limit: state.paginationLimit,
@@ -169,14 +164,6 @@ export default {
           dueDate: new Date(Date.now()).toISOString(),
         },
       });
-
-      if (errors) {
-        commit("setServerError", true);
-        router.push("/error");
-        return;
-      } else {
-        commit("setServerError", false);
-      }
 
       const newRoles = data.roles;
 

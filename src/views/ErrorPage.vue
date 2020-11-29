@@ -7,10 +7,7 @@
       Something went wrong 😧
       <br />
       Please email
-      <a href="mailto:tech@extinctionrebellion.nl">
-        <!-- eslint-disable-next-line vue/html-closing-bracket-newline -->
-        tech@extinctionrebellion.nl</a
-      >
+      <a :href="`mailto:${contactEmail}`">{{ contactEmail }}</a>
       for help.
     </p>
     <p v-else>
@@ -22,17 +19,18 @@
       .
       <br />
       If the problem persists please contact
-      <a href="mailto:tech@extinctionrebellion.nl">
-        tech@extinctionrebellion.nl
-      </a>
+      <a :href="`mailto:${contactEmail}`">{{ contactEmail }}</a>
     </p>
   </div>
 </template>
 
 <script>
+import { contactEmail } from "@/constants/contacts";
+
 export default {
   name: "ErrorPage",
   data: () => ({
+    contactEmail,
     isDevMode: process.env.NODE_ENV !== "production",
   }),
 };

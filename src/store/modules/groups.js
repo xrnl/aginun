@@ -35,10 +35,6 @@ export default {
         `,
       });
 
-      if (!data) {
-        return;
-      }
-
       commit("setLocalGroups", data.localGroups);
       commit("setWorkingCircles", data.workingCircles);
     },
