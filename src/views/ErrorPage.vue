@@ -33,7 +33,7 @@
 export default {
   name: "ErrorPage",
   data: () => ({
-    isDevMode: process.env.NODE_ENV === "production",
+    isDevMode: process.env.NODE_ENV !== "production",
   }),
 };
 </script>
