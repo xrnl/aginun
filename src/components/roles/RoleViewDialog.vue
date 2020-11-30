@@ -1,7 +1,11 @@
 <template>
   <div>
     <div v-if="!!role.id">
-      <role-deletion-confirm v-model="isDeleteOpen" :role-title="role.title" :role-id="role.id" />
+      <role-deletion-confirm
+        v-model="isDeleteOpen"
+        :role-title="role.title"
+        :role-id="role.id"
+      />
       <role-edit-dialog v-model="isEditOpen" :edit-role="role" />
     </div>
 
@@ -14,19 +18,35 @@
     >
       <v-card>
         <transition name="fade" mode="out-in">
-          <v-skeleton-loader v-if="$apollo.loading" key="roleLoading" class="mx-auto" type="article" />
+          <v-skeleton-loader
+            v-if="$apollo.loading"
+            key="roleLoading"
+            class="mx-auto"
+            type="article"
+          />
           <div v-else key="role">
             <v-card-title>
-              <flex-wrapper classes="flex-nowrap align-start" justify-content="space-between" style="width: 100%">
+              <flex-wrapper
+                classes="flex-nowrap align-start"
+                justify-content="space-between"
+                style="width: 100%"
+              >
                 <flex-wrapper direction="column">
                   <h2 class="boldTitle">
                     {{ role.title }}
                   </h2>
-                  <flex-wrapper v-if="role.workingCircle || role.localGroup" class="subHeader" classes="flex-wrap">
+                  <flex-wrapper
+                    v-if="role.workingCircle || role.localGroup"
+                    class="subHeader"
+                    classes="flex-wrap"
+                  >
                     <span>
                       {{ !!role.workingCircle && role.workingCircle.title }}
                     </span>
-                    <span v-if="!!role.workingCircle && !!role.localGroup" style="margin: 0 0.25rem;">
+                    <span
+                      v-if="!!role.workingCircle && !!role.localGroup"
+                      style="margin: 0 0.25rem;"
+                    >
                       -
                     </span>
                     <span>
@@ -34,7 +54,9 @@
                     </span>
                   </flex-wrapper>
                   <div v-if="role.createdDate" style="line-height: 1rem">
-                    <span class="caption"> Published on {{ formatDate(role.createdDate) }} </span>
+                    <span class="caption">
+                      Published on {{ formatDate(role.createdDate) }}
+                    </span>
                   </div>
                 </flex-wrapper>
                 <v-menu v-if="!role.filledDate" offset-y left>
@@ -66,8 +88,16 @@
                       title="Responsibilities"
                       :description="role.responsibilities"
                     />
-                    <meta-info v-if="!!role.description" title="Description" :description="role.description" />
-                    <meta-info v-if="!!role.requirements" title="Requirements" :description="role.requirements" />
+                    <meta-info
+                      v-if="!!role.description"
+                      title="Description"
+                      :description="role.description"
+                    />
+                    <meta-info
+                      v-if="!!role.requirements"
+                      title="Requirements"
+                      :description="role.requirements"
+                    />
                     <meta-info
                       v-if="!!role.timeCommitmentMin"
                       title="Time Commitment"
@@ -85,7 +115,12 @@
                 </flex-wrapper>
               </v-card-text>
               <v-card-actions class="px-4 pt-0 pb-4">
-                <v-btn color="primary" class="mr-1" depressed @click.stop="applyDialog = true">
+                <v-btn
+                  color="primary"
+                  class="mr-1"
+                  depressed
+                  @click.stop="applyDialog = true"
+                >
                   Apply
                 </v-btn>
                 <v-btn depressed @click="onFillRole">
@@ -103,7 +138,8 @@
               <p>
                 You can still
                 <a @click.stop="applyDialog = true">contact the role aide</a>
-                to ask about this role or other similar opportunities in this circle.
+                to ask about this role or other similar opportunities in this
+                circle.
               </p>
             </div>
           </div>
@@ -127,14 +163,18 @@
             </p>
             <icon-link
               v-if="role.email"
-              :href="`mailto:${role.email}?subject=Role application: ${role.title}`"
+              :href="
+                `mailto:${role.email}?subject=Role application: ${role.title}`
+              "
               :link-text="role.email"
               label="Email"
               icon="mdi-email"
             />
             <icon-link
               v-if="role.mattermostId"
-              :href="`https://organise.earth/xr-netherlands/messages/${role.mattermostId}`"
+              :href="
+                `https://organise.earth/xr-netherlands/messages/${role.mattermostId}`
+              "
               :link-text="role.mattermostId"
               label="Mattermost"
               icon="mdi-message"

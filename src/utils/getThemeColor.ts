@@ -15,5 +15,7 @@ export default function(vuetifyTheme, themeColor) {
    * @param {String} themeColor one of the strings in themeColorNames
    * @return {String} hex color value of themeColor
    */
-  return vuetifyTheme.dark ? vuetifyTheme.themes.dark[themeColor] : vuetifyTheme.themes.light[themeColor];
+  return vuetifyTheme.dark
+    ? vuetifyTheme.themes.dark[themeColor]
+    : vuetifyTheme.themes.light[themeColor];
 }

@@ -3,7 +3,13 @@ module.exports = {
   env: {
     node: true
   },
-  extends: ["plugin:vue/essential", "@vue/airbnb", "@vue/typescript", "plugin:prettier/recommended"],
+  extends: [
+    "plugin:vue/essential",
+    "eslint:recommended",
+    "@vue/typescript/recommended",
+    "@vue/prettier",
+    "@vue/prettier/@typescript-eslint"
+  ],
   parserOptions: {
     parser: "@typescript-eslint/parser",
     sourceType: "module",
@@ -14,7 +20,10 @@ module.exports = {
   },
   overrides: [
     {
-      files: ["**/__tests__/*.{j,t}s?(x)", "**/tests/unit/**/*.spec.{j,t}s?(x)"],
+      files: [
+        "**/__tests__/*.{j,t}s?(x)",
+        "**/tests/unit/**/*.spec.{j,t}s?(x)"
+      ],
       env: {
         jest: true
       }

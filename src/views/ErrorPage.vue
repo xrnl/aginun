@@ -31,8 +31,8 @@ export default {
   name: "ErrorPage",
   data: () => ({
     contactEmail,
-    isDevMode: process.env.NODE_ENV !== "production",
-  }),
+    isDevMode: process.env.NODE_ENV !== "production"
+  })
 };
 </script>
 <style lang="scss">

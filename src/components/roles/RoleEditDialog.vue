@@ -4,10 +4,22 @@
       <h2>{{ formTitle }}</h2>
       <validation-observer ref="form" v-slot="{ invalid, handleSubmit }">
         <form @submit.prevent="handleSubmit(onSubmit)" @keypress.enter.prevent>
-          <validation-provider v-slot="{ errors }" rules="required|alpha_spaces|max:30" name="title">
-            <v-text-field v-model="role.title" label="Title" :error-messages="errors" />
+          <validation-provider
+            v-slot="{ errors }"
+            rules="required|alpha_spaces|max:30"
+            name="title"
+          >
+            <v-text-field
+              v-model="role.title"
+              label="Title"
+              :error-messages="errors"
+            />
           </validation-provider>
-          <validation-provider v-slot="{ errors }" rules="requiredSelect" name="local group">
+          <validation-provider
+            v-slot="{ errors }"
+            rules="requiredSelect"
+            name="local group"
+          >
             <v-select
               v-model="role.localGroupId"
               :items="localGroups"
@@ -17,7 +29,11 @@
               :error-messages="errors"
             />
           </validation-provider>
-          <validation-provider v-slot="{ errors }" rules="requiredSelect" name="working circle">
+          <validation-provider
+            v-slot="{ errors }"
+            rules="requiredSelect"
+            name="working circle"
+          >
             <v-select
               v-model="role.workingCircleId"
               :items="workingCircles"
@@ -44,7 +60,14 @@
               @keypress.enter="addResponsibility"
             >
               <template v-slot:append>
-                <v-btn text icon small color="primary" :disabled="!validResponsibility" @click="addResponsibility">
+                <v-btn
+                  text
+                  icon
+                  small
+                  color="primary"
+                  :disabled="!validResponsibility"
+                  @click="addResponsibility"
+                >
                   <v-icon>mdi-plus</v-icon>
                 </v-btn>
               </template>
@@ -53,15 +76,27 @@
           <v-card v-if="role.responsibilities.length > 0" class="mb-4">
             <template v-for="(responsibility, i) in role.responsibilities">
               <v-divider v-if="i !== 0" :key="`${i}-divider`" />
-              <v-list-item :key="`${i}-${responsibility}`" class="d-flex justify-space-between">
+              <v-list-item
+                :key="`${i}-${responsibility}`"
+                class="d-flex justify-space-between"
+              >
                 <span>{{ responsibility }}</span>
-                <v-btn text icon color="gray" @click="role.responsibilities.splice(i, 1)">
+                <v-btn
+                  text
+                  icon
+                  color="gray"
+                  @click="role.responsibilities.splice(i, 1)"
+                >
                   <v-icon>mdi-close</v-icon>
                 </v-btn>
               </v-list-item>
             </template>
           </v-card>
-          <validation-provider v-slot="{ errors }" rules="max:1000" name="description">
+          <validation-provider
+            v-slot="{ errors }"
+            rules="max:1000"
+            name="description"
+          >
             <v-textarea
               v-model="role.description"
               label="Description (optional)"
@@ -71,7 +106,11 @@ This can include information about the circle or the specific project that the r
               :error-messages="errors"
             />
           </validation-provider>
-          <validation-provider v-slot="{ errors }" rules="max:1000" name="requirements">
+          <validation-provider
+            v-slot="{ errors }"
+            rules="max:1000"
+            name="requirements"
+          >
             <v-textarea
               v-model="role.requirements"
               label="Requirements (optional)"
@@ -79,8 +118,16 @@ This can include information about the circle or the specific project that the r
               :error-messages="errors"
             />
           </validation-provider>
-          <date-picker-field :date="role.dueDate" label="Application deadline" @update="onDueDateChange" />
-          <validation-provider v-slot="{ errors }" rules="requiredSelect" name="time commitment">
+          <date-picker-field
+            :date="role.dueDate"
+            label="Application deadline"
+            @update="onDueDateChange"
+          />
+          <validation-provider
+            v-slot="{ errors }"
+            rules="requiredSelect"
+            name="time commitment"
+          >
             <v-select
               v-model="role.timeCommitmentMin"
               :items="timeCommitments"
@@ -90,21 +137,52 @@ This can include information about the circle or the specific project that the r
               :error-messages="errors"
               @change="onTimeCommitmentChange"
             >
-              <template v-slot:item="{ item }"> {{ item.min }} - {{ item.max }} hours/week </template>
-              <template v-slot:selection="{ item }"> {{ item.min }} - {{ item.max }} hours/week </template>
+              <template v-slot:item="{ item }">
+                {{ item.min }} - {{ item.max }} hours/week
+              </template>
+              <template v-slot:selection="{ item }">
+                {{ item.min }} - {{ item.max }} hours/week
+              </template>
             </v-select>
           </validation-provider>
           <p class="caption mb-0" style="color: gray">
             Contact details
           </p>
-          <validation-provider v-slot="{ errors }" name="email address" mode="eager" rules="required|email|max:50">
-            <v-text-field v-model="role.email" label="Email" :error-messages="errors" />
+          <validation-provider
+            v-slot="{ errors }"
+            name="email address"
+            mode="eager"
+            rules="required|email|max:50"
+          >
+            <v-text-field
+              v-model="role.email"
+              label="Email"
+              :error-messages="errors"
+            />
           </validation-provider>
-          <validation-provider v-slot="{ errors }" name="Mattermost id" mode="eager" rules="required|mattermost|max:50">
-            <v-text-field v-model="role.mattermostId" label="Mattermost id" :error-messages="errors" />
+          <validation-provider
+            v-slot="{ errors }"
+            name="Mattermost id"
+            mode="eager"
+            rules="required|mattermost|max:50"
+          >
+            <v-text-field
+              v-model="role.mattermostId"
+              label="Mattermost id"
+              :error-messages="errors"
+            />
           </validation-provider>
-          <validation-provider v-slot="{ errors }" rules="phone|max:20" mode="eager" name="phone number">
-            <v-text-field v-model="role.phone" label="Phone number (optional)" :error-messages="errors" />
+          <validation-provider
+            v-slot="{ errors }"
+            rules="phone|max:20"
+            mode="eager"
+            name="phone number"
+          >
+            <v-text-field
+              v-model="role.phone"
+              label="Phone number (optional)"
+              :error-messages="errors"
+            />
           </validation-provider>
           <v-card-actions class="d-flex justify-end">
             <v-btn color="primary" text @click="$emit('input', false)">
@@ -132,7 +210,12 @@ This can include information about the circle or the specific project that the r
 <script>
 import { mapState, mapActions } from "vuex";
 import { extend, ValidationProvider, ValidationObserver } from "vee-validate";
-import { required, alpha_spaces as alphaSpaces, max, email } from "vee-validate/dist/rules";
+import {
+  required,
+  alpha_spaces as alphaSpaces,
+  max,
+  email
+} from "vee-validate/dist/rules";
 import DatePickerField from "@/components/DatePickerField.vue";
 import { timeCommitments } from "@/constants/timeCommitments";
 
@@ -205,9 +288,9 @@ const initialState = () => ({
     email: undefined,
     mattermostId: undefined,
     phone: undefined,
-    dueDate: undefined,
-    timeCommitments
+    dueDate: undefined
   },
+  timeCommitments,
   newResponsibility: undefined
 });
 

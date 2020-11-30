@@ -21,7 +21,7 @@ const routes = [
     path: "/error",
     name: "error",
     beforeEnter: hasErrorsGuard,
-    component: ErrorPage,
+    component: ErrorPage
   },
   {
     // non-existent pages redirect to the home page

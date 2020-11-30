@@ -1,7 +1,17 @@
 <template>
   <div>
-    <div v-if="(!!$slots.header && !!$slots.header[0]) || this.$vuetify.breakpoint.smAndDown" class="drawer-header">
-      <v-btn v-if="this.$vuetify.breakpoint.smAndDown" icon @click="$emit('close-drawer', false)">
+    <div
+      v-if="
+        (!!$slots.header && !!$slots.header[0]) ||
+          this.$vuetify.breakpoint.smAndDown
+      "
+      class="drawer-header"
+    >
+      <v-btn
+        v-if="this.$vuetify.breakpoint.smAndDown"
+        icon
+        @click="$emit('close-drawer', false)"
+      >
         <v-icon color="primary">
           mdi-arrow-left
         </v-icon>

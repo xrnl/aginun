@@ -1,5 +1,11 @@
 <template>
-  <div :class="`d-flex flex-${direction === 'column' ? 'column' : 'row'} justify-${justifyContent} ${classes}`">
+  <div
+    :class="
+      `d-flex flex-${
+        direction === 'column' ? 'column' : 'row'
+      } justify-${justifyContent} ${classes}`
+    "
+  >
     <slot />
   </div>
 </template>

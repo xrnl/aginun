@@ -38,6 +38,6 @@ export default {
 
       commit("setLocalGroups", data.localGroups);
       commit("setWorkingCircles", data.workingCircles);
-    },
-  },
+    }
+  }
 };

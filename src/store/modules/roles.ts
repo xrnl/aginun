@@ -127,10 +127,16 @@ export default {
       });
     },
     // eslint-disable-next-line func-names
-    loadRoles: throttle(async function({ state, getters, commit, rootState, rootGetters, dispatch }, scrollState) {
+    loadRoles: throttle(async function(
+      { state, getters, commit, rootState, rootGetters, dispatch },
+      scrollState
+    ) {
       commit("setLoadingState", true);
       // load group data if it doesn't exist yet. Necessary for the next block
-      if (!rootState.groups.localGroups.length || !rootState.groups.workingCircles.length) {
+      if (
+        !rootState.groups.localGroups.length ||
+        !rootState.groups.workingCircles.length
+      ) {
         await dispatch("groups/loadGroups", {}, { root: true });
       }
 
@@ -179,7 +185,8 @@ export default {
       }
 
       commit("setLoadingState", false);
-    }, 500),
+    },
+    500),
     async reloadRoles({ commit }) {
       commit("clearRoles");
       // timeout necessary because old roles must completely transition out
@@ -193,7 +200,7 @@ export default {
       commit("setFilter", payload);
       dispatch("reloadRoles");
     },
-    setDefaultFilters({ commit, dispatch, rootGetters }) {
+    setDefaultFilters({ commit, dispatch }) {
       commit("setLoadingState", true);
       commit("setFilter", { filterType: "search", filterValue: "" });
       commit("setFilter", { filterType: "localGroups", filterValue: [] });

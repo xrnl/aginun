@@ -1,6 +1,8 @@
 import has from "lodash/has";
 
-export const makeObjectValidator = (objectExpectedStructure: { [x: string]: unknown }) => {
+export const makeObjectValidator = (objectExpectedStructure: {
+  [x: string]: unknown;
+}) => {
   return (objectToValidate: { [x: string]: unknown }) => {
     return Object.keys(objectExpectedStructure).every((key) => {
       if (!has(objectToValidate, key)) return false;
@@ -12,7 +14,10 @@ export const makeObjectValidator = (objectExpectedStructure: { [x: string]: unkn
   };
 };
 
-export const isArrayValid = (arrayToValidate: unknown[], isItemValid: (arg) => unknown) => {
+export const isArrayValid = (
+  arrayToValidate: unknown[],
+  isItemValid: (arg) => unknown
+) => {
   return arrayToValidate.every((item) => isItemValid(item));
 };
 

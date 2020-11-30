@@ -1,4 +1,9 @@
-import { makeObjectValidator, isArrayValid, iconValidator, hrefValidator } from "@/utils/validators";
+import {
+  makeObjectValidator,
+  isArrayValid,
+  iconValidator,
+  hrefValidator
+} from "@/utils/validators";
 import { isFunction, isString } from "lodash";
 
 describe("makeObjectValidator", () => {

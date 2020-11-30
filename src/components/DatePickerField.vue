@@ -1,9 +1,28 @@
 <template>
-  <v-menu v-model="showMenu" :close-on-content-click="false" transition="scale-transition" offset-y min-width="290px">
+  <v-menu
+    v-model="showMenu"
+    :close-on-content-click="false"
+    transition="scale-transition"
+    offset-y
+    min-width="290px"
+  >
     <template v-slot:activator="{ on, attrs }">
-      <v-text-field :value="formatDate(date)" :label="label" readonly v-bind="attrs" v-on="on" />
+      <v-text-field
+        :value="formatDate(date)"
+        :label="label"
+        readonly
+        v-bind="attrs"
+        v-on="on"
+      />
     </template>
-    <v-date-picker :value="date" :first-day-of-week="1" :show-current="false" :min="min" no-title @input="updateDate" />
+    <v-date-picker
+      :value="date"
+      :first-day-of-week="1"
+      :show-current="false"
+      :min="min"
+      no-title
+      @input="updateDate"
+    />
   </v-menu>
 </template>
 

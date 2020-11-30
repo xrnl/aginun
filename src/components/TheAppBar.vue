@@ -1,11 +1,19 @@
 <template>
   <v-app-bar app :height="navbarHeight" flat class="bottom-border">
     <router-link class="logo-link" to="/about">
-      <img src="@/assets/images/xr.svg" class="logo-link__icon img-fluid" alt="" width="48" height="48" />
+      <img
+        src="@/assets/images/xr.svg"
+        class="logo-link__icon img-fluid"
+        alt=""
+        width="48"
+        height="48"
+      />
     </router-link>
     <v-toolbar-title><h2>Vacatures</h2></v-toolbar-title>
     <v-spacer />
-    <v-btn text @click.stop="contactSupportDialog = true"> Support <v-icon> mdi-help-circle-outline </v-icon> </v-btn>
+    <v-btn text @click.stop="contactSupportDialog = true">
+      Support <v-icon> mdi-help-circle-outline </v-icon>
+    </v-btn>
     <v-dialog v-model="contactSupportDialog" max-width="450">
       <v-card>
         <v-card-title class="headline">

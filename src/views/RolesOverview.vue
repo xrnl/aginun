@@ -23,7 +23,11 @@
       >
         <spinner text="Loading roles" />
       </div>
-      <div v-if="!roles.length && !isLoadingRoles" key="noRoles" class="pa-5 text-center">
+      <div
+        v-if="!roles.length && !isLoadingRoles"
+        key="noRoles"
+        class="pa-5 text-center"
+      >
         <div v-if="isUsingFilters">
           <h3>No results.</h3>
           <p>Try removing filters.</p>
@@ -36,7 +40,11 @@
     <infinite-loading :identifier="infiniteScrollId" @infinite="loadRoles">
       <template #spinner>
         <!-- show spinner without transition for loading additional roles -->
-        <div v-if="!!roles.length" key="loading" class="d-flex flex-column justify-center align-center mt-5">
+        <div
+          v-if="!!roles.length"
+          key="loading"
+          class="d-flex flex-column justify-center align-center mt-5"
+        >
           <spinner text="Loading roles" />
         </div>
         <span v-else />
@@ -51,7 +59,10 @@
     <template v-slot:drawer>
       <default-drawer @close-drawer="handleCloseDrawer">
         <template #header>
-          <div class="d-flex justify-space-between align-center" style="width:100%;">
+          <div
+            class="d-flex justify-space-between align-center"
+            style="width:100%;"
+          >
             <div class="d-flex flex-column">
               <span class="font-weight-bold">
                 Search for positions
@@ -106,7 +117,12 @@ export default {
     isDrawerOpen: null
   }),
   computed: {
-    ...mapState("roles", ["roles", "isLoadingRoles", "selectedFilters", "infiniteScrollId"]),
+    ...mapState("roles", [
+      "roles",
+      "isLoadingRoles",
+      "selectedFilters",
+      "infiniteScrollId"
+    ]),
     ...mapGetters("roles", ["isUsingFilters"]),
     isMobile() {
       return this.$vuetify.breakpoint.smAndDown;

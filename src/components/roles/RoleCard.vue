@@ -1,5 +1,8 @@
 <template>
-  <default-card :to="`roles/view/${role.id}`" :color="getColour(role.workingCircle)">
+  <default-card
+    :to="`roles/view/${role.id}`"
+    :color="getColour(role.workingCircle)"
+  >
     <template #title>
       {{ role.title }}
     </template>

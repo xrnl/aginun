@@ -88,6 +88,7 @@ Before submitting your change, you need to make sure that they do not break exis
 Any code you submit must:
 
 - Not have any errors detectable by [ESLint](https://eslint.org/). ESLint enables us to easily detect and solve common problems in our code.
+- Be formatted with [Prettier](https://prettier.io/). We use prettier to have a consistent and automatic code formatting without having to memorize and follow a style guide.
 
 To easily write code that meets these requirements, we recommend using [this setup](https://github.com/xrnl/aginun/wiki/Recommended-setup).
 

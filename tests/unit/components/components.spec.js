@@ -40,7 +40,9 @@ describe("TheAppBar", () => {
 
   it("has height defined in store", () => {
     const wrapper = mountFunction();
-    expect(wrapper.find("div").attributes("style")).toBe(`height: ${styles.navbarHeight};`);
+    expect(wrapper.find("div").attributes("style")).toBe(
+      `height: ${styles.navbarHeight};`
+    );
   });
 });
 
@@ -56,7 +58,8 @@ describe("Spinner", () => {
     });
   });
 
-  const mountFunction = (options) => mount(Spinner, { localVue, vuetify, ...options });
+  const mountFunction = (options) =>
+    mount(Spinner, { localVue, vuetify, ...options });
 
   const spinnerSelector = "div > div > div";
 

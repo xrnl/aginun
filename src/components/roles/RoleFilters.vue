@@ -19,13 +19,17 @@
           :items="localGroups"
           :selected-items-ids="selectedFilters.localGroups"
           label="Local Group"
-          @change="setFilter({ filterType: 'localGroups', filterValue: $event })"
+          @change="
+            setFilter({ filterType: 'localGroups', filterValue: $event })
+          "
         />
         <autocomplete-custom
           :items="workingCircles"
           :selected-items-ids="selectedFilters.workingCircles"
           label="Working circle"
-          @change="setFilter({ filterType: 'workingCircles', filterValue: $event })"
+          @change="
+            setFilter({ filterType: 'workingCircles', filterValue: $event })
+          "
         />
       </flex-wrapper>
     </filter-section>

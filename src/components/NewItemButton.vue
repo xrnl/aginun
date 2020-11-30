@@ -1,5 +1,10 @@
 <template>
-  <icon-button theme-color="primary" icon="mdi-plus" :text="text" @click="$emit('click')" />
+  <icon-button
+    theme-color="primary"
+    icon="mdi-plus"
+    :text="text"
+    @click="$emit('click')"
+  />
 </template>
 
 <script>
