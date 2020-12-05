@@ -6,7 +6,7 @@
       <v-divider />
       <div class="d-flex justify-space-between pa-3">
         <new-item-button
-          v-if="$store.state.user.loggedIn"
+          v-if="loggedIn"
           text="New Role"
           @click="showNewRoleDialog"
         />
@@ -85,7 +85,7 @@
         <role-filters />
         <div v-if="!isMobile" class="text-center mt-4">
           <new-item-button
-            v-if="$store.state.user.loggedIn"
+            v-if="loggedIn"
             text="New Role"
             @click="showNewRoleDialog"
           />
@@ -131,7 +131,10 @@ export default {
       "selectedFilters",
       "infiniteScrollId",
     ]),
-    ...mapGetters("roles", ["isUsingFilters"]),
+    ...mapGetters({
+      loggedIn: "user/loggedIn",
+      isUsingFilters: "roles/isUsingFilters",
+    }),
     isMobile: function() {
       return this.$vuetify.breakpoint.smAndDown;
     },

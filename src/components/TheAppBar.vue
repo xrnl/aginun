@@ -16,7 +16,7 @@
     </router-link>
     <v-toolbar-title><h2>Vacatures</h2></v-toolbar-title>
     <v-spacer />
-    <v-btn v-if="!$store.state.user.loggedIn" text @click.stop="login">
+    <v-btn v-if="!loggedIn" text @click.stop="login">
       Login
     </v-btn>
     <v-btn v-else text @click.stop="logout">
@@ -55,6 +55,7 @@
 <script>
 import IconLink from "@/components/IconLink";
 import FlexWrapper from "@/components/layout/FlexWrapper";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "TheAppBar",
@@ -65,16 +66,21 @@ export default {
   data: () => ({
     contactSupportDialog: false,
   }),
+  computed: {
+    ...mapGetters({
+      loggedIn: "user/loggedIn",
+    }),
+  },
   methods: {
+    ...mapActions("user", ["logout"]),
     login() {
+      //TODO: open login modal/page here
+
       const username = "kaj-dev";
       const password = "test";
 
-      this.$store.dispatch("user/login", {username, password});
+      this.$store.dispatch("user/login", { username, password });
     },
-    logout() {
-      this.$store.dispatch("user/logout");
-    }
   },
 };
 </script>
