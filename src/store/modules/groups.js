@@ -20,7 +20,7 @@ export default {
   },
   actions: {
     async loadGroups({ commit }) {
-      const response = await apolloClient.query({
+      const { data } = await apolloClient.query({
         query: gql`
           query GroupsQuery {
             workingCircles(order_by: { title: asc }) {
@@ -34,8 +34,9 @@ export default {
           }
         `,
       });
-      commit("setLocalGroups", response.data.localGroups);
-      commit("setWorkingCircles", response.data.workingCircles);
+
+      commit("setLocalGroups", data.localGroups);
+      commit("setWorkingCircles", data.workingCircles);
     },
   },
 };

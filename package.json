@@ -91,7 +91,7 @@
         "warn",
         {
           "html": {
-            "void": "never"
+            "void": "always"
           }
         }
       ]

@@ -7,7 +7,7 @@
       {{ role.title }}
     </template>
     <template #subtitle>
-      {{ role.localGroup.title }} <br>
+      {{ role.localGroup.title }} <br />
       {{ role.workingCircle.title }}
     </template>
     <template #meta>
@@ -26,9 +26,7 @@
     </template>
   </default-card>
 </template>
-
 <script>
-
 import { mapState } from "vuex";
 import DefaultCard from "@/components/layout/DefaultCard.vue";
 
@@ -37,7 +35,7 @@ export default {
   components: {
     DefaultCard,
   },
-    props: {
+  props: {
     role: {
       type: Object,
       required: true,

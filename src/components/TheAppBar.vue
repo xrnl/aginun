@@ -34,8 +34,8 @@
           For help and feedback contact us via:
           <flex-wrapper direction="column">
             <icon-link
-              href="mailto:integration@extinctionrebellion.nl"
-              link-text="integration@extinctionrebellion.nl"
+              :href="`mailto:${contactEmail}`"
+              :link-text="contactEmail"
               label="Email"
               icon="mdi-email"
             />
@@ -56,6 +56,7 @@
 import IconLink from "@/components/IconLink";
 import FlexWrapper from "@/components/layout/FlexWrapper";
 import { mapGetters, mapActions } from "vuex";
+import { contactEmail } from "@/constants/contacts";
 
 export default {
   name: "TheAppBar",
@@ -65,6 +66,7 @@ export default {
   },
   data: () => ({
     contactSupportDialog: false,
+    contactEmail,
   }),
   computed: {
     ...mapGetters({
