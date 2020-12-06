@@ -193,13 +193,13 @@
   </div>
 </template>
 <script>
-import FlexWrapper from "../layout/FlexWrapper";
-import IconLink from "@/components/IconLink";
-import MetaInfo from "../layout/MetaInfo";
-import RoleDeletionConfirm from "./DeleteRoleConfirmation";
-import RoleEditDialog from "./RoleEditDialog";
+import IconLink from "@/components/IconLink.vue";
 import { RoleQuery } from "@/GraphQL/roles";
 import { mapActions } from "vuex";
+import FlexWrapper from "../layout/FlexWrapper.vue";
+import MetaInfo from "../layout/MetaInfo.vue";
+import RoleDeletionConfirm from "./DeleteRoleConfirmation.vue";
+import RoleEditDialog from "./RoleEditDialog.vue";
 
 export default {
   name: "RoleViewDialog",
@@ -208,7 +208,7 @@ export default {
     MetaInfo,
     IconLink,
     RoleDeletionConfirm,
-    RoleEditDialog,
+    RoleEditDialog
   },
   data() {
     return {
@@ -216,7 +216,7 @@ export default {
       isEditOpen: false,
       applyDialog: false,
       testLoading: true,
-      role: {},
+      role: {}
     };
   },
   apollo: {
@@ -224,10 +224,10 @@ export default {
       query: RoleQuery,
       variables() {
         return {
-          roleId: this.$route.params.id,
+          roleId: this.$route.params.id
         };
-      },
-    },
+      }
+    }
   },
   methods: {
     ...mapActions("roles", ["fillRole"]),
@@ -243,11 +243,11 @@ export default {
       const options = {
         year: "numeric",
         month: "long",
-        day: "numeric",
+        day: "numeric"
       };
       return formattedDate.toLocaleDateString("en-GB", options);
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="scss">

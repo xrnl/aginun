@@ -52,33 +52,37 @@
 
 <script>
 import FlexWrapper from "@/components/layout/FlexWrapper.vue";
-import AutocompleteCustom from "@/components/AutocompleteCustom";
-import { mapState, mapGetters, mapActions } from "vuex";
-import FilterDrawerSection from "../layout/FilterDrawerSection";
+import AutocompleteCustom from "@/components/AutocompleteCustom.vue";
+import { mapState, mapActions } from "vuex";
 import debounce from "lodash/debounce";
+import { timeCommitmentRange } from "@/constants/timeCommitments";
+import FilterDrawerSection from "../layout/FilterDrawerSection.vue";
 
 export default {
   name: "RoleFilters",
   components: {
     filterSection: FilterDrawerSection,
     AutocompleteCustom,
-    FlexWrapper,
+    FlexWrapper
   },
+  data: () => ({
+    timeCommitmentRange
+  }),
   computed: {
     ...mapState("groups", ["localGroups", "workingCircles"]),
-    ...mapState("roles", ["selectedFilters"]),
-    ...mapGetters("defaults", ["timeCommitmentRange"]),
+    ...mapState("roles", ["selectedFilters"])
   },
   beforeMount() {
     this.$store.dispatch("roles/setDefaultFilters");
   },
   methods: {
     ...mapActions("roles", ["setFilter"]),
+    // eslint-disable-next-line func-names
     debounceSearchUpdate: debounce(function($event) {
-      const filterValue = $event ? $event : "";
+      const filterValue = $event || "";
       this.setFilter({ filterType: "search", filterValue });
-    }, 500),
-  },
+    }, 500)
+  }
 };
 </script>
 

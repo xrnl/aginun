@@ -13,13 +13,13 @@ import IconButton from "@/components/IconButton.vue";
 export default {
   name: "NewItemButton",
   components: {
-    IconButton,
+    IconButton
   },
   props: {
     text: {
       type: String,
-      required: true,
-    },
-  },
+      required: true
+    }
+  }
 };
 </script>

@@ -8,26 +8,26 @@ export default {
   props: {
     itemWidth: {
       type: String,
-      default: "260px",
+      default: "260px"
     },
     itemHeight: {
       type: String,
-      default: "180px",
+      default: "180px"
     },
     gap: {
       type: String,
-      default: "1rem",
-    },
+      default: "1rem"
+    }
   },
   computed: {
-    listStyle: function() {
+    listStyle() {
       return {
         gridTemplateColumns: `repeat(auto-fill,${this.itemWidth})`,
         gridAutoRows: `minmax(${this.itemHeight}, max-content)`,
-        gridGap: this.gap,
+        gridGap: this.gap
       };
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

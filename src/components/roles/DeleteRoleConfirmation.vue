@@ -21,32 +21,33 @@
 </template>
 <script>
 import { mapActions } from "vuex";
+
 export default {
   name: "DeleteRoleConfirmation",
   props: {
     value: {
       type: Boolean,
-      default: false,
+      default: false
     },
     roleId: {
       type: Number,
-      required: true,
+      required: true
     },
     roleTitle: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   methods: {
     ...mapActions("roles", ["deleteRole"]),
     ...mapActions("alerts", ["displaySuccess"]),
-    onDeleteRole: function() {
+    onDeleteRole() {
       this.deleteRole(this.roleId);
       this.$emit("input", false);
       this.displaySuccess("Role deleted");
       this.$router.push("/roles");
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

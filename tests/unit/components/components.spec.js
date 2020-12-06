@@ -1,10 +1,18 @@
 import { mount, createLocalVue } from "@vue/test-utils";
-import TheAppBar from "@/components/TheAppBar";
+import TheAppBar from "@/components/TheAppBar.vue";
 import Vue from "vue";
 import Vuex from "vuex";
 import VueRouter from "vue-router";
 import Vuetify from "vuetify";
-import { state as stylesState } from "@/store/modules/styles";
+import styles from "@/constants/styles";
+import Spinner from "@/components/Spinner.vue";
+import getThemeColor from "@/utils/getThemeColor";
+import AutocompleteCustom from "@/components/AutocompleteCustom.vue";
+import IconButton from "@/components/IconButton.vue";
+import themeColorNames from "@/constants/themeColors";
+import NewItemButton from "@/components/NewItemButton.vue";
+import IconLink from "@/components/IconLink.vue";
+import DatePickerField from "@/components/DatePickerField.vue";
 
 Vue.use(Vuetify);
 
@@ -17,31 +25,26 @@ describe("TheAppBar", () => {
   const router = new VueRouter();
 
   beforeAll(() => {
-    store = new Vuex.Store({
-      modules: { styles: { state: stylesState }, namespaced: true },
-    });
+    store = new Vuex.Store({});
     vuetify = new Vuetify({ theme: { dark: false } });
   });
 
-  const mountFunction = options =>
+  const mountFunction = (options) =>
     mount(TheAppBar, {
       localVue,
       store,
       vuetify,
       router,
-      ...options,
+      ...options
     });
 
   it("has height defined in store", () => {
     const wrapper = mountFunction();
     expect(wrapper.find("div").attributes("style")).toBe(
-      `height: ${stylesState.navbarHeight};`
+      `height: ${styles.navbarHeight};`
     );
   });
 });
-
-import Spinner from "@/components/Spinner";
-import { getThemeColor } from "@/utils/getThemeColor.js";
 
 describe("Spinner", () => {
   const localVue = createLocalVue();
@@ -51,11 +54,11 @@ describe("Spinner", () => {
 
   beforeAll(() => {
     vuetify = new Vuetify({
-      theme: { dark: false, themes: { light: { primary: "#3A62A8" } } },
+      theme: { dark: false, themes: { light: { primary: "#3A62A8" } } }
     });
   });
 
-  const mountFunction = options =>
+  const mountFunction = (options) =>
     mount(Spinner, { localVue, vuetify, ...options });
 
   const spinnerSelector = "div > div > div";
@@ -79,13 +82,11 @@ describe("Spinner", () => {
     const color = getThemeColor(wrapper.vm.$vuetify.theme, themeColor);
     const spinnerTags = wrapper.findAll(spinnerSelector);
 
-    for (var i = 0; i < spinnerTags.length; i++) {
+    for (let i = 0; i < spinnerTags.length; i += 1) {
       expect(spinnerTags.at(i).attributes("color")).toBe(color);
     }
   });
 });
-
-import AutocompleteCustom from "@/components/AutocompleteCustom";
 
 describe("AutocompleteCustom", () => {
   const localVue = createLocalVue();
@@ -93,7 +94,7 @@ describe("AutocompleteCustom", () => {
   let vuetify;
   const items = [
     { id: 1, title: "Enschede" },
-    { id: 2, title: "Brabant" },
+    { id: 2, title: "Brabant" }
   ];
 
   const label = "Local group";
@@ -102,16 +103,16 @@ describe("AutocompleteCustom", () => {
     vuetify = new Vuetify();
   });
 
-  const mountFunction = options =>
+  const mountFunction = (options) =>
     mount(AutocompleteCustom, {
       localVue,
       vuetify,
       propsData: {
         label,
         items,
-        selectedItemsIds: [],
+        selectedItemsIds: []
       },
-      ...options,
+      ...options
     });
 
   it("prop label is rendered", () => {
@@ -120,7 +121,7 @@ describe("AutocompleteCustom", () => {
   });
 
   it("prop items validation works", () => {
-    const validator = AutocompleteCustom.props.items.validator;
+    const { validator } = AutocompleteCustom.props.items;
 
     expect(validator(items)).toBeTruthy();
 
@@ -132,7 +133,7 @@ describe("AutocompleteCustom", () => {
   });
 
   it("prop selectedItemsIds validation works", () => {
-    const validator = AutocompleteCustom.props.selectedItemsIds.validator;
+    const { validator } = AutocompleteCustom.props.selectedItemsIds;
 
     expect(validator([1, 2])).toBeTruthy();
     expect(validator([1, 2.5])).toBeFalsy();
@@ -140,23 +141,20 @@ describe("AutocompleteCustom", () => {
   });
 
   it("selected items are rendered", () => {
-    const selectedItemsIds = items.map(item => item.id);
+    const selectedItemsIds = items.map((item) => item.id);
     const wrapper = mountFunction({
       propsData: {
         label,
         items,
-        selectedItemsIds,
-      },
+        selectedItemsIds
+      }
     });
     const renderedItems = wrapper.findAll("v-chip__content");
-    for (var i = 0; i < renderedItems.length; i++) {
+    for (let i = 0; i < renderedItems.length; i += 1) {
       expect(renderedItems.at(i).text()).toBe(items[i].title);
     }
   });
 });
-
-import IconButton from "@/components/IconButton";
-import { themeColorNames } from "@/utils/defaults";
 
 describe("IconButton", () => {
   const localVue = createLocalVue();
@@ -170,16 +168,16 @@ describe("IconButton", () => {
     vuetify = new Vuetify();
   });
 
-  const mountFunction = options =>
+  const mountFunction = (options) =>
     mount(IconButton, {
       localVue,
       vuetify,
       propsData: {
         text,
         icon,
-        themeColor,
+        themeColor
       },
-      ...options,
+      ...options
     });
 
   it("prop text is rendered", () => {
@@ -198,17 +196,15 @@ describe("IconButton", () => {
   });
 
   it("prop color validation works", () => {
-    const validator = IconButton.props.themeColor.validator;
+    const { validator } = IconButton.props.themeColor;
 
-    themeColorNames.forEach(themeColor =>
-      expect(validator(themeColor)).toBeTruthy()
-    );
+    themeColorNames.forEach((color) => expect(validator(color)).toBeTruthy());
 
     expect(validator("#000000")).toBeFalsy();
   });
 
   it("prop icon validation works", () => {
-    const validator = IconButton.props.icon.validator;
+    const { validator } = IconButton.props.icon;
 
     expect(validator("mdi-plus")).toBeTruthy();
     expect(validator("plus-icon")).toBeFalsy();
@@ -222,8 +218,6 @@ describe("IconButton", () => {
   });
 });
 
-import NewItemButton from "@/components/NewItemButton";
-
 describe("NewItemButton", () => {
   const localVue = createLocalVue();
 
@@ -235,14 +229,14 @@ describe("NewItemButton", () => {
     vuetify = new Vuetify();
   });
 
-  const mountFunction = options =>
+  const mountFunction = (options) =>
     mount(NewItemButton, {
       localVue,
       vuetify,
       propsData: {
-        text,
+        text
       },
-      ...options,
+      ...options
     });
 
   it("prop text is rendered", () => {
@@ -263,8 +257,6 @@ describe("NewItemButton", () => {
   });
 });
 
-import IconLink from "@/components/IconLink";
-
 describe("IconLink", () => {
   const localVue = createLocalVue();
 
@@ -279,7 +271,7 @@ describe("IconLink", () => {
     vuetify = new Vuetify();
   });
 
-  const mountFunction = options =>
+  const mountFunction = (options) =>
     mount(IconLink, {
       localVue,
       vuetify,
@@ -287,13 +279,13 @@ describe("IconLink", () => {
         href,
         linkText,
         label,
-        icon,
+        icon
       },
-      ...options,
+      ...options
     });
 
   it("prop href validation works", () => {
-    const validator = IconLink.props.href.validator;
+    const { validator } = IconLink.props.href;
 
     expect(validator("https://organise.earth")).toBeTruthy();
     expect(validator("mailto:test@protonmail.com")).toBeTruthy();
@@ -302,7 +294,7 @@ describe("IconLink", () => {
   });
 
   it("prop icon validation works", () => {
-    const validator = IconLink.props.icon.validator;
+    const { validator } = IconLink.props.icon;
 
     expect(validator("mdi-plus")).toBeTruthy();
     expect(validator("plus-icon")).toBeFalsy();
@@ -329,8 +321,6 @@ describe("IconLink", () => {
   });
 });
 
-import DatePickerField from "@/components/DatePickerField";
-
 describe("DatePickerField", () => {
   const localVue = createLocalVue();
   let vuetify;
@@ -340,14 +330,14 @@ describe("DatePickerField", () => {
     vuetify = new Vuetify();
   });
 
-  const mountFunction = date =>
+  const mountFunction = (date) =>
     mount(DatePickerField, {
       localVue,
       vuetify,
       propsData: {
         label,
-        date,
-      },
+        date
+      }
     });
 
   it("prop label is rendered", () => {
@@ -356,7 +346,7 @@ describe("DatePickerField", () => {
   });
 
   it("prop date is shown in DD/MM/YYYY format in the input field when passed", () => {
-    let date = new Date().toISOString();
+    const date = new Date().toISOString();
     const wrapper = mountFunction(date);
     const [year, month, day] = date.split("-");
     const formattedDate = `${day.substr(0, 2)}/${month.substr(0, 2)}/${year}`;

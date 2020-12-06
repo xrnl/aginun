@@ -1,53 +1,53 @@
 import { apolloClient } from "@/plugins/vue-apollo";
-import { RolesQuery } from "@/GraphQL/roles";
 import throttle from "lodash/throttle";
 import Vue from "vue";
+import { timeCommitmentRange } from "@/constants/timeCommitments";
 import {
   CreateRoleMutation,
+  RolesQuery,
   UpdateRoleMutation,
   DeleteRoleMutation,
-  FillRoleMutation,
+  FillRoleMutation
 } from "../../GraphQL/roles";
 
 export default {
+  namespaced: true,
   state: {
     roles: [],
     isLoadingRoles: true,
     paginationLimit: 20, // number of roles loaded at a time. More are loaded on scroll down.
     paginationOffset: 0,
     infiniteScrollId: true, // when this variable changes new roles are loaded
-    selectedFilters: {},
+    selectedFilters: {}
   },
   getters: {
-    getByID: state => id => state.roles.find(role => role.id == id),
-    isNewQuery: state => state.paginationOffset == 0,
-    isUsingFilters(state, getters, rootState, rootGetters) {
+    getByID: (state) => (id) => state.roles.find((role) => role.id === id),
+    isNewQuery: (state) => state.paginationOffset === 0,
+    isUsingFilters(state) {
       return (
         state.selectedFilters.workingCircles.length ||
         state.selectedFilters.localGroups.length ||
         state.selectedFilters.search ||
-        state.selectedFilters.timeCommitment[0] !=
-          rootGetters["defaults/timeCommitmentRange"].min ||
-        state.selectedFilters.timeCommitment[1] !=
-          rootGetters["defaults/timeCommitmentRange"].max
+        state.selectedFilters.timeCommitment[0] !== timeCommitmentRange.min ||
+        state.selectedFilters.timeCommitment[1] !== timeCommitmentRange.max
       );
-    },
+    }
   },
   mutations: {
     addRole(state, newRole) {
       state.roles.unshift(newRole);
     },
     deleteRole(state, roleID) {
-      const roleIndex = state.roles.findIndex(role => role.id === roleID);
+      const roleIndex = state.roles.findIndex((role) => role.id === roleID);
       if (roleIndex > -1) {
         state.roles.splice(roleIndex, 1);
       }
     },
     addRoles(state, newRoles) {
-      state.roles.push.apply(state.roles, newRoles);
+      state.roles.push(...newRoles);
     },
     editRole(state, newRole) {
-      const roleIndex = state.roles.findIndex(role => role.id === newRole.id);
+      const roleIndex = state.roles.findIndex((role) => role.id === newRole.id);
       state.roles[roleIndex] = newRole;
     },
     setRoles(state, roles) {
@@ -72,10 +72,10 @@ export default {
     },
     setFilter(state, { filterType, filterValue }) {
       Vue.set(state.selectedFilters, filterType, filterValue);
-    },
+    }
   },
   actions: {
-    createRole: async function({ commit }, newRole) {
+    async createRole({ commit }, newRole) {
       await apolloClient.mutate({
         mutation: CreateRoleMutation,
         variables: { input: [newRole] },
@@ -83,15 +83,15 @@ export default {
           store,
           {
             data: {
-              insert_role: { returning },
-            },
+              insert_role: { returning }
+            }
           }
         ) => {
           commit("addRole", returning[0]);
-        },
+        }
       });
     },
-    updateRole: async function({ commit }, newRole) {
+    async updateRole({ commit }, newRole) {
       await apolloClient.mutate({
         mutation: UpdateRoleMutation,
         variables: { id: newRole.id, input: newRole },
@@ -99,33 +99,34 @@ export default {
           store,
           {
             data: {
-              update_role: { returning },
-            },
+              update_role: { returning }
+            }
           }
         ) => {
           commit("editRole", returning[0]);
-        },
+        }
       });
     },
-    fillRole: async function({ commit }, roleID) {
+    async fillRole({ commit }, roleID) {
       const now = new Date(Date.now()).toISOString();
       await apolloClient.mutate({
         mutation: FillRoleMutation,
         variables: { id: roleID, filledDate: now },
         update: () => {
           commit("deleteRole", roleID);
-        },
+        }
       });
     },
-    deleteRole: async function({ commit }, roleID) {
+    async deleteRole({ commit }, roleID) {
       await apolloClient.mutate({
         mutation: DeleteRoleMutation,
         variables: { id: roleID },
         update: () => {
           commit("deleteRole", roleID);
-        },
+        }
       });
     },
+    // eslint-disable-next-line func-names
     loadRoles: throttle(async function(
       { state, getters, commit, rootState, rootGetters, dispatch },
       scrollState
@@ -156,13 +157,13 @@ export default {
         variables: {
           limit: state.paginationLimit,
           offset: state.paginationOffset,
-          localGroupIds: localGroupIds,
-          workingCircleIds: workingCircleIds,
+          localGroupIds,
+          workingCircleIds,
           timeCommitmentMin: state.selectedFilters.timeCommitment[0],
           timeCommitmentMax: state.selectedFilters.timeCommitment[1],
           search: `%${state.selectedFilters.search}%`,
-          dueDate: new Date(Date.now()).toISOString(),
-        },
+          dueDate: new Date(Date.now()).toISOString()
+        }
       });
 
       const newRoles = data.roles;
@@ -186,7 +187,7 @@ export default {
       commit("setLoadingState", false);
     },
     500),
-    reloadRoles: async function({ commit }) {
+    async reloadRoles({ commit }) {
       commit("clearRoles");
       // timeout necessary because old roles must completely transition out
       // before InfiniteLoading component calls @infinite method
@@ -199,20 +200,17 @@ export default {
       commit("setFilter", payload);
       dispatch("reloadRoles");
     },
-    setDefaultFilters({ commit, dispatch, rootGetters }) {
+    setDefaultFilters({ commit, dispatch }) {
       commit("setLoadingState", true);
       commit("setFilter", { filterType: "search", filterValue: "" });
       commit("setFilter", { filterType: "localGroups", filterValue: [] });
       commit("setFilter", { filterType: "workingCircles", filterValue: [] });
       commit("setFilter", {
         filterType: "timeCommitment",
-        filterValue: [
-          rootGetters["defaults/timeCommitmentRange"].min,
-          rootGetters["defaults/timeCommitmentRange"].max,
-        ],
+        filterValue: [timeCommitmentRange.min, timeCommitmentRange.max]
       });
 
       dispatch("reloadRoles");
-    },
-  },
+    }
+  }
 };

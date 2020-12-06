@@ -1,6 +1,20 @@
-import store from "../store";
 import gql from "graphql-tag";
 import { apolloClient } from "@/plugins/vue-apollo";
+import store from "../store";
+
+async function healthCheck() {
+  const { errors } = await apolloClient.query({
+    query: gql`
+      query HealthCheckQuery {
+        config {
+          alive
+        }
+      }
+    `
+  });
+
+  store.dispatch("errors/serverError", !!errors);
+}
 
 export async function rolesErrorGuard(to, from, next) {
   // We need this to only run the healthcheck once
@@ -25,23 +39,5 @@ export async function hasErrorsGuard(to, from, next) {
     next("/");
   } else {
     next();
-  }
-}
-
-async function healthCheck() {
-  const { errors } = await apolloClient.query({
-    query: gql`
-      {
-        config {
-          alive
-        }
-      }
-    `,
-  });
-
-  if (errors) {
-    store.dispatch("errors/serverError", true);
-  } else {
-    store.dispatch("errors/serverError", false);
   }
 }

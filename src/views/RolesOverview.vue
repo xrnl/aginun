@@ -94,10 +94,10 @@ import RoleCard from "@/components/roles/RoleCard.vue";
 import GridList from "@/components/layout/GridList.vue";
 import RoleFilters from "@/components/roles/RoleFilters.vue";
 import { mapState, mapActions, mapGetters } from "vuex";
-import NewItemButton from "@/components/NewItemButton";
-import RoleEditDialog from "@/components/roles/RoleEditDialog";
+import NewItemButton from "@/components/NewItemButton.vue";
+import RoleEditDialog from "@/components/roles/RoleEditDialog.vue";
 import InfiniteLoading from "vue-infinite-loading";
-import Spinner from "@/components/Spinner";
+import Spinner from "@/components/Spinner.vue";
 
 export default {
   name: "RolesOverview",
@@ -110,40 +110,40 @@ export default {
     NewItemButton,
     RoleEditDialog,
     InfiniteLoading,
-    Spinner,
+    Spinner
   },
   data: () => ({
     newRoleDialog: false,
-    isDrawerOpen: null,
+    isDrawerOpen: null
   }),
   computed: {
     ...mapState("roles", [
       "roles",
       "isLoadingRoles",
       "selectedFilters",
-      "infiniteScrollId",
+      "infiniteScrollId"
     ]),
     ...mapGetters("roles", ["isUsingFilters"]),
-    isMobile: function() {
+    isMobile() {
       return this.$vuetify.breakpoint.smAndDown;
-    },
+    }
   },
   watch: {
-    isMobile: function() {
+    isMobile() {
       this.isDrawerOpen = !this.isMobile;
-    },
+    }
   },
-  created: function() {
+  created() {
     this.isDrawerOpen = !this.isMobile;
   },
   methods: {
     ...mapActions("roles", ["loadRoles", "setDefaultFilters"]),
-    handleCloseDrawer: function() {
+    handleCloseDrawer() {
       this.isDrawerOpen = false;
     },
-    showNewRoleDialog: function() {
+    showNewRoleDialog() {
       this.newRoleDialog = true;
-    },
-  },
+    }
+  }
 };
 </script>

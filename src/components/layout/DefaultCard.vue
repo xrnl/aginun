@@ -51,9 +51,9 @@ export default {
     color: {
       type: String,
       required: false,
-      default: "angry-light",
-    },
-  },
+      default: "angry-light"
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

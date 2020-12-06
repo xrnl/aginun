@@ -1,7 +1,8 @@
 export default {
+  namespaced: true,
   state: {
     alertOn: false,
-    alert: {},
+    alert: {}
   },
   mutations: {
     setAlert(state, alert) {
@@ -10,22 +11,22 @@ export default {
     },
     disableAlert(state) {
       state.alertOn = false;
-    },
+    }
   },
   actions: {
     displaySuccess({ commit }, message) {
       commit("setAlert", {
-        message: message,
+        message,
         color: "success",
-        icon: "mdi-checkbox-marked-circle-outline",
+        icon: "mdi-checkbox-marked-circle-outline"
       });
     },
     displayError({ commit }, message) {
       commit("setAlert", {
-        message: message,
+        message,
         color: "error",
-        icon: "mdi-alert",
+        icon: "mdi-alert"
       });
-    },
-  },
+    }
+  }
 };
