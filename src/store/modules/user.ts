@@ -32,7 +32,7 @@ export default {
       };
 
       const auth = await axios.post(
-        process.env.VUE_APP_KEYSERVER_URL,
+        process.env.VUE_APP_KEYSERVER_URL!,
         qs.stringify(params),
         config
       );
