@@ -5,6 +5,7 @@ import alerts from "./modules/alerts";
 import roles from "./modules/roles";
 import groups from "./modules/groups";
 import errors from "./modules/errors";
+import user from "./modules/user";
 
 Vue.use(Vuex);
 
@@ -22,7 +23,8 @@ const store = new Vuex.Store<RootState>({
     groups,
     alerts,
     roles,
-    errors
+    errors,
+    user
   },
   // Enable strict mode in development to get a warning
   // when mutating state outside of a mutation.

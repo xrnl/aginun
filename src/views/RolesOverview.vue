@@ -118,31 +118,31 @@ export default {
     NewItemButton,
     RoleEditDialog,
     InfiniteLoading,
-    Spinner,
+    Spinner
   },
   data: () => ({
     newRoleDialog: false,
-    isDrawerOpen: null,
+    isDrawerOpen: null
   }),
   computed: {
     ...mapState("roles", [
       "roles",
       "isLoadingRoles",
       "selectedFilters",
-      "infiniteScrollId",
+      "infiniteScrollId"
     ]),
     ...mapGetters({
       loggedIn: "user/loggedIn",
-      isUsingFilters: "roles/isUsingFilters",
+      isUsingFilters: "roles/isUsingFilters"
     }),
     isMobile: function() {
       return this.$vuetify.breakpoint.smAndDown;
-    },
+    }
   },
   watch: {
     isMobile: function() {
       this.isDrawerOpen = !this.isMobile;
-    },
+    }
   },
   created: function() {
     this.isDrawerOpen = !this.isMobile;
@@ -154,7 +154,7 @@ export default {
     },
     showNewRoleDialog: function() {
       this.newRoleDialog = true;
-    },
-  },
+    }
+  }
 };
 </script>

@@ -208,7 +208,7 @@ export default {
     MetaInfo,
     IconLink,
     RoleDeletionConfirm,
-    RoleEditDialog,
+    RoleEditDialog
   },
   data() {
     return {
@@ -216,7 +216,7 @@ export default {
       isEditOpen: false,
       applyDialog: false,
       testLoading: true,
-      role: {},
+      role: {}
     };
   },
   apollo: {
@@ -224,15 +224,15 @@ export default {
       query: RoleQuery,
       variables() {
         return {
-          roleId: this.$route.params.id,
+          roleId: this.$route.params.id
         };
-      },
-    },
+      }
+    }
   },
   computed: {
     ...mapGetters({
-      loggedIn: "user/loggedIn",
-    }),
+      loggedIn: "user/loggedIn"
+    })
   },
   methods: {
     ...mapActions("roles", ["fillRole"]),
@@ -248,11 +248,11 @@ export default {
       const options = {
         year: "numeric",
         month: "long",
-        day: "numeric",
+        day: "numeric"
       };
       return formattedDate.toLocaleDateString("en-GB", options);
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="scss">

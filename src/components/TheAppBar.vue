@@ -1,10 +1,5 @@
 <template>
-  <v-app-bar
-    app
-    :height="$store.state.styles.navbarHeight"
-    flat
-    class="bottom-border"
-  >
+  <v-app-bar app :height="navbarHeight" flat class="bottom-border">
     <router-link class="logo-link" to="/about">
       <img
         src="@/assets/images/xr.svg"
@@ -57,21 +52,23 @@ import IconLink from "@/components/IconLink";
 import FlexWrapper from "@/components/layout/FlexWrapper";
 import { mapGetters, mapActions } from "vuex";
 import { contactEmail } from "@/constants/contacts";
+import styles from "@/constants/styles";
 
 export default {
   name: "TheAppBar",
   components: {
     IconLink,
-    FlexWrapper,
+    FlexWrapper
   },
   data: () => ({
     contactSupportDialog: false,
     contactEmail,
+    navbarHeight: styles.navbarHeight
   }),
   computed: {
     ...mapGetters({
-      loggedIn: "user/loggedIn",
-    }),
+      loggedIn: "user/loggedIn"
+    })
   },
   methods: {
     ...mapActions("user", ["logout"]),
@@ -82,8 +79,8 @@ export default {
       const password = "test";
 
       this.$store.dispatch("user/login", { username, password });
-    },
-  },
+    }
+  }
 };
 </script>
 
