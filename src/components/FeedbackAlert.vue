@@ -19,11 +19,11 @@ import { mapState, mapMutations } from "vuex";
 export default {
   name: "FeedbackAlert",
   computed: {
-    ...mapState("alerts", ["alert", "alertOn"]),
+    ...mapState("alerts", ["alert", "alertOn"])
   },
   methods: {
-    ...mapMutations("alerts", ["disableAlert"]),
-  },
+    ...mapMutations("alerts", ["disableAlert"])
+  }
 };
 </script>
 

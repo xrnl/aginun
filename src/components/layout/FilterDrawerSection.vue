@@ -17,7 +17,7 @@
 <script>
 export default {
   name: "TheFilterDrawerSection",
-  data: () => ({}),
+  data: () => ({})
 };
 </script>
 

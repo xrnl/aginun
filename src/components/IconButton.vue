@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { themeColorNames } from "@/utils/defaults";
+import themeColorNames from "@/constants/themeColors";
 import { iconValidator } from "@/utils/validators";
 
 export default {
@@ -17,17 +17,17 @@ export default {
     themeColor: {
       type: String,
       required: true,
-      validator: themeColor => themeColorNames.includes(themeColor),
+      validator: (themeColor) => themeColorNames.includes(themeColor)
     },
     icon: {
       type: String,
       required: true,
-      validator: iconValidator,
+      validator: iconValidator
     },
     text: {
       type: String,
-      required: true,
-    },
-  },
+      required: true
+    }
+  }
 };
 </script>

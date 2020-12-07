@@ -1,4 +1,4 @@
-export const getThemeColor = (vuetifyTheme, themeColor) => {
+export default function(vuetifyTheme, themeColor) {
   /**
    * returns the hex color value of the themeColor in vuetifyTheme
    *
@@ -18,4 +18,4 @@ export const getThemeColor = (vuetifyTheme, themeColor) => {
   return vuetifyTheme.dark
     ? vuetifyTheme.themes.dark[themeColor]
     : vuetifyTheme.themes.light[themeColor];
-};
+}

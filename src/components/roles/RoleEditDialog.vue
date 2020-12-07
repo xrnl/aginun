@@ -210,12 +210,18 @@ This can include information about the circle or the specific project that the r
 <script>
 import { mapState, mapActions } from "vuex";
 import { extend, ValidationProvider, ValidationObserver } from "vee-validate";
-import { required, alpha_spaces, max, email } from "vee-validate/dist/rules";
-import DatePickerField from "@/components/DatePickerField";
+import {
+  required,
+  alpha_spaces as alphaSpaces,
+  max,
+  email
+} from "vee-validate/dist/rules";
+import DatePickerField from "@/components/DatePickerField.vue";
+import { timeCommitments } from "@/constants/timeCommitments";
 
 extend("required", {
   ...required,
-  message: fieldName => {
+  message: (fieldName) => {
     let article;
     if (fieldName.split(" ")[0].endsWith("s")) {
       article = "";
@@ -226,50 +232,50 @@ extend("required", {
     }
 
     return `You must specify ${article} ${fieldName}.`;
-  },
+  }
 });
 extend("requiredSelect", {
   ...required,
-  message: "You must select a {_field_}.",
+  message: "You must select a {_field_}."
 });
 extend("requiredList", {
   validate: () => {
     return {
       valid: false,
       data: {
-        required: false,
-      },
+        required: false
+      }
     };
   },
   computesRequired: true,
-  message: "You must add at least one {_field_}.",
+  message: "You must add at least one {_field_}."
 });
 extend("email", { ...email, message: "You must enter a valid email address." });
 extend("alpha_spaces", {
-  ...alpha_spaces,
-  message: "The {_field_} can only contain letters and spaces.",
+  ...alphaSpaces,
+  message: "The {_field_} can only contain letters and spaces."
 });
 extend("max", {
   ...max,
   params: ["length"],
-  message: "The {_field_} must be under {length} characters.",
+  message: "The {_field_} must be under {length} characters."
 });
 extend("phone", {
-  validate: value => {
+  validate: (value) => {
     const phoneRegex = RegExp(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/);
     return phoneRegex.test(value);
   },
-  message: "You must enter a valid phone number",
+  message: "You must enter a valid phone number"
 });
 extend("mattermost", {
-  validate: value => {
+  validate: (value) => {
     const mattermostRegex = RegExp(/^@\S+$/);
     return mattermostRegex.test(value);
   },
-  message: "You must enter a valid Mattermost Id.",
+  message: "You must enter a valid Mattermost Id."
 });
 
-let initialState = () => ({
+const initialState = () => ({
   role: {
     title: undefined,
     responsibilities: [],
@@ -282,9 +288,10 @@ let initialState = () => ({
     email: undefined,
     mattermostId: undefined,
     phone: undefined,
-    dueDate: undefined,
+    dueDate: undefined
   },
-  newResponsibility: undefined,
+  timeCommitments,
+  newResponsibility: undefined
 });
 
 export default {
@@ -292,27 +299,26 @@ export default {
   components: {
     ValidationProvider,
     ValidationObserver,
-    DatePickerField,
+    DatePickerField
   },
   props: {
     value: {
       required: true,
-      type: Boolean,
+      type: Boolean
     },
     editRole: {
       default: null,
-      type: Object,
-    },
+      type: Object
+    }
   },
   data: () => initialState(),
   computed: {
-    ...mapState("defaults", ["timeCommitments"]),
     ...mapState("groups", ["localGroups"]),
     ...mapState("groups", ["workingCircles"]),
-    errorResponsibility: function() {
+    errorResponsibility() {
       const maxCharsResponsibility = 200;
       if (this.newResponsibility) {
-        if (this.role.responsibilities.length == 10) {
+        if (this.role.responsibilities.length === 10) {
           return "You can enter a maximum of 10 responsibilities";
         }
         if (this.newResponsibility.length > maxCharsResponsibility) {
@@ -321,55 +327,57 @@ export default {
       }
       return null;
     },
-    validResponsibility: function() {
+    validResponsibility() {
       return !this.isEmpty(this.newResponsibility) && !this.errorResponsibility;
     },
-    formTitle: function() {
+    formTitle() {
       return this.editRole ? "Edit Role" : "New Role";
-    },
+    }
   },
   watch: {
     editRole: {
-      handler: function(editRole) {
+      handler(editRole) {
         if (editRole) {
-          for (var key in this.role) {
-            if (key in editRole) {
+          Object.keys(this.role).forEach((key) => {
+            if (editRole[key]) {
               this.role[key] = editRole[key];
             }
-          }
+          });
           this.role.workingCircleId = this.editRole.workingCircle.id;
           this.role.localGroupId = this.editRole.localGroup.id;
         }
       },
-      immediate: true,
-    },
+      immediate: true
+    }
   },
-  created: function() {
+  created() {
     const keys = Object.keys(this.role);
-    keys.forEach(value => (this[value] = this.role[value]));
+    keys.forEach((value) => {
+      this[value] = this.role[value];
+    });
     this.workingCircleId = this.role.workingCircleId;
     this.localGroupId = this.role.localGroupId;
   },
   methods: {
     ...mapActions("roles", ["updateRole", "createRole"]),
     ...mapActions("alerts", ["displaySuccess"]),
-    addResponsibility: function() {
+    addResponsibility() {
       if (this.validResponsibility) {
         this.role.responsibilities.push(this.newResponsibility);
         this.newResponsibility = undefined;
       }
     },
-    onTimeCommitmentChange: function(timeCommitment) {
+    onTimeCommitmentChange(timeCommitment) {
       this.role.timeCommitmentMin = timeCommitment.min;
       this.role.timeCommitmentMax = timeCommitment.max;
     },
-    onDueDateChange: function(duedate) {
+    onDueDateChange(duedate) {
       this.role.dueDate = duedate;
     },
-    resetState: function() {
+    resetState() {
       Object.assign(this.$data, initialState());
     },
-    onSubmit: function() {
+    onSubmit() {
       if (this.editRole) {
         this.updateRole({ id: this.editRole.id, ...this.role });
       } else {
@@ -383,8 +391,8 @@ export default {
 
       this.displaySuccess(this.editRole ? "Role edited" : "Role created");
     },
-    isEmpty: text => !text || text.length == 0 || !text.trim(),
-  },
+    isEmpty: (text) => !text || text.length === 0 || !text.trim()
+  }
 };
 </script>
 

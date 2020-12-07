@@ -32,19 +32,19 @@ export default {
   props: {
     date: {
       type: String,
-      default: null,
+      default: null
     },
     min: {
       type: String,
-      default: new Date().toISOString(),
+      default: new Date().toISOString()
     },
     label: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   data: () => ({
-    showMenu: false,
+    showMenu: false
   }),
   methods: {
     formatDate(date) {
@@ -57,7 +57,7 @@ export default {
     updateDate(date) {
       this.showMenu = false;
       this.$emit("update", new Date(date).toISOString());
-    },
-  },
+    }
+  }
 };
 </script>

@@ -23,23 +23,23 @@ export default {
     items: {
       type: Array,
       required: true,
-      validator: items => {
+      validator: (items) => {
         const objectValidator = makeObjectValidator({
           id: "number",
-          title: "string",
+          title: "string"
         });
         return isArrayValid(items, objectValidator);
-      },
+      }
     },
     selectedItemsIds: {
       type: Array,
       required: true,
-      validator: items => isArrayValid(items, Number.isInteger),
+      validator: (items) => isArrayValid(items, Number.isInteger)
     },
     label: {
       type: String,
-      required: true,
-    },
-  },
+      required: true
+    }
+  }
 };
 </script>

@@ -27,28 +27,28 @@
   </default-card>
 </template>
 <script>
-import { mapState } from "vuex";
 import DefaultCard from "@/components/layout/DefaultCard.vue";
+import styles from "@/constants/styles";
 
 export default {
   name: "RoleCard",
   components: {
-    DefaultCard,
+    DefaultCard
   },
+  data: () => ({
+    workingCircleColours: styles.workingCircleColours
+  }),
   props: {
     role: {
       type: Object,
-      required: true,
-    },
-  },
-  computed: {
-    ...mapState("styles", ["workingCircleColours"]),
+      required: true
+    }
   },
   methods: {
-    getColour: function(workingCircle) {
+    getColour(workingCircle) {
       return this.workingCircleColours[workingCircle.title];
-    },
-  },
+    }
+  }
 };
 </script>
 

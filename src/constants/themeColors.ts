@@ -1,9 +1,9 @@
-export const themeColorNames = [
+export default [
   "primary",
   "secondary",
   "accent",
   "error",
   "info",
   "success",
-  "warning",
+  "warning"
 ];

@@ -15,25 +15,25 @@ const routes = [
     beforeEnter: rolesErrorGuard,
     component: RolesOverview,
     alias: "/",
-    children: [{ path: "view/:id", component: RoleViewDialog }],
+    children: [{ path: "view/:id", component: RoleViewDialog }]
   },
   {
     path: "/error",
     name: "error",
     beforeEnter: hasErrorsGuard,
-    component: ErrorPage,
+    component: ErrorPage
   },
   {
     // non-existent pages redirect to the home page
     path: "*",
-    redirect: "/",
-  },
+    redirect: "/"
+  }
 ];
 
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
-  routes,
+  routes
 });
 
 export default router;

@@ -9,37 +9,39 @@
   </div>
 </template>
 <script>
+import styles from "@/constants/styles";
+
 export default {
   props: {
     isDrawerOpen: {
       type: Boolean,
-      default: false,
+      default: false
     },
     drawerWidth: {
       type: String,
-      default: "400px",
-    },
+      default: "400px"
+    }
   },
   computed: {
-    isMobile: function() {
+    isMobile() {
       return this.$vuetify.breakpoint.smAndDown;
     },
-    containerMargin: function() {
+    containerMargin() {
       if (this.isDrawerOpen && !this.isMobile) {
         return { marginRight: this.drawerWidth };
       }
       return {};
     },
-    drawerStyle: function() {
+    drawerStyle() {
       if (this.$vuetify.breakpoint.mdAndUp) {
         return {
-          top: this.$store.state.styles.navbarHeight,
-          width: this.drawerWidth,
+          top: styles.navbarHeight,
+          width: this.drawerWidth
         };
       }
       return {};
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
