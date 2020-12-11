@@ -5,7 +5,11 @@
     <div v-if="isMobile" class="mb-8">
       <v-divider />
       <div class="d-flex justify-space-between pa-3">
-        <new-item-button text="New Role" @click="showNewRoleDialog" />
+        <new-item-button
+          v-if="loggedIn"
+          text="New Role"
+          @click="showNewRoleDialog"
+        />
         <v-btn text color="primary" @click="isDrawerOpen = true">
           Filter
         </v-btn>
@@ -80,7 +84,11 @@
         </template>
         <role-filters />
         <div v-if="!isMobile" class="text-center mt-4">
-          <new-item-button text="New Role" @click="showNewRoleDialog" />
+          <new-item-button
+            v-if="loggedIn"
+            text="New Role"
+            @click="showNewRoleDialog"
+          />
         </div>
       </default-drawer>
     </template>
@@ -94,10 +102,10 @@ import RoleCard from "@/components/roles/RoleCard.vue";
 import GridList from "@/components/layout/GridList.vue";
 import RoleFilters from "@/components/roles/RoleFilters.vue";
 import { mapState, mapActions, mapGetters } from "vuex";
-import NewItemButton from "@/components/NewItemButton.vue";
-import RoleEditDialog from "@/components/roles/RoleEditDialog.vue";
+import NewItemButton from "@/components/NewItemButton";
+import RoleEditDialog from "@/components/roles/RoleEditDialog";
 import InfiniteLoading from "vue-infinite-loading";
-import Spinner from "@/components/Spinner.vue";
+import Spinner from "@/components/Spinner";
 
 export default {
   name: "RolesOverview",
@@ -123,25 +131,28 @@ export default {
       "selectedFilters",
       "infiniteScrollId"
     ]),
-    ...mapGetters("roles", ["isUsingFilters"]),
-    isMobile() {
+    ...mapGetters({
+      loggedIn: "user/loggedIn",
+      isUsingFilters: "roles/isUsingFilters"
+    }),
+    isMobile: function() {
       return this.$vuetify.breakpoint.smAndDown;
     }
   },
   watch: {
-    isMobile() {
+    isMobile: function() {
       this.isDrawerOpen = !this.isMobile;
     }
   },
-  created() {
+  created: function() {
     this.isDrawerOpen = !this.isMobile;
   },
   methods: {
     ...mapActions("roles", ["loadRoles", "setDefaultFilters"]),
-    handleCloseDrawer() {
+    handleCloseDrawer: function() {
       this.isDrawerOpen = false;
     },
-    showNewRoleDialog() {
+    showNewRoleDialog: function() {
       this.newRoleDialog = true;
     }
   }

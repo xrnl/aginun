@@ -11,6 +11,12 @@
     </router-link>
     <v-toolbar-title><h2>Vacatures</h2></v-toolbar-title>
     <v-spacer />
+    <v-btn v-if="!loggedIn" text @click.stop="login">
+      Login
+    </v-btn>
+    <v-btn v-else text @click.stop="logout">
+      Logout
+    </v-btn>
     <v-btn text @click.stop="contactSupportDialog = true">
       Support <v-icon> mdi-help-circle-outline </v-icon>
     </v-btn>
@@ -44,6 +50,7 @@
 <script>
 import IconLink from "@/components/IconLink";
 import FlexWrapper from "@/components/layout/FlexWrapper";
+import { mapGetters, mapActions } from "vuex";
 import { contactEmail } from "@/constants/contacts";
 import styles from "@/constants/styles";
 
@@ -58,7 +65,22 @@ export default {
     contactEmail,
     navbarHeight: styles.navbarHeight
   }),
-  methods: {}
+  computed: {
+    ...mapGetters({
+      loggedIn: "user/loggedIn"
+    })
+  },
+  methods: {
+    ...mapActions("user", ["logout"]),
+    login() {
+      //TODO: open login modal/page here
+
+      const username = "kaj-dev";
+      const password = "test";
+
+      this.$store.dispatch("user/login", { username, password });
+    }
+  }
 };
 </script>
 

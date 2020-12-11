@@ -8,7 +8,7 @@ import {
   UpdateRoleMutation,
   DeleteRoleMutation,
   FillRoleMutation
-} from "../../GraphQL/roles";
+} from "@/GraphQL/roles";
 
 export default {
   namespaced: true,

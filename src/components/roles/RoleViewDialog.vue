@@ -59,7 +59,7 @@
                     </span>
                   </div>
                 </flex-wrapper>
-                <v-menu v-if="!role.filledDate" offset-y left>
+                <v-menu v-if="!role.filledDate && loggedIn" offset-y left>
                   <template v-slot:activator="{ on }">
                     <v-btn text icon v-on="on">
                       <v-icon>
@@ -123,7 +123,7 @@
                 >
                   Apply
                 </v-btn>
-                <v-btn depressed @click="onFillRole">
+                <v-btn v-if="loggedIn" depressed @click="onFillRole">
                   <v-icon class="mr-1">
                     mdi-check
                   </v-icon>
@@ -193,13 +193,13 @@
   </div>
 </template>
 <script>
-import IconLink from "@/components/IconLink.vue";
+import FlexWrapper from "../layout/FlexWrapper";
+import IconLink from "@/components/IconLink";
+import MetaInfo from "../layout/MetaInfo";
+import RoleDeletionConfirm from "./DeleteRoleConfirmation";
+import RoleEditDialog from "./RoleEditDialog";
 import { RoleQuery } from "@/GraphQL/roles";
-import { mapActions } from "vuex";
-import FlexWrapper from "../layout/FlexWrapper.vue";
-import MetaInfo from "../layout/MetaInfo.vue";
-import RoleDeletionConfirm from "./DeleteRoleConfirmation.vue";
-import RoleEditDialog from "./RoleEditDialog.vue";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "RoleViewDialog",
@@ -228,6 +228,11 @@ export default {
         };
       }
     }
+  },
+  computed: {
+    ...mapGetters({
+      loggedIn: "user/loggedIn"
+    })
   },
   methods: {
     ...mapActions("roles", ["fillRole"]),
