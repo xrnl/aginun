@@ -376,3 +376,25 @@ describe("DatePickerField", () => {
     expect(emitted).toBe(expected.toISOString());
   });
 });
+
+import LocaleSelect from "@/components/LocaleSelect";
+
+describe.only("LocaleSelect", () => {
+  let wrapper;
+
+  beforeAll(() => {
+    wrapper = mount(LocaleSelect, {
+      vuetify: new Vuetify(),
+      mocks: {
+        $t: (msg) => msg,
+        $i18n: {
+          locale: "en"
+        }
+      }
+    });
+  });
+
+  it("component is rendered", () => {
+    expect(wrapper.get(".v-select__selection").text()).toBe("English");
+  });
+});

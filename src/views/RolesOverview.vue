@@ -69,7 +69,7 @@
           >
             <div class="d-flex flex-column">
               <span class="font-weight-bold">
-                Search for positions
+                {{ $t("Search for positions") }}
               </span>
               <span v-if="isMobile" class="font-weight-light">
                 (<span v-if="!isLoadingRoles">{{ roles.length }}</span>
