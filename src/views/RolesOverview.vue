@@ -7,11 +7,11 @@
       <div class="d-flex justify-space-between pa-3">
         <new-item-button
           v-if="loggedIn"
-          text="New Role"
+          :text="$t('New Role')"
           @click="showNewRoleDialog"
         />
         <v-btn text color="primary" @click="isDrawerOpen = true">
-          Filter
+          {{ $t("Filter") }}
         </v-btn>
       </div>
       <v-divider />
@@ -25,7 +25,7 @@
         key="loading"
         class="d-flex flex-column justify-center align-center mt-5"
       >
-        <spinner text="Loading roles" />
+        <spinner :text="$t('Loading roles')" />
       </div>
       <div
         v-if="!roles.length && !isLoadingRoles"
@@ -33,11 +33,11 @@
         class="pa-5 text-center"
       >
         <div v-if="isUsingFilters">
-          <h3>No results.</h3>
-          <p>Try removing filters.</p>
+          <h3>{{ $t("No results.") }}</h3>
+          <p>{{ $t("Try removing filters.") }}</p>
         </div>
         <div v-else>
-          <p>There are currently no published roles.</p>
+          <p>{{ $t("There are currently no published roles.") }}</p>
         </div>
       </div>
     </transition>
@@ -49,7 +49,7 @@
           key="loading"
           class="d-flex flex-column justify-center align-center mt-5"
         >
-          <spinner text="Loading roles" />
+          <spinner :text="$t('Loading roles')" />
         </div>
         <span v-else />
       </template>
@@ -74,11 +74,11 @@
               <span v-if="isMobile" class="font-weight-light">
                 (<span v-if="!isLoadingRoles">{{ roles.length }}</span>
                 <span v-else>...</span>
-                positions found)
+                {{ $t("positions found") }})
               </span>
             </div>
             <v-btn text color="primary" @click="setDefaultFilters">
-              Clear filters
+              {{ $t("Clear filters") }}
             </v-btn>
           </div>
         </template>
@@ -86,7 +86,7 @@
         <div v-if="!isMobile" class="text-center mt-4">
           <new-item-button
             v-if="loggedIn"
-            text="New Role"
+            :text="$t('New Role')"
             @click="showNewRoleDialog"
           />
         </div>

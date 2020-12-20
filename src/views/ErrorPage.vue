@@ -1,26 +1,38 @@
 <template>
   <div class="pa-6 text-center">
     <h1 class="text-sm-large">
-      DON'T PANIC.
+      {{ $t("DON'T PANIC.") }}
     </h1>
     <p v-if="!isDevMode">
-      Something went wrong 😧
+      {{ $t("Something went wrong") }} 😧
       <br />
-      Please email
-      <a :href="`mailto:${contactEmail}`">{{ contactEmail }}</a>
-      for help.
+      <i18n path="Please email {contactEmail} for help.">
+        <template v-slot:contactEmail>
+          <a :href="`mailto:${contactEmail}`">{{ contactEmail }}</a>
+        </template>
+      </i18n>
     </p>
-    <p v-else>
-      Failed to connect to the server. Please make sure you have
-      <a href="https://github.com/xrnl/aginun#install">
-        <!-- eslint-disable-next-line vue/html-closing-bracket-newline -->
-        set the server API key</a
+    <template v-else>
+      <i18n
+        path="Failed to connect to the server. Please make sure you have set the {serverApiKey}."
+        tag="p"
+        class="mb-0"
       >
-      .
-      <br />
-      If the problem persists please contact
-      <a :href="`mailto:${contactEmail}`">{{ contactEmail }}</a>
-    </p>
+        <template v-slot:serverApiKey>
+          <a href="https://github.com/xrnl/aginun#install" target="_blank">{{
+            $t("server API key")
+          }}</a>
+        </template>
+      </i18n>
+      <i18n
+        path="If the problem persists please contact {contactEmail}."
+        tag="p"
+      >
+        <template v-slot:contactEmail>
+          <a :href="`mailto:${contactEmail}`">{{ contactEmail }}</a>
+        </template>
+      </i18n>
+    </template>
   </div>
 </template>
 

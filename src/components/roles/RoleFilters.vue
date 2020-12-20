@@ -3,8 +3,8 @@
     <div>
       <v-text-field
         :value="selectedFilters.search"
-        label="Search by role title"
-        placeholder="Facilitator, Writer, Photographer..."
+        :label="$t('Search by role title')"
+        :placeholder="$t('Facilitator, Writer, Photographer...')"
         class="mt-3"
         clearable
         @input="debounceSearchUpdate"
@@ -12,13 +12,13 @@
     </div>
     <filter-section>
       <template v-slot:title>
-        Groups
+        {{ $t("Groups") }}
       </template>
       <flex-wrapper direction="column">
         <autocomplete-custom
           :items="localGroups"
           :selected-items-ids="selectedFilters.localGroups"
-          label="Local Group"
+          :label="$t('Local Group')"
           @change="
             setFilter({ filterType: 'localGroups', filterValue: $event })
           "
@@ -26,7 +26,7 @@
         <autocomplete-custom
           :items="workingCircles"
           :selected-items-ids="selectedFilters.workingCircles"
-          label="Working circle"
+          :label="$t('Working circle')"
           @change="
             setFilter({ filterType: 'workingCircles', filterValue: $event })
           "
@@ -35,7 +35,7 @@
     </filter-section>
     <filter-section>
       <template v-slot:title>
-        Time commitment
+        {{ $t("Time commitment") }}
       </template>
       <v-range-slider
         :value="selectedFilters.timeCommitment"
@@ -43,7 +43,7 @@
         :max="timeCommitmentRange.max"
         class="mt-12"
         thumb-label="always"
-        label="Time Commitment"
+        :label="$t('Time Commitment')"
         @end="setFilter({ filterType: 'timeCommitment', filterValue: $event })"
       />
     </filter-section>
@@ -77,7 +77,6 @@ export default {
   },
   methods: {
     ...mapActions("roles", ["setFilter"]),
-    // eslint-disable-next-line func-names
     debounceSearchUpdate: debounce(function($event) {
       const filterValue = $event || "";
       this.setFilter({ filterType: "search", filterValue });

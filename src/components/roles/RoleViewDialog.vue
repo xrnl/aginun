@@ -55,7 +55,7 @@
                   </flex-wrapper>
                   <div v-if="role.createdDate" style="line-height: 1rem">
                     <span class="caption">
-                      Published on {{ formatDate(role.createdDate) }}
+                      {{ publishedOnText }}
                     </span>
                   </div>
                 </flex-wrapper>
@@ -69,10 +69,10 @@
                   </template>
                   <v-list>
                     <v-list-item @click="isEditOpen = true">
-                      <v-list-item-title>Edit</v-list-item-title>
+                      <v-list-item-title>{{ $t("Edit") }}</v-list-item-title>
                     </v-list-item>
                     <v-list-item @click="isDeleteOpen = true">
-                      <v-list-item-title>Delete</v-list-item-title>
+                      <v-list-item-title>{{ $t("Delete") }}</v-list-item-title>
                     </v-list-item>
                   </v-list>
                 </v-menu>
@@ -85,30 +85,30 @@
                   <div>
                     <meta-info
                       v-if="!!role.responsibilities"
-                      title="Responsibilities"
+                      :title="$t('Responsibilities')"
                       :description="role.responsibilities"
                     />
                     <meta-info
                       v-if="!!role.description"
-                      title="Description"
+                      :title="$t('Description')"
                       :description="role.description"
                     />
                     <meta-info
                       v-if="!!role.requirements"
-                      title="Requirements"
+                      :title="$t('Requirements')"
                       :description="role.requirements"
                     />
                     <meta-info
                       v-if="!!role.timeCommitmentMin"
-                      title="Time Commitment"
+                      :title="$t('Time Commitment')"
                       :description="
                         `${role.timeCommitmentMin} -
-                ${role.timeCommitmentMax} hours/week`
+                ${role.timeCommitmentMax} ${$t('hours/week')}`
                       "
                     />
                     <meta-info
                       v-if="role.dueDate"
-                      title="Application deadline"
+                      :title="$t('Application deadline')"
                       :description="formatDate(role.dueDate)"
                     />
                   </div>
@@ -121,26 +121,30 @@
                   depressed
                   @click.stop="applyDialog = true"
                 >
-                  Apply
+                  {{ $t("Apply") }}
                 </v-btn>
                 <v-btn v-if="loggedIn" depressed @click="onFillRole">
                   <v-icon class="mr-1">
                     mdi-check
                   </v-icon>
-                  Role filled
+                  {{ $t("Role filled") }}
                 </v-btn>
               </v-card-actions>
             </template>
             <div v-else class="pa-5 text-center">
               <h3>
-                This role has been filled.
+                {{ $t("This role has been filled.") }}
               </h3>
-              <p>
-                You can still
-                <a @click.stop="applyDialog = true">contact the role aide</a>
-                to ask about this role or other similar opportunities in this
-                circle.
-              </p>
+              <i18n
+                path="You can still {contact} to ask about this role or other similar opportunities in this circle."
+                tag="p"
+              >
+                <template v-slot:contact>
+                  <a @click.stop="applyDialog = true">
+                    {{ $t("contact the role aide") }}
+                  </a>
+                </template>
+              </i18n>
             </div>
           </div>
         </transition>
@@ -150,24 +154,26 @@
       <v-card>
         <v-card-title>
           <h4 v-if="!role.filledDate">
-            Apply
+            {{ $t("Apply") }}
           </h4>
           <h4 v-else>
-            Contact
+            {{ $t("Contact") }}
           </h4>
         </v-card-title>
         <v-card-text>
           <flex-wrapper direction="column">
             <p v-if="!role.filledDate">
-              Please apply by contacting the role aide.
+              {{ $t("Please apply by contacting the role aide.") }}
             </p>
             <icon-link
               v-if="role.email"
               :href="
-                `mailto:${role.email}?subject=Role application: ${role.title}`
+                `mailto:${role.email}?subject=${$t('Role application')}: ${
+                  role.title
+                }`
               "
               :link-text="role.email"
-              label="Email"
+              :label="$t('Email')"
               icon="mdi-email"
             />
             <icon-link
@@ -176,14 +182,14 @@
                 `https://organise.earth/xr-netherlands/messages/${role.mattermostId}`
               "
               :link-text="role.mattermostId"
-              label="Mattermost"
+              :label="$t('Mattermost')"
               icon="mdi-message"
             />
             <icon-link
               v-if="role.phone"
               :href="`tel:${role.phone}`"
               :link-text="role.phone"
-              label="Phone"
+              :label="$t('Phone')"
               icon="mdi-phone"
             />
           </flex-wrapper>
@@ -232,7 +238,12 @@ export default {
   computed: {
     ...mapGetters({
       loggedIn: "user/loggedIn"
-    })
+    }),
+    publishedOnText() {
+      return this.$t("Published on {date}", {
+        date: this.formatDate(this.role.createdDate)
+      });
+    }
   },
   methods: {
     ...mapActions("roles", ["fillRole"]),
@@ -240,7 +251,7 @@ export default {
     onFillRole() {
       this.fillRole(this.role.id);
       this.$emit("input", false);
-      this.displaySuccess("Role filled");
+      this.displaySuccess(this.$t("Role filled"));
       this.$router.push("/roles");
     },
     formatDate(date) {

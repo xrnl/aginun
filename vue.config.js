@@ -12,7 +12,7 @@ module.exports = {
     i18n: {
       locale: "en",
       fallbackLocale: "en",
-      localeDir: "locales",
+      localeDir: path.resolve(__dirname, "./src/i18n/messages"),
       enableInSFC: true
     }
   },
