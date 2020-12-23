@@ -8,10 +8,9 @@
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint --no-fix",
-    "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/i18n/messages/**/*.json'",
-    "i18n:extract": "npm run i18n:extract:en && npm run i18n:extract:nl",
-    "i18n:extract:en": "vue-i18n-extract-translations -v './src/**/*.?(js|ts|vue)' -l './src/i18n/messages/' --target 'en' --key 'i18n'",
-    "i18n:extract:nl": "vue-i18n-extract-translations -v './src/**/*.?(js|ts|vue)' -l './src/i18n/messages/' --target 'nl' --fill --key 'i18n'",
+    "i18n:report": "vue-cli-service i18n:report --src 'src/**/*.?(js|vue)' --locales 'src/i18n/messages/**/*.json'",
+    "i18n:extract": "vue-i18n-extract-translations -v 'src/**/*.?(js|ts|vue)' -l 'src/i18n/messages/' --target 'nl' --fill --key 'i18n'",
+    "posti18n:extract": "node src/i18n/utils/update-empty-translations.js",
     "start": "vue-cli-service serve"
   },
   "dependencies": {
@@ -61,6 +60,7 @@
     "eslint-plugin-vue": "^6.2.2",
     "node-sass": "^5.0.0",
     "prettier": "^1.19.1",
+    "replace-in-file": "^6.1.0",
     "sass": "^1.29.0",
     "sass-loader": "^8.0.2",
     "style-resources-loader": "^1.3.3",
