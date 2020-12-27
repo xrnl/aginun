@@ -10,10 +10,10 @@ interface Language {
 export const languages: Language[] = [
   {
     code: "en",
-    label: i18n.tc("English")
+    label: i18n.t("English").toString()
   },
   {
     code: "nl",
-    label: i18n.tc("Dutch")
+    label: i18n.t("Dutch").toString()
   }
 ];
