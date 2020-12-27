@@ -15,6 +15,8 @@ import themeColorNames from "@/constants/themeColors";
 import NewItemButton from "@/components/NewItemButton.vue";
 import IconLink from "@/components/IconLink.vue";
 import DatePickerField from "@/components/DatePickerField.vue";
+import LanguageSelect from "@/components/LanguageSelect.vue";
+import i18n from "@/i18n/i18n";
 
 Vue.use(Vuetify);
 Vue.use(VueAxios, axios);
@@ -25,6 +27,7 @@ describe("TheAppBar", () => {
   const localVue = createLocalVue();
   localVue.use(Vuex);
   localVue.use(VueRouter);
+  localVue.use(i18n);
   const router = new VueRouter();
 
   beforeAll(() => {
@@ -38,6 +41,7 @@ describe("TheAppBar", () => {
       store,
       vuetify,
       router,
+      i18n,
       ...options
     });
 
@@ -377,20 +381,16 @@ describe("DatePickerField", () => {
   });
 });
 
-import LocaleSelect from "@/components/LocaleSelect";
-
-describe.only("LocaleSelect", () => {
+describe("LanguageSelect", () => {
   let wrapper;
+  let localVue;
 
   beforeAll(() => {
-    wrapper = mount(LocaleSelect, {
+    localVue = createLocalVue();
+    localVue.use(i18n);
+    wrapper = mount(LanguageSelect, {
       vuetify: new Vuetify(),
-      mocks: {
-        $t: (msg) => msg,
-        $i18n: {
-          locale: "en"
-        }
-      }
+      i18n
     });
   });
 

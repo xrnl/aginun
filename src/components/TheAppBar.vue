@@ -22,7 +22,7 @@
     <v-btn text @click.stop="contactSupportDialog = true" class="mr-3">
       {{ $t("Support") }} <v-icon> mdi-help-circle-outline </v-icon>
     </v-btn>
-    <locale-select />
+    <language-select />
     <v-dialog v-model="contactSupportDialog" max-width="450">
       <v-card>
         <v-card-title class="headline">
@@ -56,14 +56,14 @@ import FlexWrapper from "@/components/layout/FlexWrapper";
 import { mapGetters, mapActions } from "vuex";
 import { contactEmail } from "@/constants/contacts";
 import styles from "@/constants/styles";
-import LocaleSelect from "@/components/LocaleSelect.vue";
+import LanguageSelect from "@/components/LanguageSelect.vue";
 
 export default {
   name: "TheAppBar",
   components: {
     IconLink,
     FlexWrapper,
-    LocaleSelect
+    LanguageSelect
   },
   data: () => ({
     contactSupportDialog: false,

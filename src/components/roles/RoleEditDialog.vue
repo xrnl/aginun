@@ -236,7 +236,7 @@ extend("required", {
       article = "a";
     }
 
-    return i18n.t(`You must specify {article} {fieldName}.`, {
+    return i18n.tc(`You must specify {article} {fieldName}.`, {
       article,
       fieldName
     });
@@ -244,7 +244,7 @@ extend("required", {
 });
 extend("requiredSelect", {
   ...required,
-  message: i18n.t("You must select a {_field_}.")
+  message: i18n.tc("You must select a {_field_}.")
 });
 extend("requiredList", {
   validate: () => {
@@ -256,34 +256,34 @@ extend("requiredList", {
     };
   },
   computesRequired: true,
-  message: i18n.t("You must add at least one {_field_}.")
+  message: i18n.tc("You must add at least one {_field_}.")
 });
 extend("email", {
   ...email,
-  message: i18n.t("You must enter a valid email address.")
+  message: i18n.tc("You must enter a valid email address.")
 });
 extend("alpha_spaces", {
   ...alphaSpaces,
-  message: i18n.t("The {_field_} can only contain letters and spaces.")
+  message: i18n.tc("The {_field_} can only contain letters and spaces.")
 });
 extend("max", {
   ...max,
   message: (_, values) =>
-    i18n.t("The {_field_} must be under {length} characters.", values)
+    i18n.tc("The {_field_} must be under {length} characters.", values)
 });
 extend("phone", {
   validate: (value) => {
     const phoneRegex = RegExp(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/);
     return phoneRegex.test(value);
   },
-  message: i18n.t("You must enter a valid phone number")
+  message: i18n.tc("You must enter a valid phone number")
 });
 extend("mattermost", {
   validate: (value) => {
     const mattermostRegex = RegExp(/^@\S+$/);
     return mattermostRegex.test(value);
   },
-  message: i18n.t("You must enter a valid Mattermost Id.")
+  message: i18n.tc("You must enter a valid Mattermost Id.")
 });
 
 const initialState = () => ({

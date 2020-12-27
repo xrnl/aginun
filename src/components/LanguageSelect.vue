@@ -3,8 +3,8 @@
     style="max-width: 130px; z-index: 16"
     hide-details
     :value="$i18n.locale"
-    @input="setSelected"
     :items="locales"
+    @input="setSelected"
     item-text="label"
     item-value="code"
     dense
@@ -14,20 +14,12 @@
 
 <script>
 import { loadLanguageAsync } from "@/i18n/utils/load-language-async";
+import { languages } from "@/constants/languages";
 
 export default {
-  name: "LocaleSelect",
+  name: "LanguageSelect",
   data: () => ({
-    locales: [
-      {
-        code: "en",
-        label: "English"
-      },
-      {
-        code: "nl",
-        label: "Dutch"
-      }
-    ]
+    locales: languages
   }),
   methods: {
     async setSelected(lang) {
