@@ -16,12 +16,12 @@
           {{ role.timeCommitmentMin }} -
           {{ role.timeCommitmentMax }}
         </span>
-        <span class="overline text-uppercase">hours / week</span>
+        <span class="overline text-uppercase">{{ $t("hours / week") }}</span>
       </span>
     </template>
     <template #action>
       <v-btn dark :to="`roles/view/${role.id}`">
-        Read More
+        {{ $t("Read More") }}
       </v-btn>
     </template>
   </default-card>
@@ -52,4 +52,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.overline {
+  font-family: unset !important;
+}
+</style>

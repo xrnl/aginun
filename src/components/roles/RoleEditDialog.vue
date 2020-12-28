@@ -11,7 +11,7 @@
           >
             <v-text-field
               v-model="role.title"
-              label="Title"
+              :label="$t('Title')"
               :error-messages="errors"
             />
           </validation-provider>
@@ -25,7 +25,7 @@
               :items="localGroups"
               item-value="id"
               item-text="title"
-              label="Local group"
+              :label="$t('Local group')"
               :error-messages="errors"
             />
           </validation-provider>
@@ -39,12 +39,12 @@
               :items="workingCircles"
               item-value="id"
               item-text="title"
-              label="Working circle"
+              :label="$t('Working circle')"
               :error-messages="errors"
             />
           </validation-provider>
           <p style="color: gray" class="caption">
-            Responsibilities
+            {{ $t("Responsibilities") }}
           </p>
           <validation-provider
             v-slot="{ errors }"
@@ -53,9 +53,9 @@
             name="responsibility"
           >
             <v-text-field
-              v-model="newResponsibility"
-              label="Add new responsibility"
               solo
+              v-model="newResponsibility"
+              :label="$t('Add new responsibility')"
               :error-messages="errorResponsibility || errors"
               @keypress.enter="addResponsibility"
             >
@@ -80,7 +80,7 @@
                 :key="`${i}-${responsibility}`"
                 class="d-flex justify-space-between"
               >
-                <span>{{ responsibility }}</span>
+                <span style="flex: 1">{{ responsibility }}</span>
                 <v-btn
                   text
                   icon
@@ -99,10 +99,12 @@
           >
             <v-textarea
               v-model="role.description"
-              label="Description (optional)"
-              placeholder="Any additional information not specified in the set of responsibilities.
-
-This can include information about the circle or the specific project that the role is needed for."
+              :label="$t('Description (optional)')"
+              :placeholder="
+                $t(
+                  'Any additional information not specified in the set of responsibilities. \n \n This can include information about the circle or the specific project that the role is needed for.'
+                )
+              "
               :error-messages="errors"
             />
           </validation-provider>
@@ -113,14 +115,14 @@ This can include information about the circle or the specific project that the r
           >
             <v-textarea
               v-model="role.requirements"
-              label="Requirements (optional)"
-              placeholder="Skills, experience, equipment"
+              :label="$t('Requirements (optional)')"
+              :placeholder="$t('Skills, experience, equipment')"
               :error-messages="errors"
             />
           </validation-provider>
           <date-picker-field
             :date="role.dueDate"
-            label="Application deadline"
+            :label="$t('Application deadline')"
             @update="onDueDateChange"
           />
           <validation-provider
@@ -133,20 +135,20 @@ This can include information about the circle or the specific project that the r
               :items="timeCommitments"
               item-value="min"
               return-object
-              label="Time commitment"
+              :label="$t('Time commitment')"
               :error-messages="errors"
               @change="onTimeCommitmentChange"
             >
               <template v-slot:item="{ item }">
-                {{ item.min }} - {{ item.max }} hours/week
+                {{ item.min }} - {{ item.max }} {{ $t("hours/week") }}
               </template>
               <template v-slot:selection="{ item }">
-                {{ item.min }} - {{ item.max }} hours/week
+                {{ item.min }} - {{ item.max }} {{ $t("hours/week") }}
               </template>
             </v-select>
           </validation-provider>
           <p class="caption mb-0" style="color: gray">
-            Contact details
+            {{ $t("Contact details") }}
           </p>
           <validation-provider
             v-slot="{ errors }"
@@ -156,7 +158,7 @@ This can include information about the circle or the specific project that the r
           >
             <v-text-field
               v-model="role.email"
-              label="Email"
+              :label="$t('Email')"
               :error-messages="errors"
             />
           </validation-provider>
@@ -168,7 +170,7 @@ This can include information about the circle or the specific project that the r
           >
             <v-text-field
               v-model="role.mattermostId"
-              label="Mattermost id"
+              :label="$t('Mattermost id')"
               :error-messages="errors"
             />
           </validation-provider>
@@ -180,24 +182,24 @@ This can include information about the circle or the specific project that the r
           >
             <v-text-field
               v-model="role.phone"
-              label="Phone number (optional)"
+              :label="$t('Phone number (optional)')"
               :error-messages="errors"
             />
           </validation-provider>
           <v-card-actions class="d-flex justify-end">
             <v-btn color="primary" text @click="$emit('input', false)">
-              Cancel
+              {{ $t("Cancel") }}
             </v-btn>
             <v-tooltip top>
               <template v-slot:activator="{ on }">
                 <div v-on="invalid ? on : undefined">
                   <v-btn color="primary" :disabled="invalid" type="submit">
-                    Submit
+                    {{ $t("Submit") }}
                   </v-btn>
                 </div>
               </template>
               <span>
-                Form is incomplete
+                {{ $t("Form is incomplete") }}
               </span>
             </v-tooltip>
           </v-card-actions>
@@ -218,11 +220,14 @@ import {
 } from "vee-validate/dist/rules";
 import DatePickerField from "@/components/DatePickerField.vue";
 import { timeCommitments } from "@/constants/timeCommitments";
+import i18n from "@/i18n/i18n";
 
 extend("required", {
   ...required,
   message: (fieldName) => {
     let article;
+    // TODO: this logic won't work with different languages,
+    // let's think of something more generic.
     if (fieldName.split(" ")[0].endsWith("s")) {
       article = "";
     } else if (/^([aeiou])/i.test(fieldName)) {
@@ -231,12 +236,15 @@ extend("required", {
       article = "a";
     }
 
-    return `You must specify ${article} ${fieldName}.`;
+    return i18n.t(`You must specify {article} {fieldName}.`, {
+      article,
+      fieldName
+    });
   }
 });
 extend("requiredSelect", {
   ...required,
-  message: "You must select a {_field_}."
+  message: i18n.t("You must select a {_field_}.")
 });
 extend("requiredList", {
   validate: () => {
@@ -248,31 +256,34 @@ extend("requiredList", {
     };
   },
   computesRequired: true,
-  message: "You must add at least one {_field_}."
+  message: i18n.t("You must add at least one {_field_}.")
 });
-extend("email", { ...email, message: "You must enter a valid email address." });
+extend("email", {
+  ...email,
+  message: i18n.t("You must enter a valid email address.")
+});
 extend("alpha_spaces", {
   ...alphaSpaces,
-  message: "The {_field_} can only contain letters and spaces."
+  message: i18n.t("The {_field_} can only contain letters and spaces.")
 });
 extend("max", {
   ...max,
-  params: ["length"],
-  message: "The {_field_} must be under {length} characters."
+  message: (_, values) =>
+    i18n.t("The {_field_} must be under {length} characters.", values)
 });
 extend("phone", {
   validate: (value) => {
     const phoneRegex = RegExp(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/);
     return phoneRegex.test(value);
   },
-  message: "You must enter a valid phone number"
+  message: i18n.t("You must enter a valid phone number")
 });
 extend("mattermost", {
   validate: (value) => {
     const mattermostRegex = RegExp(/^@\S+$/);
     return mattermostRegex.test(value);
   },
-  message: "You must enter a valid Mattermost Id."
+  message: i18n.t("You must enter a valid Mattermost Id.")
 });
 
 const initialState = () => ({
@@ -319,10 +330,13 @@ export default {
       const maxCharsResponsibility = 200;
       if (this.newResponsibility) {
         if (this.role.responsibilities.length === 10) {
-          return "You can enter a maximum of 10 responsibilities";
+          return this.$t("You can enter a maximum of 10 responsibilities");
         }
         if (this.newResponsibility.length > maxCharsResponsibility) {
-          return `The responsibility must be under ${maxCharsResponsibility} characters.`;
+          return this.$t(
+            `The responsibility must be under {maxCharsResponsibility} characters.`,
+            maxCharsResponsibility
+          );
         }
       }
       return null;
@@ -331,7 +345,7 @@ export default {
       return !this.isEmpty(this.newResponsibility) && !this.errorResponsibility;
     },
     formTitle() {
-      return this.editRole ? "Edit Role" : "New Role";
+      return this.editRole ? this.$t("Edit Role") : this.$t("New Role");
     }
   },
   watch: {
@@ -389,7 +403,9 @@ export default {
         this.$refs.form.reset();
       });
 
-      this.displaySuccess(this.editRole ? "Role edited" : "Role created");
+      this.displaySuccess(
+        this.editRole ? this.$t("Role edited") : this.$t("Role created")
+      );
     },
     isEmpty: (text) => !text || text.length === 0 || !text.trim()
   }

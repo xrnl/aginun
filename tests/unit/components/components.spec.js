@@ -15,6 +15,8 @@ import themeColorNames from "@/constants/themeColors";
 import NewItemButton from "@/components/NewItemButton.vue";
 import IconLink from "@/components/IconLink.vue";
 import DatePickerField from "@/components/DatePickerField.vue";
+import LanguageSelect from "@/components/LanguageSelect.vue";
+import i18n from "@/i18n/i18n";
 
 Vue.use(Vuetify);
 Vue.use(VueAxios, axios);
@@ -25,6 +27,7 @@ describe("TheAppBar", () => {
   const localVue = createLocalVue();
   localVue.use(Vuex);
   localVue.use(VueRouter);
+  localVue.use(i18n);
   const router = new VueRouter();
 
   beforeAll(() => {
@@ -38,6 +41,7 @@ describe("TheAppBar", () => {
       store,
       vuetify,
       router,
+      i18n,
       ...options
     });
 
@@ -374,5 +378,23 @@ describe("DatePickerField", () => {
     // so we need to set the expected date to match it
     expected.setUTCHours(0, 0, 0, 0);
     expect(emitted).toBe(expected.toISOString());
+  });
+});
+
+describe("LanguageSelect", () => {
+  let wrapper;
+  let localVue;
+
+  beforeAll(() => {
+    localVue = createLocalVue();
+    localVue.use(i18n);
+    wrapper = mount(LanguageSelect, {
+      vuetify: new Vuetify(),
+      i18n
+    });
+  });
+
+  it("component is rendered", () => {
+    expect(wrapper.get(".v-select__selection").text()).toBe("English");
   });
 });
