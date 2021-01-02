@@ -2,12 +2,17 @@
 
 Hey there :wave::smile:, we are excited that you want to contribute to this project! Please read this guide to learn how you can best contribute. In this guide you will find instructions on how to:
 
+- [Join project meetings](https://github.com/xrnl/aginun/blob/master/CONTRIBUTING.md#join-project-meetings)
 - [Report a problem](https://github.com/xrnl/aginun/blob/master/CONTRIBUTING.md#report-a-problem)
 - [Request a feature](https://github.com/xrnl/aginun/blob/master/CONTRIBUTING.md#request-a-feature)
 - [Contribute to the code](https://github.com/xrnl/aginun/blob/master/CONTRIBUTING.md#contribute-to-the-code)
 - [Contribute without programming](https://github.com/xrnl/aginun/blob/master/CONTRIBUTING.md#contribute-without-programming)
 
 If you want to get in contact or learn more about the project, check out the [instructions for getting support](https://github.com/xrnl/aginun/blob/master/SUPPORT.md).
+
+## Join project meetings
+
+Every other Tuesday at 19:00 we hold a brief and efficient online meeting to review the progress from the previous 2 weeks, resolve questions about current work, discuss ideas and set goals for the next two weeks. We would like to invite you to this meeting so that you can meet the team, share your ideas and get a warm welcome to the project. You can join the online meeting using [this link](https://meet2.organise.earth/b/tec-cu9-9tr) on the next Tuesday that lands on an [even week number](https://www.epochconverter.com/weeknumbers).
 
 ## Report a problem
 
