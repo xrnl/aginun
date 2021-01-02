@@ -11,30 +11,19 @@ If you want to get in contact or learn more about the project, check out the [in
 
 ## Report a problem
 
-If you have found a problem in the application, fisrt search [the project issues](https://github.com/xrnl/aginun/issues?q=is%3Aissue+is%3Aopen+label%3Abug) to see if it has already been reported. If the problem hasn't been reported, create a [new issue](https://github.com/xrnl/aginun/issues/new) with the following requirements:
+If you have found a problem in the application, fisrt search [the project issues](https://github.com/xrnl/aginun/issues?q=is%3Aissue+is%3Aopen+label%3Abug) to see if it has already been reported. If the problem hasn't been reported, [create a new issue reporting a problem](https://github.com/xrnl/aginun/issues/new?labels=bug&template=report-a-problem.md).
 
-1. Use a clear descriptive title explaining the problem.
-2. Assign the `bug` label to help maintainers distinguish this problem from less urgent issues.
-3. Describe the exact steps you took that led to the problem. For example, 1. Opened the application in Firefox 2. Clicked on a role 3. Clicked on the button to apply to the role. Explaining these steps is very important for maintainers to reproduce your problem, examine it and find a way to fix it.
-4. Describe what you expected to happen after following all these steps and what actually hapenned. For example, I expcted to find the contact information to apply to the role, but instead the application went back to the list of all roles.
-5. Add any additional comments.
-
-After you submit the issue explaining your problem, you are highly encouraged to develop a fix for the problem. Learn how you can do this in the section [Contributing to the code](https://github.com/xrnl/aginun/blob/master/CONTRIBUTING.md#Contributing-to-the-code).
+After you submit the issue explaining your problem, you are very welcome to help solve the problem. In the section [contributing to the code](https://github.com/xrnl/aginun/blob/master/CONTRIBUTING.md#Contributing-to-the-code) you can learn how. 
 
 ## Request a feature
 
-If you have an idea for a feature to improve the application, first read the [roadmap](https://github.com/xrnl/aginun/wiki/Roadmap) and the [future functionalities](https://github.com/xrnl/aginun/wiki/Future-functionalities) page to see if your idea will already be developed, and search the [existing suggestions](https://github.com/xrnl/aginun/issues?q=is%3Aopen+is%3Aissue+label%3Asuggestion) to see if it has already been suggested. If you can't find anything, create a [new issue](https://github.com/xrnl/aginun/issues/new) with the following requirements:
-
-1. Use a clear descriptive title explaining your feature.
-2. Add the `suggestion` label to help maintainers distinguish your idea from other issues.
-3. Explain what problem your idea solves.
-4. Describe a step-by-step use case of your feature. See the [functional specification](https://github.com/xrnl/aginun/wiki/Functional-Specification) for example use cases.
+If you have an idea for a feature to improve the application, first search the [open issues](https://github.com/xrnl/aginun/issues) and the [future functionalities](https://github.com/xrnl/agiinun/wiki/Future-functionalities) page to see if your idea has already been suggested. If you can't find anything, create a [new issue requesting a feature](https://github.com/xrnl/aginun/issues/new?labels=suggestion&template=request-a-feature.md).
 
 After you submit your feature request, a project maintainer will give you one of the following answers within 2 days:
 
-- The feature will be implemented in the current version. In this case you can directly start [developing your feature](https://github.com/xrnl/aginun/blob/master/CONTRIBUTING.md#how-to-contribute).
-- The feature will be implemented in a future version, and is added to the page of [future functionalities](https://github.com/xrnl/aginun/wiki/Future-functionalities). In this case you are encouraged not to develop your proposed feature, and instead develop features assigned to the next version, as these have a higher priority.
-- The feature will not be implemented, along with an explanation of why this feature is rejected.
+- The feature will be implemented in the current version. In this case you can directly start [developing your feature](https://github.com/xrnl/aginun/blob/master/CONTRIBUTING.md#Contributing-to-the-code).
+- The feature will be implemented in a future version. In this case you are encouraged not to develop your proposed feature, and instead develop features assigned to the next version, as these have a higher priority.
+- The feature will not be implemented. The project maintainer will explain why it won't be implemented so that you can understand the decision and appeal the decision if you still think your suggestion should be implemented.
 
 ## Contribute to the code
 
