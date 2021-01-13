@@ -13,9 +13,10 @@
       <h2>{{ $t("Vacatures") }}</h2>
     </v-toolbar-title>
     <v-spacer />
-    <v-btn v-if="!loggedIn" text @click.stop="login">
+    <login-modal v-if="!loggedIn"></login-modal>
+    <!--<v-btn v-if="!loggedIn" text @click.stop="openLoginModal">
       {{ $t("Login") }}
-    </v-btn>
+    </v-btn>-->
     <v-btn v-else text @click.stop="logout">
       {{ $t("Logout") }}
     </v-btn>
@@ -57,13 +58,15 @@ import { mapGetters, mapActions } from "vuex";
 import { contactEmail } from "@/constants/contacts";
 import styles from "@/constants/styles";
 import LanguageSelect from "@/components/LanguageSelect.vue";
+import LoginModal from "@/components/layout/LoginModal.vue";
 
 export default {
   name: "TheAppBar",
   components: {
     IconLink,
     FlexWrapper,
-    LanguageSelect
+    LanguageSelect,
+    LoginModal
   },
   data: () => ({
     contactSupportDialog: false,
@@ -77,14 +80,6 @@ export default {
   },
   methods: {
     ...mapActions("user", ["logout"]),
-    login() {
-      //TODO: open login modal/page here
-
-      const username = "kaj-dev";
-      const password = "test";
-
-      this.$store.dispatch("user/login", { username, password });
-    }
   }
 };
 </script>
