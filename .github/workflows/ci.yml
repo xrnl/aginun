@@ -86,4 +86,4 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '12'
-      - run: console.log("Script has run.")
+      - run: node console.log('GITHUB_BASE_REF', $GITHUB_BASE_REF)
