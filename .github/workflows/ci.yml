@@ -16,7 +16,7 @@ jobs:
         # Use this to check for `cache-hit` below
         id: npm-cache
         with:
-          path: ~/.npm
+          path: node_modules
           # Bust cache when we update dependencies
           key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
@@ -37,7 +37,7 @@ jobs:
       # Use cached dependencies
       - uses: actions/cache@v2
         with:
-          path: ~/.npm
+          path: node_modules
           key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-build-
@@ -53,7 +53,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/cache@v2
         with:
-          path: ~/.npm
+          path: node_modules
           key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.OS }}-build-
@@ -87,7 +87,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/cache@v2
         with:
-          path: ~/.npm
+          path: node_modules
           key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.OS }}-build-
