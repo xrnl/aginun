@@ -19,7 +19,7 @@ jobs:
       - name: Install dependencies
         # Only install dependencies when not found in cache
         if: steps.npm-cache.outputs.cache-hit != 'true'
-        uses: actions/setup-node@v1
+      - uses: actions/setup-node@v1
         with:
           node-version: '12'
         run: npm ci
