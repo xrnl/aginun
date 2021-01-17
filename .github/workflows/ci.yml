@@ -16,7 +16,7 @@ jobs:
         # Use this to check for `cache-hit` below
         id: npm-cache
         with:
-          path: node_modules
+          path: ~/.npm
           # Bust cache when we update dependencies
           key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
@@ -37,7 +37,7 @@ jobs:
       # Use cached dependencies
       - uses: actions/cache@v2
         with:
-          path: node_modules
+          path: ~/.npm
           key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-build-
@@ -53,7 +53,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/cache@v2
         with:
-          path: node_modules
+          path: ~/.npm
           key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.OS }}-build-
@@ -78,21 +78,21 @@ jobs:
         with:
           node-version: '12'
       - run: npm run test:unit
-  # i18n-push:
-  #   # Only run this on commits to master
-  #   if: ${{ github.event_name == 'push' }}
-  #   needs: install
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: actions/cache@v2
-  #       with:
-  #         path: node_modules
-  #         key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
-  #         restore-keys: |
-  #           ${{ runner.OS }}-build-
-  #           ${{ runner.OS }}-
-  #     - uses: actions/setup-node@v1
-  #       with:
-  #         node-version: '12'
-  #     - run: node -e 'console.log("Halo!")'
+  i18n-push:
+    # Only run this on commits to master
+    if: ${{ github.event_name == 'push' }}
+    needs: install
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-build-
+            ${{ runner.OS }}-
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+      - run: node -e 'console.log("Halo!")'
