@@ -12,14 +12,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       # Cache dependencies so they can be reused by following jobs
-      # - uses: bahmutov/npm-install@v1
       - uses: actions/cache@v2
         # Use this to check for `cache-hit` below
         id: npm-cache
         with:
           path: node_modules
           # Bust cache when we update dependencies
-          key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
       # Only install dependencies when not found in cache
       - uses: actions/setup-node@v1
         if: steps.npm-cache.outputs.cache-hit != 'true'
@@ -32,12 +31,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      # - uses: bahmutov/npm-install@v1
       # Use cached dependencies
       - uses: actions/cache@v2
         with:
           path: node_modules
-          key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
       - uses: actions/setup-node@v1
         with:
           node-version: '12'
@@ -47,11 +45,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      # - uses: bahmutov/npm-install@v1
       - uses: actions/cache@v2
         with:
           path: node_modules
-          key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
       - uses: actions/setup-node@v1
         with:
           node-version: '12'
@@ -61,11 +58,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      # - uses: bahmutov/npm-install@v1
       - uses: actions/cache@v2
         with:
           path: node_modules
-          key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
       - uses: actions/setup-node@v1
         with:
           node-version: '12'
@@ -77,11 +73,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      # - uses: bahmutov/npm-install@v1
       - uses: actions/cache@v2
         with:
           path: node_modules
-          key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
       - uses: actions/setup-node@v1
         with:
           node-version: '12'
