@@ -1,6 +1,6 @@
-name: Pull request CI
+name: CI
 on:
-  pull_request:
+  push:
     branches:
       - master
 jobs:
@@ -19,11 +19,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-
             ${{ runner.OS }}-
+      # Only install dependencies when not found in cache
       - uses: actions/setup-node@v1
         with:
+          if: steps.npm-cache.outputs.cache-hit != 'true'
           node-version: '12'
       - run: npm ci
-        # Only install dependencies when not found in cache
         if: steps.npm-cache.outputs.cache-hit != 'true'
   lint:
     needs: install
@@ -74,3 +75,22 @@ jobs:
         with:
           node-version: '12'
       - run: npm run test:unit
+  i18n-push:
+    if: ${{ github.event_name == 'push' }}
+    needs: install
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-build-
+            ${{ runner.OS }}-
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+      - run: node -e 'console.log("Halo!")'
+
+
