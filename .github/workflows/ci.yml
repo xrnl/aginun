@@ -22,52 +22,52 @@ jobs:
         with:
           node-version: '12'
       - run: npm ci
-  # lint:
-  #   needs: install
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     # Use cached dependencies
-  #     - uses: actions/cache@v2
-  #       with:
-  #         path: node_modules
-  #         key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
-  #         restore-keys: |
-  #           ${{ runner.os }}-build-
-  #           ${{ runner.OS }}-
-  #     - uses: actions/setup-node@v1
-  #       with:
-  #         node-version: '12'
-  #     - run: npm run lint
-  # build:
-  #   needs: install
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: actions/cache@v2
-  #       with:
-  #         path: node_modules
-  #         key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
-  #         restore-keys: |
-  #           ${{ runner.OS }}-build-
-  #           ${{ runner.OS }}-
-  #     - uses: actions/setup-node@v1
-  #       with:
-  #         node-version: '12'
-  #     - run: npm run build
-  # test:
-  #   needs: install
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: actions/cache@v2
-  #       with:
-  #         path: node_modules
-  #         key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
-  #         restore-keys: |
-  #           ${{ runner.OS }}-build-
-  #           ${{ runner.OS }}-
-  #     - uses: actions/setup-node@v1
-  #       with:
-  #         node-version: '12'
-  #     - run: npm run test:unit
+  lint:
+    needs: install
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      # Use cached dependencies
+      - uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-
+            ${{ runner.OS }}-
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+      - run: npm run lint
+  build:
+    needs: install
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-build-
+            ${{ runner.OS }}-
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+      - run: npm run build
+  test:
+    needs: install
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-build-
+            ${{ runner.OS }}-
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+      - run: npm run test:unit
