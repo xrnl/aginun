@@ -1,5 +1,8 @@
-name: CI
-on: [push, pull_request]
+name: Pull request CI
+on:
+  pull_request:
+    branches:
+      - master
 jobs:
   install:
     runs-on: ubuntu-latest
