@@ -16,12 +16,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-
             ${{ runner.OS }}-
-      # Only install dependencies when not found in cache
-      - if: steps.npm-cache.outputs.cache-hit != 'true'
-      - uses: actions/setup-node@v1
+      - name: Install dependencies
+        # Only install dependencies when not found in cache
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+        uses: actions/setup-node@v1
         with:
           node-version: '12'
-      - run: npm ci
+        run: npm ci
   lint:
     needs: install
     runs-on: ubuntu-latest
