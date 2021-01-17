@@ -21,8 +21,8 @@ jobs:
             ${{ runner.OS }}-
       # Only install dependencies when not found in cache
       - uses: actions/setup-node@v1
+        if: steps.npm-cache.outputs.cache-hit != 'true'
         with:
-          if: steps.npm-cache.outputs.cache-hit != 'true'
           node-version: '12'
       - run: npm ci
         if: steps.npm-cache.outputs.cache-hit != 'true'
