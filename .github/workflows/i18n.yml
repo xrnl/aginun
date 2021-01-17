@@ -15,8 +15,10 @@ jobs:
           restore-keys: |
             ${{ runner.OS }}-build-
             ${{ runner.OS }}-
-      - if: steps.npm-cache.outputs.cache-hit == 'true'
       - uses: actions/setup-node@v1
+        if: steps.npm-cache.outputs.cache-hit == 'true'
         with:
           node-version: '12'
-      - run: node -e 'console.log("Halo!")' 
+      - run: node -e 'console.log("Halo!")'
+        if: steps.npm-cache.outputs.cache-hit == 'true'
+
