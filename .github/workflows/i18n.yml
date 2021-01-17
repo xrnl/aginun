@@ -1,0 +1,22 @@
+name: i18n
+on:
+  push:
+    branches:
+      - master
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-build-
+            ${{ runner.OS }}-
+      - if: steps.npm-cache.outputs.cache-hit == 'true'
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+      - run: node -e 'console.log("Halo!")' 
