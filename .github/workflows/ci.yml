@@ -81,3 +81,5 @@ jobs:
         with:
           node-version: '12'
       - run: npm run i18n:push
+        env:
+          LOCO_API_KEY: ${{ secrets.LOCO_API_KEY }}
