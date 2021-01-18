@@ -5,7 +5,7 @@ const translations = require("../messages/nl.json");
 (async () => {
   try {
     await axios.post(
-      "https://localise.biz/api/import/json?index=text&locale=nl",
+      "https://localise.biz/api/import/json?index=text&locale=nl&tag-absent=unused&tag-new=needs-translation",
       translations,
       {
         headers: {
