@@ -11,7 +11,7 @@
 					<div class="container">
 						<div class="row">
 							<div class="col-12">
-								<input v-model="username" placeholder="username">
+								<input v-model="username" placeholder="username" type="text">
 							</div>
 						</div>
 						<div class="row">
@@ -38,7 +38,6 @@
 </template>
 
 <script>
-	import qs from "qs";
 
 	export default {
 		data () {
@@ -59,27 +58,10 @@
 			},
 			async login(e) {
 				const { username, password } = this;
-				const config = {
-					headers: {"Content-Type": "application/x-www-form-urlencoded"}
-				};
-				const params = {
-					// eslint-disable-next-line @typescript-eslint/camelcase
-					grant_type: "password",
-					// eslint-disable-next-line @typescript-eslint/camelcase
-					client_id: "volunteerplatform",
-					username,
-					password
-				};
-				let self = this;
-				this.axios.post(process.env.VUE_APP_KEYSERVER_URL || "", qs.stringify(params), config).then(function (res) {
-					const token = res.data.access_token;
-					self.$store.dispatch("user/login", {token});
-				}).catch(function (e) {
-					console.log(e.response);
-					if(e.response.data)
-						self.errorMessage = e.response.data.error_description;
-					else
-						self.errorMessage = "Inlog server unavailable";
+				this.$store.dispatch("user/login", {username, password}).then(result => {
+					if(!result[0]) {//no succes
+						this.errorMessage = result[1];
+					}
 				});
 				e.preventDefault();
 			}
