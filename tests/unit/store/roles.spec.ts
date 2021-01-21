@@ -18,7 +18,7 @@ describe("Roles Store", () => {
       title: "Role 2"
     }
   ];
-  const mockData = {
+  const mockState: Partial<RolesState> = {
     roles
   };
   const apolloQuerySpy = jest.spyOn(apolloClient, "query");
@@ -45,15 +45,50 @@ describe("Roles Store", () => {
     });
 
     describe("isUsingFilters", () => {
-      it("returns false when not using filters", () => {
+      it("returns false when using the default filters", () => {
         expect(
           rolesStore.getters.isNewQuery({
-            selectedFilters: {}
+            selectedFilters: {
+              workingCircles: [],
+              localGroups: [],
+              search: "",
+              timeCommitment: [1, 30]
+            }
           })
         ).toBe(false);
       });
 
-      it("returns true when using filters", () => {
+      it("returns true when using workingCircles", () => {
+        expect(
+          rolesStore.getters.isUsingFilters({
+            selectedFilters: {
+              workingCircles: ["something"]
+            }
+          })
+        ).toBe(true);
+      });
+
+      it("returns true when using localGroups", () => {
+        expect(
+          rolesStore.getters.isUsingFilters({
+            selectedFilters: {
+              localGroups: ["something"]
+            }
+          })
+        ).toBe(true);
+      });
+
+      it("returns true when using timeCommitment", () => {
+        expect(
+          rolesStore.getters.isUsingFilters({
+            selectedFilters: {
+              timeCommitment: [2]
+            }
+          })
+        ).toBe(true);
+      });
+
+      it("returns true when using search", () => {
         expect(
           rolesStore.getters.isUsingFilters({
             selectedFilters: {
@@ -69,11 +104,16 @@ describe("Roles Store", () => {
     describe("addRole", () => {
       it("adds a new role to the state", () => {
         const state = {
-          roles: []
+          roles: [
+            {
+              id: 1,
+              title: "Role 1"
+            }
+          ]
         };
         const newRole = {
-          id: 1,
-          title: "Role 1"
+          id: 2,
+          title: "Role 2"
         };
         rolesStore.mutations.addRole(state, newRole);
         expect(state.roles[0]).toBe(newRole);
@@ -255,7 +295,9 @@ describe("Roles Store", () => {
         loaded: jest.fn()
       };
       apolloQuerySpy.mockReturnValue(
-        Promise.resolve({ data: mockData } as ApolloQueryResult<unknown>)
+        Promise.resolve({ data: mockState } as ApolloQueryResult<
+          Partial<RolesState>
+        >)
       );
 
       it("commits setLoadingState to true", async () => {
@@ -321,8 +363,8 @@ describe("Roles Store", () => {
           Promise.resolve({
             data: {
               roles: []
-            }
-          } as ApolloQueryResult<unknown>)
+            } as Partial<RolesState>
+          } as ApolloQueryResult<Partial<RolesState>>)
         );
         await rolesStore.actions.loadRoles(defaultPayload, defaultScrollState);
         expect(defaultScrollState.complete).toBeCalled();

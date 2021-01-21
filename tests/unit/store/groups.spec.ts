@@ -23,7 +23,7 @@ describe("Groups Store", () => {
       title: "Circle 2"
     }
   ];
-  const mockData = {
+  const mockState: GroupsState = {
     localGroups,
     workingCircles
   };
@@ -32,13 +32,13 @@ describe("Groups Store", () => {
   describe("getters", () => {
     describe("localGroupIds", () => {
       it("returns localGroups ids", () => {
-        expect(groupsStore.getters.localGroupIds(mockData)).toEqual([1, 2]);
+        expect(groupsStore.getters.localGroupIds(mockState)).toEqual([1, 2]);
       });
     });
 
     describe("workingCircleIds", () => {
       it("returns workingCircles ids", () => {
-        expect(groupsStore.getters.workingCircleIds(mockData)).toEqual([3, 4]);
+        expect(groupsStore.getters.workingCircleIds(mockState)).toEqual([3, 4]);
       });
     });
   });
@@ -63,7 +63,7 @@ describe("Groups Store", () => {
 
   describe("actions", () => {
     apolloQuerySpy.mockReturnValue(
-      Promise.resolve({ data: mockData } as ApolloQueryResult<unknown>)
+      Promise.resolve({ data: mockState } as ApolloQueryResult<GroupsState>)
     );
 
     describe("loadGroups", () => {

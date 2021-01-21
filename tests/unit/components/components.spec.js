@@ -40,7 +40,14 @@ describe("TheAppBar", () => {
   const router = new VueRouter();
 
   beforeAll(() => {
-    store = new Vuex.Store({});
+    store = new Vuex.Store({
+      modules: {
+        user: {
+          namespaced: true,
+          getters: { loggedIn: () => true }
+        }
+      }
+    });
     vuetify = new Vuetify({ theme: { dark: false } });
   });
 
