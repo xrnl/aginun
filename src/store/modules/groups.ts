@@ -1,6 +1,11 @@
 import { apolloClient } from "@/plugins/vue-apollo";
 import gql from "graphql-tag";
 
+export interface GroupsState {
+  localGroups: unknown[];
+  workingCircles: unknown[];
+}
+
 export default {
   namespaced: true,
   state: {
