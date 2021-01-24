@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "vue": "vue-cli-service",
-    "i18n:report": "vue-cli-service i18n:report --src 'src/**/*.?(js|vue)' --locales 'src/i18n/messages/**/*.json'",
+    "i18n:report": "vue-cli-service i18n:report --src 'src/**/*.?(js|ts|vue)' --locales 'src/i18n/messages/**/*.json'",
     "i18n:extract": "vue-i18n-extract-translations -v 'src/**/*.?(js|ts|vue)' -l 'src/i18n/messages/' --target 'nl' --fill '' --key 'i18n'",
     "prei18n:push": "npm run i18n:extract",
     "i18n:push": "node src/i18n/scripts/push-translations.js",
