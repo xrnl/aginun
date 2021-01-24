@@ -1,5 +1,10 @@
 import qs from "qs";
 import axios from "axios";
+import Vue from "vue";
+import VueCookies from 'vue-cookies';
+import store from "../../store";
+
+Vue.use(VueCookies);
 
 export default {
   namespaced: true,
@@ -7,15 +12,27 @@ export default {
     token: ""
   },
   getters: {
-    loggedIn: (state) => !!state.token
+    loggedIn(state) {
+      return !!state.token;
+    }
   },
   mutations: {
-    setToken(state, token) {
+    setToken(state, token: string) {
       state.token = token;
-      //todo: check if cookies are accepted
+    },
+    setTokenCookie(state, token: string, lifetime: string) {
+      if(store.state.acceptedCookies)
+        Vue.$cookies.set('loginToken', token, lifetime);
+    },
+    removeToken(state) {
+      state.token = null;
+      Vue.$cookies.remove('loginToken');
     }
   },
   actions: {
+    setTokenOnStart({commit}): void {
+      commit("setToken", Vue.$cookies.get('loginToken'));
+    },
     async login({ commit }, {username, password}): Promise<[boolean, string]> {
       const config = {
         headers: {"Content-Type": "application/x-www-form-urlencoded"}
@@ -32,6 +49,7 @@ export default {
       let message = "";
       await axios.post(process.env.VUE_APP_KEYSERVER_URL || "", qs.stringify(params), config).then(function (res) {
         commit("setToken", res.data.access_token);
+        commit("setTokenCookie", res.data.access_token, res.data.expires_in);
         result = true;
       }).catch(function (e) {
         if(e.response.data)
@@ -41,8 +59,8 @@ export default {
       });
       return [result, message];
     },
-    async logout({ commit }) {
-      commit("setToken", null);
+    logout({ commit }) {//todo: doesn't need to be async?
+      commit("removeToken");
     }
   }
 };
