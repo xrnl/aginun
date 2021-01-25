@@ -81,6 +81,7 @@
         if(d) {
           this.username = "";
           this.password = "";
+          this.errorMessage = "";
         }
       }
     }
