@@ -21,10 +21,10 @@
             </div>
             <div class="row">
               <div class="col-6">
-                <input type="button" class="mr-1 v-btn v-btn--depressed theme--light v-size--default" @click="cancel" value="Cancel">
+                <button type="button" class="mr-1 v-btn v-btn--depressed theme--light v-size--default" @click="cancel" value="Cancel">Cancel</button>
               </div>
               <div class="col-6">
-                <input type="button" class="mr-1 v-btn v-btn--depressed theme--light v-size--default primary" @click="login" value="Log in">
+                <button type="submit" class="mr-1 v-btn v-btn--depressed theme--light v-size--default primary" @click="login" value="Log in">Log in</button>
               </div>
             </div>
             <div class="row" v-if="errorMessage!=''">
@@ -63,6 +63,7 @@
       },
       login(e) {
         var self = this;
+        e.preventDefault();
         const { username, password } = this;
         if(!this.readyToLogIn)
           return;
@@ -73,7 +74,6 @@
           }
           self.waitingForServer = false;
         });
-        e.preventDefault();
       }
     },
     watch: {
