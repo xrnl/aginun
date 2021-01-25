@@ -29,23 +29,12 @@ const store = new Vuex.Store<RootState>({
     errors,
     user,
   },
-  state: {
-    acceptedCookies: true,//todo: set to false
-    //todo: initialize
-  },
-  mutations: {
-    acceptCookies(state) {
-      state.acceptedCookies = true;
-      //todo:save user token if logged in
-    }
-  },
   // Enable strict mode in development to get a warning
   // when mutating state outside of a mutation.
   // https://vuex.vuejs.org/guide/strict.html
   strict: process.env.NODE_ENV !== "production"
 });
 if(Vue.$cookies.isKey('loginToken')) {
-  store.commit("acceptCookies");
   store.dispatch("user/setTokenOnStart");
 }
 

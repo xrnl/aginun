@@ -21,10 +21,10 @@
             </div>
             <div class="row">
               <div class="col-6">
-                <button type="submit" class="mr-1 v-btn v-btn--depressed theme--light v-size--default" @click="cancel">Cancel</button>
+                <input type="button" class="mr-1 v-btn v-btn--depressed theme--light v-size--default" @click="cancel" value="Cancel">
               </div>
               <div class="col-6">
-                <button type="submit" class="mr-1 v-btn v-btn--depressed theme--light v-size--default primary" ref="loginSubmit">Log in</button>
+                <input type="button" class="mr-1 v-btn v-btn--depressed theme--light v-size--default primary" @click="login" value="Log in">
               </div>
             </div>
             <div class="row" v-if="errorMessage!=''">
@@ -48,6 +48,12 @@
         username: "kaj-dev",
         password: "test",
         errorMessage: "",
+        waitingForServer: false,
+      }
+    },
+    computed: {
+      readyToLogIn: function () {
+        return (this.username.trim().length > 0 && this.password.length > 0) && !this.waitingForServer;
       }
     },
     methods: {
@@ -56,14 +62,16 @@
         e.preventDefault();//prevents sending login request
       },
       login(e) {
-        this.$refs.loginSubmit.enabled = false;
         var self = this;
         const { username, password } = this;
+        if(!this.readyToLogIn)
+          return;
+        this.waitingForServer = true;
         this.$store.dispatch("user/login", {username, password, self}).then(result => {
           if(!result[0]) {//no succes
             this.errorMessage = result[1];
-            self.$refs.loginSubmit.enabled = true;
           }
+          self.waitingForServer = false;
         });
         e.preventDefault();
       }
@@ -71,11 +79,8 @@
     watch: {
       dialog(d) {
         if(d) {
-          this.$refs.loginSubmit.enabled = true;
           this.username = "";
           this.password = "";
-        }
-        else {
         }
       }
     }

@@ -21,8 +21,7 @@ export default {
       state.token = token;
     },
     setTokenCookie(state, token: string, lifetime: string) {
-      if(store.state.acceptedCookies)
-        Vue.$cookies.set('loginToken', token, lifetime);
+      Vue.$cookies.set('loginToken', token, lifetime);
     },
     removeToken(state) {
       state.token = null;
@@ -45,21 +44,21 @@ export default {
         username,
         password
       };
-      let result = false;
+      let success = false;
       let message = "";
       await axios.post(process.env.VUE_APP_KEYSERVER_URL || "", qs.stringify(params), config).then(function (res) {
         commit("setToken", res.data.access_token);
         commit("setTokenCookie", res.data.access_token, res.data.expires_in);
-        result = true;
+        success = true;
       }).catch(function (e) {
         if(e.response.data)
           message = e.response.data.error_description;
         else
           message = "Login server unavailable";
       });
-      return [result, message];
+      return [success, message];
     },
-    logout({ commit }) {//todo: doesn't need to be async?
+    logout({ commit }) {
       commit("removeToken");
     }
   }
