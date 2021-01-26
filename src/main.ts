@@ -6,8 +6,11 @@ import vuetify from "./plugins/vuetify";
 import { apolloProvider } from "./plugins/vue-apollo";
 import i18n from "./i18n/i18n";
 import { loadLanguageAsync } from "@/i18n/utils/load-language-async";
+import VueRouter from "vue-router";
 
 Vue.config.productionTip = false;
+
+Vue.use(VueRouter);
 
 new Vue({
   router,

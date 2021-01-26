@@ -19,17 +19,13 @@
           :items="localGroups"
           :selected-items-ids="selectedFilters.localGroups"
           :label="$t('Local Group')"
-          @change="
-            setFilter({ filterType: 'localGroups', filterValue: $event })
-          "
+          @change="changeFilter('localGroups',$event)"
         />
         <autocomplete-custom
           :items="workingCircles"
           :selected-items-ids="selectedFilters.workingCircles"
           :label="$t('Working circle')"
-          @change="
-            setFilter({ filterType: 'workingCircles', filterValue: $event })
-          "
+          @change="changeFilter('workingCircles', $event)"
         />
       </flex-wrapper>
     </filter-section>
@@ -44,7 +40,7 @@
         class="mt-12"
         thumb-label="always"
         :label="$t('Time Commitment')"
-        @end="setFilter({ filterType: 'timeCommitment', filterValue: $event })"
+        @end="changeFilter('timeCommitment', $event)"
       />
     </filter-section>
   </div>
@@ -68,6 +64,19 @@ export default {
   data: () => ({
     timeCommitmentRange
   }),
+  created: function () {
+    const query = JSON.parse(this.$route.query.search);
+    console.log(query);
+    for(var key in query){
+      var value = query[key];
+      if(value.length > 0) {
+        console.log(value);
+        //todo: properly update this
+        this.setFilter(key, value);
+      }
+    }
+    console.log("gelukt :)");
+  },
   computed: {
     ...mapState("groups", ["localGroups", "workingCircles"]),
     ...mapState("roles", ["selectedFilters"])
@@ -76,10 +85,16 @@ export default {
     this.$store.dispatch("roles/setDefaultFilters");
   },
   methods: {
+    changeFilter(filterType, filterValue){
+      this.setFilter({ filterType: filterType, filterValue: filterValue });
+      this.$router.replace({name: "roles", query: {search: JSON.stringify(this.selectedFilters)}});
+    },
     ...mapActions("roles", ["setFilter"]),
     debounceSearchUpdate: debounce(function($event) {
+      console.log("params");
+      console.log(this.$route.query);
       const filterValue = $event || "";
-      this.setFilter({ filterType: "search", filterValue });
+      this.changeFilter("search", filterValue);
     }, 500)
   }
 };

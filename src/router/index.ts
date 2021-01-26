@@ -6,15 +6,12 @@ import ErrorPage from "../views/ErrorPage.vue";
 import RolesOverview from "../views/RolesOverview.vue";
 import RoleViewDialog from "../components/roles/RoleViewDialog.vue";
 
-Vue.use(VueRouter);
-
 const routes = [
   {
     path: "/roles",
     name: "roles",
     beforeEnter: rolesErrorGuard,
     component: RolesOverview,
-    alias: "/",
     children: [{ path: "view/:id", component: RoleViewDialog }]
   },
   {
@@ -26,7 +23,7 @@ const routes = [
   {
     // non-existent pages redirect to the home page
     path: "*",
-    redirect: "/"
+    redirect: "/roles"
   }
 ];
 
