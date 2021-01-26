@@ -64,18 +64,20 @@ export default {
   data: () => ({
     timeCommitmentRange
   }),
-  created: function () {
-    const query = JSON.parse(this.$route.query.search);
-    console.log(query);
+  mounted: function () {
+    if(this.$route.query.search === "")
+      return;
+    var query = {};
+    try {
+      query = JSON.parse(this.$route.query.search);
+    } catch (e) {}
     for(var key in query){
       var value = query[key];
       if(value.length > 0) {
-        console.log(value);
-        //todo: properly update this
-        this.setFilter(key, value);
+        //todo: also update this in the html
+        this.setFilter({ filterType: key, filterValue: value });
       }
     }
-    console.log("gelukt :)");
   },
   computed: {
     ...mapState("groups", ["localGroups", "workingCircles"]),
@@ -87,7 +89,15 @@ export default {
   methods: {
     changeFilter(filterType, filterValue){
       this.setFilter({ filterType: filterType, filterValue: filterValue });
-      this.$router.replace({name: "roles", query: {search: JSON.stringify(this.selectedFilters)}});
+      var params = {};
+      //only put non-empty parameters in url
+      //todo: ignore time commitment if range is 100%
+      for(var key in this.selectedFilters) {
+        if(this.selectedFilters[key].length > 0) {
+          params[key] = this.selectedFilters[key];
+        }
+      }
+      this.$router.replace({name: "roles", query: {search: JSON.stringify(params)}});
     },
     ...mapActions("roles", ["setFilter"]),
     debounceSearchUpdate: debounce(function($event) {
