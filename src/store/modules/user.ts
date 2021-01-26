@@ -20,7 +20,7 @@ export default {
     setToken(state, token: string) {
       state.token = token;
     },
-    setTokenCookie(state, token: string, lifetime: string) {
+    setTokenCookie(state, {token, lifetime}) {
       Vue.$cookies.set('loginToken', token, lifetime);
     },
     removeToken(state) {
