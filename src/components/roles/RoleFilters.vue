@@ -16,12 +16,14 @@
       </template>
       <flex-wrapper direction="column">
         <autocomplete-custom
+          ref="localGroupsFilter"
           :items="localGroups"
           :selected-items-ids="selectedFilters.localGroups"
           :label="$t('Local Group')"
           @change="changeFilter('localGroups',$event)"
         />
         <autocomplete-custom
+          ref="workingCirclesFilter"
           :items="workingCircles"
           :selected-items-ids="selectedFilters.workingCircles"
           :label="$t('Working circle')"
@@ -34,6 +36,7 @@
         {{ $t("Time commitment") }}
       </template>
       <v-range-slider
+        ref="timeCommitmentFilter"
         :value="selectedFilters.timeCommitment"
         :min="timeCommitmentRange.min"
         :max="timeCommitmentRange.max"
@@ -65,19 +68,24 @@ export default {
     timeCommitmentRange
   }),
   mounted: function () {
-    if(this.$route.query.search === "")
+    if(typeof (this.$route.query.search) == "undefined")
       return;
     var query = {};
     try {
+      console.log(this.$route.query.search);
       query = JSON.parse(this.$route.query.search);
-    } catch (e) {}
+    } catch (e) {
+      this.$router.replace({name: "roles", query: {}});
+    }
     for(var key in query){
       var value = query[key];
       if(value.length > 0) {
         //todo: also update this in the html
+        //this.$refs[key + "Filter"].value = value;
         this.setFilter({ filterType: key, filterValue: value });
       }
     }
+    console.log(this.$refs);
   },
   computed: {
     ...mapState("groups", ["localGroups", "workingCircles"]),
@@ -91,18 +99,25 @@ export default {
       this.setFilter({ filterType: filterType, filterValue: filterValue });
       var params = {};
       //only put non-empty parameters in url
-      //todo: ignore time commitment if range is 100%
       for(var key in this.selectedFilters) {
         if(this.selectedFilters[key].length > 0) {
+          if(key === "timeCommitment") {
+            if(this.selectedFilters[key][0] === this.timeCommitmentRange.min && this.selectedFilters[key][1] === this.timeCommitmentRange.max){
+              continue;
+            }
+          }
           params[key] = this.selectedFilters[key];
         }
       }
-      this.$router.replace({name: "roles", query: {search: JSON.stringify(params)}});
+      if(Object.keys(params).length === 0) {
+        this.$router.replace({name: "roles"});
+      }
+      else if(this.$route.query.search !== JSON.stringify(params)) {
+        this.$router.replace({name: "roles", query: {search: JSON.stringify(params)}});
+      }
     },
     ...mapActions("roles", ["setFilter"]),
     debounceSearchUpdate: debounce(function($event) {
-      console.log("params");
-      console.log(this.$route.query);
       const filterValue = $event || "";
       this.changeFilter("search", filterValue);
     }, 500)
