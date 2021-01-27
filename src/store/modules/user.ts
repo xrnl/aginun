@@ -10,12 +10,12 @@ export default {
     loggedIn: (state) => !!state.token
   },
   mutations: {
-    setToken(state, token) {
+    setToken(state, token: string) {
       state.token = token;
     }
   },
   actions: {
-    async login({ commit }, { username, password }) {
+    async login({ commit }, { username, password }): Promise<void> {
       const config = {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
@@ -23,9 +23,7 @@ export default {
       };
 
       const params = {
-        // eslint-disable-next-line @typescript-eslint/camelcase
         grant_type: "password",
-        // eslint-disable-next-line @typescript-eslint/camelcase
         client_id: "volunteerplatform",
         username,
         password
@@ -41,7 +39,7 @@ export default {
 
       commit("setToken", token);
     },
-    async logout({ commit }) {
+    async logout({ commit }): Promise<void> {
       commit("setToken", null);
     }
   }

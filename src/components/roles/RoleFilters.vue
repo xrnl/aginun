@@ -20,7 +20,7 @@
           :items="localGroups"
           :selected-items-ids="selectedFilters.localGroups"
           :label="$t('Local Group')"
-          @change="changeFilter('localGroups',$event)"
+          @change="changeFilter('localGroups', $event)"
         />
         <autocomplete-custom
           ref="workingCirclesFilter"
@@ -67,25 +67,23 @@ export default {
   data: () => ({
     timeCommitmentRange
   }),
-  mounted: function () {
-    if(typeof (this.$route.query.search) == "undefined")
-      return;
+  mounted: function() {
+    if (typeof this.$route.query.search == "undefined") return;
     var query = {};
     try {
       console.log(this.$route.query.search);
       query = JSON.parse(this.$route.query.search);
     } catch (e) {
-      this.$router.replace({name: "roles", query: {}});
+      this.$router.replace({ name: "roles", query: {} });
     }
-    for(var key in query){
+    for (var key in query) {
       var value = query[key];
-      if(value.length > 0) {
+      if (value.length > 0) {
         //todo: also update this in the html
         //this.$refs[key + "Filter"].value = value;
         this.setFilter({ filterType: key, filterValue: value });
       }
     }
-    console.log(this.$refs);
   },
   computed: {
     ...mapState("groups", ["localGroups", "workingCircles"]),
@@ -95,25 +93,30 @@ export default {
     this.$store.dispatch("roles/setDefaultFilters");
   },
   methods: {
-    changeFilter(filterType, filterValue){
+    changeFilter(filterType, filterValue) {
       this.setFilter({ filterType: filterType, filterValue: filterValue });
       var params = {};
       //only put non-empty parameters in url
-      for(var key in this.selectedFilters) {
-        if(this.selectedFilters[key].length > 0) {
-          if(key === "timeCommitment") {
-            if(this.selectedFilters[key][0] === this.timeCommitmentRange.min && this.selectedFilters[key][1] === this.timeCommitmentRange.max){
+      for (var key in this.selectedFilters) {
+        if (this.selectedFilters[key].length > 0) {
+          if (key === "timeCommitment") {
+            if (
+              this.selectedFilters[key][0] === this.timeCommitmentRange.min &&
+              this.selectedFilters[key][1] === this.timeCommitmentRange.max
+            ) {
               continue;
             }
           }
           params[key] = this.selectedFilters[key];
         }
       }
-      if(Object.keys(params).length === 0) {
-        this.$router.replace({name: "roles"});
-      }
-      else if(this.$route.query.search !== JSON.stringify(params)) {
-        this.$router.replace({name: "roles", query: {search: JSON.stringify(params)}});
+      if (Object.keys(params).length === 0) {
+        this.$router.replace({ name: "roles" });
+      } else if (this.$route.query.search !== JSON.stringify(params)) {
+        this.$router.replace({
+          name: "roles",
+          query: { search: JSON.stringify(params) }
+        });
       }
     },
     ...mapActions("roles", ["setFilter"]),
