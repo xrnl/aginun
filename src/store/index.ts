@@ -1,5 +1,5 @@
 import Vue from "vue";
-import Vuex, {mapActions, mapMutations} from "vuex";
+import Vuex, { mapActions, mapMutations } from "vuex";
 
 import alerts from "./modules/alerts";
 import roles from "./modules/roles";
@@ -27,14 +27,14 @@ const store = new Vuex.Store<RootState>({
     alerts,
     roles,
     errors,
-    user,
+    user
   },
   // Enable strict mode in development to get a warning
   // when mutating state outside of a mutation.
   // https://vuex.vuejs.org/guide/strict.html
   strict: process.env.NODE_ENV !== "production"
 });
-if(Vue.$cookies.isKey('loginToken')) {
+if (Vue.$cookies.isKey("loginToken")) {
   store.dispatch("user/setTokenOnStart");
 }
 

@@ -1,37 +1,48 @@
 <template>
   <div class="text-center" v-model="dialog">
-    <v-dialog v-model="dialog" width="500" @close-dialog="cancel">
+    <v-dialog
+      v-model="dialog"
+      width="365px"
+      height="285px"
+      @close-dialog.prevent="cancel"
+    >
       <template v-slot:activator="{ on, attrs }">
         <v-btn v-bind="attrs" v-on="on">login</v-btn>
       </template>
-      <v-card>
-        <v-card-title class="headline">Log in</v-card-title>
-        <v-divider></v-divider>
-        <form v-on:submit="login">
+      <v-card id="login-modal">
+        <div class="container">
+          <button id="close-button" @click.prevent="cancel"></button>
+          <h2>Member login</h2>
+          <span
+            >Log in to post new vacancies or edit existing ones. Don't have an
+            account yet?</span
+          >
+          <a href="/">Contact us</a>
+        </div>
+        <form v-on:submit.prevent="login">
           <div class="container">
-            <div class="row">
-              <div class="col-12">
-                <input v-model="username" placeholder="username" type="text">
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12">
-                <input v-model="password" placeholder="password" type="password">
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-6">
-                <button type="button" class="mr-1 v-btn v-btn--depressed theme--light v-size--default" @click="cancel" value="Cancel">Cancel</button>
-              </div>
-              <div class="col-6">
-                <button type="submit" class="mr-1 v-btn v-btn--depressed theme--light v-size--default primary" @click="login" value="Log in">Log in</button>
-              </div>
-            </div>
-            <div class="row" v-if="errorMessage!=''">
-              <div class="col-12">
-                <span>{{errorMessage}}</span>
-              </div>
-            </div>
+            <input
+              id="usernameInput"
+              v-model="username"
+              placeholder="username"
+              type="text"
+            />
+            <input
+              class=""
+              v-model="password"
+              placeholder="password"
+              type="password"
+            />
+            <button
+              id="submit-button"
+              type="submit"
+              class="mr-1 v-btn v-btn--depressed theme--light v-size--default primary"
+              @click.prevent="login"
+              value="Log in"
+            >
+              Log in
+            </button>
+            <span class="error-message">{{ errorMessage }}</span>
           </div>
         </form>
       </v-card>
@@ -40,50 +51,53 @@
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        name: "login-modal",
-        dialog: false,
-        username: "kaj-dev",
-        password: "test",
-        errorMessage: "",
-        waitingForServer: false,
-      }
+export default {
+  data() {
+    return {
+      name: "login-modal",
+      dialog: false,
+      username: "",
+      password: "",
+      errorMessage: "",
+      waitingForServer: false
+    };
+  },
+  computed: {
+    readyToLogIn: function() {
+      return (
+        this.username.trim().length > 0 &&
+        this.password.length > 0 &&
+        !this.waitingForServer
+      );
+    }
+  },
+  methods: {
+    cancel() {
+      this.dialog = false;
     },
-    computed: {
-      readyToLogIn: function () {
-        return (this.username.trim().length > 0 && this.password.length > 0) && !this.waitingForServer;
-      }
-    },
-    methods: {
-      cancel(e) {
-        this.dialog=false;
-        e.preventDefault();//prevents sending login request
-      },
-      login(e) {
-        var self = this;
-        e.preventDefault();
-        const { username, password } = this;
-        if(!this.readyToLogIn)
-          return;
-        this.waitingForServer = true;
-        this.$store.dispatch("user/login", {username, password, self}).then(result => {
-          if(!result[0]) {//no succes
+    login() {
+      const { username, password } = this;
+      if (!this.readyToLogIn) return;
+      this.waitingForServer = true;
+      this.$store
+        .dispatch("user/login", { username, password, self })
+        .then((result) => {
+          if (!result[0]) {
+            //no succes
             this.errorMessage = result[1];
           }
-          self.waitingForServer = false;
+          this.waitingForServer = false;
         });
-      }
-    },
-    watch: {
-      dialog(d) {
-        if(d) {
-          this.username = "";
-          this.password = "";
-          this.errorMessage = "";
-        }
+    }
+  },
+  watch: {
+    dialog(d) {
+      if (d) {
+        this.username = "";
+        this.password = "";
+        this.errorMessage = "";
       }
     }
   }
+};
 </script>
