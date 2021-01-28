@@ -69,15 +69,14 @@ export default {
   }),
   mounted: function() {
     if (typeof this.$route.query.search == "undefined") return;
-    var query = {};
+    let query = {};
     try {
-      console.log(this.$route.query.search);
       query = JSON.parse(this.$route.query.search);
     } catch (e) {
       this.$router.replace({ name: "roles", query: {} });
     }
-    for (var key in query) {
-      var value = query[key];
+    for (const key in query) {
+      const value = query[key];
       if (value.length > 0) {
         //todo: also update this in the html
         //this.$refs[key + "Filter"].value = value;
@@ -95,7 +94,7 @@ export default {
   methods: {
     changeFilter(filterType, filterValue) {
       this.setFilter({ filterType: filterType, filterValue: filterValue });
-      var params = {};
+      let params = {};
       //only put non-empty parameters in url
       for (var key in this.selectedFilters) {
         if (this.selectedFilters[key].length > 0) {

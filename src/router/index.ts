@@ -11,7 +11,7 @@ const routes = [
     name: "roles",
     beforeEnter: rolesErrorGuard,
     component: RolesOverview,
-    children: [{ path: "view/:id", component: RoleViewDialog }]
+    children: [{ path: "view/:id", component: RoleViewDialog}]
   },
   {
     path: "/error",

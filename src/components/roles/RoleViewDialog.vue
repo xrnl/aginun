@@ -13,8 +13,8 @@
       persistent
       max-width="750"
       value="true"
-      @click:outside="$router.push('/roles')"
-      @keydown.escape="$router.push('/roles')"
+      @click:outside="onClose"
+      @keydown.escape="onClose"
     >
       <v-card>
         <transition name="fade" mode="out-in">
@@ -222,7 +222,8 @@ export default {
       isEditOpen: false,
       applyDialog: false,
       testLoading: true,
-      role: {}
+      role: {},
+      prevRoute: null
     };
   },
   apollo: {
@@ -245,7 +246,18 @@ export default {
       });
     }
   },
+  beforeRouteEnter(to, from, next) {
+    next((vm) => {
+      vm.prevRoute = from;
+    });
+  },
   methods: {
+    onClose() {
+      if (this.prevRoute) {
+        if (this.prevRoute.path === "/roles") this.$router.back();
+        else this.$router.push("/roles");
+      } else this.$router.push("/roles");
+    },
     ...mapActions("roles", ["fillRole"]),
     ...mapActions("alerts", ["displaySuccess"]),
     onFillRole() {
