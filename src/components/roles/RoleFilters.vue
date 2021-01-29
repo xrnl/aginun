@@ -94,9 +94,9 @@ export default {
   methods: {
     changeFilter(filterType, filterValue) {
       this.setFilter({ filterType: filterType, filterValue: filterValue });
-      let params = {};
+      const params = {};
       //only put non-empty parameters in url
-      for (var key in this.selectedFilters) {
+      for (const key in this.selectedFilters) {
         if (this.selectedFilters[key].length > 0) {
           if (key === "timeCommitment") {
             if (
