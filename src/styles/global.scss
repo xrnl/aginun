@@ -23,10 +23,31 @@
   box-shadow: none;
 }
 
+.error-message {
+  display: inline-block; 
+  align-self:center; 
+  margin-bottom: 15px;
+  span {
+    color: #C20000;
+    background-color: #FFBCBC;
+    border-radius: 5px;
+    text-align: center;
+    align-self: center;
+    padding: 4px 10px 4px 10px;
+  }
+}
+
 #login-modal {
   font-size: 14px;
   //padding: 0 20px 20px 20px;
   padding: 20px;
+  v-input {
+    margin: 0;
+    padding: 0;
+  }
+  p {
+    margin-bottom: 10px;
+  }
   h2 {
     font-size: 20px;
     text-align: center;
@@ -41,19 +62,18 @@
   #close-button::after {
     content: " \2573";//2715
   }
+  p {
+    width: 240px;
+    text-align: center;
+    align-self: center;
+  }
   .container {
     margin: 0;
-    margin: 0;
-    padding-top: 0;
+    padding: 0;
     flex-wrap: wrap;
     flex-direction: column;
     display: flex;
     justify-content: center;
-    span {
-      width: 240px;
-      text-align: center;
-      align-self: center;
-    }
     form {
       padding: 0;
       margin: 0;
@@ -67,10 +87,6 @@
       //padding: 0 20px 0 20px;
       text-align: left;
       align-self: center;
-    }
-    .error-message {
-      margin-top: 10px;
-      color: red;
     }
     #submit-button {
       font-size: 20px;

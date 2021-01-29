@@ -2,7 +2,6 @@ import qs from "qs";
 import axios from "axios";
 import Vue from "vue";
 import VueCookies from "vue-cookies";
-import store from "../../store";
 
 Vue.use(VueCookies);
 
@@ -40,7 +39,9 @@ export default {
         headers: { "Content-Type": "application/x-www-form-urlencoded" }
       };
       const params = {
+        // eslint-disable-next-line @typescript-eslint/camelcase
         grant_type: "password",
+        // eslint-disable-next-line @typescript-eslint/camelcase
         client_id: "volunteerplatform",
         username,
         password

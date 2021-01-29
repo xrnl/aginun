@@ -13,7 +13,7 @@
         <div class="container">
           <button id="close-button" @click.prevent="cancel"></button>
           <h2>Member login</h2>
-          <span>{{ $t('Log in to post new vacancies or edit existing ones. Don\'t have an account yet?') }}</span>
+          <p>{{ $t('Log in to post new vacancies or edit existing ones. Don\'t have an account yet?') }}</p>
           <a href="/">{{ $t('Contact us') }}</a>
         </div>
         <form v-on:submit.prevent="login">
@@ -28,6 +28,9 @@
               :placeholder="$t('password')"
               type="password"
               class="mt-3"/>
+            <div class="error-message" v-if="errorMessage !== ''">
+              <span>{{ $t(errorMessage) }}</span>
+            </div>
             <button
               id="submit-button"
               type="submit"
@@ -36,7 +39,6 @@
             >
               {{ $t('Log in') }}
             </button>
-            <span class="error-message">{{ $t(errorMessage) }}</span>
           </div>
         </form>
       </v-card>
