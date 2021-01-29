@@ -78,7 +78,7 @@
                 {{ $t("positions found") }})
               </span>
             </div>
-            <v-btn text color="primary" @click="setDefaultFilters">
+            <v-btn text color="primary" @click="clearFilters">
               {{ $t("Clear filters") }}
             </v-btn>
           </div>
@@ -150,6 +150,10 @@ export default {
   },
   methods: {
     ...mapActions("roles", ["loadRoles", "setDefaultFilters"]),
+    clearFilters: function() {
+      this.setDefaultFilters();
+      this.$router.replace({ name: "roles", query: {} });
+    },
     handleCloseDrawer: function() {
       this.isDrawerOpen = false;
     },
