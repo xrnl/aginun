@@ -12,7 +12,7 @@ import VueAxios from "vue-axios";
 Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
 
-var app = new Vue({
+new Vue({
   router,
   store,
   vuetify,

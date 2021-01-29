@@ -64,19 +64,13 @@
     input {
       width: 200px;
       height: 30px;
-      padding: 0 20px 0 20px;
+      //padding: 0 20px 0 20px;
       text-align: left;
       align-self: center;
-      //border: 1px solid gray;
-      //border-radius: 5px;
-      margin-bottom: 10px;
     }
     .error-message {
       margin-top: 10px;
       color: red;
-    }
-    input:last-of-type {
-      margin-bottom: 20px;
     }
     #submit-button {
       font-size: 20px;

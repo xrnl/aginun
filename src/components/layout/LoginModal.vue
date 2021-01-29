@@ -7,42 +7,36 @@
       @close-dialog.prevent="cancel"
     >
       <template v-slot:activator="{ on, attrs }">
-        <v-btn v-bind="attrs" v-on="on">login</v-btn>
+        <v-btn v-bind="attrs" v-on="on">{{ $t('Log in') }}</v-btn>
       </template>
       <v-card id="login-modal">
         <div class="container">
           <button id="close-button" @click.prevent="cancel"></button>
           <h2>Member login</h2>
-          <span
-            >Log in to post new vacancies or edit existing ones. Don't have an
-            account yet?</span
-          >
-          <a href="/">Contact us</a>
+          <span>{{ $t('Log in to post new vacancies or edit existing ones. Don\'t have an account yet?') }}</span>
+          <a href="/">{{ $t('Contact us') }}</a>
         </div>
         <form v-on:submit.prevent="login">
           <div class="container">
-            <input
-              id="usernameInput"
+            <v-text-field
               v-model="username"
-              placeholder="username"
-              type="text"
-            />
-            <input
-              class=""
+              :placeholder="$t('username')"
+              autofocus
+              class="mt-3"/>
+            <v-text-field
               v-model="password"
-              placeholder="password"
+              :placeholder="$t('password')"
               type="password"
-            />
+              class="mt-3"/>
             <button
               id="submit-button"
               type="submit"
               class="mr-1 v-btn v-btn--depressed theme--light v-size--default primary"
               @click.prevent="login"
-              value="Log in"
             >
-              Log in
+              {{ $t('Log in') }}
             </button>
-            <span class="error-message">{{ errorMessage }}</span>
+            <span class="error-message">{{ $t(errorMessage) }}</span>
           </div>
         </form>
       </v-card>
