@@ -4,7 +4,7 @@
       v-model="dialog"
       width="365px"
       height="285px"
-      @close-dialog.prevent="cancel"
+      @click:outside="$emit('close')"
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn v-bind="attrs" v-on="on">{{ $t('Log in') }}</v-btn>
