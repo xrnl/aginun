@@ -1,3 +1,8 @@
+export interface AlertsState {
+  alertOn: boolean;
+  alert: unknown;
+}
+
 export default {
   namespaced: true,
   state: {

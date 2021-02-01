@@ -21,6 +21,15 @@ import i18n from "@/i18n/i18n";
 Vue.use(Vuetify);
 Vue.use(VueAxios, axios);
 
+/**
+ * Add a wrapping `div data-app="true"` to the body so that Vuetify
+ * doesn't complain about missing data-app attribute for some components.
+ * See https://github.com/vuetifyjs/vuetify/issues/1210
+ */
+const app = document.createElement("div");
+app.setAttribute("data-app", "true");
+document.body.appendChild(app);
+
 describe("TheAppBar", () => {
   let store;
   let vuetify;
@@ -31,7 +40,14 @@ describe("TheAppBar", () => {
   const router = new VueRouter();
 
   beforeAll(() => {
-    store = new Vuex.Store({});
+    store = new Vuex.Store({
+      modules: {
+        user: {
+          namespaced: true,
+          getters: { loggedIn: () => true }
+        }
+      }
+    });
     vuetify = new Vuetify({ theme: { dark: false } });
   });
 

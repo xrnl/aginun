@@ -25,7 +25,7 @@
               :items="localGroups"
               item-value="id"
               item-text="title"
-              :label="$t('Local group')"
+              :label="$t('Local Group')"
               :error-messages="errors"
             />
           </validation-provider>

@@ -1,3 +1,5 @@
+// We need this import for testing
+import "unfetch/polyfill";
 import Vue from "vue";
 import VueApollo from "vue-apollo";
 import { ApolloClient } from "apollo-client";
