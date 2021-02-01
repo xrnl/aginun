@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 <template>
   <page-with-drawer :is-drawer-open="isDrawerOpen" class="pb-5">
     <router-view :key="$route.fullPath" />

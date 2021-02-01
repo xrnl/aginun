@@ -10,6 +10,15 @@ import {
   FillRoleMutation
 } from "@/GraphQL/roles";
 
+export interface RolesState {
+  roles: unknown[];
+  isLoadingRoles: boolean;
+  paginationLimit: number;
+  paginationOffset: number;
+  infiniteScrollId: boolean;
+  selectedFilters: unknown;
+}
+
 export default {
   namespaced: true,
   state: {
@@ -24,12 +33,13 @@ export default {
     getByID: (state) => (id) => state.roles.find((role) => role.id === id),
     isNewQuery: (state) => state.paginationOffset === 0,
     isUsingFilters(state) {
-      return (
-        state.selectedFilters.workingCircles.length ||
-        state.selectedFilters.localGroups.length ||
-        state.selectedFilters.search ||
-        state.selectedFilters.timeCommitment[0] !== timeCommitmentRange.min ||
-        state.selectedFilters.timeCommitment[1] !== timeCommitmentRange.max
+      return Boolean(
+        state.selectedFilters.workingCircles?.length ||
+          state.selectedFilters.localGroups?.length ||
+          state.selectedFilters.search ||
+          state.selectedFilters.timeCommitment?.[0] !==
+            timeCommitmentRange.min ||
+          state.selectedFilters.timeCommitment?.[1] !== timeCommitmentRange.max
       );
     }
   },
@@ -187,11 +197,11 @@ export default {
       commit("setLoadingState", false);
     },
     500),
-    async reloadRoles({ commit }) {
+    reloadRoles({ commit }) {
       commit("clearRoles");
       // timeout necessary because old roles must completely transition out
       // before InfiniteLoading component calls @infinite method
-      await setTimeout(() => {
+      setTimeout(() => {
         commit("triggerReload");
       }, 1000);
     },

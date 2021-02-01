@@ -8,9 +8,12 @@ import i18n from "./i18n/i18n";
 import { loadLanguageAsync } from "@/i18n/utils/load-language-async";
 import axios from "axios";
 import VueAxios from "vue-axios";
+import VueRouter from "vue-router";
 
 Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
+
+Vue.use(VueRouter);
 
 new Vue({
   router,

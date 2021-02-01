@@ -10,7 +10,7 @@
       />
     </router-link>
     <v-toolbar-title>
-      <h2>{{ $t("Vacatures") }}</h2>
+      <h2>{{ $t("Vacancies") }}</h2>
     </v-toolbar-title>
     <v-spacer />
     <login-modal v-if="!loggedIn"></login-modal>
