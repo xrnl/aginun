@@ -28,7 +28,13 @@ export default {
     }
   },
   actions: {
-    async login({ commit }, { username, password }): Promise<[boolean, string]> {
+    setTokenOnStart({ commit }): void {
+      commit("setToken", Vue.$cookies.get("loginToken"));
+    },
+    async login(
+      { commit },
+      { username, password }
+    ): Promise<[boolean, string]> {
       const config = {
         headers: { "Content-Type": "application/x-www-form-urlencoded" }
       };

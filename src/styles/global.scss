@@ -24,12 +24,12 @@
 }
 
 .error-message {
-  display: inline-block; 
-  align-self:center; 
+  display: inline-block;
+  align-self: center;
   margin-bottom: 15px;
   span {
-    color: #C20000;
-    background-color: #FFBCBC;
+    color: #c20000;
+    background-color: #ffbcbc;
     border-radius: 5px;
     text-align: center;
     align-self: center;
@@ -39,12 +39,7 @@
 
 #login-modal {
   font-size: 14px;
-  //padding: 0 20px 20px 20px;
   padding: 20px;
-  v-input {
-    margin: 0;
-    padding: 0;
-  }
   h2 {
     font-size: 20px;
     text-align: center;
@@ -65,17 +60,14 @@
     text-align: center;
     align-self: center;
   }
-  .container {
-    margin: 0;
+  form {
     padding: 0;
-    flex-wrap: wrap;
+    margin: 0;
+  }
+  .container {
+    padding: 0;
     flex-direction: column;
     display: flex;
-    justify-content: center;
-    form {
-      padding: 0;
-      margin: 0;
-    }
     a {
       align-self: center;
     }
