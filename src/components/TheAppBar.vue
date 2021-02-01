@@ -13,10 +13,7 @@
       <h2>{{ $t("Vacancies") }}</h2>
     </v-toolbar-title>
     <v-spacer />
-    <login-modal v-if="!loggedIn"></login-modal>
-    <v-btn v-else text @click.stop="logout">
-      {{ $t("Logout") }}
-    </v-btn>
+    <login-modal ref="loginModal"></login-modal>
     <v-btn text @click.stop="contactSupportDialog = true" class="mr-3">
       {{ $t("Support") }} <v-icon> mdi-help-circle-outline </v-icon>
     </v-btn>
@@ -51,7 +48,6 @@
 <script>
 import IconLink from "@/components/IconLink";
 import FlexWrapper from "@/components/layout/FlexWrapper";
-import { mapGetters, mapActions } from "vuex";
 import { contactEmail } from "@/constants/contacts";
 import styles from "@/constants/styles";
 import LanguageSelect from "@/components/LanguageSelect.vue";
@@ -69,15 +65,7 @@ export default {
     contactSupportDialog: false,
     contactEmail,
     navbarHeight: styles.navbarHeight
-  }),
-  computed: {
-    ...mapGetters({
-      loggedIn: "user/loggedIn"
-    })
-  },
-  methods: {
-    ...mapActions("user", ["logout"])
-  }
+  })
 };
 </script>
 

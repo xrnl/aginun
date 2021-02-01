@@ -1,15 +1,12 @@
 import Vue from "vue";
-import Vuex, { mapActions, mapMutations } from "vuex";
-
+import Vuex from "vuex"
 import alerts from "./modules/alerts";
 import roles from "./modules/roles";
 import groups from "./modules/groups";
 import errors from "./modules/errors";
 import user from "./modules/user";
-import VueCookies from "vue-cookies";
 
 Vue.use(Vuex);
-Vue.use(VueCookies);
 
 interface RootState {
   groups: Record<string, unknown>;
@@ -34,8 +31,5 @@ const store = new Vuex.Store<RootState>({
   // https://vuex.vuejs.org/guide/strict.html
   strict: process.env.NODE_ENV !== "production"
 });
-if (Vue.$cookies.isKey("loginToken")) {
-  store.dispatch("user/setTokenOnStart");
-}
 
 export default store;

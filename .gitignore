@@ -27,4 +27,3 @@ yarn-error.log*
 apollo.config.js
 
 *.wiki
-.eslintrc.json

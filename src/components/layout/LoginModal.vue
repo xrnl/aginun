@@ -5,13 +5,16 @@
     height="285px"
     @click:outside="$emit('close')"
   >
-    <template v-slot:activator="{ on, attrs }">
-      <v-btn v-bind="attrs" v-on="on">{{ $t("Log in") }}</v-btn>
+    <template v-slot:activator="{}">
+      <v-btn v-if="!loggedIn" @click="open">{{ $t("Log in") }}</v-btn>
+      <v-btn v-else text @click="logout">
+        {{ $t("Logout") }}
+      </v-btn>
     </template>
     <v-card id="login-modal">
       <div class="container">
         <button id="close-button" @click.prevent="cancel"></button>
-        <h2>Member login</h2>
+        <h2>{{ $t("Member login") }}</h2>
         <p>
           {{
             $t(
@@ -19,33 +22,35 @@
             )
           }}
         </p>
-        <a href="/">{{ $t("Contact us") }}</a>
+        <a href="`mailto:${contactEmail}`">{{ $t("Contact us") }}</a>
       </div>
-      <form v-on:submit.prevent="login">
+      <form @submit.prevent="login">
         <div class="container">
           <v-text-field
             v-model="username"
-            :placeholder="$t('username')"
+            :placeholder="$t('Username')"
             autofocus
             class="mt-3"
           />
           <v-text-field
             v-model="password"
-            :placeholder="$t('password')"
+            :placeholder="$t('Password')"
             type="password"
             class="mt-3"
           />
-          <div class="error-message" v-if="errorMessage !== ''">
-            <span>{{ $t(errorMessage) }}</span>
+          <div class="error-message" v-if="errorMessage">
+            <span>{{ errorMessage }}</span>
           </div>
-          <button
+          <v-btn
+            depressed
+            color="primary"
             id="submit-button"
             type="submit"
+            :disabled="buttonDisabled"
             class="mr-1 v-btn v-btn--depressed theme--light v-size--default primary"
-            @click.prevent="login"
           >
             {{ $t("Log in") }}
-          </button>
+          </v-btn>
         </div>
       </form>
     </v-card>
@@ -53,53 +58,55 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "LoginModal",
   data() {
     return {
-      name: "login-modal",
       dialog: false,
       username: "",
       password: "",
       errorMessage: "",
-      waitingForServer: false
+      serverLoading: false
     };
   },
   computed: {
-    readyToLogIn: function() {
+    buttonDisabled: function() {
       return (
-        this.username.trim().length > 0 &&
-        this.password.length > 0 &&
-        !this.waitingForServer
+        this.username.trim().length == 0 ||
+        this.password.trim().length == 0 ||
+        this.serverLoading
       );
-    }
+    },
+    ...mapGetters({
+      loggedIn: "user/loggedIn"
+    })
   },
   methods: {
-    cancel() {
+    open() {
+      this.dialog = true;
+      this.username = ""; //kaj-dev
+      this.password = ""; //test
+      this.serverLoading = false;
+      this.errorMessage = "";
+    },
+    close() {
       this.dialog = false;
     },
-    login() {
+    ...mapActions("user", ["logout"]),
+    async login() {
       const { username, password } = this;
-      if (!this.readyToLogIn) return;
-      this.waitingForServer = true;
-      this.$store
-        .dispatch("user/login", { username, password, self })
-        .then((result) => {
-          if (!result[0]) {
-            //no succes
-            this.errorMessage = result[1];
-          }
-          this.waitingForServer = false;
-        });
-    }
-  },
-  watch: {
-    dialog(d) {
-      if (d) {
-        this.username = "";
-        this.password = "";
-        this.errorMessage = "";
+      this.serverLoading = true;
+      const message = await this.$store.dispatch("user/login", {
+        username,
+        password
+      });
+      this.serverLoading = false;
+      if (message === "") {
+        this.close();
+        return;
       }
+      this.errorMessage = message;
     }
   }
 };

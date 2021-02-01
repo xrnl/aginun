@@ -1,9 +1,8 @@
 import qs from "qs";
 import axios from "axios";
 import Vue from "vue";
-import VueCookies from "vue-cookies";
 
-Vue.use(VueCookies);
+export const loginCookieKey = "loginToken";
 
 export default {
   namespaced: true,
@@ -20,23 +19,23 @@ export default {
       state.token = token;
     },
     setTokenCookie(state, { token, lifetime }) {
-      Vue.$cookies.set("loginToken", token, lifetime);
+      Vue.$cookies.set(loginCookieKey, token, lifetime);
     },
     removeToken(state) {
       state.token = null;
-      Vue.$cookies.remove("loginToken");
+      Vue.$cookies.remove(loginCookieKey);
     }
   },
   actions: {
-    setTokenOnStart({ commit }): void {
-      commit("setToken", Vue.$cookies.get("loginToken"));
+    initializeFromCookie({ commit }) {
+      commit("setToken", Vue.$cookies.get(loginCookieKey));
     },
-    async login(
-      { commit },
-      { username, password }
-    ): Promise<[boolean, string]> {
+    async login({ commit }, { username, password }) {
       const config = {
-        headers: { "Content-Type": "application/x-www-form-urlencoded" }
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Access-Control-Allow-Origin": "*"
+        }
       };
       const params = {
         // eslint-disable-next-line @typescript-eslint/camelcase
@@ -46,24 +45,27 @@ export default {
         username,
         password
       };
-      let success = false;
       let message = "";
-      await axios
-        .post(
+      try {
+        const { data } = await axios.post(
           process.env.VUE_APP_KEYSERVER_URL || "",
           qs.stringify(params),
           config
-        )
-        .then(function(res) {
-          commit("setToken", res.data.access_token);
-          commit("setTokenCookie", res.data.access_token, res.data.expires_in);
-          success = true;
-        })
-        .catch(function(e) {
+        );
+        commit("setToken", data.access_token);
+        commit("setTokenCookie", {
+          token: data.access_token,
+          lifetime: data.expires_in
+        });
+      } catch ({ e }) {
+        if (e) {
           if (e.response.data) message = e.response.data.error_description;
           else message = "Login server unavailable";
-        });
-      return [success, message];
+        } else {
+          message = "Error loggin in";
+        }
+      }
+      return message;
     },
     logout({ commit }): void {
       commit("removeToken");
