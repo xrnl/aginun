@@ -13,7 +13,7 @@
       <h2>{{ $t("Vacatures") }}</h2>
     </v-toolbar-title>
     <v-spacer />
-    <login-modal ref="loginModal" v-if="!loggedIn"></login-modal>
+    <login-modal v-if="!loggedIn"></login-modal>
     <v-btn v-else text @click.stop="logout">
       {{ $t("Logout") }}
     </v-btn>
@@ -56,7 +56,6 @@ import { contactEmail } from "@/constants/contacts";
 import styles from "@/constants/styles";
 import LanguageSelect from "@/components/LanguageSelect.vue";
 import LoginModal from "@/components/layout/LoginModal.vue";
-import store from "../store";
 
 export default {
   name: "TheAppBar",
@@ -77,7 +76,7 @@ export default {
     })
   },
   methods: {
-    ...mapActions("user", ["logout"]),
+    ...mapActions("user", ["logout"])
   }
 };
 </script>

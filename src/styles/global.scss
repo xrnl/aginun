@@ -45,9 +45,6 @@
     margin: 0;
     padding: 0;
   }
-  p {
-    margin-bottom: 10px;
-  }
   h2 {
     font-size: 20px;
     text-align: center;
@@ -60,10 +57,11 @@
     margin-right: 10px;
   }
   #close-button::after {
-    content: " \2573";//2715
+    content: " \2573";
   }
   p {
     width: 240px;
+    margin-bottom: 10px;
     text-align: center;
     align-self: center;
   }
