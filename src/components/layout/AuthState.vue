@@ -6,7 +6,7 @@
     @click:outside="$emit('close')"
   >
     <template v-slot:activator="{}">
-      <v-btn v-if="!loggedIn" @click="open">{{ $t("Log in") }}</v-btn>
+      <v-btn v-if="!loggedIn" @click="open">{{ $t("Login") }}</v-btn>
       <v-btn v-else text @click="logout">
         {{ $t("Logout") }}
       </v-btn>

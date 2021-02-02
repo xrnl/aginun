@@ -34,7 +34,6 @@ export default {
       const config = {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
-          "Access-Control-Allow-Origin": "*"
         }
       };
       const params = {
@@ -60,7 +59,7 @@ export default {
           if (e.response.data) message = e.response.data.error_description;
           else message = "Login server unavailable";
         } else {
-          message = "Error loggin in";
+          message = "Error logging in. Please try again later.";
         }
       }
       return message;
