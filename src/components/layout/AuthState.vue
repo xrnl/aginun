@@ -60,7 +60,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 export default {
-  name: "LoginModal",
+  name: "AuthState",
   data() {
     return {
       dialog: false,

@@ -13,7 +13,7 @@
       <h2>{{ $t("Vacancies") }}</h2>
     </v-toolbar-title>
     <v-spacer />
-    <login-modal ref="loginModal"></login-modal>
+    <auth-state></auth-state>
     <v-btn text @click.stop="contactSupportDialog = true" class="mr-3">
       {{ $t("Support") }} <v-icon> mdi-help-circle-outline </v-icon>
     </v-btn>
@@ -51,7 +51,7 @@ import FlexWrapper from "@/components/layout/FlexWrapper";
 import { contactEmail } from "@/constants/contacts";
 import styles from "@/constants/styles";
 import LanguageSelect from "@/components/LanguageSelect.vue";
-import LoginModal from "@/components/layout/LoginModal.vue";
+import AuthState from "@/components/layout/AuthState.vue";
 
 export default {
   name: "TheAppBar",
@@ -59,7 +59,7 @@ export default {
     IconLink,
     FlexWrapper,
     LanguageSelect,
-    LoginModal
+    AuthState
   },
   data: () => ({
     contactSupportDialog: false,

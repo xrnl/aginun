@@ -38,9 +38,7 @@ export default {
         }
       };
       const params = {
-        // eslint-disable-next-line @typescript-eslint/camelcase
         grant_type: "password",
-        // eslint-disable-next-line @typescript-eslint/camelcase
         client_id: "volunteerplatform",
         username,
         password
