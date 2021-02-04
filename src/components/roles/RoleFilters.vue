@@ -16,18 +16,20 @@
       </template>
       <flex-wrapper direction="column">
         <autocomplete-custom
-          ref="localGroupsFilter"
           :items="localGroups"
           :selected-items-ids="selectedFilters.localGroups"
           :label="$t('Local Group')"
-          @change="changeFilter('localGroups', $event)"
+          @change="
+            setFilter({ filterType: 'localGroups', filterValue: $event })
+          "
         />
         <autocomplete-custom
-          ref="workingCirclesFilter"
           :items="workingCircles"
           :selected-items-ids="selectedFilters.workingCircles"
           :label="$t('Working circle')"
-          @change="changeFilter('workingCircles', $event)"
+          @change="
+            setFilter({ filterType: 'workingCircles', filterValue: $event })
+          "
         />
       </flex-wrapper>
     </filter-section>
@@ -36,14 +38,13 @@
         {{ $t("Time commitment") }}
       </template>
       <v-range-slider
-        ref="timeCommitmentFilter"
         :value="selectedFilters.timeCommitment"
         :min="timeCommitmentRange.min"
         :max="timeCommitmentRange.max"
         class="mt-12"
         thumb-label="always"
         :label="$t('Time Commitment')"
-        @end="changeFilter('timeCommitment', $event)"
+        @end="setFilter({ filterType: 'timeCommitment', filterValue: $event })"
       />
     </filter-section>
   </div>
@@ -67,24 +68,6 @@ export default {
   data: () => ({
     timeCommitmentRange
   }),
-  mounted: function() {
-    if (typeof this.$route.query.search == "undefined") return;
-    var query = {};
-    try {
-      console.log(this.$route.query.search);
-      query = JSON.parse(this.$route.query.search);
-    } catch (e) {
-      this.$router.replace({ name: "roles", query: {} });
-    }
-    for (var key in query) {
-      var value = query[key];
-      if (value.length > 0) {
-        //todo: also update this in the html
-        //this.$refs[key + "Filter"].value = value;
-        this.setFilter({ filterType: key, filterValue: value });
-      }
-    }
-  },
   computed: {
     ...mapState("groups", ["localGroups", "workingCircles"]),
     ...mapState("roles", ["selectedFilters"])
@@ -93,36 +76,10 @@ export default {
     this.$store.dispatch("roles/setDefaultFilters");
   },
   methods: {
-    changeFilter(filterType, filterValue) {
-      this.setFilter({ filterType: filterType, filterValue: filterValue });
-      var params = {};
-      //only put non-empty parameters in url
-      for (var key in this.selectedFilters) {
-        if (this.selectedFilters[key].length > 0) {
-          if (key === "timeCommitment") {
-            if (
-              this.selectedFilters[key][0] === this.timeCommitmentRange.min &&
-              this.selectedFilters[key][1] === this.timeCommitmentRange.max
-            ) {
-              continue;
-            }
-          }
-          params[key] = this.selectedFilters[key];
-        }
-      }
-      if (Object.keys(params).length === 0) {
-        this.$router.replace({ name: "roles" });
-      } else if (this.$route.query.search !== JSON.stringify(params)) {
-        this.$router.replace({
-          name: "roles",
-          query: { search: JSON.stringify(params) }
-        });
-      }
-    },
     ...mapActions("roles", ["setFilter"]),
     debounceSearchUpdate: debounce(function($event) {
       const filterValue = $event || "";
-      this.changeFilter("search", filterValue);
+      this.setFilter({ filterType: "search", filterValue });
     }, 500)
   }
 };
