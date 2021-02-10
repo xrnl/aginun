@@ -1,6 +1,9 @@
 import qs from "qs";
 import axios from "axios";
 import Vue from "vue";
+import VueCookies from "vue-cookies";
+
+Vue.use(VueCookies);
 
 export const loginCookieKey = "loginToken";
 
@@ -33,16 +36,17 @@ export default {
     async login({ commit }, { username, password }) {
       const config = {
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
+          "Content-Type": "application/x-www-form-urlencoded"
         }
       };
       const params = {
+        // eslint-disable-next-line @typescript-eslint/camelcase
         grant_type: "password",
+        // eslint-disable-next-line @typescript-eslint/camelcase
         client_id: "volunteerplatform",
         username,
         password
       };
-      let message = "";
       try {
         const { data } = await axios.post(
           process.env.VUE_APP_KEYSERVER_URL || "",
@@ -54,17 +58,15 @@ export default {
           token: data.access_token,
           lifetime: data.expires_in
         });
-      } catch ({ e }) {
-        if (e) {
-          if (e.response.data) message = e.response.data.error_description;
-          else message = "Login server unavailable";
-        } else {
-          message = "Error logging in. Please try again later.";
-        }
+      } catch ({ response }) {
+        return (
+          (response.data?.error_description as string) ||
+          "Login server unavailable"
+        );
       }
-      return message;
+      return "";//no error
     },
-    logout({ commit }): void {
+    logout({ commit }) {
       commit("removeToken");
     }
   }

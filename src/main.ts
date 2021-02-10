@@ -12,7 +12,6 @@ import VueCookies from "vue-cookies";
 
 Vue.config.productionTip = false;
 
-Vue.use(VueRouter);
 Vue.use(VueCookies);
 
 new Vue({
