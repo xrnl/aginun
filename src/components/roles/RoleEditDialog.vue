@@ -4,17 +4,11 @@
       <h2>{{ formTitle }}</h2>
       <validation-observer ref="form" v-slot="{ invalid, handleSubmit }">
         <form @submit.prevent="handleSubmit(onSubmit)" @keypress.enter.prevent>
-          <validation-provider
-            v-slot="{ errors }"
-            rules="required|alpha_spaces|max:30"
-            name="title"
-          >
-            <v-text-field
-              v-model="role.title"
-              :label="$t('Title')"
-              :error-messages="errors"
-            />
-          </validation-provider>
+          <multi-language-input
+            v-model="role.title"
+            :label="$t('Title')"
+            :rules="{ requiredTranslation: role.title }"
+          ></multi-language-input>
           <validation-provider
             v-slot="{ errors }"
             rules="requiredSelect"
@@ -219,6 +213,7 @@ import {
   email
 } from "vee-validate/dist/rules";
 import DatePickerField from "@/components/DatePickerField.vue";
+import MultiLanguageInput from "@/components/MultiLanguageInput.vue";
 import { timeCommitments } from "@/constants/timeCommitments";
 import i18n from "@/i18n/i18n";
 
@@ -245,6 +240,11 @@ extend("required", {
 extend("requiredSelect", {
   ...required,
   message: i18n.t("You must select a {_field_}.")
+});
+extend("requiredTranslation", {
+  params: ["translation"],
+  validate: (value, { translation: { en, nl } }) => Boolean(en || nl),
+  message: i18n.t("You must enter at least one language.")
 });
 extend("requiredList", {
   validate: () => {
@@ -310,7 +310,8 @@ export default {
   components: {
     ValidationProvider,
     ValidationObserver,
-    DatePickerField
+    DatePickerField,
+    MultiLanguageInput
   },
   props: {
     value: {
