@@ -22,28 +22,28 @@ import { Translation } from "@/i18n/models/translation";
 export default Vue.extend({
   name: "MultiLanguageInput",
   components: {
-    ValidationProvider,
+    ValidationProvider
   },
   props: {
     requiredLanguages: {
       type: Object,
-      default: () => ({ en: true, nl: true }),
+      default: () => ({ en: true, nl: true })
     },
     value: {
       type: Object as () => Translation,
       default: () => ({
         en: "",
-        nl: "",
-      }),
+        nl: ""
+      })
     },
     label: {
       type: String,
-      default: "",
+      default: ""
     },
     rules: {
       type: [String, Object],
-      default: null,
-    },
-  },
+      default: null
+    }
+  }
 });
 </script>
