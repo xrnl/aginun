@@ -16,7 +16,8 @@ module.exports = {
     ecmaVersion: 2020
   },
   rules: {
-    "no-console": process.env.NODE_ENV === "production" ? "warn" : "off"
+    "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
+    "prettier/prettier": ["error", { arrowParens: "always" }]
   },
   overrides: [
     {
@@ -29,9 +30,9 @@ module.exports = {
       }
     },
     {
-      "files": [ "**/*.js"],
-      "rules": {
-        '@typescript-eslint/no-var-requires': "off",
+      files: ["**/*.js"],
+      rules: {
+        "@typescript-eslint/no-var-requires": "off"
       }
     }
   ]

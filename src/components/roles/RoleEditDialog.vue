@@ -3,7 +3,10 @@
     <v-card class="pa-4">
       <h2>{{ formTitle }}</h2>
       <validation-observer ref="form" v-slot="{ invalid, handleSubmit }">
-        <v-checkbox v-model="requiredLanguages.en" label="Is this role only for dutch speakers?"></v-checkbox>
+        <v-checkbox
+          v-model="requiredLanguages.en"
+          label="Is this role only for dutch speakers?"
+        ></v-checkbox>
         <form @submit.prevent="handleSubmit(onSubmit)" @keypress.enter.prevent>
           <multi-language-input
             v-model="role.title"
@@ -11,7 +14,11 @@
             rules="required"
             :requiredLanguages="requiredLanguages"
           ></multi-language-input>
-          <validation-provider v-slot="{ errors }" rules="requiredSelect" name="local group">
+          <validation-provider
+            v-slot="{ errors }"
+            rules="requiredSelect"
+            name="local group"
+          >
             <v-select
               v-model="role.localGroupId"
               :items="localGroups"
@@ -21,7 +28,11 @@
               :error-messages="errors"
             />
           </validation-provider>
-          <validation-provider v-slot="{ errors }" rules="requiredSelect" name="working circle">
+          <validation-provider
+            v-slot="{ errors }"
+            rules="requiredSelect"
+            name="working circle"
+          >
             <v-select
               v-model="role.workingCircleId"
               :items="workingCircles"
@@ -48,7 +59,14 @@
               @keypress.enter="addResponsibility"
             >
               <template v-slot:append>
-                <v-btn text icon small color="primary" :disabled="!validResponsibility" @click="addResponsibility">
+                <v-btn
+                  text
+                  icon
+                  small
+                  color="primary"
+                  :disabled="!validResponsibility"
+                  @click="addResponsibility"
+                >
                   <v-icon>mdi-plus</v-icon>
                 </v-btn>
               </template>
@@ -57,15 +75,27 @@
           <v-card v-if="role.responsibilities.length > 0" class="mb-4">
             <template v-for="(responsibility, i) in role.responsibilities">
               <v-divider v-if="i !== 0" :key="`${i}-divider`" />
-              <v-list-item :key="`${i}-${responsibility}`" class="d-flex justify-space-between">
+              <v-list-item
+                :key="`${i}-${responsibility}`"
+                class="d-flex justify-space-between"
+              >
                 <span style="flex: 1">{{ responsibility }}</span>
-                <v-btn text icon color="gray" @click="role.responsibilities.splice(i, 1)">
+                <v-btn
+                  text
+                  icon
+                  color="gray"
+                  @click="role.responsibilities.splice(i, 1)"
+                >
                   <v-icon>mdi-close</v-icon>
                 </v-btn>
               </v-list-item>
             </template>
           </v-card>
-          <validation-provider v-slot="{ errors }" rules="max:1000" name="description">
+          <validation-provider
+            v-slot="{ errors }"
+            rules="max:1000"
+            name="description"
+          >
             <v-textarea
               v-model="role.description"
               :label="$t('Description (optional)')"
@@ -77,7 +107,11 @@
               :error-messages="errors"
             />
           </validation-provider>
-          <validation-provider v-slot="{ errors }" rules="max:1000" name="requirements">
+          <validation-provider
+            v-slot="{ errors }"
+            rules="max:1000"
+            name="requirements"
+          >
             <v-textarea
               v-model="role.requirements"
               :label="$t('Requirements (optional)')"
@@ -85,8 +119,16 @@
               :error-messages="errors"
             />
           </validation-provider>
-          <date-picker-field :date="role.dueDate" :label="$t('Application deadline')" @update="onDueDateChange" />
-          <validation-provider v-slot="{ errors }" rules="requiredSelect" name="time commitment">
+          <date-picker-field
+            :date="role.dueDate"
+            :label="$t('Application deadline')"
+            @update="onDueDateChange"
+          />
+          <validation-provider
+            v-slot="{ errors }"
+            rules="requiredSelect"
+            name="time commitment"
+          >
             <v-select
               v-model="role.timeCommitmentMin"
               :items="timeCommitments"
@@ -96,21 +138,52 @@
               :error-messages="errors"
               @change="onTimeCommitmentChange"
             >
-              <template v-slot:item="{ item }"> {{ item.min }} - {{ item.max }} {{ $t("hours/week") }} </template>
-              <template v-slot:selection="{ item }"> {{ item.min }} - {{ item.max }} {{ $t("hours/week") }} </template>
+              <template v-slot:item="{ item }">
+                {{ item.min }} - {{ item.max }} {{ $t("hours/week") }}
+              </template>
+              <template v-slot:selection="{ item }">
+                {{ item.min }} - {{ item.max }} {{ $t("hours/week") }}
+              </template>
             </v-select>
           </validation-provider>
           <p class="caption mb-0" style="color: gray">
             {{ $t("Contact details") }}
           </p>
-          <validation-provider v-slot="{ errors }" name="email address" mode="eager" rules="required|email|max:50">
-            <v-text-field v-model="role.email" :label="$t('Email')" :error-messages="errors" />
+          <validation-provider
+            v-slot="{ errors }"
+            name="email address"
+            mode="eager"
+            rules="required|email|max:50"
+          >
+            <v-text-field
+              v-model="role.email"
+              :label="$t('Email')"
+              :error-messages="errors"
+            />
           </validation-provider>
-          <validation-provider v-slot="{ errors }" name="Mattermost id" mode="eager" rules="required|mattermost|max:50">
-            <v-text-field v-model="role.mattermostId" :label="$t('Mattermost id')" :error-messages="errors" />
+          <validation-provider
+            v-slot="{ errors }"
+            name="Mattermost id"
+            mode="eager"
+            rules="required|mattermost|max:50"
+          >
+            <v-text-field
+              v-model="role.mattermostId"
+              :label="$t('Mattermost id')"
+              :error-messages="errors"
+            />
           </validation-provider>
-          <validation-provider v-slot="{ errors }" rules="phone|max:20" mode="eager" name="phone number">
-            <v-text-field v-model="role.phone" :label="$t('Phone number (optional)')" :error-messages="errors" />
+          <validation-provider
+            v-slot="{ errors }"
+            rules="phone|max:20"
+            mode="eager"
+            name="phone number"
+          >
+            <v-text-field
+              v-model="role.phone"
+              :label="$t('Phone number (optional)')"
+              :error-messages="errors"
+            />
           </validation-provider>
           <v-card-actions class="d-flex justify-end">
             <v-btn color="primary" text @click="$emit('input', false)">
@@ -138,7 +211,12 @@
 <script>
 import { mapState, mapActions } from "vuex";
 import { extend, ValidationProvider, ValidationObserver } from "vee-validate";
-import { required, alpha_spaces as alphaSpaces, max, email } from "vee-validate/dist/rules";
+import {
+  required,
+  alpha_spaces as alphaSpaces,
+  max,
+  email
+} from "vee-validate/dist/rules";
 import DatePickerField from "@/components/DatePickerField.vue";
 import MultiLanguageInput from "@/components/MultiLanguageInput.vue";
 import { timeCommitments } from "@/constants/timeCommitments";
@@ -195,7 +273,8 @@ extend("alpha_spaces", {
 });
 extend("max", {
   ...max,
-  message: (_, values) => i18n.t("The {_field_} must be under {length} characters.", values)
+  message: (_, values) =>
+    i18n.t("The {_field_} must be under {length} characters.", values)
 });
 extend("phone", {
   validate: (value) => {
@@ -334,7 +413,9 @@ export default {
         this.$refs.form.reset();
       });
 
-      this.displaySuccess(this.editRole ? this.$t("Role edited") : this.$t("Role created"));
+      this.displaySuccess(
+        this.editRole ? this.$t("Role edited") : this.$t("Role created")
+      );
     },
     isEmpty: (text) => !text || text.length === 0 || !text.trim()
   }
