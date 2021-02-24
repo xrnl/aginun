@@ -160,13 +160,13 @@ extend("required", {
 
     return i18n.t(`You must specify {article} {fieldName}.`, {
       article,
-      fieldName,
+      fieldName
     });
-  },
+  }
 });
 extend("requiredSelect", {
   ...required,
-  message: i18n.t("You must select a {_field_}."),
+  message: i18n.t("You must select a {_field_}.")
 });
 // extend("requiredTranslation", {
 //   params: ["translation"],
@@ -178,38 +178,38 @@ extend("requiredList", {
     return {
       valid: false,
       data: {
-        required: false,
-      },
+        required: false
+      }
     };
   },
   computesRequired: true,
-  message: i18n.t("You must add at least one {_field_}."),
+  message: i18n.t("You must add at least one {_field_}.")
 });
 extend("email", {
   ...email,
-  message: i18n.t("You must enter a valid email address."),
+  message: i18n.t("You must enter a valid email address.")
 });
 extend("alpha_spaces", {
   ...alphaSpaces,
-  message: i18n.t("The {_field_} can only contain letters and spaces."),
+  message: i18n.t("The {_field_} can only contain letters and spaces.")
 });
 extend("max", {
   ...max,
-  message: (_, values) => i18n.t("The {_field_} must be under {length} characters.", values),
+  message: (_, values) => i18n.t("The {_field_} must be under {length} characters.", values)
 });
 extend("phone", {
   validate: (value) => {
     const phoneRegex = RegExp(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/);
     return phoneRegex.test(value);
   },
-  message: i18n.t("You must enter a valid phone number"),
+  message: i18n.t("You must enter a valid phone number")
 });
 extend("mattermost", {
   validate: (value) => {
     const mattermostRegex = RegExp(/^@\S+$/);
     return mattermostRegex.test(value);
   },
-  message: i18n.t("You must enter a valid Mattermost Id."),
+  message: i18n.t("You must enter a valid Mattermost Id.")
 });
 
 const initialState = () => ({
@@ -225,14 +225,14 @@ const initialState = () => ({
     email: undefined,
     mattermostId: undefined,
     phone: undefined,
-    dueDate: undefined,
+    dueDate: undefined
   },
   timeCommitments,
   newResponsibility: undefined,
   requiredLanguages: {
     en: true,
-    nl: true,
-  },
+    nl: true
+  }
 });
 
 export default {
@@ -241,17 +241,17 @@ export default {
     ValidationProvider,
     ValidationObserver,
     DatePickerField,
-    MultiLanguageInput,
+    MultiLanguageInput
   },
   props: {
     value: {
       required: true,
-      type: Boolean,
+      type: Boolean
     },
     editRole: {
       default: null,
-      type: Object,
-    },
+      type: Object
+    }
   },
   data: () => initialState(),
   computed: {
@@ -277,7 +277,7 @@ export default {
     },
     formTitle() {
       return this.editRole ? this.$t("Edit Role") : this.$t("New Role");
-    },
+    }
   },
   watch: {
     editRole: {
@@ -292,8 +292,8 @@ export default {
           this.role.localGroupId = this.editRole.localGroup.id;
         }
       },
-      immediate: true,
-    },
+      immediate: true
+    }
   },
   created() {
     const keys = Object.keys(this.role);
@@ -336,8 +336,8 @@ export default {
 
       this.displaySuccess(this.editRole ? this.$t("Role edited") : this.$t("Role created"));
     },
-    isEmpty: (text) => !text || text.length === 0 || !text.trim(),
-  },
+    isEmpty: (text) => !text || text.length === 0 || !text.trim()
+  }
 };
 </script>
 
