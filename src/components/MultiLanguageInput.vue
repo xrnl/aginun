@@ -1,29 +1,65 @@
 <template>
-  <div>
-    <label class="font-weight-bold">{{ label }}</label>
+  <v-card outlined elevation="1" class="rounded-sm px-3 pt-2 mb-7">
+    <p class="font-weight-bold">{{ label }}</p>
     <validation-provider
-      v-if="requiredLanguages.en"
+      v-if="requiredLanguages.includes('en')"
       tag="div"
       :rules="rules"
       :name="label"
       v-slot="{ errors }"
     >
-      <v-text-field v-model="value.en" :error-messages="errors">
+      <v-text-field
+        v-if="isTextField"
+        outlined
+        dense
+        class="rounded-lg"
+        v-model="value.en"
+        :error-messages="errors"
+      >
         <template v-slot:label>🇬🇧 {{ $t("English") }}</template>
       </v-text-field>
+      <v-textarea
+        v-else
+        outlined
+        dense
+        class="rounded-lg"
+        v-model="value.en"
+        :error-messages="errors"
+        :placeholder="placeholder"
+      >
+        <template v-slot:label>🇬🇧 {{ $t("English") }}</template>
+      </v-textarea>
     </validation-provider>
     <validation-provider
-      v-if="requiredLanguages.nl"
+      v-if="requiredLanguages.includes('nl')"
       tag="div"
       :rules="rules"
       :name="label"
       v-slot="{ errors }"
     >
-      <v-text-field v-model="value.nl" :error-messages="errors">
+      <v-text-field
+        v-if="isTextField"
+        outlined
+        dense
+        class="rounded-lg"
+        v-model="value.nl"
+        :error-messages="errors"
+      >
         <template v-slot:label>🇳🇱 {{ $t("Dutch") }}</template>
       </v-text-field>
+      <v-textarea
+        v-else
+        outlined
+        dense
+        class="rounded-lg"
+        v-model="value.nl"
+        :error-messages="errors"
+        :placeholder="placeholder"
+      >
+        <template v-slot:label>🇬🇧 {{ $t("Dutch") }}</template>
+      </v-textarea>
     </validation-provider>
-  </div>
+  </v-card>
 </template>
 
 <script lang="ts">
@@ -36,10 +72,15 @@ export default Vue.extend({
   components: {
     ValidationProvider
   },
+  computed: {
+    isTextField() {
+      return this.type === "text-field";
+    }
+  },
   props: {
     requiredLanguages: {
-      type: Object,
-      default: () => ({ en: true, nl: true })
+      type: Array,
+      default: () => ["en", "nl"]
     },
     value: {
       type: Object as () => Translation,
@@ -52,9 +93,17 @@ export default Vue.extend({
       type: String,
       default: ""
     },
+    placeholder: {
+      type: String,
+      default: ""
+    },
     rules: {
       type: [String, Object],
       default: null
+    },
+    type: {
+      type: String,
+      default: "text-field"
     }
   }
 });

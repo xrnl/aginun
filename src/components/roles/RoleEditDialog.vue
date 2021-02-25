@@ -3,25 +3,70 @@
     <v-card class="pa-4">
       <h2>{{ formTitle }}</h2>
       <validation-observer ref="form" v-slot="{ invalid, handleSubmit }">
-        <v-checkbox
-          v-model="requiredLanguages.en"
-          label="Is this role only for dutch speakers?"
-        ></v-checkbox>
+        <p class="mb-0">
+          {{ $t("Choose the languages for this role:") }}
+        </p>
+        <v-chip-group
+          active-class="primary--text"
+          v-model="requiredLanguages"
+          mandatory
+          multiple
+        >
+          <v-chip outlined value="en">
+            {{ `🇬🇧  ${$t("English")}` }}
+          </v-chip>
+          <v-chip outlined value="nl">
+            {{ `🇳🇱  ${$t("Dutch")}` }}
+          </v-chip>
+        </v-chip-group>
         <form @submit.prevent="handleSubmit(onSubmit)" @keypress.enter.prevent>
           <multi-language-input
             v-model="role.title"
-            :label="$t('Title')"
             rules="required"
+            :label="$t('Title')"
             :requiredLanguages="requiredLanguages"
-          ></multi-language-input>
+          />
+          <multi-language-input
+            v-model="role.responsibilities"
+            :label="$t('Responsibilities')"
+            :requiredLanguages="requiredLanguages"
+            rules="required|max:1000"
+            type="textarea"
+          />
+          <multi-language-input
+            v-model="role.description"
+            :label="$t('Description (optional)')"
+            :placeholder="
+              $t(
+                'Any additional information not specified in the set of responsibilities. \n \n This can include information about the circle or the specific project that the role is needed for.'
+              )
+            "
+            rules="max:1000"
+            :requiredLanguages="requiredLanguages"
+            type="textarea"
+          />
+          <multi-language-input
+            v-model="role.requirements"
+            :label="$t('Requirements (optional)')"
+            :placeholder="$t('Skills, experience, equipment')"
+            rules="max:1000"
+            :requiredLanguages="requiredLanguages"
+            type="textarea"
+          />
+          <p class="font-weight-bold">
+            {{ $t("Role info") }}
+          </p>
           <validation-provider
             v-slot="{ errors }"
-            rules="requiredSelect"
+            rules="required"
             name="local group"
           >
             <v-select
               v-model="role.localGroupId"
               :items="localGroups"
+              outlined
+              dense
+              class="rounded-lg"
               item-value="id"
               item-text="title"
               :label="$t('Local Group')"
@@ -30,92 +75,18 @@
           </validation-provider>
           <validation-provider
             v-slot="{ errors }"
-            rules="requiredSelect"
+            rules="required"
             name="working circle"
           >
             <v-select
               v-model="role.workingCircleId"
               :items="workingCircles"
+              outlined
+              dense
+              class="rounded-lg"
               item-value="id"
               item-text="title"
               :label="$t('Working circle')"
-              :error-messages="errors"
-            />
-          </validation-provider>
-          <p style="color: gray" class="caption">
-            {{ $t("Responsibilities") }}
-          </p>
-          <validation-provider
-            v-slot="{ errors }"
-            :rules="`${role.responsibilities.length < 1 ? 'requiredList' : ''}`"
-            mode="eager"
-            name="responsibility"
-          >
-            <v-text-field
-              solo
-              v-model="newResponsibility"
-              :label="$t('Add new responsibility')"
-              :error-messages="errorResponsibility || errors"
-              @keypress.enter="addResponsibility"
-            >
-              <template v-slot:append>
-                <v-btn
-                  text
-                  icon
-                  small
-                  color="primary"
-                  :disabled="!validResponsibility"
-                  @click="addResponsibility"
-                >
-                  <v-icon>mdi-plus</v-icon>
-                </v-btn>
-              </template>
-            </v-text-field>
-          </validation-provider>
-          <v-card v-if="role.responsibilities.length > 0" class="mb-4">
-            <template v-for="(responsibility, i) in role.responsibilities">
-              <v-divider v-if="i !== 0" :key="`${i}-divider`" />
-              <v-list-item
-                :key="`${i}-${responsibility}`"
-                class="d-flex justify-space-between"
-              >
-                <span style="flex: 1">{{ responsibility }}</span>
-                <v-btn
-                  text
-                  icon
-                  color="gray"
-                  @click="role.responsibilities.splice(i, 1)"
-                >
-                  <v-icon>mdi-close</v-icon>
-                </v-btn>
-              </v-list-item>
-            </template>
-          </v-card>
-          <validation-provider
-            v-slot="{ errors }"
-            rules="max:1000"
-            name="description"
-          >
-            <v-textarea
-              v-model="role.description"
-              :label="$t('Description (optional)')"
-              :placeholder="
-                $t(
-                  'Any additional information not specified in the set of responsibilities. \n \n This can include information about the circle or the specific project that the role is needed for.'
-                )
-              "
-              :error-messages="errors"
-            />
-          </validation-provider>
-          <validation-provider
-            v-slot="{ errors }"
-            rules="max:1000"
-            name="requirements"
-          >
-            <v-textarea
-              v-model="role.requirements"
-              :label="$t('Requirements (optional)')"
-              :placeholder="$t('Skills, experience, equipment')"
               :error-messages="errors"
             />
           </validation-provider>
@@ -126,7 +97,7 @@
           />
           <validation-provider
             v-slot="{ errors }"
-            rules="requiredSelect"
+            rules="required"
             name="time commitment"
           >
             <v-select
@@ -134,6 +105,9 @@
               :items="timeCommitments"
               item-value="min"
               return-object
+              outlined
+              dense
+              class="rounded-lg"
               :label="$t('Time commitment')"
               :error-messages="errors"
               @change="onTimeCommitmentChange"
@@ -146,7 +120,7 @@
               </template>
             </v-select>
           </validation-provider>
-          <p class="caption mb-0" style="color: gray">
+          <p class="font-weight-bold">
             {{ $t("Contact details") }}
           </p>
           <validation-provider
@@ -156,6 +130,9 @@
             rules="required|email|max:50"
           >
             <v-text-field
+              outlined
+              dense
+              class="rounded-lg"
               v-model="role.email"
               :label="$t('Email')"
               :error-messages="errors"
@@ -168,6 +145,9 @@
             rules="required|mattermost|max:50"
           >
             <v-text-field
+              outlined
+              dense
+              class="rounded-lg"
               v-model="role.mattermostId"
               :label="$t('Mattermost id')"
               :error-messages="errors"
@@ -180,6 +160,9 @@
             name="phone number"
           >
             <v-text-field
+              outlined
+              dense
+              class="rounded-lg"
               v-model="role.phone"
               :label="$t('Phone number (optional)')"
               :error-messages="errors"
@@ -224,44 +207,9 @@ import i18n from "@/i18n/i18n";
 
 extend("required", {
   ...required,
-  message: (fieldName) => {
-    let article;
-    // TODO: this logic won't work with different languages,
-    // let's think of something more generic.
-    if (fieldName.split(" ")[0].endsWith("s")) {
-      article = "";
-    } else if (/^([aeiou])/i.test(fieldName)) {
-      article = "an";
-    } else {
-      article = "a";
-    }
-
-    return i18n.t(`You must specify {article} {fieldName}.`, {
-      article,
-      fieldName
-    });
+  message: () => {
+    return i18n.t("This field is required.");
   }
-});
-extend("requiredSelect", {
-  ...required,
-  message: i18n.t("You must select a {_field_}.")
-});
-// extend("requiredTranslation", {
-//   params: ["translation"],
-//   validate: (value, { translation: { en, nl } }) => Boolean(en || nl),
-//   message: i18n.t("You must enter at least one language."),
-// });
-extend("requiredList", {
-  validate: () => {
-    return {
-      valid: false,
-      data: {
-        required: false
-      }
-    };
-  },
-  computesRequired: true,
-  message: i18n.t("You must add at least one {_field_}.")
 });
 extend("email", {
   ...email,
@@ -294,7 +242,7 @@ extend("mattermost", {
 const initialState = () => ({
   role: {
     title: undefined,
-    responsibilities: [],
+    responsibilities: undefined,
     description: undefined,
     requirements: undefined,
     localGroupId: undefined,
@@ -307,11 +255,7 @@ const initialState = () => ({
     dueDate: undefined
   },
   timeCommitments,
-  newResponsibility: undefined,
-  requiredLanguages: {
-    en: true,
-    nl: true
-  }
+  requiredLanguages: ["en", "nl"]
 });
 
 export default {
@@ -336,24 +280,6 @@ export default {
   computed: {
     ...mapState("groups", ["localGroups"]),
     ...mapState("groups", ["workingCircles"]),
-    errorResponsibility() {
-      const maxCharsResponsibility = 200;
-      if (this.newResponsibility) {
-        if (this.role.responsibilities.length === 10) {
-          return this.$t("You can enter a maximum of 10 responsibilities");
-        }
-        if (this.newResponsibility.length > maxCharsResponsibility) {
-          return this.$t(
-            `The responsibility must be under {maxCharsResponsibility} characters.`,
-            maxCharsResponsibility
-          );
-        }
-      }
-      return null;
-    },
-    validResponsibility() {
-      return !this.isEmpty(this.newResponsibility) && !this.errorResponsibility;
-    },
     formTitle() {
       return this.editRole ? this.$t("Edit Role") : this.$t("New Role");
     }
@@ -385,12 +311,6 @@ export default {
   methods: {
     ...mapActions("roles", ["updateRole", "createRole"]),
     ...mapActions("alerts", ["displaySuccess"]),
-    addResponsibility() {
-      if (this.validResponsibility) {
-        this.role.responsibilities.push(this.newResponsibility);
-        this.newResponsibility = undefined;
-      }
-    },
     onTimeCommitmentChange(timeCommitment) {
       this.role.timeCommitmentMin = timeCommitment.min;
       this.role.timeCommitmentMax = timeCommitment.max;
