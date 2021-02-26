@@ -53,121 +53,137 @@
             :requiredLanguages="requiredLanguages"
             type="textarea"
           />
-          <p class="font-weight-bold">
-            {{ $t("Role info") }}
-          </p>
-          <validation-provider
-            v-slot="{ errors }"
-            rules="required"
-            name="local group"
-          >
-            <v-select
-              v-model="role.localGroupId"
-              :items="localGroups"
-              outlined
-              dense
-              class="rounded-lg"
-              item-value="id"
-              item-text="title"
-              :label="$t('Local Group')"
-              :error-messages="errors"
-            />
-          </validation-provider>
-          <validation-provider
-            v-slot="{ errors }"
-            rules="required"
-            name="working circle"
-          >
-            <v-select
-              v-model="role.workingCircleId"
-              :items="workingCircles"
-              outlined
-              dense
-              class="rounded-lg"
-              item-value="id"
-              item-text="title"
-              :label="$t('Working circle')"
-              :error-messages="errors"
-            />
-          </validation-provider>
-          <date-picker-field
-            :date="role.dueDate"
-            :label="$t('Application deadline')"
-            @update="onDueDateChange"
-          />
-          <validation-provider
-            v-slot="{ errors }"
-            rules="required"
-            name="time commitment"
-          >
-            <v-select
-              v-model="role.timeCommitmentMin"
-              :items="timeCommitments"
-              item-value="min"
-              return-object
-              outlined
-              dense
-              class="rounded-lg"
-              :label="$t('Time commitment')"
-              :error-messages="errors"
-              @change="onTimeCommitmentChange"
-            >
-              <template v-slot:item="{ item }">
-                {{ item.min }} - {{ item.max }} {{ $t("hours/week") }}
-              </template>
-              <template v-slot:selection="{ item }">
-                {{ item.min }} - {{ item.max }} {{ $t("hours/week") }}
-              </template>
-            </v-select>
-          </validation-provider>
-          <p class="font-weight-bold">
-            {{ $t("Contact details") }}
-          </p>
-          <validation-provider
-            v-slot="{ errors }"
-            name="email address"
-            mode="eager"
-            rules="required|email|max:50"
-          >
-            <v-text-field
-              outlined
-              dense
-              class="rounded-lg"
-              v-model="role.email"
-              :label="$t('Email')"
-              :error-messages="errors"
-            />
-          </validation-provider>
-          <validation-provider
-            v-slot="{ errors }"
-            name="Mattermost id"
-            mode="eager"
-            rules="required|mattermost|max:50"
-          >
-            <v-text-field
-              outlined
-              dense
-              class="rounded-lg"
-              v-model="role.mattermostId"
-              :label="$t('Mattermost id')"
-              :error-messages="errors"
-            />
-          </validation-provider>
-          <validation-provider
-            v-slot="{ errors }"
-            rules="phone|max:20"
-            mode="eager"
-            name="phone number"
-          >
-            <v-text-field
-              outlined
-              dense
-              class="rounded-lg"
-              v-model="role.phone"
-              :label="$t('Phone number (optional)')"
-              :error-messages="errors"
-            />
-          </validation-provider>
+          <v-card outlined elevation="1" class="rounded-sm px-3 pt-2 mb-7">
+            <p class="font-weight-bold">
+              {{ $t("Role info") }}
+            </p>
+            <v-row dense>
+              <v-col cols="12" sm="6">
+                <validation-provider
+                  v-slot="{ errors }"
+                  rules="required"
+                  name="local group"
+                >
+                  <v-select
+                    v-model="role.localGroupId"
+                    :items="localGroups"
+                    outlined
+                    dense
+                    class="rounded-lg"
+                    item-value="id"
+                    item-text="title"
+                    :label="$t('Local Group')"
+                    :error-messages="errors"
+                  />
+                </validation-provider>
+                <validation-provider
+                  v-slot="{ errors }"
+                  rules="required"
+                  name="working circle"
+                >
+                  <v-select
+                    v-model="role.workingCircleId"
+                    :items="workingCircles"
+                    outlined
+                    dense
+                    class="rounded-lg"
+                    item-value="id"
+                    item-text="title"
+                    :label="$t('Working circle')"
+                    :error-messages="errors"
+                  />
+                </validation-provider>
+              </v-col>
+              <v-col cols="12" sm="6">
+                <date-picker-field
+                  :date="role.dueDate"
+                  :label="$t('Application deadline')"
+                  @update="onDueDateChange"
+                />
+                <validation-provider
+                  v-slot="{ errors }"
+                  rules="required"
+                  name="time commitment"
+                >
+                  <v-select
+                    v-model="role.timeCommitmentMin"
+                    :items="timeCommitments"
+                    item-value="min"
+                    return-object
+                    outlined
+                    dense
+                    class="rounded-lg"
+                    :label="$t('Time commitment')"
+                    :error-messages="errors"
+                    @change="onTimeCommitmentChange"
+                  >
+                    <template v-slot:item="{ item }">
+                      {{ item.min }} - {{ item.max }} {{ $t("hours/week") }}
+                    </template>
+                    <template v-slot:selection="{ item }">
+                      {{ item.min }} - {{ item.max }} {{ $t("hours/week") }}
+                    </template>
+                  </v-select>
+                </validation-provider>
+              </v-col>
+            </v-row>
+          </v-card>
+          <v-card outlined elevation="1" class="rounded-sm px-3 pt-2 mb-7">
+            <p class="font-weight-bold">
+              {{ $t("Contact details") }}
+            </p>
+            <v-row dense>
+              <v-col cols="12" sm="6">
+                <validation-provider
+                  v-slot="{ errors }"
+                  name="email address"
+                  mode="eager"
+                  rules="required|email|max:50"
+                >
+                  <v-text-field
+                    outlined
+                    dense
+                    class="rounded-lg"
+                    v-model="role.email"
+                    :label="$t('Email')"
+                    :error-messages="errors"
+                  />
+                </validation-provider>
+                <validation-provider
+                  v-slot="{ errors }"
+                  name="Mattermost id"
+                  mode="eager"
+                  rules="required|mattermost|max:50"
+                >
+                  <v-text-field
+                    outlined
+                    dense
+                    class="rounded-lg"
+                    v-model="role.mattermostId"
+                    :label="$t('Mattermost id')"
+                    :error-messages="errors"
+                  />
+                </validation-provider>
+              </v-col>
+              <v-col cols="12" sm="6">
+                <validation-provider
+                  v-slot="{ errors }"
+                  rules="phone|max:20"
+                  mode="eager"
+                  name="phone number"
+                >
+                  <v-text-field
+                    outlined
+                    dense
+                    class="rounded-lg"
+                    v-model="role.phone"
+                    :label="$t('Phone number (optional)')"
+                    :error-messages="errors"
+                  />
+                </validation-provider>
+              </v-col>
+            </v-row>
+          </v-card>
           <v-card-actions class="d-flex justify-end">
             <v-btn color="primary" text @click="$emit('input', false)">
               {{ $t("Cancel") }}

@@ -13,7 +13,8 @@
         outlined
         dense
         class="rounded-lg"
-        v-model="value.en"
+        :value="internalValue.en"
+        @input="updateValue('en', $event)"
         :error-messages="errors"
       >
         <template v-slot:label>🇬🇧 {{ $t("English") }}</template>
@@ -23,7 +24,8 @@
         outlined
         dense
         class="rounded-lg"
-        v-model="value.en"
+        :value="internalValue.en"
+        @input="updateValue('en', $event)"
         :error-messages="errors"
         :placeholder="placeholder"
       >
@@ -42,7 +44,8 @@
         outlined
         dense
         class="rounded-lg"
-        v-model="value.nl"
+        :value="internalValue.nl"
+        @input="updateValue('nl', $event)"
         :error-messages="errors"
       >
         <template v-slot:label>🇳🇱 {{ $t("Dutch") }}</template>
@@ -52,7 +55,8 @@
         outlined
         dense
         class="rounded-lg"
-        v-model="value.nl"
+        :value="internalValue.nl"
+        @input="updateValue('nl', $event)"
         :error-messages="errors"
         :placeholder="placeholder"
       >
@@ -77,6 +81,11 @@ export default Vue.extend({
       return this.type === "text-field";
     }
   },
+  data() {
+    return {
+      internalValue: this.value
+    };
+  },
   props: {
     requiredLanguages: {
       type: Array,
@@ -84,10 +93,7 @@ export default Vue.extend({
     },
     value: {
       type: Object as () => Translation,
-      default: () => ({
-        en: "",
-        nl: ""
-      })
+      default: () => ({ en: "", nl: "" })
     },
     label: {
       type: String,
@@ -104,6 +110,12 @@ export default Vue.extend({
     type: {
       type: String,
       default: "text-field"
+    }
+  },
+  methods: {
+    updateValue(key: string, value: string) {
+      this.internalValue[key] = value;
+      this.$emit("input", this.internalValue);
     }
   }
 });
