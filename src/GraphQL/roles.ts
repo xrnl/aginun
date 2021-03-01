@@ -44,8 +44,15 @@ const RoleFieldsFragment = gql`
   }
 `;
 
-export const RolesQuery = gql`
-  query Roles(
+/* 
+queries all roles with:
+ - a title, responsibilities, description or requirements containing $search in this $language
+ - no filledDate
+ - dueDate in the future or no dueDate
+ - all other conditions specified in the where clause.
+*/
+export const SearchRolesQuery = gql`
+  query SearchRoles(
     $limit: Int!
     $offset: Int!
     $localGroupIds: [Int!]
@@ -53,19 +60,17 @@ export const RolesQuery = gql`
     $timeCommitmentMin: Int!
     $timeCommitmentMax: Int!
     $search: String!
-    $dueDate: timestamptz
+    $language: String!
   ) {
-    roles(
+    search_roles(
+      args: { language: $language, search: $search }
       where: {
         _and: [
           { localGroupId: { _in: $localGroupIds } }
           { workingCircleId: { _in: $workingCircleIds } }
           { timeCommitmentMin: { _gte: $timeCommitmentMin } }
           { timeCommitmentMax: { _lte: $timeCommitmentMax } }
-          { title: { _ilike: $search } }
-          { filledDate: { _is_null: true } }
         ]
-        _or: [{ dueDate: { _gte: $dueDate } }, { dueDate: { _is_null: true } }]
       }
       order_by: { createdDate: desc }
       limit: $limit

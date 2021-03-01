@@ -4,7 +4,7 @@
     :color="getColour(role.workingCircle)"
   >
     <template #title>
-      {{ role.title }}
+      {{ role.title[$i18n.locale] }}
     </template>
     <template #subtitle>
       {{ role.localGroup.title }} <br />
