@@ -4,7 +4,7 @@ import Vue from "vue";
 import { timeCommitmentRange } from "@/constants/timeCommitments";
 import {
   CreateRoleMutation,
-  RolesQuery,
+  SearchRolesQuery,
   UpdateRoleMutation,
   DeleteRoleMutation,
   FillRoleMutation
@@ -163,7 +163,7 @@ export default {
         : rootGetters["groups/workingCircleIds"];
 
       const { data } = await apolloClient.query({
-        query: RolesQuery,
+        query: SearchRolesQuery,
         variables: {
           limit: state.paginationLimit,
           offset: state.paginationOffset,
@@ -172,11 +172,12 @@ export default {
           timeCommitmentMin: state.selectedFilters.timeCommitment[0],
           timeCommitmentMax: state.selectedFilters.timeCommitment[1],
           search: `%${state.selectedFilters.search}%`,
-          dueDate: new Date(Date.now()).toISOString()
+          // TODO: set language dynamically
+          language: "en"
         }
       });
 
-      const newRoles = data.roles;
+      const newRoles = data.search_roles;
 
       if (getters.isNewQuery) {
         commit("setRoles", newRoles);

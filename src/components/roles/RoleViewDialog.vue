@@ -3,7 +3,7 @@
     <div v-if="!!role.id">
       <role-deletion-confirm
         v-model="isDeleteOpen"
-        :role-title="role.title"
+        :role-title="role.title[$i18n.locale]"
         :role-id="role.id"
       />
       <role-edit-dialog v-model="isEditOpen" :edit-role="role" />
@@ -33,7 +33,7 @@
               >
                 <flex-wrapper direction="column">
                   <h2 class="boldTitle">
-                    {{ role.title }}
+                    {{ role.title[$i18n.locale] }}
                   </h2>
                   <flex-wrapper
                     v-if="role.workingCircle || role.localGroup"
@@ -84,19 +84,19 @@
                 <flex-wrapper>
                   <div>
                     <meta-info
-                      v-if="!!role.responsibilities"
+                      v-if="!!role.responsibilities[$i18n.locale]"
                       :title="$t('Responsibilities')"
-                      :description="role.responsibilities"
+                      :description="role.responsibilities[$i18n.locale]"
                     />
                     <meta-info
-                      v-if="!!role.description"
+                      v-if="!!role.description[$i18n.locale]"
                       :title="$t('Description')"
-                      :description="role.description"
+                      :description="role.description[$i18n.locale]"
                     />
                     <meta-info
-                      v-if="!!role.requirements"
+                      v-if="!!role.requirements[$i18n.locale]"
                       :title="$t('Requirements')"
-                      :description="role.requirements"
+                      :description="role.requirements[$i18n.locale]"
                     />
                     <meta-info
                       v-if="!!role.timeCommitmentMin"
@@ -230,7 +230,7 @@ export default {
       query: RoleQuery,
       variables() {
         return {
-          roleId: this.$route.params.id
+          roleId: parseInt(this.$route.params.id, 10)
         };
       }
     }
