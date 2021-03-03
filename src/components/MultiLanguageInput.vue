@@ -2,37 +2,6 @@
   <v-card outlined elevation="1" class="rounded-sm px-3 pt-2 mb-7">
     <p class="font-weight-bold">{{ label }}</p>
     <validation-provider
-      v-if="requiredLanguages.includes('en')"
-      tag="div"
-      :rules="rules"
-      :name="label"
-      v-slot="{ errors }"
-    >
-      <v-text-field
-        v-if="isTextField"
-        outlined
-        dense
-        class="rounded-lg"
-        :value="internalValue.en"
-        @input="updateValue('en', $event)"
-        :error-messages="errors"
-      >
-        <template v-slot:label>🇬🇧 {{ $t("English") }}</template>
-      </v-text-field>
-      <v-textarea
-        v-else
-        outlined
-        dense
-        class="rounded-lg"
-        :value="internalValue.en"
-        @input="updateValue('en', $event)"
-        :error-messages="errors"
-        :placeholder="placeholder"
-      >
-        <template v-slot:label>🇬🇧 {{ $t("English") }}</template>
-      </v-textarea>
-    </validation-provider>
-    <validation-provider
       v-if="requiredLanguages.includes('nl')"
       tag="div"
       :rules="rules"
@@ -56,11 +25,42 @@
         dense
         class="rounded-lg"
         :value="internalValue.nl"
-        @input="updateValue('nl', $event)"
         :error-messages="errors"
         :placeholder="placeholder"
+        @input="updateValue('nl', $event)"
       >
-        <template v-slot:label>🇬🇧 {{ $t("Dutch") }}</template>
+        <template v-slot:label>🇳🇱 {{ $t("Dutch") }}</template>
+      </v-textarea>
+    </validation-provider>
+    <validation-provider
+      v-if="requiredLanguages.includes('en')"
+      tag="div"
+      :rules="rules"
+      :name="label"
+      v-slot="{ errors }"
+    >
+      <v-text-field
+        v-if="isTextField"
+        outlined
+        dense
+        class="rounded-lg"
+        :value="internalValue.en"
+        @input="updateValue('en', $event)"
+        :error-messages="errors"
+      >
+        <template v-slot:label>🇬🇧 {{ $t("English") }}</template>
+      </v-text-field>
+      <v-textarea
+        v-else
+        outlined
+        dense
+        class="rounded-lg"
+        :value="internalValue.en"
+        :error-messages="errors"
+        :placeholder="placeholder"
+        @input="updateValue('en', $event)"
+      >
+        <template v-slot:label>🇬🇧 {{ $t("English") }}</template>
       </v-textarea>
     </validation-provider>
   </v-card>
@@ -116,6 +116,11 @@ export default Vue.extend({
     updateValue(key: string, value: string) {
       this.internalValue[key] = value;
       this.$emit("input", this.internalValue);
+    }
+  },
+  watch: {
+    value(value) {
+      this.internalValue = value;
     }
   }
 });

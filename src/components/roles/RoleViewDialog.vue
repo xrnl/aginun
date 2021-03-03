@@ -96,17 +96,19 @@
                 <flex-wrapper>
                   <div>
                     <meta-info
-                      v-if="!!role.responsibilities[$i18n.locale]"
+                      v-if="role.responsibilities[$i18n.locale]"
                       :title="$t('Responsibilities')"
                       :description="role.responsibilities[$i18n.locale]"
                     />
                     <meta-info
-                      v-if="!!role.description[$i18n.locale]"
+                      v-if="role.description && role.description[$i18n.locale]"
                       :title="$t('Description')"
                       :description="role.description[$i18n.locale]"
                     />
                     <meta-info
-                      v-if="!!role.requirements[$i18n.locale]"
+                      v-if="
+                        role.requirements && role.requirements[$i18n.locale]
+                      "
                       :title="$t('Requirements')"
                       :description="role.requirements[$i18n.locale]"
                     />

@@ -12,17 +12,17 @@
           mandatory
           multiple
         >
-          <v-chip outlined value="en">
-            {{ `🇬🇧  ${$t("English")}` }}
-          </v-chip>
           <v-chip outlined value="nl">
             {{ `🇳🇱  ${$t("Dutch")}` }}
           </v-chip>
+          <v-chip outlined value="en">
+            {{ `🇬🇧  ${$t("English")}` }}
+          </v-chip>
         </v-chip-group>
-        <form @submit.prevent="handleSubmit(onSubmit)" @keypress.enter.prevent>
+        <form @submit.prevent="handleSubmit(onSubmit)" @keyup.enter.prevent>
           <multi-language-input
             v-model="role.title"
-            rules="required"
+            rules="required|alpha_spaces|max:30"
             :label="$t('Title')"
             :requiredLanguages="requiredLanguages"
           />
@@ -97,7 +97,7 @@
               <v-col cols="12" sm="6">
                 <date-picker-field
                   :date="role.dueDate"
-                  :label="$t('Application deadline')"
+                  :label="$t('Application deadline (optional)')"
                   @update="onDueDateChange"
                 />
                 <validation-provider
@@ -234,12 +234,12 @@ extend("email", {
 });
 extend("alpha_spaces", {
   ...alphaSpaces,
-  message: i18n.t("The {_field_} can only contain letters and spaces.")
+  message: i18n.t("This field can only contain letters and spaces.")
 });
 extend("max", {
   ...max,
   message: (_, values) =>
-    i18n.t("The {_field_} must be under {length} characters.", values)
+    i18n.t("This field must be under {length} characters.", values)
 });
 extend("phone", {
   validate: (value) => {
