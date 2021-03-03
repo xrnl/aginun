@@ -46,7 +46,7 @@ const RoleFieldsFragment = gql`
 
 /* 
 queries all roles with:
- - a title, responsibilities, description or requirements containing $search in this $language
+ - a title, responsibilities, description or requirements containing $search (for the selected language)
  - no filledDate
  - dueDate in the future or no dueDate
  - all other conditions specified in the where clause.
@@ -60,10 +60,9 @@ export const SearchRolesQuery = gql`
     $timeCommitmentMin: Int!
     $timeCommitmentMax: Int!
     $search: String!
-    $language: String!
   ) {
     search_roles(
-      args: { language: $language, search: $search }
+      args: { search: $search }
       where: {
         _and: [
           { localGroupId: { _in: $localGroupIds } }
