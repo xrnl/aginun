@@ -24,6 +24,15 @@
             class="mx-auto"
             type="article"
           />
+          <div v-else-if="!role.title[$i18n.locale]" class="pa-8 text-center">
+            <h3>
+              {{
+                $t(
+                  "Sorry, this role isn't available for your selected language."
+                )
+              }}
+            </h3>
+          </div>
           <div v-else key="role">
             <v-card-title>
               <flex-wrapper
