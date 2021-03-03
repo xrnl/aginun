@@ -171,9 +171,7 @@ export default {
           workingCircleIds,
           timeCommitmentMin: state.selectedFilters.timeCommitment[0],
           timeCommitmentMax: state.selectedFilters.timeCommitment[1],
-          search: `%${state.selectedFilters.search}%`,
-          // TODO: set language dynamically
-          language: "en"
+          search: `%${state.selectedFilters.search}%`
         }
       });
 
