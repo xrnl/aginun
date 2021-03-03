@@ -295,9 +295,9 @@ describe("Roles Store", () => {
         loaded: jest.fn()
       };
       apolloQuerySpy.mockReturnValue(
-        Promise.resolve({ data: mockState } as ApolloQueryResult<
-          Partial<RolesState>
-        >)
+        Promise.resolve({
+          data: { rolesSearch: mockState.roles }
+        } as ApolloQueryResult<unknown>)
       );
 
       it("commits setLoadingState to true", async () => {
@@ -361,10 +361,8 @@ describe("Roles Store", () => {
       it("calls scrollState.complete when there aren't new roles", async () => {
         apolloQuerySpy.mockReturnValue(
           Promise.resolve({
-            data: {
-              roles: []
-            } as Partial<RolesState>
-          } as ApolloQueryResult<Partial<RolesState>>)
+            data: { rolesSearch: [] }
+          } as ApolloQueryResult<unknown>)
         );
         await rolesStore.actions.loadRoles(defaultPayload, defaultScrollState);
         expect(defaultScrollState.complete).toBeCalled();

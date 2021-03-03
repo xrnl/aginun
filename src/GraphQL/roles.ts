@@ -51,8 +51,8 @@ queries all roles with:
  - dueDate in the future or no dueDate
  - all other conditions specified in the where clause.
 */
-export const SearchRolesQuery = gql`
-  query SearchRoles(
+export const RolesSearchQuery = gql`
+  query RolesSearch(
     $limit: Int!
     $offset: Int!
     $localGroupIds: [Int!]
@@ -61,7 +61,7 @@ export const SearchRolesQuery = gql`
     $timeCommitmentMax: Int!
     $search: String!
   ) {
-    search_roles(
+    rolesSearch(
       args: { search: $search }
       where: {
         _and: [
