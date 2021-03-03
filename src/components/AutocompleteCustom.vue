@@ -3,7 +3,7 @@
     :items="items"
     :value="selectedItemsIds"
     item-value="id"
-    item-text="title"
+    :item-text="itemText"
     chips
     small-chips
     deletable-chips
@@ -15,21 +15,22 @@
 </template>
 
 <script>
-import { makeObjectValidator, isArrayValid } from "@/utils/validators";
+import { isArrayValid } from "@/utils/validators";
 
 export default {
   name: "AutocompleteCustom",
   props: {
     items: {
       type: Array,
-      required: true,
-      validator: (items) => {
-        const objectValidator = makeObjectValidator({
-          id: "number",
-          title: "string"
-        });
-        return isArrayValid(items, objectValidator);
-      }
+      required: true
+      // TODO: handle validtion with typescript types
+      //validator: (items) => {
+      //  const objectValidator = makeObjectValidator({
+      //    id: "number",
+      //    title: "string"
+      //  });
+      //  return isArrayValid(items, objectValidator);
+      //}
     },
     selectedItemsIds: {
       type: Array,
@@ -38,6 +39,10 @@ export default {
     },
     label: {
       type: String,
+      required: true
+    },
+    itemText: {
+      type: [String, Array, Function],
       required: true
     }
   }

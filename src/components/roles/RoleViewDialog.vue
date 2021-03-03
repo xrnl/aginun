@@ -50,7 +50,10 @@
                     classes="flex-wrap"
                   >
                     <span>
-                      {{ !!role.workingCircle && role.workingCircle.title }}
+                      {{
+                        !!role.workingCircle &&
+                          role.workingCircle.title[$i18n.locale]
+                      }}
                     </span>
                     <span
                       v-if="!!role.workingCircle && !!role.localGroup"

@@ -8,7 +8,7 @@
     </template>
     <template #subtitle>
       {{ role.localGroup.title }} <br />
-      {{ role.workingCircle.title }}
+      {{ role.workingCircle.title[$i18n.locale] }}
     </template>
     <template #meta>
       <span class="xr-title d-flex flex-column justify-center">
@@ -46,7 +46,11 @@ export default {
   },
   methods: {
     getColour(workingCircle) {
-      return this.workingCircleColours[workingCircle.title];
+      const fallbackColour = "khaki-light";
+      return (
+        this.workingCircleColours[workingCircle.title[this.$i18n.locale]] ||
+        fallbackColour
+      );
     }
   }
 };
