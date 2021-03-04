@@ -88,7 +88,7 @@
                     dense
                     class="rounded-lg"
                     item-value="id"
-                    :item-text="extractWorkingCircleTitle"
+                    :item-text="['title', $i18n.locale]"
                     :label="$t('Working circle')"
                     :error-messages="errors"
                   />
@@ -220,7 +220,6 @@ import DatePickerField from "@/components/DatePickerField.vue";
 import MultiLanguageInput from "@/components/MultiLanguageInput.vue";
 import { timeCommitments } from "@/constants/timeCommitments";
 import i18n from "@/i18n/i18n";
-import { extractWorkingCircleTitle } from "@/utils/translations";
 
 extend("required", {
   ...required,
@@ -354,8 +353,7 @@ export default {
         this.editRole ? this.$t("Role edited") : this.$t("Role created")
       );
     },
-    isEmpty: (text) => !text || text.length === 0 || !text.trim(),
-    extractWorkingCircleTitle
+    isEmpty: (text) => !text || text.length === 0 || !text.trim()
   }
 };
 </script>

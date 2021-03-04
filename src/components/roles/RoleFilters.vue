@@ -28,7 +28,7 @@
           :items="workingCircles"
           :selected-items-ids="selectedFilters.workingCircles"
           :label="$t('Working circle')"
-          :item-text="extractWorkingCircleTitle"
+          :item-text="['title', $i18n.locale]"
           @change="
             setFilter({ filterType: 'workingCircles', filterValue: $event })
           "
@@ -59,7 +59,6 @@ import { mapState, mapActions } from "vuex";
 import debounce from "lodash/debounce";
 import { timeCommitmentRange } from "@/constants/timeCommitments";
 import FilterDrawerSection from "../layout/FilterDrawerSection.vue";
-import { extractWorkingCircleTitle } from "@/utils/translations";
 
 export default {
   name: "RoleFilters",
@@ -83,8 +82,7 @@ export default {
     debounceSearchUpdate: debounce(function($event) {
       const filterValue = $event || "";
       this.setFilter({ filterType: "search", filterValue });
-    }, 500),
-    extractWorkingCircleTitle
+    }, 500)
   }
 };
 </script>
