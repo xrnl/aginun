@@ -338,10 +338,18 @@ export default {
       Object.assign(this.$data, initialState());
     },
     onSubmit() {
+      const role = {
+        ...this.role,
+        title: this.parseTranslation(this.role.title),
+        responsibilities: this.parseTranslation(this.role.responsibilities),
+        description: this.parseTranslation(this.role.description),
+        requirements: this.parseTranslation(this.role.requirements)
+      };
+
       if (this.editRole) {
-        this.updateRole({ id: this.editRole.id, ...this.role });
+        this.updateRole({ id: this.editRole.id, ...role });
       } else {
-        this.createRole(this.role);
+        this.createRole(role);
       }
       this.$emit("input", false);
       this.resetState();
@@ -353,7 +361,17 @@ export default {
         this.editRole ? this.$t("Role edited") : this.$t("Role created")
       );
     },
-    isEmpty: (text) => !text || text.length === 0 || !text.trim()
+    isEmpty: (text) => !text || text.length === 0 || !text.trim(),
+    parseTranslation(translation) {
+      return (
+        translation &&
+        Object.entries(translation).reduce((result, [key, value]) => {
+          result[key] = this.requiredLanguages.includes(key) ? value : "";
+
+          return result;
+        }, {})
+      );
+    }
   }
 };
 </script>

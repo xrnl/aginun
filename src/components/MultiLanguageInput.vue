@@ -3,6 +3,7 @@
     <p class="font-weight-bold">{{ label }}</p>
     <validation-provider
       v-if="requiredLanguages.includes('nl')"
+      ref="nl_form"
       tag="div"
       :rules="rules"
       :name="label"
@@ -34,6 +35,7 @@
     </validation-provider>
     <validation-provider
       v-if="requiredLanguages.includes('en')"
+      ref="en_form"
       tag="div"
       :rules="rules"
       :name="label"
@@ -119,8 +121,10 @@ export default Vue.extend({
     }
   },
   watch: {
-    value(value) {
+    value(value: Translation) {
       this.internalValue = value;
+      (this.$refs.nl_form as InstanceType<typeof ValidationProvider>).reset();
+      (this.$refs.en_form as InstanceType<typeof ValidationProvider>).reset();
     }
   }
 });
