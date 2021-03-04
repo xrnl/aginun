@@ -133,7 +133,8 @@ describe("AutocompleteCustom", () => {
       propsData: {
         label,
         items,
-        selectedItemsIds: []
+        selectedItemsIds: [],
+        itemText: "title"
       },
       ...options
     });
@@ -141,18 +142,6 @@ describe("AutocompleteCustom", () => {
   it("prop label is rendered", () => {
     const wrapper = mountFunction();
     expect(wrapper.find("label").text()).toBe(label);
-  });
-
-  it("prop items validation works", () => {
-    const { validator } = AutocompleteCustom.props.items;
-
-    expect(validator(items)).toBeTruthy();
-
-    const itemsInvalidKeys = items.concat([{ value: 0, text: "test" }]);
-    expect(validator(itemsInvalidKeys)).toBeFalsy();
-
-    const itemsInvalidTypes = items.concat([{ id: "0", title: 0 }]);
-    expect(validator(itemsInvalidTypes)).toBeFalsy();
   });
 
   it("prop selectedItemsIds validation works", () => {
@@ -169,7 +158,8 @@ describe("AutocompleteCustom", () => {
       propsData: {
         label,
         items,
-        selectedItemsIds
+        selectedItemsIds,
+        itemText: "title"
       }
     });
     const renderedItems = wrapper.findAll("v-chip__content");
