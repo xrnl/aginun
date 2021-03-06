@@ -72,6 +72,7 @@
 import Vue from "vue";
 import { ValidationProvider } from "vee-validate";
 import { Translation } from "@/i18n/models/translation";
+import { createTranslation } from "@/i18n/utils/create-translation";
 
 export default Vue.extend({
   name: "MultiLanguageInput",
@@ -95,7 +96,7 @@ export default Vue.extend({
     },
     value: {
       type: Object as () => Translation,
-      default: () => ({ en: "", nl: "" })
+      default: createTranslation()
     },
     label: {
       type: String,

@@ -220,6 +220,7 @@ import DatePickerField from "@/components/DatePickerField.vue";
 import MultiLanguageInput from "@/components/MultiLanguageInput.vue";
 import { timeCommitments } from "@/constants/timeCommitments";
 import i18n from "@/i18n/i18n";
+import { createTranslation } from "@/i18n/utils/create-translation";
 
 extend("required", {
   ...required,
@@ -257,10 +258,10 @@ extend("mattermost", {
 
 const initialState = () => ({
   role: {
-    title: undefined,
-    responsibilities: undefined,
-    description: undefined,
-    requirements: undefined,
+    title: createTranslation(),
+    responsibilities: createTranslation(),
+    description: createTranslation(),
+    requirements: createTranslation(),
     localGroupId: undefined,
     workingCircleId: undefined,
     timeCommitmentMin: undefined,
