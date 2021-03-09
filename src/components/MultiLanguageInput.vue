@@ -14,7 +14,7 @@
         outlined
         dense
         class="rounded-lg"
-        :value="internalValue.nl"
+        :value="value.nl"
         @input="updateValue('nl', $event)"
         :error-messages="errors"
       >
@@ -25,7 +25,7 @@
         outlined
         dense
         class="rounded-lg"
-        :value="internalValue.nl"
+        :value="value.nl"
         :error-messages="errors"
         :placeholder="placeholder"
         @input="updateValue('nl', $event)"
@@ -46,7 +46,7 @@
         outlined
         dense
         class="rounded-lg"
-        :value="internalValue.en"
+        :value="value.en"
         @input="updateValue('en', $event)"
         :error-messages="errors"
       >
@@ -57,7 +57,7 @@
         outlined
         dense
         class="rounded-lg"
-        :value="internalValue.en"
+        :value="value.en"
         :error-messages="errors"
         :placeholder="placeholder"
         @input="updateValue('en', $event)"
@@ -83,11 +83,6 @@ export default Vue.extend({
     isTextField() {
       return this.type === "text-field";
     }
-  },
-  data() {
-    return {
-      internalValue: this.value
-    };
   },
   props: {
     requiredLanguages: {
@@ -117,15 +112,14 @@ export default Vue.extend({
   },
   methods: {
     updateValue(key: string, value: string) {
-      this.internalValue[key] = value;
-      this.$emit("input", this.internalValue);
+      this.value[key] = value;
+      this.$emit("input", this.value);
     }
   },
   watch: {
-    value(value: Translation) {
-      this.internalValue = value;
-      (this.$refs.nl_form as InstanceType<typeof ValidationProvider>).reset();
-      (this.$refs.en_form as InstanceType<typeof ValidationProvider>).reset();
+    value() {
+      (this.$refs.nl_form as InstanceType<typeof ValidationProvider>)?.reset();
+      (this.$refs.en_form as InstanceType<typeof ValidationProvider>)?.reset();
     }
   }
 });

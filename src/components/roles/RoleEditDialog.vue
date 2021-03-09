@@ -364,14 +364,11 @@ export default {
     },
     isEmpty: (text) => !text || text.length === 0 || !text.trim(),
     parseTranslation(translation) {
-      return (
-        translation &&
-        Object.entries(translation).reduce((result, [key, value]) => {
-          result[key] = this.requiredLanguages.includes(key) ? value : "";
+      return Object.entries(translation).reduce((result, [key, value]) => {
+        result[key] = this.requiredLanguages.includes(key) ? value : "";
 
-          return result;
-        }, {})
-      );
+        return result;
+      }, {});
     }
   }
 };
