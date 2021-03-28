@@ -303,13 +303,15 @@ export default {
     }
   },
   watch: {
-    editRole: {
-      handler(editRole) {
-        if (!editRole) {
+    value: {
+      handler(value) {
+        if (!value) {
           return;
         }
-
-        const role = cloneDeep(editRole);
+        if (!this.editRole) {
+          return;
+        }
+        const role = cloneDeep(this.editRole);
         // Delete this extra field we get from the query
         delete role.__typename;
 
