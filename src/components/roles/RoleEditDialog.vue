@@ -12,12 +12,8 @@
           mandatory
           multiple
         >
-          <v-chip outlined value="nl">
-            {{ `🇳🇱  ${$t("Dutch")}` }}
-          </v-chip>
-          <v-chip outlined value="en">
-            {{ `🇬🇧  ${$t("English")}` }}
-          </v-chip>
+          <v-chip outlined value="nl">🇳🇱 {{ $t("Dutch") }}</v-chip>
+          <v-chip outlined value="en">🇬🇧 {{ $t("English") }}</v-chip>
         </v-chip-group>
         <form @submit.prevent="handleSubmit(onSubmit)" @keyup.enter.prevent>
           <multi-language-input
@@ -225,9 +221,7 @@ import { cloneDeep } from "lodash";
 
 extend("required", {
   ...required,
-  message: () => {
-    return i18n.t("This field is required.");
-  }
+  message: i18n.t("This field is required.")
 });
 extend("email", {
   ...email,
@@ -296,22 +290,19 @@ export default {
   },
   data: () => initialState(),
   computed: {
-    ...mapState("groups", ["localGroups"]),
-    ...mapState("groups", ["workingCircles"]),
+    ...mapState("groups", ["localGroups", "workingCircles"]),
     formTitle() {
       return this.editRole ? this.$t("Edit Role") : this.$t("New Role");
     }
   },
   watch: {
-    value: {
-      handler(value) {
-        if (!value) {
+    editRole: {
+      handler(editRole) {
+        if (!editRole) {
           return;
         }
-        if (!this.editRole) {
-          return;
-        }
-        const role = cloneDeep(this.editRole);
+
+        const role = cloneDeep(editRole);
         // Delete this extra field we get from the query
         delete role.__typename;
 

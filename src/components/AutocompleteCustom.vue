@@ -23,14 +23,14 @@ export default {
     items: {
       type: Array,
       required: true
-      // TODO: handle validtion with typescript types
-      //validator: (items) => {
+      // TODO: handle validation with typescript types
+      // validator: (items) => {
       //  const objectValidator = makeObjectValidator({
       //    id: "number",
       //    title: "string"
       //  });
       //  return isArrayValid(items, objectValidator);
-      //}
+      // }
     },
     selectedItemsIds: {
       type: Array,

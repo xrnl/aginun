@@ -15,8 +15,8 @@
         dense
         class="rounded-lg"
         :value="value.nl"
-        @input="updateValue('nl', $event)"
         :error-messages="errors"
+        @input="updateValue('nl', $event)"
       >
         <template v-slot:label>🇳🇱 {{ $t("Dutch") }}</template>
       </v-text-field>
@@ -47,8 +47,8 @@
         dense
         class="rounded-lg"
         :value="value.en"
-        @input="updateValue('en', $event)"
         :error-messages="errors"
+        @input="updateValue('en', $event)"
       >
         <template v-slot:label>🇬🇧 {{ $t("English") }}</template>
       </v-text-field>
@@ -87,7 +87,7 @@ export default Vue.extend({
   props: {
     requiredLanguages: {
       type: Array,
-      default: () => ["en", "nl"]
+      required: true
     },
     value: {
       type: Object as () => Translation,

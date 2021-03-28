@@ -108,13 +108,13 @@
                   <div>
                     <meta-info
                       v-if="role.responsibilities[$i18n.locale]"
-                      class="white-space-pre-wrap"
+                      class="white-space-pre-line"
                       :title="$t('Responsibilities')"
                       :description="role.responsibilities[$i18n.locale]"
                     />
                     <meta-info
                       v-if="role.description && role.description[$i18n.locale]"
-                      class="white-space-pre-wrap"
+                      class="white-space-pre-line"
                       :title="$t('Description')"
                       :description="role.description[$i18n.locale]"
                     />
@@ -122,7 +122,7 @@
                       v-if="
                         role.requirements && role.requirements[$i18n.locale]
                       "
-                      class="white-space-pre-wrap"
+                      class="white-space-pre-line"
                       :title="$t('Requirements')"
                       :description="role.requirements[$i18n.locale]"
                     />
@@ -319,7 +319,7 @@ export default {
   font-weight: bold;
 }
 
-.white-space-pre-wrap {
-  white-space: pre-wrap;
+.white-space-pre-line {
+  white-space: pre-line;
 }
 </style>
