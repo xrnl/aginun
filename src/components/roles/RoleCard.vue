@@ -1,14 +1,14 @@
 <template>
   <default-card
     :to="`roles/view/${role.id}`"
-    :color="getColour(role.workingCircle)"
+    :color="workingCirclesMap[role.workingCircleId].colour"
   >
     <template #title>
-      {{ role.title }}
+      {{ role.title[$i18n.locale] }}
     </template>
     <template #subtitle>
-      {{ role.localGroup.title }} <br />
-      {{ role.workingCircle.title }}
+      {{ localGroupsMap[role.localGroupId].title }} <br />
+      {{ workingCirclesMap[role.workingCircleId].title[$i18n.locale] }}
     </template>
     <template #meta>
       <span class="xr-title d-flex flex-column justify-center">
@@ -28,25 +28,23 @@
 </template>
 <script>
 import DefaultCard from "@/components/layout/DefaultCard.vue";
-import styles from "@/constants/styles";
+import { mapGetters } from "vuex";
 
 export default {
   name: "RoleCard",
   components: {
     DefaultCard
   },
-  data: () => ({
-    workingCircleColours: styles.workingCircleColours
-  }),
+  computed: {
+    ...mapGetters({
+      localGroupsMap: "groups/localGroupsMap",
+      workingCirclesMap: "groups/workingCirclesMap"
+    })
+  },
   props: {
     role: {
       type: Object,
       required: true
-    }
-  },
-  methods: {
-    getColour(workingCircle) {
-      return this.workingCircleColours[workingCircle.title];
     }
   }
 };

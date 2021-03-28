@@ -4,7 +4,7 @@ import Vue from "vue";
 import { timeCommitmentRange } from "@/constants/timeCommitments";
 import {
   CreateRoleMutation,
-  RolesQuery,
+  RolesSearchQuery,
   UpdateRoleMutation,
   DeleteRoleMutation,
   FillRoleMutation
@@ -101,7 +101,7 @@ export default {
         }
       });
     },
-    async updateRole({ commit }, newRole) {
+    async updateRole({ commit, dispatch }, newRole) {
       await apolloClient.mutate({
         mutation: UpdateRoleMutation,
         variables: { id: newRole.id, input: newRole },
@@ -114,6 +114,7 @@ export default {
           }
         ) => {
           commit("editRole", returning[0]);
+          dispatch("loadRoles");
         }
       });
     },
@@ -163,7 +164,7 @@ export default {
         : rootGetters["groups/workingCircleIds"];
 
       const { data } = await apolloClient.query({
-        query: RolesQuery,
+        query: RolesSearchQuery,
         variables: {
           limit: state.paginationLimit,
           offset: state.paginationOffset,
@@ -171,12 +172,11 @@ export default {
           workingCircleIds,
           timeCommitmentMin: state.selectedFilters.timeCommitment[0],
           timeCommitmentMax: state.selectedFilters.timeCommitment[1],
-          search: `%${state.selectedFilters.search}%`,
-          dueDate: new Date(Date.now()).toISOString()
+          search: `%${state.selectedFilters.search}%`
         }
       });
 
-      const newRoles = data.roles;
+      const newRoles = data.rolesSearch;
 
       if (getters.isNewQuery) {
         commit("setRoles", newRoles);
@@ -185,13 +185,13 @@ export default {
       }
 
       if (newRoles.length) {
-        scrollState.loaded();
+        scrollState?.loaded();
         commit("nextPagination");
         if (newRoles.length < state.paginationLimit) {
-          scrollState.complete();
+          scrollState?.complete();
         }
       } else {
-        scrollState.complete();
+        scrollState?.complete();
       }
 
       commit("setLoadingState", false);

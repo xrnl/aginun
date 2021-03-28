@@ -11,6 +11,9 @@
         :value="formatDate(date)"
         :label="label"
         readonly
+        outlined
+        dense
+        class="rounded-lg"
         v-bind="attrs"
         v-on="on"
       />

@@ -19,6 +19,7 @@
           :items="localGroups"
           :selected-items-ids="selectedFilters.localGroups"
           :label="$t('Local Group')"
+          item-text="title"
           @change="
             setFilter({ filterType: 'localGroups', filterValue: $event })
           "
@@ -27,6 +28,7 @@
           :items="workingCircles"
           :selected-items-ids="selectedFilters.workingCircles"
           :label="$t('Working circle')"
+          :item-text="['title', $i18n.locale]"
           @change="
             setFilter({ filterType: 'workingCircles', filterValue: $event })
           "

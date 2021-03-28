@@ -18,7 +18,11 @@
     </div>
     <transition name="fade" mode="out-in">
       <grid-list v-if="!!roles.length" key="roles" gap="1rem">
-        <role-card v-for="role in roles" :key="role.id" :role="role" />
+        <role-card
+          v-for="role in rolesSelectedLanguage"
+          :key="role.id"
+          :role="role"
+        />
       </grid-list>
       <div
         v-if="!roles.length && isLoadingRoles"
@@ -137,6 +141,10 @@ export default {
     }),
     isMobile: function() {
       return this.$vuetify.breakpoint.smAndDown;
+    },
+    rolesSelectedLanguage() {
+      // roles that do have an empty string as title have not been filled in for that language.
+      return this.roles.filter((role) => role.title[this.$i18n.locale]);
     }
   },
   watch: {

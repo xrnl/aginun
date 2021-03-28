@@ -51,7 +51,7 @@ export default {
     color: {
       type: String,
       required: false,
-      default: "angry-light"
+      default: "khaki-light"
     }
   }
 };

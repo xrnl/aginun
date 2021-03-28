@@ -12,19 +12,30 @@
   ></v-select>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from "vue";
 import { loadLanguageAsync } from "@/i18n/utils/load-language-async";
-import { languages } from "@/constants/languages";
 
-export default {
+export default Vue.extend({
   name: "LanguageSelect",
-  data: () => ({
-    locales: languages
-  }),
+  data() {
+    return {
+      locales: [
+        {
+          code: "en",
+          label: this.$t("English")
+        },
+        {
+          code: "nl",
+          label: this.$t("Dutch")
+        }
+      ]
+    };
+  },
   methods: {
     async setSelected(lang) {
       await loadLanguageAsync(lang);
     }
   }
-};
+});
 </script>

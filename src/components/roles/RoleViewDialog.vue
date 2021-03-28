@@ -3,7 +3,7 @@
     <div v-if="!!role.id">
       <role-deletion-confirm
         v-model="isDeleteOpen"
-        :role-title="role.title"
+        :role-title="role.title[$i18n.locale]"
         :role-id="role.id"
       />
       <role-edit-dialog v-model="isEditOpen" :edit-role="role" />
@@ -24,6 +24,15 @@
             class="mx-auto"
             type="article"
           />
+          <div v-else-if="!role.title[$i18n.locale]" class="pa-8 text-center">
+            <h3>
+              {{
+                $t(
+                  "Sorry, this role isn't available for your selected language."
+                )
+              }}
+            </h3>
+          </div>
           <div v-else key="role">
             <v-card-title>
               <flex-wrapper
@@ -33,24 +42,38 @@
               >
                 <flex-wrapper direction="column">
                   <h2 class="boldTitle">
-                    {{ role.title }}
+                    {{ role.title[$i18n.locale] }}
                   </h2>
                   <flex-wrapper
-                    v-if="role.workingCircle || role.localGroup"
+                    v-if="
+                      workingCirclesMap[role.workingCircleId] ||
+                        localGroupsMap[role.localGroupId]
+                    "
                     class="subHeader"
                     classes="flex-wrap"
                   >
                     <span>
-                      {{ !!role.workingCircle && role.workingCircle.title }}
+                      {{
+                        workingCirclesMap[role.workingCircleId] &&
+                          workingCirclesMap[role.workingCircleId].title[
+                            $i18n.locale
+                          ]
+                      }}
                     </span>
                     <span
-                      v-if="!!role.workingCircle && !!role.localGroup"
+                      v-if="
+                        workingCirclesMap[role.workingCircleId] ||
+                          localGroupsMap[role.localGroupId]
+                      "
                       style="margin: 0 0.25rem;"
                     >
                       -
                     </span>
                     <span>
-                      {{ !!role.localGroup && role.localGroup.title }}
+                      {{
+                        localGroupsMap[role.localGroupId] &&
+                          localGroupsMap[role.localGroupId].title
+                      }}
                     </span>
                   </flex-wrapper>
                   <div v-if="role.createdDate" style="line-height: 1rem">
@@ -84,19 +107,24 @@
                 <flex-wrapper>
                   <div>
                     <meta-info
-                      v-if="!!role.responsibilities"
+                      v-if="role.responsibilities[$i18n.locale]"
+                      class="white-space-pre-line"
                       :title="$t('Responsibilities')"
-                      :description="role.responsibilities"
+                      :description="role.responsibilities[$i18n.locale]"
                     />
                     <meta-info
-                      v-if="!!role.description"
+                      v-if="role.description && role.description[$i18n.locale]"
+                      class="white-space-pre-line"
                       :title="$t('Description')"
-                      :description="role.description"
+                      :description="role.description[$i18n.locale]"
                     />
                     <meta-info
-                      v-if="!!role.requirements"
+                      v-if="
+                        role.requirements && role.requirements[$i18n.locale]
+                      "
+                      class="white-space-pre-line"
                       :title="$t('Requirements')"
-                      :description="role.requirements"
+                      :description="role.requirements[$i18n.locale]"
                     />
                     <meta-info
                       v-if="!!role.timeCommitmentMin"
@@ -230,14 +258,16 @@ export default {
       query: RoleQuery,
       variables() {
         return {
-          roleId: this.$route.params.id
+          roleId: parseInt(this.$route.params.id, 10)
         };
       }
     }
   },
   computed: {
     ...mapGetters({
-      loggedIn: "user/loggedIn"
+      loggedIn: "user/loggedIn",
+      localGroupsMap: "groups/localGroupsMap",
+      workingCirclesMap: "groups/workingCirclesMap"
     }),
     publishedOnText() {
       return this.$t("Published on {date}", {
@@ -287,5 +317,9 @@ export default {
 .boldTitle {
   font-size: 1.5rem !important;
   font-weight: bold;
+}
+
+.white-space-pre-line {
+  white-space: pre-line;
 }
 </style>

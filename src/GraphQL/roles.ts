@@ -7,14 +7,8 @@ const RoleSummaryFieldsFragment = gql`
     timeCommitmentMin
     timeCommitmentMax
     dueDate
-    workingCircle {
-      title
-      id
-    }
-    localGroup {
-      title
-      id
-    }
+    workingCircleId
+    localGroupId
   }
 `;
 
@@ -33,19 +27,20 @@ const RoleFieldsFragment = gql`
     createdDate
     dueDate
     filledDate
-    workingCircle {
-      title
-      id
-    }
-    localGroup {
-      title
-      id
-    }
+    workingCircleId
+    localGroupId
   }
 `;
 
-export const RolesQuery = gql`
-  query Roles(
+/* 
+queries all roles with:
+ - a title, responsibilities, description or requirements containing $search (for the selected language)
+ - no filledDate
+ - dueDate in the future or no dueDate
+ - all other conditions specified in the where clause.
+*/
+export const RolesSearchQuery = gql`
+  query RolesSearch(
     $limit: Int!
     $offset: Int!
     $localGroupIds: [Int!]
@@ -53,19 +48,16 @@ export const RolesQuery = gql`
     $timeCommitmentMin: Int!
     $timeCommitmentMax: Int!
     $search: String!
-    $dueDate: timestamptz
   ) {
-    roles(
+    rolesSearch(
+      args: { search: $search }
       where: {
         _and: [
           { localGroupId: { _in: $localGroupIds } }
           { workingCircleId: { _in: $workingCircleIds } }
           { timeCommitmentMin: { _gte: $timeCommitmentMin } }
           { timeCommitmentMax: { _lte: $timeCommitmentMax } }
-          { title: { _ilike: $search } }
-          { filledDate: { _is_null: true } }
         ]
-        _or: [{ dueDate: { _gte: $dueDate } }, { dueDate: { _is_null: true } }]
       }
       order_by: { createdDate: desc }
       limit: $limit
