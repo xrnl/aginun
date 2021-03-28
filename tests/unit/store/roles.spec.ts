@@ -228,6 +228,7 @@ describe("Roles Store", () => {
 
   describe("actions", () => {
     const commit = jest.fn();
+    const dispatch = jest.fn();
     apolloMutateSpy.mockReturnValue(Promise.resolve({}));
 
     describe("createRole", () => {
@@ -247,7 +248,7 @@ describe("Roles Store", () => {
           id: 3,
           title: "Role 3"
         };
-        await rolesStore.actions.updateRole({ commit }, newRole);
+        await rolesStore.actions.updateRole({ commit, dispatch }, newRole);
         expect(apolloMutateSpy).toBeCalled();
       });
     });

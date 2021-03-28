@@ -101,7 +101,7 @@ export default {
         }
       });
     },
-    async updateRole({ commit }, newRole) {
+    async updateRole({ commit, dispatch }, newRole) {
       await apolloClient.mutate({
         mutation: UpdateRoleMutation,
         variables: { id: newRole.id, input: newRole },
@@ -114,6 +114,7 @@ export default {
           }
         ) => {
           commit("editRole", returning[0]);
+          dispatch("loadRoles");
         }
       });
     },
@@ -184,13 +185,13 @@ export default {
       }
 
       if (newRoles.length) {
-        scrollState.loaded();
+        scrollState?.loaded();
         commit("nextPagination");
         if (newRoles.length < state.paginationLimit) {
-          scrollState.complete();
+          scrollState?.complete();
         }
       } else {
-        scrollState.complete();
+        scrollState?.complete();
       }
 
       commit("setLoadingState", false);

@@ -7,14 +7,8 @@ const RoleSummaryFieldsFragment = gql`
     timeCommitmentMin
     timeCommitmentMax
     dueDate
-    workingCircle {
-      title
-      id
-    }
-    localGroup {
-      title
-      id
-    }
+    workingCircleId
+    localGroupId
   }
 `;
 
@@ -33,14 +27,8 @@ const RoleFieldsFragment = gql`
     createdDate
     dueDate
     filledDate
-    workingCircle {
-      title
-      id
-    }
-    localGroup {
-      title
-      id
-    }
+    workingCircleId
+    localGroupId
   }
 `;
 

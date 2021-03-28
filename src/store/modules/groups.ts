@@ -14,7 +14,21 @@ export default {
   },
   getters: {
     localGroupIds: (state) => state.localGroups.map((g) => g.id),
-    workingCircleIds: (state) => state.workingCircles.map((g) => g.id)
+    workingCircleIds: (state) => state.workingCircles.map((g) => g.id),
+    localGroupsMap: (state) =>
+      state.localGroups.reduce((result, group) => {
+        const { id, ...details } = group;
+        result[id] = details;
+
+        return result;
+      }, {}),
+    workingCirclesMap: (state) =>
+      state.workingCircles.reduce((result, group) => {
+        const { id, ...details } = group;
+        result[id] = details;
+
+        return result;
+      }, {})
   },
   mutations: {
     setLocalGroups(state, localGroups) {

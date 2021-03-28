@@ -221,6 +221,7 @@ import MultiLanguageInput from "@/components/MultiLanguageInput.vue";
 import { timeCommitments } from "@/constants/timeCommitments";
 import i18n from "@/i18n/i18n";
 import { createTranslation } from "@/i18n/utils/create-translation";
+import { cloneDeep } from "lodash";
 
 extend("required", {
   ...required,
@@ -304,26 +305,23 @@ export default {
   watch: {
     editRole: {
       handler(editRole) {
-        if (editRole) {
-          Object.keys(this.role).forEach((key) => {
-            if (editRole[key]) {
-              this.role[key] = editRole[key];
-            }
-          });
-          this.role.workingCircleId = this.editRole.workingCircle.id;
-          this.role.localGroupId = this.editRole.localGroup.id;
+        if (!editRole) {
+          return;
         }
+
+        const role = cloneDeep(editRole);
+        // Delete this extra field we get from the query
+        delete role.__typename;
+
+        // Initialize the requiredLanguages array based on the role languages
+        this.requiredLanguages = Object.entries(role.title)
+          .map(([key, value]) => value && key)
+          .filter(Boolean);
+        this.role = role;
       },
+      deep: true,
       immediate: true
     }
-  },
-  created() {
-    const keys = Object.keys(this.role);
-    keys.forEach((value) => {
-      this[value] = this.role[value];
-    });
-    this.workingCircleId = this.role.workingCircleId;
-    this.localGroupId = this.role.localGroupId;
   },
   methods: {
     ...mapActions("roles", ["updateRole", "createRole"]),

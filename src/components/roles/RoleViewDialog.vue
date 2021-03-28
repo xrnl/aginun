@@ -45,24 +45,35 @@
                     {{ role.title[$i18n.locale] }}
                   </h2>
                   <flex-wrapper
-                    v-if="role.workingCircle || role.localGroup"
+                    v-if="
+                      workingCirclesMap[role.workingCircleId] ||
+                        localGroupsMap[role.localGroupId]
+                    "
                     class="subHeader"
                     classes="flex-wrap"
                   >
                     <span>
                       {{
-                        !!role.workingCircle &&
-                          role.workingCircle.title[$i18n.locale]
+                        workingCirclesMap[role.workingCircleId] &&
+                          workingCirclesMap[role.workingCircleId].title[
+                            $i18n.locale
+                          ]
                       }}
                     </span>
                     <span
-                      v-if="!!role.workingCircle && !!role.localGroup"
+                      v-if="
+                        workingCirclesMap[role.workingCircleId] ||
+                          localGroupsMap[role.localGroupId]
+                      "
                       style="margin: 0 0.25rem;"
                     >
                       -
                     </span>
                     <span>
-                      {{ !!role.localGroup && role.localGroup.title }}
+                      {{
+                        localGroupsMap[role.localGroupId] &&
+                          localGroupsMap[role.localGroupId].title
+                      }}
                     </span>
                   </flex-wrapper>
                   <div v-if="role.createdDate" style="line-height: 1rem">
@@ -254,7 +265,9 @@ export default {
   },
   computed: {
     ...mapGetters({
-      loggedIn: "user/loggedIn"
+      loggedIn: "user/loggedIn",
+      localGroupsMap: "groups/localGroupsMap",
+      workingCirclesMap: "groups/workingCirclesMap"
     }),
     publishedOnText() {
       return this.$t("Published on {date}", {
