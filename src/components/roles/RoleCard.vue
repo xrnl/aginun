@@ -1,7 +1,7 @@
 <template>
   <default-card
     :to="`roles/view/${role.id}`"
-    :color="getColour(workingCirclesMap[role.workingCircleId])"
+    :color="workingCirclesMap[role.workingCircleId].colour"
   >
     <template #title>
       {{ role.title[$i18n.locale] }}
@@ -28,7 +28,6 @@
 </template>
 <script>
 import DefaultCard from "@/components/layout/DefaultCard.vue";
-import styles from "@/constants/styles";
 import { mapGetters } from "vuex";
 
 export default {
@@ -42,22 +41,10 @@ export default {
       workingCirclesMap: "groups/workingCirclesMap"
     })
   },
-  data: () => ({
-    workingCircleColours: styles.workingCircleColours
-  }),
   props: {
     role: {
       type: Object,
       required: true
-    }
-  },
-  methods: {
-    getColour(workingCircle) {
-      const fallbackColour = "khaki-light";
-      return (
-        this.workingCircleColours[workingCircle.title[this.$i18n.locale]] ||
-        fallbackColour
-      );
     }
   }
 };
