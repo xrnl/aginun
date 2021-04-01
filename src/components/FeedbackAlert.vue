@@ -2,6 +2,7 @@
   <v-snackbar
     transition="v-expand-transition"
     top
+    content-class="text-center"
     :color="alert.color"
     :value="alertOn"
     @input="disableAlert"

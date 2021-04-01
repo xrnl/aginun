@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!!role.id">
+    <div v-if="role && role.id">
       <role-deletion-confirm
         v-model="isDeleteOpen"
         :role-title="role.title[$i18n.locale]"
@@ -8,7 +8,6 @@
       />
       <role-edit-dialog v-model="isEditOpen" :edit-role="role" />
     </div>
-
     <v-dialog
       persistent
       max-width="750"
@@ -24,6 +23,11 @@
             class="mx-auto"
             type="article"
           />
+          <div v-else-if="!role" class="pa-8 text-center">
+            <h3>
+              {{ $t("Sorry, this role doesn't exist.") }}
+            </h3>
+          </div>
           <div v-else-if="!role.title[$i18n.locale]" class="pa-8 text-center">
             <h3>
               {{
@@ -178,7 +182,12 @@
         </transition>
       </v-card>
     </v-dialog>
-    <v-dialog v-model="applyDialog" max-width="500" content-class>
+    <v-dialog
+      v-if="applyDialog"
+      v-model="applyDialog"
+      max-width="500"
+      content-class
+    >
       <v-card>
         <v-card-title>
           <h4 v-if="!role.filledDate">

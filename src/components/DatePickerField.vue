@@ -10,7 +10,9 @@
       <v-text-field
         :value="formatDate(date)"
         :label="label"
+        @click:clear="updateDate"
         readonly
+        clearable
         outlined
         dense
         class="rounded-lg"
@@ -59,7 +61,7 @@ export default {
     },
     updateDate(date) {
       this.showMenu = false;
-      this.$emit("update", new Date(date).toISOString());
+      this.$emit("update", date && new Date(date).toISOString());
     }
   }
 };
