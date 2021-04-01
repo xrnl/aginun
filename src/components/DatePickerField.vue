@@ -10,7 +10,7 @@
       <v-text-field
         :value="formatDate(date)"
         :label="label"
-        @click:clear="updateDate"
+        @click:clear="updateDate(null)"
         readonly
         clearable
         outlined
