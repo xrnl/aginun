@@ -13,12 +13,7 @@
       <h2>{{ $t("Vacancies") }}</h2>
     </v-toolbar-title>
     <v-spacer />
-    <v-btn v-if="!loggedIn" text @click.stop="login">
-      {{ $t("Login") }}
-    </v-btn>
-    <v-btn v-else text @click.stop="logout">
-      {{ $t("Logout") }}
-    </v-btn>
+    <auth-state></auth-state>
     <v-btn text @click.stop="contactSupportDialog = true" class="mr-3">
       {{ $t("Support") }} <v-icon> mdi-help-circle-outline </v-icon>
     </v-btn>
@@ -53,39 +48,24 @@
 <script>
 import IconLink from "@/components/IconLink";
 import FlexWrapper from "@/components/layout/FlexWrapper";
-import { mapGetters, mapActions } from "vuex";
 import { contactEmail } from "@/constants/contacts";
 import styles from "@/constants/styles";
 import LanguageSelect from "@/components/LanguageSelect.vue";
+import AuthState from "@/components/AuthState.vue";
 
 export default {
   name: "TheAppBar",
   components: {
     IconLink,
     FlexWrapper,
-    LanguageSelect
+    LanguageSelect,
+    AuthState
   },
   data: () => ({
     contactSupportDialog: false,
     contactEmail,
     navbarHeight: styles.navbarHeight
-  }),
-  computed: {
-    ...mapGetters({
-      loggedIn: "user/loggedIn"
-    })
-  },
-  methods: {
-    ...mapActions("user", ["logout"]),
-    login() {
-      //TODO: open login modal/page here
-
-      const username = "kaj-dev";
-      const password = "test";
-
-      this.$store.dispatch("user/login", { username, password });
-    }
-  }
+  })
 };
 </script>
 
