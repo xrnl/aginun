@@ -1,0 +1,17 @@
+.container{
+    width: calc(100% - ( 2* #{$distance-md}));
+
+    @media (min-width: $breakpoint-sm) {
+        &__hamburger{
+            display: none;
+        }
+    }
+
+    &--md{
+        width: 20rem;
+    }
+
+    &--margin-top{
+        margin-top: $distance-lg;
+    }
+}

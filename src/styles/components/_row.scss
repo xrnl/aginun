@@ -1,0 +1,25 @@
+.row{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+
+    @media (min-width: $breakpoint-sm) {
+        flex-direction: column;
+    }
+    &__image{
+        display: flex;
+        margin-bottom: $distance-md;
+        @media (min-width: $breakpoint-sm) {
+            margin-right: $distance-lg;
+            margin-bottom: 0;
+        }
+        img{
+            height: 10rem;
+        }
+    }
+    &__content{
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+}
