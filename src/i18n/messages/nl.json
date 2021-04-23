@@ -59,7 +59,9 @@
   "Login": "Inloggen",
   "Logout": "Uitloggen",
   "Support": "Hulp",
+  "Dashboard": "Overzicht",
   "About": "Over ons",
+  "Our contributing guidelines can be found <a href='https://github.com/xrnl/aginun/blob/master/CONTRIBUTING.md'>here</a>.": "Our contributing guidelines can be found <a href='https://github.com/xrnl/aginun/blob/master/CONTRIBUTING.md'>here</a>.",
   "Need help?": "Hulp nodig?",
   "Get to know our techteam and contribute:": "Leer ons techteam kennen en draag iets bij:",
   "For help and feedback contact us via:": "Neem contact met ons op voor hulp en feedback via:",
@@ -78,5 +80,8 @@
   "There are currently no published roles.": "Er zijn momenteel geen gepubliceerde rollen.",
   "Search for positions": "Zoek naar vacatures",
   "positions found": "vacatures gevonden",
-  "Clear filters": "Verwijder filters"
+  "Clear filters": "Verwijder filters",
+  "Get to know our techteam and contribute":"Leer ons techteam kennen en draag iets bij",
+  "Check out our guidelines":"Bekijk onze richtlijnen",
+  "here":"hier"
 }

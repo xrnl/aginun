@@ -2,9 +2,8 @@
     background-color: $xr-green;
     display: flex;
     flex-direction: row;
-    padding: $distance-sm;
+    padding: $distance-xs $distance-sm;
     justify-content: space-between;
-    padding: $distance-sm;
 
     .logo-link{
         @include font-heading();
@@ -13,20 +12,44 @@
     }
 
     &__left{
-
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
     }
 
     &__right{
-
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .flag{
         border: 10px solid red;
     }
 
+    .language-select{
+        margin-bottom: $distance-md;
+        margin-top: $distance-sm;
+        z-index: 99;
+        @media (min-width: $breakpoint-sm) {
+            margin-top: 0;
+            margin: 0 $distance-sm;
+            margin-bottom: 0;
+        }
+    }
 
-    .language-select, .login-button{
-        margin-left: $distance-sm;
+    .login-button, .nav-link{
+        margin-bottom: $distance-xs;
+        @media (min-width: $breakpoint-sm) {
+            margin-bottom: 0;
+        }
+    }
+
+    .login-button{
+        margin-top: $distance-xs;
+        @media (min-width: $breakpoint-sm) {
+            margin-top: 0;
+        }
     }
 
     &__content{
@@ -41,11 +64,21 @@
         justify-content: center;
         align-items: center;
         flex-direction: column;
+        @media (min-width: $breakpoint-sm) {
+            position: relative;
+            display: flex;
+            display: flex;
+            flex-direction: row;
+        }
         &__close{
             position: absolute;
             right: $distance-sm;
             top: $distance-sm;
             display: flex;
+            @media (min-width: $breakpoint-sm) {
+                display: none;
+                height: 48px
+            }
         }
         &.active{
             display: flex;
@@ -53,15 +86,22 @@
         .spacer{
             display: none;
         }
+
     }
 
     &__hamburger{
         z-index: 99;
+        display: flex;
+        padding: $distance-xs;
+        background: $xr-white;
+        img {
+            height: 23px;
+        }
     }
 
     @media (min-width: $breakpoint-sm) {
         &__hamburger{
-            // display: none;
+            display: none;
         }
     }
 

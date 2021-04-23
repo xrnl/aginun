@@ -1,14 +1,7 @@
 <template>
-  <div
-    app
-    flat
-    class="bottom-border nav-bar"
-  >
+  <div class="nav-bar">
     <div class="nav-bar__left">
-      <router-link
-        class="logo-link"
-        to="/about"
-      >
+      <router-link class="logo-link" to="/about">
         <img
           src="@/assets/images/xr.svg"
           class="logo-link__icon img-fluid"
@@ -18,29 +11,17 @@
         />
         <h2>{{ $t("Vacancies") }}</h2>
       </router-link>
-
     </div>
 
     <div class="nav-bar__right">
-
-
-
-      <div
-        class="nav-bar__hamburger"
-        @click.stop="toggleNavigation"
-      >
+      <div class="nav-bar__hamburger" @click.stop="toggleNavigation">
         <img
           src="@/assets/images/hamburger.svg"
           class="img-fluid"
           :alt="$t('Logo')"
-          width="48"
-          height="48"
         />
       </div>
-      <div
-        class="nav-bar__content"
-        :class="{ active: mobileMenu }"
-      >
+      <div class="nav-bar__content" :class="{ active: mobileMenuVisible }">
         <div class="nav-bar__content__close" @click="closeNavigation">
           <img
             src="@/assets/images/close.svg"
@@ -53,17 +34,17 @@
         <!-- <v-toolbar-title>
         </v-toolbar-title> -->
         <v-spacer />
-        <div>
-          <language-select />
-        </div>
-        <router-link
-          class="nav-link"
-          to="/about"
-        >{{ $t("About") }}</router-link>
-        <router-link
-          class="nav-link"
-          to="/support"
-        >{{ $t("Support") }}</router-link>
+        <router-link class="nav-link" to="/">{{ $t("Dashboard") }}</router-link>
+        <router-link class="nav-link" to="/about">{{
+          $t("About")
+        }}</router-link>
+
+        <router-link class="nav-link" to="/support">{{
+          $t("Support")
+        }}</router-link>
+        <a class="nav-link" :href="xrNLWebsiteUrl" target="_blank">
+          XR NL
+        </a>
         <v-btn
           class="login-button"
           v-if="!loggedIn"
@@ -73,24 +54,18 @@
         >
           {{ $t("Login") }}
         </v-btn>
-        <v-btn
-          class="login-button"
-          v-else
-          text
-          outlined
-          @click.stop="logout"
-        >
+        <v-btn class="login-button" v-else text outlined @click.stop="logout">
           {{ $t("Logout") }}
         </v-btn>
+        <div>
+          <language-select />
+        </div>
       </div>
     </div>
-
   </div>
 </template>
 
 <script>
-import IconLink from "@/components/IconLink";
-import FlexWrapper from "@/components/layout/FlexWrapper";
 import { mapGetters, mapActions } from "vuex";
 import { contactEmail } from "@/constants/contacts";
 import styles from "@/constants/styles";
@@ -99,29 +74,37 @@ import LanguageSelect from "@/components/LanguageSelect.vue";
 export default {
   name: "TheAppBar",
   components: {
-    IconLink,
-    FlexWrapper,
-    LanguageSelect,
+    LanguageSelect
   },
   data: () => ({
     contactSupportDialog: false,
-    mobileMenu: false,
+    mobileMenuVisible: false,
     contactEmail,
-    navbarHeight: styles.navbarHeight,
+    navbarHeight: styles.navbarHeight
   }),
   computed: {
     ...mapGetters({
-      loggedIn: "user/loggedIn",
+      loggedIn: "user/loggedIn"
     }),
+    xrNLWebsiteUrl: function() {
+      const url =
+        "https://extinctionrebellion.nl" +
+        (this.$i18n.locale === "en" ? "/en" : "");
+      return url;
+    }
+  },
+  watch: {
+    $route() {
+      this.mobileMenuVisible = false;
+    }
   },
   methods: {
     ...mapActions("user", ["logout"]),
     closeNavigation() {
-      this.mobileMenu = false;
+      this.mobileMenuVisible = false;
     },
     toggleNavigation() {
-      this.mobileMenu = true;
-      if ((this.mobileMenuVisible = true)) {
+      if (this.mobileMenuVisible) {
         this.mobileMenuVisible = false;
       } else {
         this.mobileMenuVisible = true;
@@ -134,8 +117,8 @@ export default {
       const password = "test";
 
       this.$store.dispatch("user/login", { username, password });
-    },
-  },
+    }
+  }
 };
 </script>
 

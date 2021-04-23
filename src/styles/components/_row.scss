@@ -4,8 +4,9 @@
     flex-wrap: nowrap;
 
     @media (min-width: $breakpoint-sm) {
-        flex-direction: column;
+        flex-direction: row;
     }
+
     &__image{
         display: flex;
         margin-bottom: $distance-md;
@@ -14,7 +15,7 @@
             margin-bottom: 0;
         }
         img{
-            height: 10rem;
+            width: 240px;
         }
     }
     &__content{

@@ -1,11 +1,8 @@
 <template>
-  <div class="container container--margin-top">
+  <div class="container container--md container--margin-top">
     <div class="row">
       <div class="row__image">
-        <img
-          src="@/assets/images/bee.svg"
-          alt="Bee"
-        >
+        <img src="@/assets/images/tree.svg" alt="Bee" />
       </div>
       <div class="row__content">
         <h2>{{ $t("For help and feedback contact us via:") }}</h2>
@@ -33,20 +30,11 @@ import { contactEmail } from "@/constants/contacts";
 export default {
   name: "ErrorPage",
   components: {
-    IconLink,
+    IconLink
   },
   data: () => ({
     contactEmail,
-    isDevMode: process.env.NODE_ENV !== "production",
-  }),
+    isDevMode: process.env.NODE_ENV !== "production"
+  })
 };
 </script>
-<style lang="scss">
-@import "~vuetify/src/styles/settings/_variables";
-
-.text-sm-large {
-  @media #{map-get($display-breakpoints, "sm-and-up")} {
-    font-size: 60px;
-  }
-}
-</style>
