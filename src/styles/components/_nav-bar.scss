@@ -4,6 +4,13 @@
     flex-direction: row;
     padding: $distance-xs $distance-sm;
     justify-content: space-between;
+    position: fixed;
+    width: 100%;
+    z-index: 99;
+
+    @media (min-width: $breakpoint-sm) {
+        position: relative;
+    }
 
     .logo-link{
         @include font-heading();

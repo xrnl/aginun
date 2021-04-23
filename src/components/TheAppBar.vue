@@ -30,9 +30,6 @@
             height="48"
           />
         </div>
-
-        <!-- <v-toolbar-title>
-        </v-toolbar-title> -->
         <v-spacer />
         <router-link class="nav-link" to="/">{{ $t("Dashboard") }}</router-link>
         <router-link class="nav-link" to="/about">{{
@@ -68,7 +65,6 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import { contactEmail } from "@/constants/contacts";
-import styles from "@/constants/styles";
 import LanguageSelect from "@/components/LanguageSelect.vue";
 
 export default {
@@ -77,10 +73,8 @@ export default {
     LanguageSelect
   },
   data: () => ({
-    contactSupportDialog: false,
     mobileMenuVisible: false,
     contactEmail,
-    navbarHeight: styles.navbarHeight
   }),
   computed: {
     ...mapGetters({
