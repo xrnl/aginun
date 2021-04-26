@@ -13,15 +13,18 @@ Vue.use(VueApollo);
 const httpLink = createHttpLink({
   uri: "http://178.62.229.109/v1/graphql",
   headers: {
-    "x-hasura-admin-secret": process.env.VUE_APP_API_KEY
+    // "x-hasura-admin-secret": process.env.VUE_APP_API_KEY
   }
 });
 
-const languageLink = setContext((_, { headers }) => {
+const authLink = setContext((_, { headers }) => {
+  const token = Vue.$cookies.get('loginToken');
   return {
     headers: {
       ...headers,
-      "x-hasura-lang": i18n.locale
+      "x-hasura-lang": i18n.locale,
+      // If the token exists, this property will bed added
+      ...(token && {authorization: `Bearer ${token}`})
     }
   };
 });
@@ -29,7 +32,7 @@ const languageLink = setContext((_, { headers }) => {
 const cache = new InMemoryCache();
 
 const apolloClient = new ApolloClient({
-  link: languageLink.concat(httpLink),
+  link: authLink.concat(httpLink),
   cache,
   defaultOptions: {
     query: {
