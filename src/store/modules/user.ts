@@ -1,5 +1,9 @@
+import i18n from "@/i18n/i18n";
 import axios from "axios";
 import qs from "qs";
+import Vue from "vue";
+
+export const loginCookieKey = "loginToken";
 
 export default {
   namespaced: true,
@@ -12,16 +16,25 @@ export default {
   mutations: {
     setToken(state, token) {
       state.token = token;
+    },
+    setTokenCookie(state, { token, lifetime }) {
+      Vue.$cookies.set(loginCookieKey, token, lifetime);
+    },
+    removeToken(state) {
+      state.token = null;
+      Vue.$cookies.remove(loginCookieKey);
     }
   },
   actions: {
-    async login({ commit }, { username, password }) {
+    initializeFromCookie({ commit }) {
+      commit("setToken", Vue.$cookies.get(loginCookieKey));
+    },
+    async login({ commit, dispatch }, { username, password }) {
       const config = {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
         }
       };
-
       const params = {
         // eslint-disable-next-line @typescript-eslint/camelcase
         grant_type: "password",
@@ -31,18 +44,28 @@ export default {
         password
       };
 
-      const auth = await axios.post(
-        process.env.VUE_APP_KEYSERVER_URL || "",
-        qs.stringify(params),
-        config
-      );
-
-      const token = auth.data.access_token;
-
-      commit("setToken", token);
+      try {
+        const { data } = await axios.post(
+          process.env.VUE_APP_KEYSERVER_URL || "",
+          qs.stringify(params),
+          config
+        );
+        commit("setToken", data.access_token);
+        commit("setTokenCookie", {
+          token: data.access_token,
+          lifetime: data.expires_in
+        });
+        dispatch("alerts/displaySuccess", i18n.t("Logged in"), { root: true });
+      } catch ({ response }) {
+        return (
+          (response?.data?.error_description as string) ||
+          i18n.t("Login server unavailable")
+        );
+      }
     },
-    async logout({ commit }) {
-      commit("setToken", null);
+    logout({ commit, dispatch }) {
+      commit("removeToken");
+      dispatch("alerts/displaySuccess", i18n.t("Logged out"), { root: true });
     }
   }
 };
