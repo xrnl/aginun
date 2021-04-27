@@ -29,7 +29,7 @@ export default {
     initializeFromCookie({ commit }) {
       commit("setToken", Vue.$cookies.get(loginCookieKey));
     },
-    async login({ commit }, { username, password }) {
+    async login({ commit, dispatch }, { username, password }) {
       const config = {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
@@ -55,15 +55,17 @@ export default {
           token: data.access_token,
           lifetime: data.expires_in
         });
+        dispatch("alerts/displaySuccess", i18n.t("Logged in"), { root: true });
       } catch ({ response }) {
         return (
-          (response.data?.error_description as string) ||
+          (response?.data?.error_description as string) ||
           i18n.t("Login server unavailable")
         );
       }
     },
-    logout({ commit }) {
+    logout({ commit, dispatch }) {
       commit("removeToken");
+      dispatch("alerts/displaySuccess", i18n.t("Logged out"), { root: true });
     }
   }
 };
