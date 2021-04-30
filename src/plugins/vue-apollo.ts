@@ -19,13 +19,13 @@ const httpLink = createHttpLink({
 
 // set request headers based on current application state
 const dyanmicLink = setContext((_, { headers }) => {
-  const loginToken = Vue.$cookies.get('loginToken');
+  const loginToken = Vue.$cookies.get("loginToken");
   return {
     headers: {
       ...headers,
       "x-hasura-lang": i18n.locale,
       // If the loginToken exists, this property will bed added
-      ...(loginToken && {authorization: `Bearer ${loginToken}`})
+      ...(loginToken && { authorization: `Bearer ${loginToken}` })
     }
   };
 });
