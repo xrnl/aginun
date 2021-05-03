@@ -1,5 +1,5 @@
 .nav-bar{
-    background-color: $xr-green;
+    background-color: $xr-green-light;
     display: flex;
     flex-direction: row;
     padding: $distance-xs $distance-sm;
@@ -9,7 +9,7 @@
     z-index: 99;
 
     @media (min-width: $breakpoint-sm) {
-        position: relative;
+        // position: relative;
     }
 
     .logo-link{

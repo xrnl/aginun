@@ -39,9 +39,6 @@
         <router-link class="nav-link" to="/support">{{
           $t("Support")
         }}</router-link>
-        <a class="nav-link" :href="xrNLWebsiteUrl" target="_blank">
-          XR NL
-        </a>
         <v-btn
           class="login-button"
           v-if="!loggedIn"
@@ -74,7 +71,7 @@ export default {
   },
   data: () => ({
     mobileMenuVisible: false,
-    contactEmail,
+    contactEmail
   }),
   computed: {
     ...mapGetters({

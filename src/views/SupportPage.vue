@@ -2,7 +2,7 @@
   <div class="container container--md container--margin-top">
     <div class="row">
       <div class="row__image">
-        <img src="@/assets/images/tree.svg" alt="Bee" />
+        <img src="@/assets/images/tree.svg" alt="Tree" />
       </div>
       <div class="row__content">
         <h2>{{ $t("For help and feedback contact us via:") }}</h2>
