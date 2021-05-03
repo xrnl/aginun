@@ -7,19 +7,21 @@
       "
       class="drawer-header"
     >
-      <v-btn
-        v-if="this.$vuetify.breakpoint.smAndDown"
-        icon
-        @click="$emit('close-drawer', false)"
-      >
-        <v-icon color="primary">
-          mdi-arrow-left
-        </v-icon>
-      </v-btn>
       <slot name="header" />
     </div>
     <div class="drawer-content">
       <slot />
+      <v-btn
+        v-if="this.$vuetify.breakpoint.smAndDown"
+        fab
+        class="drawer-content__button-back"
+        color="primary"
+        @click="$emit('close-drawer', false)"
+      >
+        <v-icon>
+          mdi-arrow-left
+        </v-icon>
+      </v-btn>
     </div>
   </div>
 </template>
@@ -45,5 +47,8 @@ export default {
 }
 .drawer-content {
   padding: 0.5rem;
+  &__button-back {
+    margin-top: $distance-sm;
+  }
 }
 </style>
