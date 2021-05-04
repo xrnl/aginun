@@ -30,7 +30,7 @@
 <script>
 import { contactEmail } from "@/constants/contacts";
 export default {
-  name: "ErrorPage",
+  name: "AboutPage",
   data: () => ({
     contactEmail,
     isDevMode: process.env.NODE_ENV !== "production"

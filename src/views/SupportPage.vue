@@ -28,7 +28,7 @@ import IconLink from "@/components/IconLink";
 import { contactEmail } from "@/constants/contacts";
 
 export default {
-  name: "ErrorPage",
+  name: "SupportPage",
   components: {
     IconLink
   },
