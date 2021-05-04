@@ -1,13 +1,11 @@
 <template>
   <div class="nav-bar">
     <div class="nav-bar__left">
-      <router-link class="logo-link" to="/about">
+      <router-link class="logo-link" to="/">
         <img
           src="@/assets/images/xr.svg"
           class="logo-link__icon img-fluid"
           :alt="$t('Logo')"
-          width="48"
-          height="48"
         />
         <h2>{{ $t("Vacancies") }}</h2>
       </router-link>
@@ -35,7 +33,6 @@
         <router-link class="nav-link" to="/about">{{
           $t("About")
         }}</router-link>
-
         <router-link class="nav-link" to="/support">{{
           $t("Support")
         }}</router-link>
@@ -61,7 +58,6 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import { contactEmail } from "@/constants/contacts";
 import LanguageSelect from "@/components/LanguageSelect.vue";
 
 export default {
@@ -70,19 +66,12 @@ export default {
     LanguageSelect
   },
   data: () => ({
-    mobileMenuVisible: false,
-    contactEmail
+    mobileMenuVisible: false
   }),
   computed: {
     ...mapGetters({
       loggedIn: "user/loggedIn"
-    }),
-    xrNLWebsiteUrl: function() {
-      const url =
-        "https://extinctionrebellion.nl" +
-        (this.$i18n.locale === "en" ? "/en" : "");
-      return url;
-    }
+    })
   },
   watch: {
     $route() {

@@ -68,6 +68,10 @@ $headings: (
 // $btn-letter-spacing: 2px;
 $btn-font-weight: 600;
 
+$logo-height: 2.5rem;
+$navbar-padding-vertical: $distance-xs;
+$nav-bar-height: calc(#{$logo-height} + #{$navbar-padding-vertical});
+
 // Variables for specific components must come before the import
 
 // Any component modifications must be imported at the bottom

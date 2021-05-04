@@ -1,8 +1,9 @@
+
 .nav-bar{
     background-color: $xr-green-light;
     display: flex;
     flex-direction: row;
-    padding: $distance-xs $distance-sm;
+    padding: $navbar-padding-vertical $distance-sm;
     justify-content: space-between;
     position: fixed;
     width: 100%;
@@ -16,6 +17,10 @@
         @include font-heading();
         color: $xr-black;
         text-decoration: none;
+        &__icon{
+            width: $logo-height;
+            height: $logo-height;
+        }
     }
 
     &__left{
