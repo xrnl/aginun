@@ -28,13 +28,8 @@
   </div>
 </template>
 <script>
-import { contactEmail } from "@/constants/contacts";
 export default {
   name: "AboutPage",
-  data: () => ({
-    contactEmail,
-    isDevMode: process.env.NODE_ENV !== "production"
-  }),
   computed: {
     xrNLWebsiteUrl: function() {
       const url =

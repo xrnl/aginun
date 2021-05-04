@@ -6,7 +6,6 @@ import VueRouter from "vue-router";
 import Vuetify from "vuetify";
 import axios from "axios";
 import VueAxios from "vue-axios";
-import styles from "@/constants/styles";
 import Spinner from "@/components/Spinner.vue";
 import getThemeColor from "@/utils/getThemeColor";
 import AutocompleteCustom from "@/components/AutocompleteCustom.vue";
