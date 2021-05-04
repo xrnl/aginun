@@ -14,7 +14,7 @@
         />
         <icon-link
           href="https://organise.earth/xr-netherlands/messages/@vacancies_support_xrnl"
-          link-text="@vacancies_support_xrnl"
+          :link-text="mattermostId"
           :label="$t('Mattermost')"
           icon="mdi-message"
         />
@@ -25,7 +25,7 @@
 
 <script>
 import IconLink from "@/components/IconLink";
-import { contactEmail } from "@/constants/contacts";
+import { contactEmail, mattermostId } from "@/constants/contacts";
 
 export default {
   name: "SupportPage",
@@ -34,7 +34,7 @@ export default {
   },
   data: () => ({
     contactEmail,
-    isDevMode: process.env.NODE_ENV !== "production"
+    mattermostId
   })
 };
 </script>
