@@ -17,7 +17,7 @@
       <v-divider />
     </div>
     <transition name="fade" mode="out-in">
-      <grid-list v-if="!!roles.length" key="roles" gap="1rem">
+      <grid-list v-if="!!roles.length" key="roles">
         <role-card
           v-for="role in rolesSelectedLanguage"
           :key="role.id"
