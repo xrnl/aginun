@@ -1,53 +1,47 @@
 <template>
-  <v-hover v-slot:default="{ hover }">
-    <v-card
-      width="300"
-      height="180"
-      class="card"
-      :class="`bg-${color}`"
-      v-bind="$attrs"
-    >
-      <div
-        class="transition-wrapper d-flex flex-column full-height"
-        :class="{ lighter: hover && $vuetify.theme.dark }"
-      >
-        <template v-if="!!$slots.header && !!$slots.header[0]">
-          <div class="d-flex align-center pa-3">
-            <slot name="header" />
-          </div>
-          <v-divider />
-        </template>
-        <div class="pa-3 d-flex flex-column justify-space-between flex-grow-1">
-          <div>
-            <h3>
-              <slot name="title" />
-            </h3>
-            <slot name="subtitle" />
-            <v-card-text
-              v-if="!!$slots.content && !!$slots.content[0]"
-              class="pa-3"
-            >
-              <slot name="content" />
-            </v-card-text>
-          </div>
-          <div class="d-flex flex-wrap justify-space-between align-end">
-            <span class="d-flex flex-column justify-center">
-              <slot name="meta" />
-            </span>
-            <div>
-              <slot name="action" />
-            </div>
+  <router-link class="card" v-bind="$attrs">
+    <div class="card__color-bar" :class="`bg-${color}`"></div>
+    <div class="card__content">
+      <h3 class="card__content__title" :if="title">{{ title }}</h3>
+      <!-- <slot name="title" v-if="!!$slots.title && !!$slots.title[0]" /> -->
+      <slot name="content" v-if="!!$slots.content && !!$slots.content[0]" />
+      <div class="card__content__bottom">
+        <div class="card__content__bottom__subtitle">
+          <h3 class="card__content__bottom__subtitle__heading">
+            {{ subtitle }}
+          </h3>
+          <div class="card__content__bottom__subtitle__extra">
+            {{ subtitleExtra }}
           </div>
         </div>
+        <div class="card__content__bottom_secondary" :if="secondaryInfo">
+          <span>{{ secondaryInfo }}</span>
+        </div>
       </div>
-    </v-card>
-  </v-hover>
+    </div>
+  </router-link>
 </template>
 
 <script>
 export default {
   name: "DefaultCard",
   props: {
+    subtitle: {
+      type: String,
+      required: false
+    },
+    subtitleExtra: {
+      type: String,
+      required: false
+    },
+    title: {
+      type: String,
+      required: false
+    },
+    secondaryInfo: {
+      type: String,
+      required: false
+    },
     color: {
       type: String,
       required: false,
@@ -57,13 +51,69 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.full-height {
-  height: 100%;
-}
-.transition-wrapper {
-  transition: background-color 280ms;
-}
-.lighter {
-  background-color: #333333 !important;
+.card {
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 4px 10px 0px #dadada;
+  height: 140px;
+  text-decoration: none;
+  transition: box-shadow 0.3s ease-in-out;
+  background: white;
+  z-index: 5;
+  &:hover {
+    box-shadow: 0px 4px 28px 0px #dadada;
+  }
+  &__color-bar {
+    height: 0.75rem;
+    width: 100%;
+  }
+  &__content {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    color: black;
+    l &__title {
+      // margin-bottom: 2rem;
+      font-size: 1.25rem;
+      font-weight: normal;
+      width: 100%;
+    }
+    &__bottom {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      &__subtitle {
+        display: flex;
+        flex-direction: row;
+        font-family: "FucXed";
+        font-weight: 600;
+        &__heading {
+          line-height: 1;
+          font-size: 1.2rem;
+        }
+        &__extra {
+          line-height: 1.2;
+          margin-left: 0.5rem;
+          font-size: 0.6rem;
+          width: 35px;
+          p {
+            margin-bottom: 0;
+          }
+        }
+      }
+      &__secondary {
+        flex-direction: column;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        p {
+          color: grey;
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
 }
 </style>
