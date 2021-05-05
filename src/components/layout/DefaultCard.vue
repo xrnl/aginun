@@ -59,13 +59,21 @@ export default {
   text-decoration: none;
   transition: box-shadow 0.3s ease-in-out;
   background: white;
-  z-index: 5;
+  z-index: 4;
+  @media only screen and (max-width: 600px) {
+    flex-direction: row;
+    width: 100% !important;
+  }
   &:hover {
     box-shadow: 0px 4px 28px 0px #dadada;
   }
   &__color-bar {
     height: 0.75rem;
     width: 100%;
+    @media only screen and (max-width: 600px) {
+      height: 100%;
+      width: 0.75rem;
+    }
   }
   &__content {
     padding: 1rem;
@@ -82,8 +90,11 @@ export default {
     }
     &__bottom {
       display: flex;
-      flex-direction: row;
-      justify-content: space-between;
+      flex-direction: column;
+      @media only screen and (min-width: 600px) {
+        flex-direction: row;
+        justify-content: space-between;
+      }
       &__subtitle {
         display: flex;
         flex-direction: row;

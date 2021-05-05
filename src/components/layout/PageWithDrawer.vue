@@ -62,9 +62,7 @@ export default {
   height: calc(100% - 4rem);
   margin-top: 0.5rem;
   @media only screen and (max-width: 600px) {
-    body {
-      background-color: lightblue;
-    }
+    display: none;
   }
   img {
     width: 60vw;
