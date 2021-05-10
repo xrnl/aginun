@@ -82,8 +82,9 @@ export default {
     justify-content: space-between;
     height: 100%;
     color: black;
-    l &__title {
-      // margin-bottom: 2rem;
+    width: calc(100% - 0.75rem);
+    &__title {
+      line-height: 1.1;
       font-size: 1.25rem;
       font-weight: normal;
       width: 100%;
