@@ -17,14 +17,15 @@ const httpLink = createHttpLink({
   }
 });
 
-const authLink = setContext((_, { headers }) => {
-  const token = Vue.$cookies.get('loginToken');
+// set request headers based on current application state
+const dyanmicLink = setContext((_, { headers }) => {
+  const loginToken = Vue.$cookies.get("loginToken");
   return {
     headers: {
       ...headers,
       "x-hasura-lang": i18n.locale,
-      // If the token exists, this property will bed added
-      ...(token && {authorization: `Bearer ${token}`})
+      // If the loginToken exists, this property will bed added
+      ...(loginToken && { authorization: `Bearer ${loginToken}` })
     }
   };
 });
@@ -32,7 +33,7 @@ const authLink = setContext((_, { headers }) => {
 const cache = new InMemoryCache();
 
 const apolloClient = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: dyanmicLink.concat(httpLink),
   cache,
   defaultOptions: {
     query: {

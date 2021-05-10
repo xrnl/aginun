@@ -45,7 +45,7 @@
                   type="password"
                   v-model="password"
                   :label="$t('Password')"
-                  :error-messages="errors.length ? errors : serverError"
+                  :error-messages="errors"
                 />
               </validation-provider>
               <div class="d-flex justify-end">
@@ -105,9 +105,10 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions("user", ["login", "logout"]),
+    ...mapActions("alerts", ["displayError"]),
     resetForm() {
-      this.username = "";
-      this.password = "";
+      this.username = "kaj-dev";
+      this.password = "test";
       this.serverLoading = false;
       this.serverError = "";
       (this.$refs.login_form as InstanceType<
@@ -123,10 +124,13 @@ export default Vue.extend({
       });
       this.serverLoading = false;
 
-      if (!this.serverError) {
-        this.resetForm();
-        this.dialog = false;
+      if (this.serverError) {
+        this.displayError(this.serverError);
+        return;
       }
+
+      this.resetForm();
+      this.dialog = false;
     }
   }
 });
