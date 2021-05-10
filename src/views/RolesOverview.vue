@@ -76,18 +76,15 @@
             style="width:100%;"
           >
             <div class="d-flex flex-column">
-              <span class="font-weight-bold">
+              <h3 class="font-weight-bold">
                 {{ $t("Search for positions") }}
-              </span>
+              </h3>
               <span v-if="isMobile" class="font-weight-light">
                 (<span v-if="!isLoadingRoles">{{ roles.length }}</span>
                 <span v-else>...</span>
                 {{ $t("positions found") }})
               </span>
             </div>
-            <v-btn text color="primary" @click="setDefaultFilters">
-              {{ $t("Clear filters") }}
-            </v-btn>
           </div>
         </template>
         <role-filters />
