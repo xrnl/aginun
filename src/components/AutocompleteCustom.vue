@@ -1,13 +1,12 @@
 <template>
-  <v-autocomplete
+  <v-select
     :items="items"
     :value="selectedItemsIds"
     item-value="id"
     :item-text="itemText"
-    chips
-    small-chips
-    deletable-chips
     multiple
+    outlined
+    :hide-details="hideDetails"
     class="mt-3"
     :label="label"
     @change="$emit('change', $event)"
@@ -20,6 +19,10 @@ import { isArrayValid } from "@/utils/validators";
 export default {
   name: "AutocompleteCustom",
   props: {
+    hideDetails: {
+      type: Boolean,
+      required: false
+    },
     items: {
       type: Array,
       required: true
