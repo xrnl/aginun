@@ -7,6 +7,7 @@ import { ApolloClient } from "apollo-client";
 import { setContext } from "apollo-link-context";
 import { createHttpLink } from "apollo-link-http";
 import { InMemoryCache } from "apollo-cache-inmemory";
+import user from "@/store/modules/user";
 
 Vue.use(VueApollo);
 
@@ -16,8 +17,8 @@ const httpLink = createHttpLink({
 });
 
 // set request headers based on current application state
-const dyanmicLink = setContext((_, { headers }) => {
-  const loginToken = Vue.$cookies.get("loginToken");
+const dynamicLink = setContext((_, { headers }) => {
+  const loginToken = user.state.token;
   return {
     headers: {
       ...headers,
@@ -31,7 +32,7 @@ const dyanmicLink = setContext((_, { headers }) => {
 const cache = new InMemoryCache();
 
 const apolloClient = new ApolloClient({
-  link: dyanmicLink.concat(httpLink),
+  link: dynamicLink.concat(httpLink),
   cache,
   defaultOptions: {
     query: {
