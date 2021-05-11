@@ -42,7 +42,7 @@
       />
     </flex-wrapper>
     <v-btn
-      v-if="isUsingFilters"
+      :disabled="!isUsingFilters"
       class="delete-filter-btn"
       depressed
       @click="setDefaultFilters"
