@@ -12,8 +12,7 @@ import user from "@/store/modules/user";
 Vue.use(VueApollo);
 
 const httpLink = createHttpLink({
-  uri: "http://178.62.229.109/v1/graphql",
-  headers: {}
+  uri: "http://178.62.229.109/v1/graphql"
 });
 
 // set request headers based on current application state

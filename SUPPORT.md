@@ -10,5 +10,6 @@ If you have any questions that are not answered in the [project wiki](https://gi
 
 We encourage you to communicate publicly on the volunteer platform channel so that everyone in the community can reply to questions and benefits from insights. For sensitive communication, such as security vulnerabilities or violations of the code of conduct, you can communicate directly to our email.
 
-## Request account and Hasura API key for developing
-Email [tech@extinctionrebellion.nl](mailto:tech@extinctionrebellion.nl) to request a Keycloak account and the development API key (works as password) to the [Hasura console](http://178.62.229.109/console). You should hear back within a day.
+## Request test account or Hasura console password
+
+Email [tech@extinctionrebellion.nl](mailto:tech@extinctionrebellion.nl) to request a Keycloak account and the development API key (which works as password) to the [Hasura console](http://178.62.229.109/console). You should hear back within a day.
