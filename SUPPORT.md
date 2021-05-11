@@ -12,4 +12,4 @@ We encourage you to communicate publicly on the volunteer platform channel so th
 
 ## Request test account or Hasura console password
 
-Email [tech@extinctionrebellion.nl](mailto:tech@extinctionrebellion.nl) to request a Keycloak account and the development API key (works as password) to the [Hasura console](http://178.62.229.109/console). You should hear back within a day.
+Email [tech@extinctionrebellion.nl](mailto:tech@extinctionrebellion.nl) to request a Keycloak account and the development API key (which works as password) to the [Hasura console](http://178.62.229.109/console). You should hear back within a day.
