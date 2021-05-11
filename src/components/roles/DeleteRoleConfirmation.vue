@@ -43,12 +43,12 @@ export default {
     ...mapActions("alerts", ["displaySuccess", "displayError"]),
     onDeleteRole() {
       this.deleteRole(this.roleId)
-        .then((succes) => {
+        .then(() => {
           this.displaySuccess("Role deleted");
           this.$emit("input", false);
           this.$router.push("/roles");
         })
-        .catch((e) => {
+        .catch(() => {
           this.displayError(
             this.$t("An error occured during deleting this role")
           );
