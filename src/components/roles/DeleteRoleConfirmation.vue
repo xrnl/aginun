@@ -44,7 +44,7 @@ export default {
     onDeleteRole() {
       this.deleteRole(this.roleId)
         .then(() => {
-          this.displaySuccess("Role deleted");
+          this.displaySuccess(this.$t("Role deleted"));
           this.$emit("input", false);
           this.$router.push("/roles");
         })

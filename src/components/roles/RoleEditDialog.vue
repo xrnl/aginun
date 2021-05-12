@@ -338,25 +338,12 @@ export default {
       };
 
       if (this.editRole) {
-        console.log("heja");
         this.updateRole({
           id: this.editRole.id,
           ...role
-        })
-          .then((success) => {
-            this.displaySuccess(this.$t("Role updated"));
-          })
-          .catch((error) => {
-            this.displayError(this.$t("An error occured updating this role"));
-          });
+        });
       } else {
-        this.createRole(role)
-          .then((succes) => {
-            this.displaySuccess(this.$t("Role created"));
-          })
-          .catch((error) => {
-            this.displayError(this.$t("An error occured creating this role"));
-          });
+        this.createRole(role);
       }
     },
     onSucces() {

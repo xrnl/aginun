@@ -1,6 +1,7 @@
 import { apolloClient } from "@/plugins/vue-apollo";
 import throttle from "lodash/throttle";
 import Vue from "vue";
+import i18n from "@/i18n/i18n";
 import { timeCommitmentRange } from "@/constants/timeCommitments";
 import {
   CreateRoleMutation,
@@ -85,38 +86,64 @@ export default {
     }
   },
   actions: {
-    async createRole({ commit }, newRole) {
-      await apolloClient.mutate({
-        mutation: CreateRoleMutation,
-        variables: { input: [newRole] },
-        update: (
-          store,
-          {
-            data: {
-              insert_role: { returning }
+    async createRole({ commit, dispatch }, newRole) {
+      try {
+        await apolloClient.mutate({
+          mutation: CreateRoleMutation,
+          variables: { input: [newRole] },
+          update: (
+            store,
+            {
+              data: {
+                insert_role: { returning }
+              }
             }
+          ) => {
+            commit("addRole", returning[0]);
           }
-        ) => {
-          commit("addRole", returning[0]);
-        }
-      });
+        });
+        dispatch("alerts/displaySuccess", i18n.t("Role created"), {
+          root: true
+        });
+      } catch {
+        dispatch(
+          "alerts/displayError",
+          i18n.t("An error occured creating this role"),
+          {
+            root: true
+          }
+        );
+      }
     },
     async updateRole({ commit, dispatch }, newRole) {
-      await apolloClient.mutate({
-        mutation: UpdateRoleMutation,
-        variables: { id: newRole.id, input: newRole },
-        update: (
-          store,
-          {
-            data: {
-              update_role: { returning }
+      try {
+        await apolloClient.mutate({
+          mutation: UpdateRoleMutation,
+          variables: { id: newRole.id, input: newRole },
+          update: (
+            store,
+            {
+              data: {
+                update_role: { returning }
+              }
             }
+          ) => {
+            commit("editRole", returning[0]);
+            dispatch("loadRoles");
           }
-        ) => {
-          commit("editRole", returning[0]);
-          dispatch("loadRoles");
-        }
-      });
+        });
+        dispatch("alerts/displaySuccess", i18n.t("Role updated"), {
+          root: true
+        });
+      } catch {
+        dispatch(
+          "alerts/displayError",
+          i18n.t("An error occured updating this role"),
+          {
+            root: true
+          }
+        );
+      }
     },
     async fillRole({ commit }, roleID) {
       const now = new Date(Date.now()).toISOString();
