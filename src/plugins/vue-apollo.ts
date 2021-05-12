@@ -22,7 +22,7 @@ const dynamicLink = setContext((_, { headers }) => {
     headers: {
       ...headers,
       "x-hasura-lang": i18n.locale,
-      // If the loginToken exists, this property will bed added
+      // If the loginToken exists, this property will be added
       ...(loginToken && { authorization: `Bearer ${loginToken}` })
     }
   };
