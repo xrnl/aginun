@@ -328,7 +328,7 @@ export default {
     resetState() {
       Object.assign(this.$data, initialState());
     },
-    onSubmit() {
+    async onSubmit() {
       const role = {
         ...this.role,
         title: this.parseTranslation(this.role.title),
@@ -338,12 +338,22 @@ export default {
       };
 
       if (this.editRole) {
-        this.updateRole({
-          id: this.editRole.id,
-          ...role
-        });
+        try {
+          await this.updateRole({
+            id: this.editRole.id,
+            ...role
+          });
+          this.onSucces();
+        } finally {
+          //
+        }
       } else {
-        this.createRole(role);
+        try {
+          await this.createRole(role);
+          this.onSucces();
+        } finally {
+          //
+        }
       }
     },
     onSucces() {
