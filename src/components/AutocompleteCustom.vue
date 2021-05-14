@@ -1,13 +1,15 @@
 <template>
-  <v-select
+  <v-autocomplete
     :items="items"
     :value="selectedItemsIds"
     item-value="id"
     :item-text="itemText"
-    multiple
     outlined
+    chips
+    small-chips
+    deletable-chips
+    multiple
     :hide-details="hideDetails"
-    class="mt-3"
     :label="label"
     @change="$emit('change', $event)"
   />

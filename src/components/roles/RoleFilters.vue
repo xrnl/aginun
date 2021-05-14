@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="role-filters">
     <v-text-field
       :value="selectedFilters.search"
       :label="$t('Search by role title')"
@@ -11,8 +11,9 @@
     >
     </v-text-field>
     <flex-wrapper direction="column">
-      <h4>{{ $t("Groups") }}</h4>
+      <h4 class="heading">{{ $t("Groups") }}</h4>
       <autocomplete-custom
+        class="group-dropdown-first"
         :items="localGroups"
         :selected-items-ids="selectedFilters.localGroups"
         :label="$t('Local Group')"
@@ -38,6 +39,7 @@
         class="mt-12"
         thumb-label="always"
         :label="$t('Time Commitment')"
+        hide-details
         @end="setFilter({ filterType: 'timeCommitment', filterValue: $event })"
       />
     </flex-wrapper>
@@ -95,5 +97,13 @@ export default {
 .delete-filter-btn {
   margin-top: 1rem;
   float: right;
+}
+.role-filters {
+  .heading {
+    margin-bottom: 0.5rem;
+  }
+  .group-dropdown-first {
+    margin-bottom: 1rem;
+  }
 }
 </style>
