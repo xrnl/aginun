@@ -1,10 +1,12 @@
 <template>
-  <div class="container container--md container--margin-top">
-    <div class="row">
-      <div class="row__image">
+  <v-container class="mt-6">
+    <v-row align="center" justify="center">
+      <v-col class="col-md-4">
         <img src="@/assets/images/tree.svg" alt="Tree" />
-      </div>
-      <div class="row__content">
+      </v-col>
+    </v-row>
+    <v-row align="center" justify="center">
+      <v-col class="col-md-4">
         <h2>{{ $t("For help and feedback contact us via:") }}</h2>
         <icon-link
           :href="`mailto:${contactEmail}`"
@@ -18,9 +20,9 @@
           :label="$t('Mattermost')"
           icon="mdi-message"
         />
-      </div>
-    </div>
-  </div>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
