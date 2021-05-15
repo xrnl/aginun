@@ -36,18 +36,7 @@
         <router-link class="nav-link" to="/support">{{
           $t("Support")
         }}</router-link>
-        <v-btn
-          class="login-button"
-          v-if="!loggedIn"
-          outlined
-          text
-          @click.stop="login"
-        >
-          {{ $t("Login") }}
-        </v-btn>
-        <v-btn class="login-button" v-else text outlined @click.stop="logout">
-          {{ $t("Logout") }}
-        </v-btn>
+        <auth-state></auth-state>
         <div>
           <language-select />
         </div>
@@ -57,29 +46,24 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
 import LanguageSelect from "@/components/LanguageSelect.vue";
+import AuthState from "@/components/AuthState.vue";
 
 export default {
   name: "TheAppBar",
   components: {
-    LanguageSelect
+    LanguageSelect,
+    AuthState
   },
   data: () => ({
     mobileMenuVisible: false
   }),
-  computed: {
-    ...mapGetters({
-      loggedIn: "user/loggedIn"
-    })
-  },
   watch: {
     $route() {
       this.mobileMenuVisible = false;
     }
   },
   methods: {
-    ...mapActions("user", ["logout"]),
     closeNavigation() {
       this.mobileMenuVisible = false;
     },
@@ -89,14 +73,6 @@ export default {
       } else {
         this.mobileMenuVisible = true;
       }
-    },
-    login() {
-      //TODO: open login modal/page here
-
-      const username = "kaj-dev";
-      const password = "test";
-
-      this.$store.dispatch("user/login", { username, password });
     }
   }
 };

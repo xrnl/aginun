@@ -1,6 +1,5 @@
 import Vue from "vue";
 import Vuex from "vuex";
-
 import alerts from "./modules/alerts";
 import roles from "./modules/roles";
 import groups from "./modules/groups";
@@ -16,6 +15,7 @@ interface RootState {
   errors: {
     serverError: boolean;
   };
+  user: Record<string, unknown>;
 }
 
 const store = new Vuex.Store<RootState>({
