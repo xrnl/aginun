@@ -1,6 +1,7 @@
 <template>
   <v-select
-    style="max-width: 130px; z-index: 16"
+    style="max-width: 130px;"
+    class="language-select"
     hide-details
     :value="$i18n.locale"
     :items="locales"

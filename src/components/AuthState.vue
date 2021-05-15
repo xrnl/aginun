@@ -1,7 +1,14 @@
 <template>
   <div>
-    <v-btn v-if="!loggedIn" @click="dialog = true">{{ $t("Login") }}</v-btn>
-    <v-btn v-else @click="logout">
+    <v-btn
+      v-if="!loggedIn"
+      class="login-button"
+      outlined
+      text
+      @click="dialog = true"
+      >{{ $t("Login") }}</v-btn
+    >
+    <v-btn v-else class="login-button" outlined text @click="logout">
       {{ $t("Logout") }}
     </v-btn>
     <v-dialog v-model="dialog" :persistent="serverLoading" max-width="380px">

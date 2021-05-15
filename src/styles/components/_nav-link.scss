@@ -1,0 +1,17 @@
+.nav-link{
+    color: black;
+    height: 36px;
+    min-width: 64px;
+    padding: 0 $distance-xs;
+    margin: 0 $distance-xs;
+    @include font-heading();
+    font-size: $font-size-md;
+    text-decoration: none;
+    line-height: 2;
+    &:hover{
+        border-bottom: 2px solid black;
+    }
+    &.router-link-exact-active{
+        border-bottom: 2px solid black;
+    }
+}

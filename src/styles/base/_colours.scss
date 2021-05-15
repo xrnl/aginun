@@ -1,18 +1,36 @@
+// Colors from the XR Brand guide, found in the XR NL Wordpress theme
+$xr-black: #000000;
+$xr-white: #ffffff;
+$xr-green: #14aa37;
+$xr-lemon: #f7ee6a;
+$xr-pink: #ed9bc4;
+$xr-light-green: #bed276;
+$xr-bright-pink: #cf6297;
+$xr-dark-blue: #3860aa;
+$xr-light-blue: #75d0f1;
+$xr-purple: #986297;
+$xr-warm-yellow: #ffc11e;
+$xr-red: #dc4f00;
+$xr-angry: #c80082;
+$xr-primary: $xr-green;
+$xr-light-gray: lighten($xr-black, 85%);
+
+$xr-green-light: #4ea648;
+
 $theme-colors: (
-  "primary": #4ea648,
-  "green": #4ea648,
-  "yellow": #ffc113,
-  "pink": #ed9bc4,
-  "red": #dc4f00,
-  "orange": #f19631,
-  "lemon": #ded712,
-  "blue": #75d0f1,
-  "black": #000,
-  "navy": #3860aa,
-  "purple": #906198,
-  "angry": rgb(200, 0, 130),
-  "white": #fff,
-  "khaki": #97ab3f
+  "green": $xr-green,
+  "yellow": $xr-lemon,
+  "pink": $xr-pink,
+  "red": $xr-red,
+  "orange": $xr-warm-yellow,
+  "lemon": $xr-lemon,
+  "blue":  $xr-light-blue,
+  "black": $xr-black,
+  "navy": $xr-dark-blue,
+  "purple": $xr-purple,
+  "angry": $xr-angry,
+  "white": $xr-white,
+  "khaki": $xr-light-green,
 ) !default;
 
 // These colours were found at: https://rebellion.global/news/#blog

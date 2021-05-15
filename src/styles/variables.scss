@@ -32,6 +32,20 @@ $border-radius-root: 0;
 $body-font-family: 'Crimson Text', serif;
 $font-size-root: 18px;
 
+$font-size-sm: 0.875rem;
+$font-size-md: 1rem;
+$font-size-lg: 1.5rem;
+
+// Dimensions
+$distance-xs: .5rem;
+$distance-sm: 1rem;
+$distance-md: 1.75rem;
+$distance-lg: 3.5rem;
+$distance-xl: 5rem;
+
+// Breakpoints
+$breakpoint-sm: 600px;
+
 // $heading-font-family: 'FucXed', sans-serif !default;
 
 $headings: (
@@ -53,6 +67,10 @@ $headings: (
 // BTN
 // $btn-letter-spacing: 2px;
 $btn-font-weight: 600;
+
+$logo-height: 2.5rem;
+$navbar-padding-vertical: $distance-xs;
+$nav-bar-height: calc(#{$logo-height} + #{$navbar-padding-vertical});
 
 // Variables for specific components must come before the import
 
