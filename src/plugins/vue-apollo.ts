@@ -2,7 +2,6 @@
 import "unfetch/polyfill";
 import Vue from "vue";
 import VueApollo from "vue-apollo";
-import i18n from "@/i18n/i18n";
 import { ApolloClient } from "apollo-client";
 import { setContext } from "apollo-link-context";
 import { createHttpLink } from "apollo-link-http";
@@ -21,7 +20,6 @@ const dynamicLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      "x-hasura-lang": i18n.locale,
       // If the loginToken exists, this property will be added
       ...(loginToken && { authorization: `Bearer ${loginToken}` })
     }

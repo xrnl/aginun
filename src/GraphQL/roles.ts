@@ -48,9 +48,10 @@ export const RolesSearchQuery = gql`
     $timeCommitmentMin: Int!
     $timeCommitmentMax: Int!
     $search: String!
+    $language: String!
   ) {
     rolesSearch(
-      args: { search: $search }
+      args: { selected_language: $language, search: $search }
       where: {
         _and: [
           { localGroupId: { _in: $localGroupIds } }
