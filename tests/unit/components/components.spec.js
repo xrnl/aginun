@@ -6,7 +6,6 @@ import VueRouter from "vue-router";
 import Vuetify from "vuetify";
 import axios from "axios";
 import VueAxios from "vue-axios";
-import styles from "@/constants/styles";
 import Spinner from "@/components/Spinner.vue";
 import getThemeColor from "@/utils/getThemeColor";
 import AutocompleteCustom from "@/components/AutocompleteCustom.vue";
@@ -61,11 +60,18 @@ describe("TheAppBar", () => {
       ...options
     });
 
-  it("has height defined in store", () => {
+  it("has to open up when the hamburger is clicked", async () => {
     const wrapper = mountFunction();
-    expect(wrapper.find("div").attributes("style")).toBe(
-      `height: ${styles.navbarHeight};`
-    );
+    await wrapper.find(".nav-bar__hamburger").trigger("click");
+    expect(wrapper.find(".nav-bar__content").classes("active")).toBe(true);
+  });
+
+  it("has to close when the close button is clicked", async () => {
+    const wrapper = mountFunction();
+    // First open up the navigation, otherwise we wouldn't be able to close it
+    await wrapper.find(".nav-bar__hamburger").trigger("click");
+    await wrapper.find(".nav-bar__content__close").trigger("click");
+    expect(wrapper.find(".nav-bar__content").classes("active")).toBe(false);
   });
 });
 

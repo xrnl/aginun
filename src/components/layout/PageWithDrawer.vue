@@ -84,6 +84,7 @@ export default {
   transform: translateX(100%);
   &.active {
     transform: translateX(0);
+    z-index: 99;
   }
   .theme--light & {
     background: white;

@@ -1,6 +1,7 @@
 import { apolloClient } from "@/plugins/vue-apollo";
 import throttle from "lodash/throttle";
 import Vue from "vue";
+import i18n from "@/i18n/i18n";
 import { timeCommitmentRange } from "@/constants/timeCommitments";
 import {
   CreateRoleMutation,
@@ -85,57 +86,113 @@ export default {
     }
   },
   actions: {
-    async createRole({ commit }, newRole) {
-      await apolloClient.mutate({
-        mutation: CreateRoleMutation,
-        variables: { input: [newRole] },
-        update: (
-          store,
-          {
-            data: {
-              insert_role: { returning }
+    async createRole({ commit, dispatch }, newRole) {
+      try {
+        await apolloClient.mutate({
+          mutation: CreateRoleMutation,
+          variables: { input: [newRole] },
+          update: (
+            store,
+            {
+              data: {
+                insert_role: { returning }
+              }
             }
+          ) => {
+            commit("addRole", returning[0]);
           }
-        ) => {
-          commit("addRole", returning[0]);
-        }
-      });
+        });
+        dispatch("alerts/displaySuccess", i18n.t("Role created"), {
+          root: true
+        });
+      } catch (e) {
+        dispatch(
+          "alerts/displayError",
+          i18n.t("An error occured creating this role"),
+          {
+            root: true
+          }
+        );
+        return e;
+      }
     },
     async updateRole({ commit, dispatch }, newRole) {
-      await apolloClient.mutate({
-        mutation: UpdateRoleMutation,
-        variables: { id: newRole.id, input: newRole },
-        update: (
-          store,
-          {
-            data: {
-              update_role: { returning }
+      try {
+        await apolloClient.mutate({
+          mutation: UpdateRoleMutation,
+          variables: { id: newRole.id, input: newRole },
+          update: (
+            store,
+            {
+              data: {
+                update_role: { returning }
+              }
             }
+          ) => {
+            commit("editRole", returning[0]);
+            dispatch("loadRoles");
           }
-        ) => {
-          commit("editRole", returning[0]);
-          dispatch("loadRoles");
-        }
-      });
+        });
+        dispatch("alerts/displaySuccess", i18n.t("Role updated"), {
+          root: true
+        });
+      } catch (e) {
+        dispatch(
+          "alerts/displayError",
+          i18n.t("An error occured updating this role"),
+          {
+            root: true
+          }
+        );
+        return e;
+      }
     },
-    async fillRole({ commit }, roleID) {
-      const now = new Date(Date.now()).toISOString();
-      await apolloClient.mutate({
-        mutation: FillRoleMutation,
-        variables: { id: roleID, filledDate: now },
-        update: () => {
-          commit("deleteRole", roleID);
-        }
-      });
+    async fillRole({ commit, dispatch }, roleID) {
+      try {
+        const now = new Date(Date.now()).toISOString();
+        await apolloClient.mutate({
+          mutation: FillRoleMutation,
+          variables: { id: roleID, filledDate: now },
+          update: () => {
+            commit("deleteRole", roleID);
+          }
+        });
+        dispatch("alerts/displaySuccess", i18n.t("Role filled"), {
+          root: true
+        });
+      } catch (e) {
+        dispatch(
+          "alerts/displayError",
+          i18n.t("An error occured while updating this role"),
+          {
+            root: true
+          }
+        );
+        return e;
+      }
     },
-    async deleteRole({ commit }, roleID) {
-      await apolloClient.mutate({
-        mutation: DeleteRoleMutation,
-        variables: { id: roleID },
-        update: () => {
-          commit("deleteRole", roleID);
-        }
-      });
+    async deleteRole({ commit, dispatch }, roleID) {
+      try {
+        await apolloClient.mutate({
+          mutation: DeleteRoleMutation,
+          variables: { id: roleID },
+          update: () => {
+            commit("deleteRole", roleID);
+          }
+        });
+        dispatch("alerts/displaySuccess", i18n.t("Role deleted"), {
+          root: true
+        });
+      } catch (e) {
+        dispatch(
+          "alerts/displayError",
+          i18n.t("An error occured while deleting this role"),
+          {
+            root: true
+          }
+        );
+        return e;
+      }
     },
     // eslint-disable-next-line func-names
     loadRoles: throttle(async function(
@@ -172,7 +229,8 @@ export default {
           workingCircleIds,
           timeCommitmentMin: state.selectedFilters.timeCommitment[0],
           timeCommitmentMax: state.selectedFilters.timeCommitment[1],
-          search: `%${state.selectedFilters.search}%`
+          search: `%${state.selectedFilters.search}%`,
+          language: i18n.locale
         }
       });
 

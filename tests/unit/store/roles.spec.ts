@@ -3,6 +3,7 @@ import Vue from "vue";
 import { apolloClient } from "@/plugins/vue-apollo";
 import { timeCommitmentRange } from "@/constants/timeCommitments";
 import { ApolloQueryResult } from "apollo-client";
+import i18n from "@/i18n/i18n";
 
 jest.mock("lodash/throttle", () => jest.fn((fn) => fn));
 jest.useFakeTimers();
@@ -228,41 +229,56 @@ describe("Roles Store", () => {
 
   describe("actions", () => {
     const commit = jest.fn();
-    const dispatch = jest.fn();
     apolloMutateSpy.mockReturnValue(Promise.resolve({}));
 
     describe("createRole", () => {
       it("calls apolloClient.mutate with the role to create", async () => {
+        const dispatch = jest.fn(() => Promise.resolve());
         const newRole = {
           id: 3,
           title: "Role 3"
         };
-        await rolesStore.actions.createRole({ commit }, newRole);
+        await rolesStore.actions.createRole({ commit, dispatch }, newRole);
         expect(apolloMutateSpy).toBeCalled();
+        expect(dispatch).toBeCalledWith(
+          "alerts/displaySuccess",
+          i18n.t("Role created"),
+          { root: true }
+        );
       });
     });
 
     describe("updateRole", () => {
       it("calls apolloClient.mutate with the role to update", async () => {
-        const newRole = {
+        const dispatch = jest.fn(() => Promise.resolve());
+        const updatedRole = {
           id: 3,
           title: "Role 3"
         };
-        await rolesStore.actions.updateRole({ commit, dispatch }, newRole);
+        await rolesStore.actions.updateRole({ commit, dispatch }, updatedRole);
         expect(apolloMutateSpy).toBeCalled();
+        expect(dispatch).toBeCalledWith(
+          "alerts/displaySuccess",
+          i18n.t("Role updated"),
+          {
+            root: true
+          }
+        );
       });
     });
 
     describe("fillRole", () => {
       it("calls apolloClient.mutate with the role to update", async () => {
-        await rolesStore.actions.fillRole({ commit }, 1);
+        const dispatch = jest.fn(() => Promise.resolve());
+        await rolesStore.actions.fillRole({ commit, dispatch }, 1);
         expect(apolloMutateSpy).toBeCalled();
       });
     });
 
     describe("deleteRole", () => {
       it("calls apolloClient.mutate with the role to delete", async () => {
-        await rolesStore.actions.deleteRole({ commit }, 1);
+        const dispatch = jest.fn(() => Promise.resolve());
+        await rolesStore.actions.deleteRole({ commit, dispatch }, 1);
         expect(apolloMutateSpy).toBeCalled();
       });
     });

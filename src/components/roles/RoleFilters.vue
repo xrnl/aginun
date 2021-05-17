@@ -1,44 +1,37 @@
 <template>
-  <div>
-    <div>
-      <v-text-field
-        :value="selectedFilters.search"
-        :label="$t('Search by role title')"
-        :placeholder="$t('Facilitator, Writer, Photographer...')"
-        class="mt-3"
-        clearable
-        @input="debounceSearchUpdate"
+  <div class="role-filters">
+    <v-text-field
+      :value="selectedFilters.search"
+      :label="$t('Search by role title')"
+      :placeholder="$t('Facilitator, Writer, Photographer...')"
+      clearable
+      outlined
+      append-icon="mdi-magnify"
+      @input="debounceSearchUpdate"
+    >
+    </v-text-field>
+    <flex-wrapper direction="column">
+      <h4 class="heading">{{ $t("Groups") }}</h4>
+      <autocomplete-custom
+        class="group-dropdown-first"
+        :items="localGroups"
+        :selected-items-ids="selectedFilters.localGroups"
+        :label="$t('Local Group')"
+        :hideDetails="true"
+        item-text="title"
+        @change="setFilter({ filterType: 'localGroups', filterValue: $event })"
       />
-    </div>
-    <filter-section>
-      <template v-slot:title>
-        {{ $t("Groups") }}
-      </template>
-      <flex-wrapper direction="column">
-        <autocomplete-custom
-          :items="localGroups"
-          :selected-items-ids="selectedFilters.localGroups"
-          :label="$t('Local Group')"
-          item-text="title"
-          @change="
-            setFilter({ filterType: 'localGroups', filterValue: $event })
-          "
-        />
-        <autocomplete-custom
-          :items="workingCircles"
-          :selected-items-ids="selectedFilters.workingCircles"
-          :label="$t('Working circle')"
-          :item-text="['title', $i18n.locale]"
-          @change="
-            setFilter({ filterType: 'workingCircles', filterValue: $event })
-          "
-        />
-      </flex-wrapper>
-    </filter-section>
-    <filter-section>
-      <template v-slot:title>
-        {{ $t("Time commitment") }}
-      </template>
+      <autocomplete-custom
+        :items="workingCircles"
+        :selected-items-ids="selectedFilters.workingCircles"
+        :label="$t('Working circle')"
+        :item-text="['title', $i18n.locale]"
+        outlined
+        @change="
+          setFilter({ filterType: 'workingCircles', filterValue: $event })
+        "
+      />
+      <h4>{{ $t("Time Commitment") }}</h4>
       <v-range-slider
         :value="selectedFilters.timeCommitment"
         :min="timeCommitmentRange.min"
@@ -46,24 +39,34 @@
         class="mt-12"
         thumb-label="always"
         :label="$t('Time Commitment')"
+        hide-details
         @end="setFilter({ filterType: 'timeCommitment', filterValue: $event })"
       />
-    </filter-section>
+    </flex-wrapper>
+    <v-btn
+      :disabled="!isUsingFilters"
+      class="delete-filter-btn"
+      depressed
+      @click="setDefaultFilters"
+    >
+      {{ $t("Clear filters") }}
+      <v-icon>
+        mdi-delete
+      </v-icon>
+    </v-btn>
   </div>
 </template>
 
 <script>
 import FlexWrapper from "@/components/layout/FlexWrapper.vue";
 import AutocompleteCustom from "@/components/AutocompleteCustom.vue";
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapGetters } from "vuex";
 import debounce from "lodash/debounce";
 import { timeCommitmentRange } from "@/constants/timeCommitments";
-import FilterDrawerSection from "../layout/FilterDrawerSection.vue";
 
 export default {
   name: "RoleFilters",
   components: {
-    filterSection: FilterDrawerSection,
     AutocompleteCustom,
     FlexWrapper
   },
@@ -72,13 +75,16 @@ export default {
   }),
   computed: {
     ...mapState("groups", ["localGroups", "workingCircles"]),
-    ...mapState("roles", ["selectedFilters"])
+    ...mapState("roles", ["selectedFilters"]),
+    ...mapGetters({
+      isUsingFilters: "roles/isUsingFilters"
+    })
   },
   beforeMount() {
     this.$store.dispatch("roles/setDefaultFilters");
   },
   methods: {
-    ...mapActions("roles", ["setFilter"]),
+    ...mapActions("roles", ["setFilter", "setDefaultFilters"]),
     debounceSearchUpdate: debounce(function($event) {
       const filterValue = $event || "";
       this.setFilter({ filterType: "search", filterValue });
@@ -87,4 +93,17 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.delete-filter-btn {
+  margin-top: 1rem;
+  float: right;
+}
+.role-filters {
+  .heading {
+    margin-bottom: 0.5rem;
+  }
+  .group-dropdown-first {
+    margin-bottom: 1rem;
+  }
+}
+</style>

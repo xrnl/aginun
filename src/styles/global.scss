@@ -2,6 +2,10 @@
 @import "base/typography";
 @import "variables";
 
+// components
+@import "components/nav-link";
+@import "components/nav-bar";
+
 .xr-title {
   font-family: "FucXed";
 }
@@ -19,6 +23,10 @@
 
 .v-btn {
   font-family: "FucXed";
-  padding: .5rem 1rem;
+  padding: 0.5rem 1rem;
   box-shadow: none;
+}
+
+.v-content {
+  margin-top: $nav-bar-height;
 }

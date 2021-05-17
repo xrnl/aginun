@@ -301,7 +301,6 @@ export default {
         if (!editRole) {
           return;
         }
-
         const role = cloneDeep(editRole);
         // Delete this extra field we get from the query
         delete role.__typename;
@@ -318,7 +317,6 @@ export default {
   },
   methods: {
     ...mapActions("roles", ["updateRole", "createRole"]),
-    ...mapActions("alerts", ["displaySuccess"]),
     onTimeCommitmentChange(timeCommitment) {
       this.role.timeCommitmentMin = timeCommitment.min;
       this.role.timeCommitmentMax = timeCommitment.max;
@@ -329,7 +327,7 @@ export default {
     resetState() {
       Object.assign(this.$data, initialState());
     },
-    onSubmit() {
+    async onSubmit() {
       const role = {
         ...this.role,
         title: this.parseTranslation(this.role.title),
@@ -337,21 +335,22 @@ export default {
         description: this.parseTranslation(this.role.description),
         requirements: this.parseTranslation(this.role.requirements)
       };
-
+      let error;
       if (this.editRole) {
-        this.updateRole({ id: this.editRole.id, ...role });
+        error = await this.updateRole({
+          id: this.editRole.id,
+          ...role
+        });
       } else {
-        this.createRole(role);
+        error = await this.createRole(role);
       }
-      this.$emit("input", false);
-      this.resetState();
-      this.$nextTick(() => {
-        this.$refs.form.reset();
-      });
-
-      this.displaySuccess(
-        this.editRole ? this.$t("Role edited") : this.$t("Role created")
-      );
+      if (!error) {
+        this.$emit("input", false);
+        this.resetState();
+        this.$nextTick(() => {
+          this.$refs.form.reset();
+        });
+      }
     },
     isEmpty: (text) => !text || text.length === 0 || !text.trim(),
     parseTranslation(translation) {

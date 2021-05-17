@@ -40,12 +40,12 @@ export default {
   },
   methods: {
     ...mapActions("roles", ["deleteRole"]),
-    ...mapActions("alerts", ["displaySuccess"]),
-    onDeleteRole() {
-      this.deleteRole(this.roleId);
-      this.$emit("input", false);
-      this.displaySuccess("Role deleted");
-      this.$router.push("/roles");
+    async onDeleteRole() {
+      const error = await this.deleteRole(this.roleId);
+      if (!error) {
+        this.$emit("input", false);
+        this.$router.push("/roles");
+      }
     }
   }
 };
