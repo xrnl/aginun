@@ -6,33 +6,18 @@
     <p v-if="!isDevMode">
       {{ $t("Something went wrong") }} 😧
       <br />
-      <i18n path="Please email {contactEmail} for help.">
-        <template v-slot:contactEmail>
-          <a :href="`mailto:${contactEmail}`">{{ contactEmail }}</a>
-        </template>
-      </i18n>
     </p>
-    <template v-else>
-      <i18n
-        path="Failed to connect to the server. Please make sure you have set the {serverApiKey}."
-        tag="p"
-        class="mb-0"
-      >
-        <template v-slot:serverApiKey>
-          <a href="https://github.com/xrnl/aginun#install" target="_blank">{{
-            $t("server API key")
-          }}</a>
-        </template>
-      </i18n>
-      <i18n
-        path="If the problem persists please contact {contactEmail}."
-        tag="p"
-      >
-        <template v-slot:contactEmail>
-          <a :href="`mailto:${contactEmail}`">{{ contactEmail }}</a>
-        </template>
-      </i18n>
-    </template>
+    <i18n
+      v-else
+      path="The application made a failed request to the server."
+      tag="p"
+      class="mb-0"
+    />
+    <i18n path="Please email {contactEmail} for help.">
+      <template v-slot:contactEmail>
+        <a :href="`mailto:${contactEmail}`">{{ contactEmail }}</a>
+      </template>
+    </i18n>
   </div>
 </template>
 
