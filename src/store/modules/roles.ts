@@ -105,7 +105,7 @@ export default {
         dispatch("alerts/displaySuccess", i18n.t("Role created"), {
           root: true
         });
-      } catch {
+      } catch (e) {
         dispatch(
           "alerts/displayError",
           i18n.t("An error occured creating this role"),
@@ -113,6 +113,7 @@ export default {
             root: true
           }
         );
+        return e;
       }
     },
     async updateRole({ commit, dispatch }, newRole) {
@@ -135,7 +136,7 @@ export default {
         dispatch("alerts/displaySuccess", i18n.t("Role updated"), {
           root: true
         });
-      } catch {
+      } catch (e) {
         dispatch(
           "alerts/displayError",
           i18n.t("An error occured updating this role"),
@@ -143,26 +144,55 @@ export default {
             root: true
           }
         );
+        return e;
       }
     },
-    async fillRole({ commit }, roleID) {
-      const now = new Date(Date.now()).toISOString();
-      await apolloClient.mutate({
-        mutation: FillRoleMutation,
-        variables: { id: roleID, filledDate: now },
-        update: () => {
-          commit("deleteRole", roleID);
-        }
-      });
+    async fillRole({ commit, dispatch }, roleID) {
+      try {
+        const now = new Date(Date.now()).toISOString();
+        await apolloClient.mutate({
+          mutation: FillRoleMutation,
+          variables: { id: roleID, filledDate: now },
+          update: () => {
+            commit("deleteRole", roleID);
+          }
+        });
+        dispatch("alerts/displaySuccess", i18n.t("Role filled"), {
+          root: true
+        });
+      } catch (e) {
+        dispatch(
+          "alerts/displayError",
+          i18n.t("An error occured while updating this role"),
+          {
+            root: true
+          }
+        );
+        return e;
+      }
     },
-    async deleteRole({ commit }, roleID) {
-      await apolloClient.mutate({
-        mutation: DeleteRoleMutation,
-        variables: { id: roleID },
-        update: () => {
-          commit("deleteRole", roleID);
-        }
-      });
+    async deleteRole({ commit, dispatch }, roleID) {
+      try {
+        await apolloClient.mutate({
+          mutation: DeleteRoleMutation,
+          variables: { id: roleID },
+          update: () => {
+            commit("deleteRole", roleID);
+          }
+        });
+        dispatch("alerts/displaySuccess", i18n.t("Role deleted"), {
+          root: true
+        });
+      } catch (e) {
+        dispatch(
+          "alerts/displayError",
+          i18n.t("An error occured while deleting this role"),
+          {
+            root: true
+          }
+        );
+        return e;
+      }
     },
     // eslint-disable-next-line func-names
     loadRoles: throttle(async function(

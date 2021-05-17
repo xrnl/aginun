@@ -317,7 +317,6 @@ export default {
   },
   methods: {
     ...mapActions("roles", ["updateRole", "createRole"]),
-    ...mapActions("alerts", ["displaySuccess", "displayError"]),
     onTimeCommitmentChange(timeCommitment) {
       this.role.timeCommitmentMin = timeCommitment.min;
       this.role.timeCommitmentMax = timeCommitment.max;
@@ -336,32 +335,22 @@ export default {
         description: this.parseTranslation(this.role.description),
         requirements: this.parseTranslation(this.role.requirements)
       };
-
+      let error;
       if (this.editRole) {
-        try {
-          await this.updateRole({
-            id: this.editRole.id,
-            ...role
-          });
-          this.onSucces();
-        } finally {
-          //
-        }
+        error = await this.updateRole({
+          id: this.editRole.id,
+          ...role
+        });
       } else {
-        try {
-          await this.createRole(role);
-          this.onSucces();
-        } finally {
-          //
-        }
+        error = await this.createRole(role);
       }
-    },
-    onSucces() {
-      this.$emit("input", false);
-      this.resetState();
-      this.$nextTick(() => {
-        this.$refs.form.reset();
-      });
+      if (!error) {
+        this.$emit("input", false);
+        this.resetState();
+        this.$nextTick(() => {
+          this.$refs.form.reset();
+        });
+      }
     },
     isEmpty: (text) => !text || text.length === 0 || !text.trim(),
     parseTranslation(translation) {

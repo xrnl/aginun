@@ -286,12 +286,12 @@ export default {
   },
   methods: {
     ...mapActions("roles", ["fillRole"]),
-    ...mapActions("alerts", ["displaySuccess"]),
-    onFillRole() {
-      this.fillRole(this.role.id);
-      this.$emit("input", false);
-      this.displaySuccess(this.$t("Role filled"));
-      this.$router.push("/roles");
+    async onFillRole() {
+      const error = await this.fillRole(this.role.id);
+      if (!error) {
+        this.$emit("input", false);
+        this.$router.push("/roles");
+      }
     },
     formatDate(date) {
       const formattedDate = new Date(date);

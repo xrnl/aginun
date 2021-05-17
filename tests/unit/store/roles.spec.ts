@@ -269,14 +269,16 @@ describe("Roles Store", () => {
 
     describe("fillRole", () => {
       it("calls apolloClient.mutate with the role to update", async () => {
-        await rolesStore.actions.fillRole({ commit }, 1);
+        const dispatch = jest.fn(() => Promise.resolve());
+        await rolesStore.actions.fillRole({ commit, dispatch }, 1);
         expect(apolloMutateSpy).toBeCalled();
       });
     });
 
     describe("deleteRole", () => {
       it("calls apolloClient.mutate with the role to delete", async () => {
-        await rolesStore.actions.deleteRole({ commit }, 1);
+        const dispatch = jest.fn(() => Promise.resolve());
+        await rolesStore.actions.deleteRole({ commit, dispatch }, 1);
         expect(apolloMutateSpy).toBeCalled();
       });
     });
