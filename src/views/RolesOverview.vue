@@ -21,7 +21,7 @@
       <v-icon>mdi-magnify</v-icon>
     </v-btn>
     <transition name="fade" mode="out-in">
-      <grid-list v-if="!!roles.length" key="roles" gap="1rem">
+      <grid-list v-if="!!roles.length" key="roles">
         <role-card
           v-for="role in rolesSelectedLanguage"
           :key="role.id"

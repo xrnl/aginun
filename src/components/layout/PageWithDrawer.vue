@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div class="page-background" :style="containerMargin">
+      <img src="@/assets/images/tree.svg" :alt="$t('Tree')" />
+    </div>
     <div :style="containerMargin">
       <slot />
     </div>
@@ -45,6 +48,27 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.page-background {
+  height: 15rem;
+  position: absolute;
+  width: calc(100% - 400px);
+  z-index: 1;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  display: flex;
+  justify-content: center;
+  // align-items: center;
+  height: calc(100% - 4rem);
+  margin-top: 0.5rem;
+  @media only screen and (max-width: 600px) {
+    display: none;
+  }
+  img {
+    width: 60vw;
+    // height: 15rem;
+  }
+}
 .drawer {
   position: fixed;
   top: 0;

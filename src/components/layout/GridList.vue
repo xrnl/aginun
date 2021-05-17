@@ -1,33 +1,11 @@
 <template>
-  <div class="grid-list" :style="listStyle">
+  <div class="grid-list">
     <slot />
   </div>
 </template>
 <script>
 export default {
-  props: {
-    itemWidth: {
-      type: String,
-      default: "260px"
-    },
-    itemHeight: {
-      type: String,
-      default: "180px"
-    },
-    gap: {
-      type: String,
-      default: "1rem"
-    }
-  },
-  computed: {
-    listStyle() {
-      return {
-        gridTemplateColumns: `repeat(auto-fill,${this.itemWidth})`,
-        gridAutoRows: `minmax(${this.itemHeight}, max-content)`,
-        gridGap: this.gap
-      };
-    }
-  }
+  props: {}
 };
 </script>
 <style lang="scss" scoped>
@@ -35,6 +13,13 @@ export default {
   display: grid;
   align-items: start;
   justify-content: center;
-  margin: 3rem;
+  margin: 2rem;
+  grid-template-columns: repeat(auto-fill, 100%);
+  grid-gap: 1rem;
+  @media only screen and (min-width: 600px) {
+    margin: 3rem;
+    grid-template-columns: repeat(auto-fill, 260px);
+    grid-auto-rows: minmax(180px, max-content);
+  }
 }
 </style>
