@@ -4,11 +4,12 @@
     :value="selectedItemsIds"
     item-value="id"
     :item-text="itemText"
+    outlined
     chips
     small-chips
     deletable-chips
     multiple
-    class="mt-3"
+    :hide-details="hideDetails"
     :label="label"
     @change="$emit('change', $event)"
   />
@@ -20,6 +21,10 @@ import { isArrayValid } from "@/utils/validators";
 export default {
   name: "AutocompleteCustom",
   props: {
+    hideDetails: {
+      type: Boolean,
+      required: false
+    },
     items: {
       type: Array,
       required: true

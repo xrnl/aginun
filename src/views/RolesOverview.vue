@@ -4,18 +4,22 @@
     <role-edit-dialog v-model="newRoleDialog" />
     <div v-if="isMobile" class="mb-8">
       <v-divider />
-      <div class="d-flex justify-space-between pa-3">
-        <new-item-button
-          v-if="loggedIn"
-          :text="$t('New Role')"
-          @click="showNewRoleDialog"
-        />
-        <v-btn text color="primary" @click="isDrawerOpen = true">
-          {{ $t("Filter") }}
-        </v-btn>
+      <div class="d-flex justify-space-between pa-3" v-if="loggedIn">
+        <new-item-button :text="$t('New Role')" @click="showNewRoleDialog" />
       </div>
       <v-divider />
     </div>
+    <v-btn
+      class="filter-btn"
+      color="primary"
+      v-if="!isDrawerOpen"
+      @click="isDrawerOpen = true"
+      rounded
+      x-large
+    >
+      {{ $t("Filter") }}
+      <v-icon>mdi-magnify</v-icon>
+    </v-btn>
     <transition name="fade" mode="out-in">
       <grid-list v-if="!!roles.length" key="roles" gap="1rem">
         <role-card
@@ -72,18 +76,15 @@
             style="width:100%;"
           >
             <div class="d-flex flex-column">
-              <span class="font-weight-bold">
+              <h3 class="font-weight-bold">
                 {{ $t("Search for positions") }}
-              </span>
+              </h3>
               <span v-if="isMobile" class="font-weight-light">
                 (<span v-if="!isLoadingRoles">{{ roles.length }}</span>
                 <span v-else>...</span>
                 {{ $t("positions found") }})
               </span>
             </div>
-            <v-btn text color="primary" @click="setDefaultFilters">
-              {{ $t("Clear filters") }}
-            </v-btn>
           </div>
         </template>
         <role-filters />
@@ -166,3 +167,15 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+.filter-btn {
+  position: fixed;
+  background: $xr-angry;
+  right: $distance-sm;
+  bottom: $distance-sm;
+  z-index: 80;
+  @media (min-width: $breakpoint-sm) {
+    display: none;
+  }
+}
+</style>
