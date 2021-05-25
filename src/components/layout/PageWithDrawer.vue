@@ -49,24 +49,18 @@ export default {
 </script>
 <style lang="scss" scoped>
 .page-background {
-  height: 15rem;
+  height: 100%;
+  width: 100%;
   position: absolute;
-  width: calc(100% - 400px);
-  z-index: 1;
-  top: 0;
-  left: 0;
   z-index: 0;
   display: flex;
   justify-content: center;
-  // align-items: center;
-  height: calc(100% - 4rem);
   margin-top: 0.5rem;
   @media only screen and (max-width: 600px) {
     display: none;
   }
   img {
     width: 60vw;
-    // height: 15rem;
   }
 }
 .drawer {
