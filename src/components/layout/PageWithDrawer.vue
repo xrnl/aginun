@@ -1,6 +1,10 @@
 <template>
   <div>
-    <div class="page-background" :style="containerMargin">
+    <div
+      class="page-background"
+      :style="containerMargin"
+      :class="{ 'drawer-open': isDrawerOpen }"
+    >
       <img src="@/assets/images/tree.svg" :alt="$t('Tree')" />
     </div>
     <div :style="containerMargin">
@@ -51,13 +55,15 @@ export default {
 .page-background {
   height: 100%;
   width: 100%;
-  position: absolute;
+  position: fixed;
   z-index: 0;
   display: flex;
   justify-content: center;
-  margin-top: 0.5rem;
   @media only screen and (max-width: 600px) {
     display: none;
+  }
+  &.drawer-open {
+    width: calc(100% - 400px);
   }
   img {
     width: 60vw;

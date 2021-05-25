@@ -70,7 +70,7 @@ $btn-font-weight: 600;
 
 $logo-height: 2.5rem;
 $navbar-padding-vertical: $distance-xs;
-$nav-bar-height: calc(#{$logo-height} + #{$navbar-padding-vertical});
+$nav-bar-height: calc(#{$logo-height} + (#{$navbar-padding-vertical} * 2));
 
 // Variables for specific components must come before the import
 
