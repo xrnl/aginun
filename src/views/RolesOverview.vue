@@ -10,7 +10,7 @@
       <v-divider />
     </div>
     <v-btn
-      class="filter-btn"
+      class="filter-btn d-lg-none"
       color="primary"
       v-if="!isDrawerOpen"
       @click="isDrawerOpen = true"
@@ -157,7 +157,7 @@ export default {
     this.isDrawerOpen = !this.isMobile;
   },
   methods: {
-    ...mapActions("roles", ["loadRoles", "setDefaultFilters"]),
+    ...mapActions("roles", ["loadRoles"]),
     handleCloseDrawer: function() {
       this.isDrawerOpen = false;
     },
@@ -174,8 +174,5 @@ export default {
   right: $distance-sm;
   bottom: $distance-sm;
   z-index: 80;
-  @media (min-width: $breakpoint-sm) {
-    display: none;
-  }
 }
 </style>

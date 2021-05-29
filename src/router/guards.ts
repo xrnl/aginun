@@ -16,7 +16,7 @@ async function healthCheck() {
   store.dispatch("errors/serverError", !!errors);
 }
 
-export async function rolesErrorGuard(to, from, next) {
+export async function rolesGuard(to, from, next) {
   // We need this to only run the healthcheck once
   if (store.state.errors.serverError === undefined) {
     await healthCheck();
@@ -24,9 +24,24 @@ export async function rolesErrorGuard(to, from, next) {
 
   if (store.state.errors.serverError) {
     next("/error");
-  } else {
-    next();
+    return;
   }
+
+  if (to.query) {
+    new URLSearchParams(to.query).forEach((filterValue, filterType) => {
+      if (filterValue.length > 0) {
+        store.commit("roles/setFilter", {
+          filterType,
+          filterValue:
+            filterType === "search"
+              ? filterValue
+              : filterValue.split(",").map((el) => parseInt(el, 10))
+        });
+      }
+    });
+  }
+
+  next();
 }
 
 export async function hasErrorsGuard(to, from, next) {
