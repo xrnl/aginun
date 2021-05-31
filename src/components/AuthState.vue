@@ -87,6 +87,7 @@ import { mapGetters, mapActions } from "vuex";
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 import { PulseLoader } from "@saeris/vue-spinners";
 import { contactEmail } from "@/constants/contacts";
+import { isProduction } from "@/utils/isProduction";
 
 export default Vue.extend({
   name: "AuthState",
@@ -94,8 +95,8 @@ export default Vue.extend({
     return {
       contactEmail,
       dialog: false,
-      username: "kaj-dev",
-      password: "test",
+      username: !isProduction() ? "kaj-dev" : "",
+      password: !isProduction() ? "test" : "",
       serverError: "",
       serverLoading: false
     };
@@ -114,8 +115,8 @@ export default Vue.extend({
     ...mapActions("user", ["login", "logout"]),
     ...mapActions("alerts", ["displayError"]),
     resetForm() {
-      this.username = "kaj-dev";
-      this.password = "test";
+      this.username = !isProduction() ? "kaj-dev" : "";
+      this.password = !isProduction() ? "test" : "";
       this.serverLoading = false;
       this.serverError = "";
       (this.$refs.login_form as InstanceType<

@@ -23,12 +23,13 @@
 
 <script>
 import { contactEmail } from "@/constants/contacts";
+import { isProduction } from "@/utils/isProduction";
 
 export default {
   name: "ErrorPage",
   data: () => ({
     contactEmail,
-    isDevMode: process.env.NODE_ENV !== "production"
+    isDevMode: !isProduction()
   })
 };
 </script>
