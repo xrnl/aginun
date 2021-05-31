@@ -33,6 +33,7 @@ export const defaultFilters = (): FiltersState => ({
   workingCircles: [],
   timeCommitment: [timeCommitmentRange.min, timeCommitmentRange.max]
 });
+export const FILTERS_KEYS = Object.keys(defaultFilters());
 
 export default {
   namespaced: true,

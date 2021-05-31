@@ -1,6 +1,7 @@
 import gql from "graphql-tag";
 import { apolloClient } from "@/plugins/vue-apollo";
 import store from "../store";
+import { FILTERS_KEYS } from "@/store/modules/roles";
 
 async function healthCheck() {
   const { errors } = await apolloClient.query({
@@ -27,7 +28,14 @@ export async function rolesGuard(to, from, next) {
     return;
   }
 
-  if (to.query) {
+  const queryKeys = Object.keys(to.query || {});
+
+  if (!queryKeys.length) {
+    next();
+    return;
+  }
+
+  if (FILTERS_KEYS.some((key) => queryKeys.includes(key))) {
     new URLSearchParams(to.query).forEach((filterValue, filterType) => {
       if (filterValue.length > 0) {
         store.commit("roles/setFilter", {
@@ -39,9 +47,11 @@ export async function rolesGuard(to, from, next) {
         });
       }
     });
-  }
 
-  next();
+    next();
+  } else {
+    next({ name: "roles", replace: true });
+  }
 }
 
 export async function hasErrorsGuard(to, from, next) {
