@@ -1,11 +1,20 @@
-import rolesStore, { RolesState } from "@/store/modules/roles";
-import Vue from "vue";
+import rolesStore, {
+  defaultFilters,
+  FiltersState,
+  RolesState
+} from "@/store/modules/roles";
 import { apolloClient } from "@/plugins/vue-apollo";
-import { timeCommitmentRange } from "@/constants/timeCommitments";
 import { ApolloQueryResult } from "apollo-client";
 import i18n from "@/i18n/i18n";
+import router from "@/router";
 
 jest.mock("lodash/throttle", () => jest.fn((fn) => fn));
+jest.mock("@/router", () => ({
+  push: jest.fn(),
+  currentRoute: {
+    path: "/"
+  }
+}));
 jest.useFakeTimers();
 
 describe("Roles Store", () => {
@@ -24,7 +33,6 @@ describe("Roles Store", () => {
   };
   const apolloQuerySpy = jest.spyOn(apolloClient, "query");
   const apolloMutateSpy = jest.spyOn(apolloClient, "mutate");
-  const vueSetSpy = jest.spyOn(Vue, "set");
 
   describe("getters", () => {
     describe("isNewQuery", () => {
@@ -49,12 +57,7 @@ describe("Roles Store", () => {
       it("returns false when using the default filters", () => {
         expect(
           rolesStore.getters.isNewQuery({
-            selectedFilters: {
-              workingCircles: [],
-              localGroups: [],
-              search: "",
-              timeCommitment: [1, 30]
-            }
+            selectedFilters: defaultFilters()
           })
         ).toBe(false);
       });
@@ -208,21 +211,29 @@ describe("Roles Store", () => {
       });
     });
 
-    describe("setFilter", () => {
-      it("sets a filter in the state using Vue.set()", () => {
+    describe("setDefaultFilters", () => {
+      it("sets the default filters", () => {
         const state = {
           selectedFilters: {}
+        };
+        rolesStore.mutations.setDefaultFilters(state);
+        expect(state.selectedFilters).toEqual(defaultFilters());
+      });
+    });
+
+    describe("setFilter", () => {
+      it("sets a filter in the state", () => {
+        const state: Partial<RolesState> = {
+          selectedFilters: defaultFilters()
         };
         const newFilter = {
           filterType: "search",
           filterValue: "newSearch"
         };
         rolesStore.mutations.setFilter(state, newFilter);
-        expect(vueSetSpy).toBeCalledWith(
-          state.selectedFilters,
-          newFilter.filterType,
-          newFilter.filterValue
-        );
+        expect(
+          (state.selectedFilters as FiltersState)[newFilter.filterType]
+        ).toBe(newFilter.filterValue);
       });
     });
   });
@@ -398,10 +409,13 @@ describe("Roles Store", () => {
     describe("setFilter", () => {
       it("commits clearRoles and triggerReload", () => {
         const dispatch = jest.fn(() => Promise.resolve());
-        const payload = { filterType: "search", filterValue: "" };
+        const payload = { filterType: "search", filterValue: "newSearch" };
         rolesStore.actions.setFilter({ commit, dispatch }, payload);
         expect(commit).toBeCalledWith("setLoadingState", true);
         expect(commit).toBeCalledWith("setFilter", payload);
+        expect(router.push).toBeCalledWith(
+          `/?${payload.filterType}=${payload.filterValue}`
+        );
         expect(dispatch).toBeCalledWith("reloadRoles");
       });
     });
@@ -411,22 +425,7 @@ describe("Roles Store", () => {
         const dispatch = jest.fn(() => Promise.resolve());
         rolesStore.actions.setDefaultFilters({ commit, dispatch });
         expect(commit).toBeCalledWith("setLoadingState", true);
-        expect(commit).toBeCalledWith("setFilter", {
-          filterType: "search",
-          filterValue: ""
-        });
-        expect(commit).toBeCalledWith("setFilter", {
-          filterType: "localGroups",
-          filterValue: []
-        });
-        expect(commit).toBeCalledWith("setFilter", {
-          filterType: "workingCircles",
-          filterValue: []
-        });
-        expect(commit).toBeCalledWith("setFilter", {
-          filterType: "timeCommitment",
-          filterValue: [timeCommitmentRange.min, timeCommitmentRange.max]
-        });
+        expect(commit).toBeCalledWith("setDefaultFilters");
         expect(dispatch).toBeCalledWith("reloadRoles");
       });
     });

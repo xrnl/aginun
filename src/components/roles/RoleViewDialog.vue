@@ -12,8 +12,8 @@
       persistent
       max-width="750"
       value="true"
-      @click:outside="$router.push('/roles')"
-      @keydown.escape="$router.push('/roles')"
+      @click:outside="$router.back()"
+      @keydown.escape="$router.back()"
     >
       <v-card>
         <transition name="fade" mode="out-in">
@@ -290,7 +290,7 @@ export default {
       const error = await this.fillRole(this.role.id);
       if (!error) {
         this.$emit("input", false);
-        this.$router.push("/roles");
+        this.$router.back();
       }
     },
     formatDate(date) {

@@ -1,6 +1,5 @@
 import { apolloClient } from "@/plugins/vue-apollo";
 import throttle from "lodash/throttle";
-import Vue from "vue";
 import i18n from "@/i18n/i18n";
 import { timeCommitmentRange } from "@/constants/timeCommitments";
 import {
@@ -10,6 +9,14 @@ import {
   DeleteRoleMutation,
   FillRoleMutation
 } from "@/GraphQL/roles";
+import router from "@/router";
+
+export interface FiltersState {
+  search: string;
+  localGroups: number[];
+  workingCircles: number[];
+  timeCommitment: number[];
+}
 
 export interface RolesState {
   roles: unknown[];
@@ -17,8 +24,16 @@ export interface RolesState {
   paginationLimit: number;
   paginationOffset: number;
   infiniteScrollId: boolean;
-  selectedFilters: unknown;
+  selectedFilters: FiltersState;
 }
+
+export const defaultFilters = (): FiltersState => ({
+  search: "",
+  localGroups: [],
+  workingCircles: [],
+  timeCommitment: [timeCommitmentRange.min, timeCommitmentRange.max]
+});
+export const FILTERS_KEYS = Object.keys(defaultFilters());
 
 export default {
   namespaced: true,
@@ -28,7 +43,7 @@ export default {
     paginationLimit: 20, // number of roles loaded at a time. More are loaded on scroll down.
     paginationOffset: 0,
     infiniteScrollId: true, // when this variable changes new roles are loaded
-    selectedFilters: {}
+    selectedFilters: defaultFilters()
   },
   getters: {
     getByID: (state) => (id) => state.roles.find((role) => role.id === id),
@@ -81,8 +96,11 @@ export default {
     nextPagination(state) {
       state.paginationOffset += state.paginationLimit;
     },
+    setDefaultFilters(state) {
+      state.selectedFilters = defaultFilters();
+    },
     setFilter(state, { filterType, filterValue }) {
-      Vue.set(state.selectedFilters, filterType, filterValue);
+      state.selectedFilters[filterType] = filterValue;
     }
   },
   actions: {
@@ -266,18 +284,28 @@ export default {
     setFilter({ commit, dispatch }, payload) {
       commit("setLoadingState", true);
       commit("setFilter", payload);
+
+      const params = new URLSearchParams(
+        router.currentRoute.query as Record<string, string>
+      );
+
+      if (
+        !payload.filterValue?.length ||
+        (payload.filterType === "timeCommitment" &&
+          payload.filterValue[0] === timeCommitmentRange.min &&
+          payload.filterValue[1] === timeCommitmentRange.max)
+      ) {
+        params.delete(payload.filterType);
+      } else {
+        params.set(payload.filterType, payload.filterValue);
+      }
+
+      router.push(`${router.currentRoute.path}?${params.toString()}`);
       dispatch("reloadRoles");
     },
     setDefaultFilters({ commit, dispatch }) {
       commit("setLoadingState", true);
-      commit("setFilter", { filterType: "search", filterValue: "" });
-      commit("setFilter", { filterType: "localGroups", filterValue: [] });
-      commit("setFilter", { filterType: "workingCircles", filterValue: [] });
-      commit("setFilter", {
-        filterType: "timeCommitment",
-        filterValue: [timeCommitmentRange.min, timeCommitmentRange.max]
-      });
-
+      commit("setDefaultFilters");
       dispatch("reloadRoles");
     }
   }

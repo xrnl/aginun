@@ -7,7 +7,7 @@
       clearable
       outlined
       append-icon="mdi-magnify"
-      @input="debounceSearchUpdate"
+      @input="updateFilter('search', $event)"
     >
     </v-text-field>
     <flex-wrapper direction="column">
@@ -19,7 +19,7 @@
         :label="$t('Local Group')"
         :hideDetails="true"
         item-text="title"
-        @change="setFilter({ filterType: 'localGroups', filterValue: $event })"
+        @change="updateFilter('localGroups', $event)"
       />
       <autocomplete-custom
         :items="workingCircles"
@@ -27,9 +27,7 @@
         :label="$t('Working circle')"
         :item-text="['title', $i18n.locale]"
         outlined
-        @change="
-          setFilter({ filterType: 'workingCircles', filterValue: $event })
-        "
+        @change="updateFilter('workingCircles', $event)"
       />
       <h4>{{ $t("Time Commitment") }}</h4>
       <v-range-slider
@@ -40,14 +38,14 @@
         thumb-label="always"
         :label="$t('Time Commitment')"
         hide-details
-        @end="setFilter({ filterType: 'timeCommitment', filterValue: $event })"
+        @end="updateFilter('timeCommitment', $event)"
       />
     </flex-wrapper>
     <v-btn
       :disabled="!isUsingFilters"
       class="delete-filter-btn"
       depressed
-      @click="setDefaultFilters"
+      @click="clearFilters"
     >
       {{ $t("Clear filters") }}
       <v-icon>
@@ -80,14 +78,16 @@ export default {
       isUsingFilters: "roles/isUsingFilters"
     })
   },
-  beforeMount() {
-    this.$store.dispatch("roles/setDefaultFilters");
-  },
   methods: {
     ...mapActions("roles", ["setFilter", "setDefaultFilters"]),
-    debounceSearchUpdate: debounce(function($event) {
-      const filterValue = $event || "";
-      this.setFilter({ filterType: "search", filterValue });
+    clearFilters() {
+      this.setDefaultFilters();
+      this.$router.replace("/roles");
+    },
+    // We need to debounce both to avoid updating too often (e.g. while typing the search)
+    // and because the v-range-slider emits changes twice https://github.com/vuetifyjs/vuetify/issues/7915
+    updateFilter: debounce(function(filterType, filterValue) {
+      this.setFilter({ filterType, filterValue });
     }, 500)
   }
 };

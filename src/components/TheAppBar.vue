@@ -29,7 +29,9 @@
           />
         </div>
         <v-spacer />
-        <router-link class="nav-link" to="/">{{ $t("Dashboard") }}</router-link>
+        <router-link class="nav-link" to="/roles" :exact-path="true">{{
+          $t("Roles")
+        }}</router-link>
         <router-link class="nav-link" to="/about">{{
           $t("About")
         }}</router-link>

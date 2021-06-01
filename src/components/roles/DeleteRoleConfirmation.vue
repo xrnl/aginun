@@ -44,7 +44,7 @@ export default {
       const error = await this.deleteRole(this.roleId);
       if (!error) {
         this.$emit("input", false);
-        this.$router.push("/roles");
+        this.$router.back();
       }
     }
   }

@@ -1,6 +1,7 @@
 import gql from "graphql-tag";
 import { apolloClient } from "@/plugins/vue-apollo";
 import store from "../store";
+import { FILTERS_KEYS } from "@/store/modules/roles";
 
 async function healthCheck() {
   const { errors } = await apolloClient.query({
@@ -16,7 +17,7 @@ async function healthCheck() {
   store.dispatch("errors/serverError", !!errors);
 }
 
-export async function rolesErrorGuard(to, from, next) {
+export async function rolesGuard(to, from, next) {
   // We need this to only run the healthcheck once
   if (store.state.errors.serverError === undefined) {
     await healthCheck();
@@ -24,8 +25,32 @@ export async function rolesErrorGuard(to, from, next) {
 
   if (store.state.errors.serverError) {
     next("/error");
-  } else {
+    return;
+  }
+
+  const queryKeys = Object.keys(to.query || {});
+
+  if (!queryKeys.length) {
     next();
+    return;
+  }
+
+  if (FILTERS_KEYS.some((key) => queryKeys.includes(key))) {
+    new URLSearchParams(to.query).forEach((filterValue, filterType) => {
+      if (filterValue.length > 0) {
+        store.commit("roles/setFilter", {
+          filterType,
+          filterValue:
+            filterType === "search"
+              ? filterValue
+              : filterValue.split(",").map((el) => parseInt(el, 10))
+        });
+      }
+    });
+
+    next();
+  } else {
+    next({ name: "roles", replace: true });
   }
 }
 
