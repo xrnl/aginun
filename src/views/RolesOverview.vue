@@ -38,7 +38,7 @@
       <div
         v-if="!roles.length && !isLoadingRoles"
         key="noRoles"
-        class="pa-5 text-center"
+        class="pa-5 text-center fix-z-index"
       >
         <div v-if="isUsingFilters">
           <h3>{{ $t("No results.") }}</h3>
