@@ -103,6 +103,7 @@ When you submit or update your pull request, you should receive a reply within 2
 Contrary to popular belief, you don't need programming skills to contribute to this project, You could:
 
 - Contribute to the [application documentation](https://github.com/xrnl/aginun/wiki): write new documents, or improve existing one by translating them, adding more content or making them easier to read.
+- Participate in our discussions [on Discourse](https://base.extinctionrebellion.nl/c/tech/volunteer-platform/89).
 - Improve the design of the application.
 - Help with the recruitment and integration of new people into this project.
 - Improve the list of [standardized roles](https://drive.google.com/file/d/1KYau2qSltZUTjWH8EcyGhBNnJ_S8PbWR/view) in Extinction Rebellion.
