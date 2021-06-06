@@ -1,4 +1,3 @@
-
 .nav-bar{
     background-color: $xr-green-light;
     display: flex;
@@ -9,13 +8,9 @@
     width: 100%;
     z-index: 99;
 
-    @media (min-width: $breakpoint-sm) {
-        // position: relative;
-    }
-
     .logo-link{
         @include font-heading();
-        color: $xr-black;
+        color: $xr-white;
         text-decoration: none;
         &__icon{
             width: $logo-height;
@@ -105,7 +100,6 @@
         z-index: 99;
         display: flex;
         padding: $distance-xs;
-        background: $xr-white;
         img {
             height: 23px;
         }

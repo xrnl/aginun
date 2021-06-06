@@ -1,5 +1,5 @@
 .nav-link{
-    color: black;
+    color: $xr-white;
     height: 36px;
     min-width: 64px;
     padding: 0 $distance-xs;
@@ -9,9 +9,9 @@
     text-decoration: none;
     line-height: 2;
     &:hover{
-        border-bottom: 2px solid black;
+        border-bottom: 2px solid $xr-white;
     }
     &.router-link-exact-active{
-        border-bottom: 2px solid black;
+        border-bottom: 2px solid $xr-white;
     }
 }

@@ -5,10 +5,11 @@
       class="login-button"
       outlined
       text
+      dark
       @click="dialog = true"
       >{{ $t("Login") }}</v-btn
     >
-    <v-btn v-else class="login-button" outlined text @click="logout">
+    <v-btn v-else class="login-button" dark outlined text @click="logout">
       {{ $t("Logout") }}
     </v-btn>
     <v-dialog v-model="dialog" :persistent="serverLoading" max-width="380px">
