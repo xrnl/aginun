@@ -1,4 +1,5 @@
 // styles in this file are available from all components
+@import "base/colours";
 @import "base/typography";
 @import "variables";
 
@@ -33,4 +34,12 @@
 
 .fix-z-index {
   position: relative;
+}
+
+.bg-primary {
+  background: $xr-green-light;
+}
+
+.text-white {
+  color: $xr-white !important;
 }
