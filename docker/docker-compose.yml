@@ -29,5 +29,11 @@ services:
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
       HASURA_GRAPHQL_ADMIN_SECRET: D!G!TALREBELL1on
       HASURA_GRAPHQL_UNAUTHORIZED_ROLE: "public"
+      HASURA_GRAPHQL_JWT_SECRET: '{
+  "type": "RS256",
+  "claims_namespace": "extinctionrebellion",
+  "issuer": "https://keyserver.extinctionrebellion.nl/auth/realms/XR",
+  "key": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArGsXmrPW/q4HY061WE2Z\nATc+t12kuBKWk68CgUHtrsJhs3/Ku+OSYZsdgycGWz05Hp5/HnLWkG1eHHz/xQNV\nhIvof9/X162XmqsnMk9d9DzFBuZbguftfWAYBhZM1wFAN0FC5/UoHus5Mx3MCxcp\nVMDUwCtvEARBzf/myTb9snInMFAe1or6jk73LPN4ifnzWuNFvRDdyu5uJ4w5Zlz+\nfUhEsu2mFKFRLh+QlZSb3xzsVRr+2NFCw7/xZBIOo7qZ3apgK9yqz9wv+rjb3X1X\nRynZgF/GK1lMi+n9Q75K/vaX6IviSBG2BHoIzJofPc7bbLx7+Rm3Y+oVIKbjIOtQ\n7wIDAQAB\n-----END PUBLIC KEY-----"
+}'
 volumes:
   db_data:

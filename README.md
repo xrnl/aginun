@@ -26,13 +26,19 @@ You can install the application in your own computer by following these simple s
 2. Navigate into the project directory (`cd aginun`) and install packages with the command `npm install`.
 3. Copy the `.env.example` file to `.env.local`, as follows: `cp .env.example .env.local`.
 4. [Request the necessary credentials/ keys.](https://github.com/xrnl/aginun/blob/master/SUPPORT.md).
+5. Install [docker desktop](https://www.docker.com/products/docker-desktop)
 
 
 If you wish edit the code of this application, we recommend using [this setup](https://github.com/xrnl/aginun/wiki/Recommended-setup).
 
 ## Run
 
-Once you have installed tha application, you can run it with the command `npm start`. When the application is running, you can access it at [localhost:8080](http://localhost:8080).
+If you copied the `.env.example` file you are using the local hasura back end which needs te be started by running the command `npm run docker:start`. 
+
+Don't forget to stop the local backend when you are finnished developing by running
+the command `npm run docker:stop`.
+
+Once you started the local hasura backend and have installed tha application, you can run it with the command `npm start`. When the application is running, you can access it at [localhost:8080](http://localhost:8080).
 
 ## Edit back end
 
@@ -58,3 +64,4 @@ npm run test:e2e
 ## Build
 
 Compile and minify for production with `npm run build`
+ 
