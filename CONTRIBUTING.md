@@ -12,7 +12,7 @@ If you want to get in contact or learn more about the project, check out the [in
 
 ## Join project meetings
 
-Every other Tuesday at 17:30 we hold a brief and efficient online meeting to review the progress from the previous 2 weeks, resolve questions about current work, discuss ideas and set goals for the next two weeks. We would like to invite you to this meeting so that you can meet the team, share your ideas and get a warm welcome to the project. You can join the online meeting using [this link](https://meet2.organise.earth/b/tec-cu9-9tr) on the next Tuesday that lands on an [even week number](https://www.epochconverter.com/weeknumbers).
+Every other Tuesday at 17:30 (in the [CEST](https://24timezones.com/time-zone/cest)/[CET](https://24timezones.com/time-zone/cet) timezone, depending on the season) we hold a brief and efficient online meeting to review the progress from the previous 2 weeks, resolve questions about current work, discuss ideas and set goals for the next two weeks. We would like to invite you to this meeting so that you can meet the team, share your ideas and get a warm welcome to the project. You can join the online meeting using [this link](https://meet2.organise.earth/b/tec-cu9-9tr) on the next Tuesday that lands on an [even week number](https://www.epochconverter.com/weeknumbers).
 
 ## Report a problem
 
