@@ -56,8 +56,6 @@ export const RolesSearchQuery = gql`
         _and: [
           { localGroupId: { _in: $localGroupIds } }
           { workingCircleId: { _in: $workingCircleIds } }
-          { timeCommitmentMin: { _lte: $timeCommitmentMax } }
-          { timeCommitmentMax: { _gte: $timeCommitmentMin } }
           {
             _or: [
               { timeCommitmentMax: { _lte: $timeCommitmentMax } }
