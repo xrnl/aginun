@@ -40,6 +40,37 @@
   background: $xr-green-light;
 }
 
-.text-white {
-  color: $xr-white !important;
+.bg-green {
+  background: $xr-green;
+}
+
+.bg-light-green {
+  background: $xr-light-green;
+}
+
+.bg-light-blue {
+  background: $xr-light-blue;
+}
+
+.bg-warm-yellow {
+  background: $xr-warm-yellow;
+}
+
+.bg-white {
+  background: $xr-white;
+}
+
+.bg-black {
+  background: $xr-black;
+}
+
+.text-md-large {
+  @media #{map-get($display-breakpoints, "md-and-up")} {
+    font-size: 60px;
+    line-height: 1.2;
+  }
+}
+
+.w-50 {
+  width: 50%;
 }

@@ -37,9 +37,9 @@
       </v-row>
     </v-container>
     <v-footer padless fixed class="py-3">
-      <v-row align="center" justify="center" class="text-white bg-primary">
+      <v-row align="center" justify="center" class="white--text bg-primary">
         <v-col class="col-auto">
-          <v-icon class="text-white" size="35">mdi-github-circle</v-icon>
+          <v-icon class="white--text" size="35">mdi-github-circle</v-icon>
         </v-col>
         <v-col class="col-8 col-sm-auto pl-0">
           <i18n
@@ -47,18 +47,18 @@
           >
             <template v-slot:githubPage>
               <a
-                class="text-white d-none d-md-inline"
+                class="white--text d-none d-md-inline"
                 href="https://github.com/xrnl/aginun"
                 target="_blank"
                 >{{ $t("Github Page") }}</a
               >
-              <span class="text-white d-md-none">{{ $t("Github Page") }}</span>
+              <span class="white--text d-md-none">{{ $t("Github Page") }}</span>
             </template>
           </i18n>
         </v-col>
         <v-col class="col-12 pt-0 text-center d-md-none">
           <a
-            class="v-btn v-btn--outlined rounded text-white"
+            class="v-btn v-btn--outlined rounded white--text"
             href="https://github.com/xrnl/aginun"
             target="_blank"
             >{{ $t("Go to Github") }}</a
