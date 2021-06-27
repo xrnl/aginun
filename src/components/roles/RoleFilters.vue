@@ -7,7 +7,7 @@
       clearable
       outlined
       append-icon="mdi-magnify"
-      @input="updateFilter('search', $event)"
+      @input="updateFilter('search', $event || '')"
     >
     </v-text-field>
     <flex-wrapper direction="column">
