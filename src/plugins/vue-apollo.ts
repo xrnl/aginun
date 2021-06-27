@@ -33,7 +33,8 @@ const apolloClient = new ApolloClient({
   cache,
   defaultOptions: {
     query: {
-      errorPolicy: "all"
+      errorPolicy: "all",
+      fetchPolicy: "no-cache"
     }
   }
 });
