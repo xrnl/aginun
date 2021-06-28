@@ -16,7 +16,9 @@
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint --no-fix",
     "lint-fix": "vue-cli-service lint --fix",
-    "start": "vue-cli-service serve"
+    "start": "vue-cli-service serve",
+    "docker:start": "docker compose --file docker/docker-compose.yml --env-file ./docker/.env.local up -d",
+    "docker:stop": "docker compose --file docker/docker-compose.yml --env-file ./docker/.env.local stop"
   },
   "dependencies": {
     "@mdi/font": "^4.5.95",
