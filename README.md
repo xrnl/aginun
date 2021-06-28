@@ -26,7 +26,7 @@ You can install the application in your own computer by following these simple s
 2. Navigate into the project directory (`cd aginun`) and install packages with the command `npm install`.
 3. Copy the `.env.example` file to `.env.local`, as follows: `cp .env.example .env.local`.
 4. [Request the necessary credentials/ keys.](https://github.com/xrnl/aginun/blob/master/SUPPORT.md).
-5. Install [docker desktop](https://www.docker.com/products/docker-desktop)
+5. Install [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/)
 
 
 If you wish edit the code of this application, we recommend using [this setup](https://github.com/xrnl/aginun/wiki/Recommended-setup).
