@@ -9,7 +9,7 @@ services:
     - "5432"
     volumes:
     - db_data:/var/lib/postgresql/data
-    - ./init_db.sql:/docker-entrypoint-initdb.d/init.sql
+    - ./init.sql:/docker-entrypoint-initdb.d/
     environment:
       POSTGRES_PASSWORD: t-h0]hAh~b8G=O=f3Eo
       POSTGRES_HOST_AUTH_METHOD: trust
