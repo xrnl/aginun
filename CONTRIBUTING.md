@@ -15,7 +15,7 @@ If you want to get in contact or learn more about the project, check out the
 
 ## Join project meetings
 
-Every other Tuesday at 17:30 (in the
+Every other Wednesday at 17:30 (in the
 [CEST](https://24timezones.com/time-zone/cest)/[CET](https://24timezones.com/time-zone/cet)
 timezone, depending on the season) we hold a brief and efficient online meeting
 to review the progress from the previous 2 weeks, resolve questions about
