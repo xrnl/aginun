@@ -3,11 +3,9 @@ import TheAppBar from "@/components/TheAppBar.vue";
 import Vue from "vue";
 import Vuex from "vuex";
 import VueRouter from "vue-router";
-import Vuetify from "vuetify";
 import axios from "axios";
 import VueAxios from "vue-axios";
 import Spinner from "@/components/Spinner.vue";
-import getThemeColor from "@/utils/getThemeColor";
 import AutocompleteCustom from "@/components/AutocompleteCustom.vue";
 import IconButton from "@/components/IconButton.vue";
 import themeColorNames from "@/constants/themeColors";
@@ -17,21 +15,10 @@ import DatePickerField from "@/components/DatePickerField.vue";
 import LanguageSelect from "@/components/LanguageSelect.vue";
 import i18n from "@/i18n/i18n";
 
-Vue.use(Vuetify);
 Vue.use(VueAxios, axios);
-
-/**
- * Add a wrapping `div data-app="true"` to the body so that Vuetify
- * doesn't complain about missing data-app attribute for some components.
- * See https://github.com/vuetifyjs/vuetify/issues/1210
- */
-const app = document.createElement("div");
-app.setAttribute("data-app", "true");
-document.body.appendChild(app);
 
 describe("TheAppBar", () => {
   let store;
-  let vuetify;
   const localVue = createLocalVue();
   localVue.use(Vuex);
   localVue.use(VueRouter);
@@ -47,14 +34,12 @@ describe("TheAppBar", () => {
         }
       }
     });
-    vuetify = new Vuetify({ theme: { dark: false } });
   });
 
   const mountFunction = (options) =>
     mount(TheAppBar, {
       localVue,
       store,
-      vuetify,
       router,
       i18n,
       ...options
@@ -78,17 +63,9 @@ describe("TheAppBar", () => {
 describe("Spinner", () => {
   const localVue = createLocalVue();
 
-  let vuetify;
   localVue.use(Vuex);
 
-  beforeAll(() => {
-    vuetify = new Vuetify({
-      theme: { dark: false, themes: { light: { primary: "#3A62A8" } } }
-    });
-  });
-
-  const mountFunction = (options) =>
-    mount(Spinner, { localVue, vuetify, ...options });
+  const mountFunction = (options) => mount(Spinner, { localVue, ...options });
 
   const spinnerSelector = "div > div > div";
 
@@ -104,23 +81,11 @@ describe("Spinner", () => {
     const wrapper = mountFunction({ propsData: { text } });
     expect(wrapper.find("p").text()).toBe(text);
   });
-
-  it("prop themeColor is rendered", () => {
-    const themeColor = "primary";
-    const wrapper = mountFunction({ propsData: { themeColor } });
-    const color = getThemeColor(wrapper.vm.$vuetify.theme, themeColor);
-    const spinnerTags = wrapper.findAll(spinnerSelector);
-
-    for (let i = 0; i < spinnerTags.length; i += 1) {
-      expect(spinnerTags.at(i).attributes("color")).toBe(color);
-    }
-  });
 });
 
 describe("AutocompleteCustom", () => {
   const localVue = createLocalVue();
 
-  let vuetify;
   const items = [
     { id: 1, title: "Enschede" },
     { id: 2, title: "Brabant" }
@@ -128,14 +93,9 @@ describe("AutocompleteCustom", () => {
 
   const label = "Local group";
 
-  beforeAll(() => {
-    vuetify = new Vuetify();
-  });
-
   const mountFunction = (options) =>
     mount(AutocompleteCustom, {
       localVue,
-      vuetify,
       propsData: {
         label,
         items,
@@ -178,19 +138,13 @@ describe("AutocompleteCustom", () => {
 describe("IconButton", () => {
   const localVue = createLocalVue();
 
-  let vuetify;
   const text = "add";
   const icon = "mdi-plus";
   const themeColor = "primary";
 
-  beforeAll(() => {
-    vuetify = new Vuetify();
-  });
-
   const mountFunction = (options) =>
     mount(IconButton, {
       localVue,
-      vuetify,
       propsData: {
         text,
         icon,
@@ -240,18 +194,12 @@ describe("IconButton", () => {
 describe("NewItemButton", () => {
   const localVue = createLocalVue();
 
-  let vuetify;
   const text = "New role";
   const icon = "mdi-plus";
-
-  beforeAll(() => {
-    vuetify = new Vuetify();
-  });
 
   const mountFunction = (options) =>
     mount(NewItemButton, {
       localVue,
-      vuetify,
       propsData: {
         text
       },
@@ -279,21 +227,14 @@ describe("NewItemButton", () => {
 describe("IconLink", () => {
   const localVue = createLocalVue();
 
-  let vuetify;
-
   const href = "https://organise.earth";
   const linkText = "@username";
   const label = "Mattermost";
   const icon = "mdi-message";
 
-  beforeAll(() => {
-    vuetify = new Vuetify();
-  });
-
   const mountFunction = (options) =>
     mount(IconLink, {
       localVue,
-      vuetify,
       propsData: {
         href,
         linkText,
@@ -342,17 +283,11 @@ describe("IconLink", () => {
 
 describe("DatePickerField", () => {
   const localVue = createLocalVue();
-  let vuetify;
   const label = "Application deadline";
-
-  beforeAll(() => {
-    vuetify = new Vuetify();
-  });
 
   const mountFunction = (date) =>
     mount(DatePickerField, {
       localVue,
-      vuetify,
       propsData: {
         label,
         date
@@ -401,7 +336,6 @@ describe("LanguageSelect", () => {
     localVue = createLocalVue();
     localVue.use(i18n);
     wrapper = mount(LanguageSelect, {
-      vuetify: new Vuetify(),
       i18n
     });
   });

@@ -16,8 +16,6 @@
   </div>
 </template>
 <script>
-import styles from "@/constants/styles";
-
 export default {
   props: {
     isDrawerOpen: {
@@ -30,21 +28,9 @@ export default {
     }
   },
   computed: {
-    isMobile() {
-      return this.$vuetify.breakpoint.smAndDown;
-    },
     containerMargin() {
-      if (this.isDrawerOpen && !this.isMobile) {
+      if (this.isDrawerOpen) {
         return { marginRight: this.drawerWidth };
-      }
-      return {};
-    },
-    drawerStyle() {
-      if (this.$vuetify.breakpoint.mdAndUp) {
-        return {
-          top: styles.navbarHeight,
-          width: this.drawerWidth
-        };
       }
       return {};
     }

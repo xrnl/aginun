@@ -3,23 +3,21 @@
     <router-view :key="$route.fullPath" />
     <role-edit-dialog v-model="newRoleDialog" />
     <div v-if="isMobile" class="mb-8">
-      <v-divider />
+      <hr />
       <div class="d-flex justify-space-between pa-3" v-if="loggedIn">
         <new-item-button :text="$t('New Role')" @click="showNewRoleDialog" />
       </div>
-      <v-divider />
+      <hr />
     </div>
-    <v-btn
-      class="filter-btn d-lg-none"
-      color="primary"
+    <button
       v-if="!isDrawerOpen"
+      type="button"
+      class="btn btn-primary btn-lg filter-btn d-lg-none"
       @click="isDrawerOpen = true"
-      rounded
-      x-large
     >
       {{ $t("Filter") }}
-      <v-icon>mdi-magnify</v-icon>
-    </v-btn>
+      <i class="bi-filter"></i>
+    </button>
     <transition name="fade" mode="out-in">
       <grid-list v-if="!!roles.length" key="roles">
         <role-card
@@ -140,9 +138,6 @@ export default {
       loggedIn: "user/loggedIn",
       isUsingFilters: "roles/isUsingFilters"
     }),
-    isMobile: function() {
-      return this.$vuetify.breakpoint.smAndDown;
-    },
     rolesSelectedLanguage() {
       // roles that do have an empty string as title have not been filled in for that language.
       return this.roles.filter((role) => role.title[this.$i18n.locale]);

@@ -1,12 +1,12 @@
 <template>
-  <v-container class="mt-6">
-    <v-row align="center" justify="center">
-      <v-col class="col-md-4 bee">
+  <div class="container mt-6">
+    <div class="row align-items-center justify-content-center">
+      <div class="col col-md-4 bee">
         <img src="@/assets/images/bee.svg" alt="Bee" />
-      </v-col>
-    </v-row>
-    <v-row align="center" justify="center">
-      <v-col class="col-md-4">
+      </div>
+    </div>
+    <div class="row align-items-center justify-content-center">
+      <div class="col col-md-4">
         <h2>{{ $t("Get to know our techteam and contribute") }}</h2>
         <p>
           {{ $t("Check out our guidelines") }}
@@ -25,9 +25,9 @@
             )
           }}
         </p>
-      </v-col>
-    </v-row>
-  </v-container>
+      </div>
+    </div>
+  </div>
 </template>
 <script>
 export default {

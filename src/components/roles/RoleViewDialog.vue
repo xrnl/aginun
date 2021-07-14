@@ -105,7 +105,7 @@
                 </v-menu>
               </flex-wrapper>
             </v-card-title>
-            <v-divider />
+            <hr />
             <template v-if="!role.filledDate">
               <v-card-text class="pt-3 pb-0">
                 <flex-wrapper>

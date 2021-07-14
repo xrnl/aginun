@@ -34,8 +34,6 @@ export default {
 };
 </script>
 <style lang="scss">
-@import "~vuetify/src/styles/settings/_variables";
-
 .text-sm-large {
   @media #{map-get($display-breakpoints, "sm-and-up")} {
     font-size: 60px;

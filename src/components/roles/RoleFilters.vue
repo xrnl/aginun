@@ -84,8 +84,7 @@ export default {
       this.setDefaultFilters();
       this.$router.replace("/roles");
     },
-    // We need to debounce both to avoid updating too often (e.g. while typing the search)
-    // and because the v-range-slider emits changes twice https://github.com/vuetifyjs/vuetify/issues/7915
+    // We need to debounce to avoid updating too often (e.g. while typing the search)
     updateFilter: debounce(function(filterType, filterValue) {
       this.setFilter({ filterType, filterValue });
     }, 500)

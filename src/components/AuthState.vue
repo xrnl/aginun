@@ -1,19 +1,23 @@
 <template>
   <div>
-    <v-btn
+    <button
       v-if="!loggedIn"
-      class="login-button"
-      outlined
-      text
-      dark
-      @click="dialog = true"
-      >{{ $t("Login") }}</v-btn
+      type="button"
+      class="btn btn-outline-primary login-button"
+      @click="showDialog = true"
     >
-    <v-btn v-else class="login-button" dark outlined text @click="logout">
+      {{ $t("Login") }}
+    </button>
+    <button
+      v-else
+      type="button"
+      class="btn btn-outline-primary login-button"
+      @click="logout"
+    >
       {{ $t("Logout") }}
-    </v-btn>
-    <v-dialog v-model="dialog" :persistent="serverLoading" max-width="380px">
-      <v-card class="pa-3">
+    </button>
+    <dialog v-if="showDialog" max-width="380px">
+      <div class="card">
         <div class="text-center">
           <h2>{{ $t("Member login") }}</h2>
           <p>
@@ -31,40 +35,57 @@
                 name="username"
                 rules="required"
               >
-                <v-text-field
-                  outlined
-                  dense
-                  class="rounded-lg"
-                  v-model="username"
-                  :label="$t('Username')"
-                  :error-messages="errors"
-                  autofocus
-                />
+                <div class="form-floating mb-3">
+                  <label>
+                    <input
+                      v-model="username"
+                      class="form-control"
+                      :placeholder="$t('Username')"
+                    />{{ $t("Username") }}</label
+                  >
+                </div>
+                <div
+                  class="invalid-feedback"
+                  :class="{ 'd-block': errors.length }"
+                >
+                  {{ errors[0] }}
+                </div>
               </validation-provider>
               <validation-provider
                 v-slot="{ errors }"
                 name="password"
                 rules="required"
               >
-                <v-text-field
-                  outlined
-                  dense
-                  class="rounded-lg"
-                  type="password"
-                  v-model="password"
-                  :label="$t('Password')"
-                  :error-messages="errors"
-                />
+                <div class="form-floating mb-3">
+                  <label>
+                    <input
+                      v-model="username"
+                      type="password"
+                      class="form-control"
+                      :placeholder="$t('Password')"
+                    />{{ $t("Password") }}</label
+                  >
+                </div>
+                <div
+                  class="invalid-feedback"
+                  :class="{ 'd-block': errors.length }"
+                >
+                  {{ errors[0] }}
+                </div>
               </validation-provider>
               <div class="d-flex justify-end">
-                <v-btn text :disabled="serverLoading" @click="dialog = false">
+                <button
+                  class="btn btn-outline-primary login-button"
+                  type="button"
+                  :disabled="serverLoading"
+                  @click="showDialog = false"
+                >
                   {{ $t("Cancel") }}
-                </v-btn>
-                <v-btn
-                  color="primary"
+                </button>
+                <button
+                  class="btn btn-primary ml-2"
                   type="submit"
                   :disabled="invalid || serverLoading"
-                  class="ml-2"
                 >
                   <pulse-loader
                     v-if="serverLoading"
@@ -72,13 +93,13 @@
                     :loading="true"
                   ></pulse-loader>
                   <template v-else>{{ $t("Log in") }}</template>
-                </v-btn>
+                </button>
               </div>
             </form>
           </validation-observer>
         </div>
-      </v-card>
-    </v-dialog>
+      </div>
+    </dialog>
   </div>
 </template>
 
@@ -95,7 +116,7 @@ export default Vue.extend({
   data() {
     return {
       contactEmail,
-      dialog: false,
+      showDialog: false,
       username: !isProduction() ? "kaj-dev" : "",
       password: !isProduction() ? "test" : "",
       serverError: "",
@@ -139,7 +160,7 @@ export default Vue.extend({
       }
 
       this.resetForm();
-      this.dialog = false;
+      this.showDialog = false;
     }
   }
 });

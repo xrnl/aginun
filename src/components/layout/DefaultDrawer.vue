@@ -1,20 +1,16 @@
 <template>
   <div>
     <div
-      v-if="
-        (!!$slots.header && !!$slots.header[0]) ||
-          this.$vuetify.breakpoint.smAndDown
-      "
-      class="drawer-header"
+      v-if="$slots.header && !!$slots.header[0]"
+      class="drawer-header d-md-none"
     >
       <slot name="header" />
     </div>
     <div class="drawer-content">
       <slot />
       <v-btn
-        v-if="this.$vuetify.breakpoint.smAndDown"
         fab
-        class="drawer-content__button-back"
+        class="drawer-content__button-back d-md-none"
         color="primary"
         @click="$emit('close-drawer', false)"
       >

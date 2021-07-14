@@ -1,11 +1,9 @@
 <template>
-  <v-app>
+  <main>
     <feedback-alert />
     <the-app-bar />
-    <v-content>
-      <router-view />
-    </v-content>
-  </v-app>
+    <router-view />
+  </main>
 </template>
 
 <script>
@@ -19,7 +17,7 @@ export default {
     FeedbackAlert
   },
   data: () => ({
-    drawer: null // vuetify determines initial state based on screen size
+    drawer: null
   })
 };
 </script>

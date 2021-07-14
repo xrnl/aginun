@@ -1,7 +1,6 @@
 const path = require("path");
 
 module.exports = {
-  transpileDependencies: ["vuetify"],
   lintOnSave: process.env.NODE_ENV !== "production",
   pluginOptions: {
     "style-resources-loader": {
