@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <feedback-alert />
-    <the-app-bar />
+    <nav-bar />
     <v-content>
       <router-view />
     </v-content>
@@ -9,13 +9,13 @@
 </template>
 
 <script>
-import TheAppBar from "@/components/TheAppBar.vue";
+import NavBar from "@/components/NavBar.vue";
 import FeedbackAlert from "@/components/FeedbackAlert.vue";
 
 export default {
   name: "App",
   components: {
-    TheAppBar,
+    NavBar,
     FeedbackAlert
   },
   data: () => ({

@@ -142,3 +142,11 @@ export default Vue.extend({
   }
 });
 </script>
+<style lang="scss" scoped>
+.login-button {
+  color: white !important;
+  > span {
+    color: white !important;
+  }
+}
+</style>

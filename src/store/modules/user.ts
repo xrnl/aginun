@@ -2,18 +2,28 @@ import i18n from "@/i18n/i18n";
 import axios from "axios";
 import qs from "qs";
 import Vue from "vue";
+import jwtDecode from "jwt-decode";
 
 export const loginCookieKey = "loginToken";
+
+export interface UserState {
+  token: string;
+  userId: string;
+}
 
 export default {
   namespaced: true,
   state: {
-    token: ""
+    token: "",
+    userId: ""
   },
   getters: {
     loggedIn: (state) => !!state.token
   },
   mutations: {
+    setUserId(state, id) {
+      state.userId = id;
+    },
     setToken(state, token) {
       state.token = token;
     },
@@ -27,7 +37,10 @@ export default {
   },
   actions: {
     initializeFromCookie({ commit }) {
-      commit("setToken", Vue.$cookies.get(loginCookieKey));
+      const accesToken = Vue.$cookies.get(loginCookieKey);
+      commit("setToken", accesToken);
+      const userData: any = jwtDecode(accesToken);
+      commit("setUserId", userData.sub);
     },
     async login({ commit, dispatch }, { username, password }) {
       const config = {
@@ -41,7 +54,8 @@ export default {
         // eslint-disable-next-line @typescript-eslint/camelcase
         client_id: "volunteerplatform",
         username,
-        password
+        password,
+        scope: "openid"
       };
 
       try {
@@ -50,6 +64,8 @@ export default {
           qs.stringify(params),
           config
         );
+        const decodedJWT: any = jwtDecode(data.access_token);
+        commit("setUserId", decodedJWT.sub);
         commit("setToken", data.access_token);
         commit("setTokenCookie", {
           token: data.access_token,

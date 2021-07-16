@@ -17,6 +17,20 @@ const routes = [
     beforeEnter: rolesErrorGuard,
     component: RolesOverview,
     alias: "/",
+    props: {
+      isMyRolesMode: false
+    },
+    children: [{ path: "view/:id", component: RoleViewDialog }]
+  },
+  {
+    path: "/my-roles",
+    name: "myRoles",
+    beforeEnter: rolesErrorGuard,
+    component: RolesOverview,
+    props: {
+      isMyRolesMode: true
+    },
+    alias: "/my-roles",
     children: [{ path: "view/:id", component: RoleViewDialog }]
   },
   {

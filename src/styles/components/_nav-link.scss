@@ -4,14 +4,20 @@
     min-width: 64px;
     padding: 0 $distance-xs;
     margin: 0 $distance-xs;
+
     @include font-heading();
     font-size: $font-size-md;
     text-decoration: none;
     line-height: 2;
+
     &:hover{
-        border-bottom: 2px solid black;
+        background-color: lighten($xr-primary, 10%);
     }
     &.router-link-exact-active{
-        border-bottom: 2px solid black;
+        background-color: lighten($xr-primary, 20%);
+    }
+
+    &--white{
+        color: white;
     }
 }

@@ -49,6 +49,8 @@
         </div>
       </div>
     </transition>
+    <h1>JAP</h1>
+    <h1 v-if="this.isMyRolesMode">myRolesMode</h1>
     <infinite-loading :identifier="infiniteScrollId" @infinite="loadRoles">
       <template #spinner>
         <!-- show spinner without transition for loading additional roles -->
@@ -106,7 +108,7 @@ import PageWithDrawer from "@/components/layout/PageWithDrawer.vue";
 import RoleCard from "@/components/roles/RoleCard.vue";
 import GridList from "@/components/layout/GridList.vue";
 import RoleFilters from "@/components/roles/RoleFilters.vue";
-import { mapState, mapActions, mapGetters } from "vuex";
+import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
 import NewItemButton from "@/components/NewItemButton";
 import RoleEditDialog from "@/components/roles/RoleEditDialog";
 import InfiniteLoading from "vue-infinite-loading";
@@ -124,6 +126,9 @@ export default {
     RoleEditDialog,
     InfiniteLoading,
     Spinner
+  },
+  props: {
+    isMyRolesMode: Boolean
   },
   data: () => ({
     newRoleDialog: false,
@@ -153,11 +158,20 @@ export default {
       this.isDrawerOpen = !this.isMobile;
     }
   },
+  beforeMount: function() {
+    console.log("before");
+    this.updateMyRolesMode(this.isMyRolesMode);
+  },
   created: function() {
     this.isDrawerOpen = !this.isMobile;
+    // Set the store roles param "myRolesMode" to true or false according to view
   },
   methods: {
-    ...mapActions("roles", ["loadRoles", "setDefaultFilters"]),
+    ...mapActions("roles", [
+      "loadRoles",
+      "setDefaultFilters",
+      "updateMyRolesMode"
+    ]),
     handleCloseDrawer: function() {
       this.isDrawerOpen = false;
     },

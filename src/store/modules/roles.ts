@@ -17,6 +17,7 @@ export interface RolesState {
   paginationLimit: number;
   paginationOffset: number;
   infiniteScrollId: boolean;
+  isMyRolesMode: boolean;
   selectedFilters: unknown;
 }
 
@@ -25,6 +26,7 @@ export default {
   state: {
     roles: [],
     isLoadingRoles: true,
+    isMyRolesMode: false,
     paginationLimit: 20, // number of roles loaded at a time. More are loaded on scroll down.
     paginationOffset: 0,
     infiniteScrollId: true, // when this variable changes new roles are loaded
@@ -57,6 +59,9 @@ export default {
     addRoles(state, newRoles) {
       state.roles.push(...newRoles);
     },
+    setMyRolesMode(state, mode) {
+      state.isMyRolesMode = mode;
+    },
     editRole(state, newRole) {
       const roleIndex = state.roles.findIndex((role) => role.id === newRole.id);
       state.roles[roleIndex] = newRole;
@@ -86,7 +91,13 @@ export default {
     }
   },
   actions: {
-    async createRole({ commit, dispatch }, newRole) {
+    updateMyRolesMode({ commit }, isMyRolesMode) {
+      commit("setMyRolesMode", isMyRolesMode);
+    },
+    async createRole({ commit, dispatch, rootState }, newRole) {
+      console.log(rootState);
+      newRole.creatorId = rootState.user.userId;
+      console.log(newRole);
       try {
         await apolloClient.mutate({
           mutation: CreateRoleMutation,
@@ -208,6 +219,14 @@ export default {
         await dispatch("groups/loadGroups", {}, { root: true });
       }
 
+      console.log(state);
+
+      if (state.isMyRolesMode) {
+        console.log("MY ROLES");
+      } else {
+        console.log("NORMAL");
+      }
+
       /*
       When no local group is selected, we search roles from all local groups. Same for working circles.
       TODO: A better solution is to have reactive queries which remove the working group or local circle `where`
@@ -220,18 +239,27 @@ export default {
         ? state.selectedFilters.workingCircles
         : rootGetters["groups/workingCircleIds"];
 
+      console.log(rootState);
+
+      const variables = {
+        limit: state.paginationLimit,
+        offset: state.paginationOffset,
+        // ...(state.isMyRolesMode && { creatorId: rootState.user.userId }),
+        creatorId: "d295c4dd-f6c1-4d62-9213-27402823c150",
+        localGroupIds,
+        workingCircleIds,
+        timeCommitmentMin: state.selectedFilters.timeCommitment[0],
+        timeCommitmentMax: state.selectedFilters.timeCommitment[1],
+        search: `%${state.selectedFilters.search}%`,
+        language: i18n.locale
+      };
+
+      console.log(variables);
+
+      // To do: store the user id, use it here
       const { data } = await apolloClient.query({
         query: RolesSearchQuery,
-        variables: {
-          limit: state.paginationLimit,
-          offset: state.paginationOffset,
-          localGroupIds,
-          workingCircleIds,
-          timeCommitmentMin: state.selectedFilters.timeCommitment[0],
-          timeCommitmentMax: state.selectedFilters.timeCommitment[1],
-          search: `%${state.selectedFilters.search}%`,
-          language: i18n.locale
-        }
+        variables
       });
 
       const newRoles = data.rolesSearch;

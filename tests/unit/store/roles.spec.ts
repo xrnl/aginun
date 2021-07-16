@@ -1,4 +1,5 @@
 import rolesStore, { RolesState } from "@/store/modules/roles";
+import rootStore, { RootState } from "@/store/";
 import Vue from "vue";
 import { apolloClient } from "@/plugins/vue-apollo";
 import { timeCommitmentRange } from "@/constants/timeCommitments";
@@ -22,6 +23,13 @@ describe("Roles Store", () => {
   const mockState: Partial<RolesState> = {
     roles
   };
+  const rootState: Partial<RootState> = {
+    user: {
+      userId: "d295c4dd-f6c1-4d62-9213-27402823c150",
+      token: "a24352lk5jrtarf89aw7uoa8iu325l2kjflkjzxfkj2l3ij45lk"
+    }
+  };
+
   const apolloQuerySpy = jest.spyOn(apolloClient, "query");
   const apolloMutateSpy = jest.spyOn(apolloClient, "mutate");
   const vueSetSpy = jest.spyOn(Vue, "set");
@@ -238,7 +246,11 @@ describe("Roles Store", () => {
           id: 3,
           title: "Role 3"
         };
-        await rolesStore.actions.createRole({ commit, dispatch }, newRole);
+        // console.log(mockRootState);
+        await rolesStore.actions.createRole(
+          { commit, dispatch, rootState },
+          newRole
+        );
         expect(apolloMutateSpy).toBeCalled();
         expect(dispatch).toBeCalledWith(
           "alerts/displaySuccess",

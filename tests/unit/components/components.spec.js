@@ -1,5 +1,5 @@
 import { mount, createLocalVue } from "@vue/test-utils";
-import TheAppBar from "@/components/TheAppBar.vue";
+import NavBar from "@/components/NavBar.vue";
 import Vue from "vue";
 import Vuex from "vuex";
 import VueRouter from "vue-router";
@@ -29,7 +29,7 @@ const app = document.createElement("div");
 app.setAttribute("data-app", "true");
 document.body.appendChild(app);
 
-describe("TheAppBar", () => {
+describe("NavBar", () => {
   let store;
   let vuetify;
   const localVue = createLocalVue();
@@ -51,7 +51,7 @@ describe("TheAppBar", () => {
   });
 
   const mountFunction = (options) =>
-    mount(TheAppBar, {
+    mount(NavBar, {
       localVue,
       store,
       vuetify,

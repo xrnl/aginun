@@ -29,10 +29,11 @@ const RoleFieldsFragment = gql`
     filledDate
     workingCircleId
     localGroupId
+    creatorId
   }
 `;
 
-/* 
+/*
 queries all roles with:
  - a title, responsibilities, description or requirements containing $search (for the selected language)
  - no filledDate
@@ -49,11 +50,13 @@ export const RolesSearchQuery = gql`
     $timeCommitmentMax: Int!
     $search: String!
     $language: String!
+    $creatorId: String!
   ) {
     rolesSearch(
       args: { selected_language: $language, search: $search }
       where: {
         _and: [
+          { creatorId: { _eq: $creatorId } }
           { localGroupId: { _in: $localGroupIds } }
           { workingCircleId: { _in: $workingCircleIds } }
           { timeCommitmentMin: { _gte: $timeCommitmentMin } }
