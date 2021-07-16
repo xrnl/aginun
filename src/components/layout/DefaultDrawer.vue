@@ -49,11 +49,6 @@ export default {
   padding-bottom: 0.5rem;
 }
 
-.theme--dark {
-  .drawer-header {
-    border-color: rgba(255, 255, 255, 0.12);
-  }
-}
 .drawer-content {
   &__button-back {
     margin-top: $distance-sm;

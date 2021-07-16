@@ -306,19 +306,6 @@ export default {
 };
 </script>
 <style lang="scss">
-.v-card {
-  &.theme--light {
-    .v-card__text {
-      color: #222;
-    }
-  }
-  &.theme--dark {
-    .v-card__text {
-      color: white !important;
-    }
-  }
-}
-
 .subHeader {
   font-size: 0.83em;
 }

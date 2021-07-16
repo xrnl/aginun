@@ -86,13 +86,5 @@ export default {
     transform: translateX(0);
     z-index: 99;
   }
-  .theme--light & {
-    background: white;
-    border-color: rgba(0, 0, 0, 0.12);
-  }
-  .theme--dark & {
-    background: #121212;
-    border-color: rgba(255, 255, 255, 0.12);
-  }
 }
 </style>
